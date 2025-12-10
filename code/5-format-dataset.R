@@ -9,7 +9,9 @@ facility_list <-
   ) |>
   as_tibble() |>
   mutate(
-    cnt = sum(year(book_in_date_time) == 2025),
+    cnt = sum(
+      year(book_in_date_time) == 2025 | year(book_out_date_time) == 2025
+    ),
     .by = detention_facility_code
   ) |>
   filter(cnt >= 1) |>
