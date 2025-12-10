@@ -18,7 +18,7 @@ hospitals <-
 
 arrow::write_feather(
   hospitals,
-  "data/facilities/hospitals.feather"
+  "data/hospitals.feather"
 )
 
 jails_prisons <- haven::read_dta("inputs/ICPSR-38323-0001-Data.dta")

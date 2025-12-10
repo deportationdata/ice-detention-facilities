@@ -8,13 +8,13 @@ facility_list <-
     "https://github.com/deportationdata/ice/raw/refs/heads/main/data/detention-stints-latest.feather"
   ) |>
   as_tibble() |>
-  mutate(
-    cnt = sum(
-      year(book_in_date_time) == 2025 | year(book_out_date_time) == 2025
-    ),
-    .by = detention_facility_code
-  ) |>
-  filter(cnt >= 1) |>
+  # mutate(
+  #   cnt = sum(
+  #     year(book_in_date_time) == 2025 | year(book_out_date_time) == 2025
+  #   ),
+  #   .by = detention_facility_code
+  # ) |>
+  # filter(cnt >= 1) |>
   distinct(detention_facility_code, name = detention_facility)
 
 best_values_wide <-

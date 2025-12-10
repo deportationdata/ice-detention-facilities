@@ -1,3 +1,5 @@
+library(tidyverse)
+
 jails_prisons <- haven::read_dta("inputs/ICPSR-38323-0001-Data.dta")
 
 jails_prisons <-
@@ -19,5 +21,5 @@ jails_prisons <-
 
 arrow::write_feather(
   jails_prisons,
-  "data/facilities/jails_prisons.feather"
+  "data/jails_prisons.feather"
 )

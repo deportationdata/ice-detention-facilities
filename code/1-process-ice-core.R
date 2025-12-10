@@ -3,11 +3,11 @@ library(readxl)
 library(tidylog)
 
 detentions_current <- arrow::read_feather(
-  "data/detention-stints-latest.feather"
+  "https://github.com/deportationdata/ice/raw/refs/heads/main/data/detention-stints-latest.feather"
 )
 
 detentions_2012_2023 <- arrow::read_feather(
-  "data/ice-detentions-2012-2023.feather"
+  "https://github.com/deportationdata/ice/raw/refs/heads/main/data/ice-detentions-2012-2023.feather"
 )
 
 # bind detentions to obtain all facilities used since 2012
@@ -53,10 +53,6 @@ detentions_facilities <-
     #   detention_book_in_date >= "2025-01-01",
     #   na.rm = TRUE
     # ),
-    ever_held_minors = any(
-      birth_year > (year(detention_book_in_date) - 18),
-      na.rm = TRUE
-    ),
     proportion_male = mean(
       gender == "Male" & gender != "Unknown",
       na.rm = TRUE
