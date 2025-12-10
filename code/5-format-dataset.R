@@ -1,11 +1,11 @@
 library(tidyverse)
 
-source("code/facilities/functions.R")
+source("code/functions.R")
 
 # temporarily just use the facilities in the recent data
 facility_list <-
   arrow::read_feather(
-    "data/detention-stints-latest.feather"
+    "https://github.com/deportationdata/ice/raw/refs/heads/main/data/detention-stints-latest.feather"
   ) |>
   as_tibble() |>
   mutate(
@@ -13,7 +13,7 @@ facility_list <-
     .by = detention_facility_code
   ) |>
   filter(cnt >= 1) |>
-  distinct(detention_facility_code, name = detention_facility, cnt = cnt)
+  distinct(detention_facility_code, name = detention_facility)
 
 best_values_wide <-
   arrow::read_feather(
@@ -43,7 +43,7 @@ facility_final <-
 
 # format data
 
-facility_final2 <-
+facility_formatted <-
   facility_final |>
   # left_join(hospitals, by = c("name", "state")) |>
   mutate(
@@ -95,6 +95,11 @@ facility_final2 <-
     over_under_72 = str_to_title(over_under_72)
   ) |>
   arrange(name)
+
+arrow::write_feather(
+  facility_formatted,
+  "data/facilities-latest.feather"
+)
 
 # # metadata for diagnostics
 # best_values_metadata <-
