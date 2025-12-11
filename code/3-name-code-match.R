@@ -36,13 +36,12 @@ hold_rooms_definitive <-
 #   clipr::write_clip()
 # pasted below
 
-# TODO: get verified links
 hold_rooms_manual <-
   tribble(
     ~detention_facility_code , ~name                    , ~state ,
-    "DULHOLD"                , "DULUTH HOLD ROOM"       , "MN"   , # https://www.vera.org/ice-detention-trends
+    "DULHOLD"                , "DULUTH HOLD ROOM"       , "MN"   , # https://github.com/vera-institute/ice-detention-trends/blob/main/metadata/facilities.csv
     "RICHOLD"                , "RICHLAND HOLD ROOM"     , "WA"   , # https://www.ice.gov/node/62177
-    "SYRHOLD"                , "SYRACUSE HOLD ROOM"     , "NY"   , # UNVERIFIED (likely HSI office)
+    "SYRHOLD"                , "SYRACUSE HOLD ROOM"     , "NY"   , # https://github.com/vera-institute/ice-detention-trends/blob/main/metadata/facilities.csv
     "CBPHOLD"                , "BUFFALO USBP HOLD ROOM" , "NY" # https://www.cbp.gov/border-security/along-us-borders/border-patrol-sectors/buffalo-sector-new-york
   )
 
