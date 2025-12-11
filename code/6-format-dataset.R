@@ -2,46 +2,11 @@ library(tidyverse)
 
 source("code/functions.R")
 
-# temporarily just use the facilities in the recent data
-facility_list <-
+facility_augmented <-
   arrow::read_feather(
-    "https://github.com/deportationdata/ice/raw/refs/heads/main/data/detention-stints-latest.feather"
-  ) |>
-  as_tibble() |>
-  # mutate(
-  #   cnt = sum(
-  #     year(book_in_date_time) == 2025 | year(book_out_date_time) == 2025
-  #   ),
-  #   .by = detention_facility_code
-  # ) |>
-  # filter(cnt >= 1) |>
-  distinct(detention_facility_code, name = detention_facility)
-
-best_values_wide <-
-  arrow::read_feather(
-    "data/facilities-best-values-wide.feather"
-  )
-
-facility_final <-
-  facility_list |>
-  left_join(
-    best_values_wide,
-    by = "detention_facility_code"
-  ) |>
-  relocate(
-    detention_facility_code,
-    name,
-    address,
-    city,
-    state,
-    zip,
-    aor,
-    type,
-    type_detailed
+    "data/facilities-augmented.feather"
   ) |>
   as_tibble()
-
-# bring in codes for changed facility codes
 
 # format data
 
@@ -92,7 +57,7 @@ facility_formatted <-
       male_female |> str_to_lower(),
       "male" ~ "M",
       "female" ~ "F",
-      "female male" ~ "M/F"
+      "female/male" ~ "M/F"
     ),
     over_under_72 = str_to_title(over_under_72)
   ) |>

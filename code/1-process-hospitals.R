@@ -42,5 +42,5 @@ jails_prisons <-
 
 arrow::write_feather(
   jails_prisons,
-  "data/facilities/jails_prisons.feather"
+  "data/jails_prisons.feather"
 )
