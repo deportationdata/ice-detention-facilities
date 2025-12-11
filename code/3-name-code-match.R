@@ -36,6 +36,7 @@ hold_rooms_definitive <-
 #   clipr::write_clip()
 # pasted below
 
+# TODO: get verified links
 hold_rooms_manual <-
   tribble(
     ~detention_facility_code , ~name                    , ~state ,
@@ -82,6 +83,7 @@ code_name_state_definitive <-
 # pasted below
 
 # need better verification of the non-BOP facilities
+# TODO: fill in the missing ones
 code_name_state_short <-
   tribble(
     ~detention_facility_code , ~name                                , ~state ,
@@ -135,6 +137,7 @@ code_name_state_short <-
 # pasted below
 
 # coded based on reading the codes and names, and additional research only when ambiguous
+# TODO: verify
 code_name_state_manual <-
   tribble(
     ~detention_facility_code , ~name                                , ~state ,
@@ -353,6 +356,9 @@ exact_non_matches <-
 #   select(.id_a, name.a, name.b, state, detention_facility_code) #|>
 # # clipr::write_clip()
 
+# name_city_state_match |> filter(str_detect(str_to_lower(name), "pickens"))
+
+# TODO: verify these fuzzy matches
 fuzzy_matches_manual <-
   tribble(
     ~.id_a , ~name.a                                                                , ~name.b                              , ~state , ~detention_facility_code ,
