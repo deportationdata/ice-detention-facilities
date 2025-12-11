@@ -15,5 +15,8 @@
   "vcs.ignore.cellar": true,
   "vcs.ignore.library": true,
   "vcs.ignore.local": true,
-  "vcs.manage.ignores": true
+  "vcs.manage.ignores": true,
+  "[r]": {
+       "editor.formatOnSave": true
+  }
 }

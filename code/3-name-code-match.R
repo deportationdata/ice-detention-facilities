@@ -40,7 +40,7 @@ hold_rooms_definitive <-
 hold_rooms_manual <-
   tribble(
     ~detention_facility_code , ~name                    , ~state ,
-    "DULHOLD"                , "DULUTH HOLD ROOM"       , "MN"   , # UNVERIFIED
+    "DULHOLD"                , "DULUTH HOLD ROOM"       , "MN"   , # https://www.vera.org/ice-detention-trends
     "RICHOLD"                , "RICHLAND HOLD ROOM"     , "WA"   , # https://www.ice.gov/node/62177
     "SYRHOLD"                , "SYRACUSE HOLD ROOM"     , "NY"   , # UNVERIFIED (likely HSI office)
     "CBPHOLD"                , "BUFFALO USBP HOLD ROOM" , "NY" # https://www.cbp.gov/border-security/along-us-borders/border-patrol-sectors/buffalo-sector-new-york
