@@ -310,7 +310,8 @@ name_city_state_match <-
     code_name_state_definitive,
     code_name_state_short,
     code_name_state_manual
-  )
+  ) |>
+  mutate(source = "detentions")
 
 # goal here is for the data where there is no code to fuzzy match by name within states to get a code
 # then later we can just merge on code
@@ -320,7 +321,7 @@ facility_code <-
   filter(
     !is.na(detention_facility_code)
   ) |>
-  transmute(name, state = str_to_upper(state), detention_facility_code)
+  transmute(name, state = str_to_upper(state), detention_facility_code, source)
 
 facility_no_code <-
   facility_attributes |>
@@ -347,14 +348,16 @@ exact_matches <-
       ),
     by = c("state", "name_join")
   ) |>
-  distinct(detention_facility_code, name = name.x, state)
+  group_by(detention_facility_code, name = name.x, state) |>
+  summarize(source = first(source.x), .groups = "drop")
 
 name_city_state_match <-
   bind_rows(
     name_city_state_match,
     exact_matches
   ) |>
-  distinct(detention_facility_code, name, state)
+  group_by(detention_facility_code, name, state) |>
+  summarize(source = first(source), .groups = "drop")
 
 exact_non_matches <-
   facility_no_code |>
@@ -374,7 +377,9 @@ exact_non_matches <-
       ),
     by = c("state", "name_join")
   ) |>
-  distinct(name, state)
+  group_by(name, state) |>
+  summarize(source = first(source), .groups = "drop")
+
 
 # library(dplyr)
 # library(stringr)
@@ -763,7 +768,60 @@ exact_non_matches <-
 #     by = c("name.a", "state")
 #   )
 
-# name_city_state_match |> filter(str_detect(str_to_lower(name), "pickens"))
+name_city_state_match |>
+  filter(str_detect(str_to_upper(name), "LOCKPORT"))
+exact_non_matches |>
+  filter(str_detect(str_to_upper(name), "LOCKPORT"))
+hospitals |>
+  filter(str_detect(str_to_upper(name), "LOCKPORT")) |>
+  print(n = 500)
+
+missing_from_vera <-
+  tribble(
+    ~state , ~detention_facility_code , ~name                                                                        ,
+    # "TX"       ,  "URSLATX"                , "URSULA CENTRALIZED PROCESSING CNTR" , # no matches
+    # "FL"       ,  "FLDSSFS"                , "FLORIDA SOFT-SIDED FACILITY-SOUTH"  , # no matches
+    # "GA"       ,  "FIPCDGA"                , "FOLKSTON D RAY ICE PROCESSING CTR"  ,
+    "GA"   , "FIPCDGA"                , "FOLKSTON D RAY ICE PROCES"                                                  ,
+    "GA"   , "FIPCDGA"                , "FOLKSTON ICE PROCESSING CENTER (D. RAY JAMES)"                              ,
+    "GA"   , "FIPCDGA"                , "Folkston D Ray ICE Processing Center"                                       ,
+    "GA"   , "FIPCDGA"                , "Folkston ICE Processing Center (Main)"                                      ,
+    "GA"   , "FIPCDGA"                , "MAIN - FOLKSTON IPC (D RAY JAMES)"                                          ,
+    # NA_character_, "UCBPMCA"                , "CBP MOVEMENT COORDINATION AREA"     , # no matches
+    # "CBPHOLD"                , "BUFFALO USBP HOLD ROOM"             , # no matches
+    # "VA", "UVACVVA"                , "UVA UNIV Hospital Center"           ,
+    "VA"   , "UVACVVA"                , "UNIVERSITY OF VIRGINIA MEDICAL CENTER"                                      ,
+    # "KY", "WOODFKY"                , "WOODFORD COUNTY SHERIFF/JAIL"       ,
+    "KY"   , "WOODFKY"                , "Woodford County Detention Center"                                           ,
+    # "NY", "UHSHONY"                , "UHS WILSON MEDICAL CENTER"          , # not in hospitals list, added to addresses_manual.csv
+    # "IL", "UCCHIIL"                , "UCHICAGO MEDICINE HOSPITAL CHICAGO" ,
+    "IL"   , "UCHCHIIL"               , "THE UNIVERSITY OF CHICAGO MEDICAL CENTER"                                   ,
+    # "IL", "UCHRVIL"                , "UCHICAGO MEDICINE INGALLS MEMORIAL" ,
+    "IL"   , "UCHRVIL"                , "INGALLS MEMORIAL HOSPITAL"                                                  ,
+    # "KS", "PRVMDKS"                , "PROVIDENCE MEDICAL GROUP"           ,
+    "KS"   , "PRVMDKS"                , "PROVIDENCE MEDICAL CENTER"                                                  , # not 100% sure on this one pls verify
+    # "MS", "HARRIMS"                , "HARRISON DETENTION CENTER"          ,
+    "MS"   , "HARRIMS"                , "HARRISON COUNTY JAIL"                                                       ,
+    "MS"   , "HARRIMS"                , "Harrison County Adult Detention Center"                                     ,
+    # "PA", "UPMCPPA"                , "UPMC PRESBYTERIAN HOSPITAL"         ,
+    "PA"   , "UPMCPPA"                , "UPMC PRESBYTERIAN SHADYSIDE"                                                , # note this is a misleading name but the address is correct
+    # "CO", "LIRSFCO"                , "LIRS - LFSRM FORT COLLINS LTFC CO"  , # can't find anything
+    # "VA", "CHPHOVA"                , "CHIPPENHAM HOSPITAL - RICHMOND"     , # can't find anything - bring back in other hospital data
+    # "CA", "STJHCCA"                , "ST JOHN'S HOSPITAL CAMARILLO"       , # not in hospitals data
+    # "VA", "HLFRJVA"                , "B.R.R.J. HALIFAX"                   ,
+    "VA"   , "HLFRJVA"                , "Blue Ridge Regional Jail Authority - Halifax County Adult Detention Center" ,
+    # "TX", "JOPSHTX"                , "JOHN PETER SMITH HOSPITAL"          , # not in hospitals data
+    # "NY", "LOCMHNY"                , "LOCKPORT MEMORIAL HOSPITAL"         , # not in hospitals data
+    # "NY", "NYWASHC"                , "WASHINGTON CORRECTIONAL"            ,
+    "NY"   , "NYWASHC"                , "WASHINGTON CORRECTIONAL FACILITY"                                           , # not 100% sure but this appears to be the NYS facility
+    # "WV", "UBRKHWV"                , "WVU MEDICINE BERKELEY MEDICAL CNTR" ,
+    # "IN", "PVHOSIN"                , "PARKVIEW HOSPITAL RANDALLIA"        ,
+    # "MI", "BTSHOMI"                , "COREWELL HLTH GR HOSP-BUTTERWORTH"  ,
+    # "NJ", "PHRCENJ"                , "PLAZA HEALTHCARE REHAB CENTER"      ,
+    # "MI", "MMMCSMI"                , "MYMICHIGAN MEDICAL CENTER SAULT"    ,
+    # "TX", "THPMCTX"                , "THOP MEMORIAL CAMPUS ELP"           ,
+    # "CU", "GTMOBCU"                , "MIGRANT OPS CENTER EAST" # need to geocode, not addressable
+  )
 
 # TODO: verify these fuzzy matches
 fuzzy_matches_manual <-
@@ -1637,7 +1695,8 @@ matches <-
     exact_matches,
     fuzzy_matches_manual |>
       select(name = name.a, state, detention_facility_code),
-    hold_rooms_final
+    hold_rooms_final,
+    missing_from_vera
   ) |>
   distinct(detention_facility_code, name, state)
 

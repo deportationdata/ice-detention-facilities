@@ -8,7 +8,9 @@ vera <- read_csv(
     name = detention_facility_name,
     city,
     state,
-    type_detailed
+    type_detailed,
+    latitude,
+    longitude
   ) |>
   mutate(date = as.Date("2025-07-01"))
 
