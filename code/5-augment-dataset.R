@@ -104,7 +104,7 @@ circuits <- tribble(
 
 facility_final <-
   facility_final |>
-  select(-circuit, -field_office, -zip_4) |>
+  select(-circuit) |>
   left_join(
     circuits,
     by = c("state" = "code")

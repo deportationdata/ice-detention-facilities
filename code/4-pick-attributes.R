@@ -1,7 +1,7 @@
 library(tidyverse)
 library(tidylog)
 
-source("code/facilities/functions.R")
+source("code/functions.R")
 
 # analysis on all fields
 all_fields <- c(
@@ -17,8 +17,7 @@ all_fields <- c(
   "docket",
   "ice_funded",
   "over_under_72",
-  "field_office",
-  "zip_4"
+  "operator"
 )
 
 facility_attributes <-
