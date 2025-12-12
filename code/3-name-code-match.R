@@ -376,392 +376,392 @@ exact_non_matches <-
   ) |>
   distinct(name, state)
 
-library(dplyr)
-library(stringr)
-library(purrr)
-library(RapidFuzz)
+# library(dplyr)
+# library(stringr)
+# library(purrr)
+# library(RapidFuzz)
 
-# ============================================================
-# 1) NORMALIZE + KEYS
-#   - core key: strips generic + type words (good for robust matching)
-#   - typed key: strips generic words but keeps type words (good gating)
-# ============================================================
+# # ============================================================
+# # 1) NORMALIZE + KEYS
+# #   - core key: strips generic + type words (good for robust matching)
+# #   - typed key: strips generic words but keeps type words (good gating)
+# # ============================================================
 
-norm <- function(x) {
-  x |>
-    str_to_upper() |>
-    str_replace_all("[[:punct:]]", " ") |>
-    str_squish()
-}
+# norm <- function(x) {
+#   x |>
+#     str_to_upper() |>
+#     str_replace_all("[[:punct:]]", " ") |>
+#     str_squish()
+# }
 
-generic_core <- c(
-  "COUNTY",
-  "CO",
-  "CITY",
-  "TOWN",
-  "PARISH",
-  "CENTER",
-  "CENTRE",
-  "CTR",
-  "FACILITY",
-  "COMPLEX",
-  "REGIONAL",
-  "REG",
-  "AUTH",
-  "AUTHORITY",
-  "SHERIFF",
-  "SHERIFFS",
-  "ADULT",
-  "INMATE",
-  "WORK",
-  "RELEASE",
-  "UNIVERSITY",
-  "SYSTEM",
-  "UNIT",
-  "DEPARTMENT",
-  "OF" # optional; can help reduce "DEPARTMENT OF" noise
-)
+# generic_core <- c(
+#   "COUNTY",
+#   "CO",
+#   "CITY",
+#   "TOWN",
+#   "PARISH",
+#   "CENTER",
+#   "CENTRE",
+#   "CTR",
+#   "FACILITY",
+#   "COMPLEX",
+#   "REGIONAL",
+#   "REG",
+#   "AUTH",
+#   "AUTHORITY",
+#   "SHERIFF",
+#   "SHERIFFS",
+#   "ADULT",
+#   "INMATE",
+#   "WORK",
+#   "RELEASE",
+#   "UNIVERSITY",
+#   "SYSTEM",
+#   "UNIT",
+#   "DEPARTMENT",
+#   "OF" # optional; can help reduce "DEPARTMENT OF" noise
+# )
 
-generic_type <- c(
-  "JAIL",
-  "DETENTION",
-  "DETENTIONCENTER",
-  "DET",
-  "CORR",
-  "CORRECTION",
-  "CORRECTIONAL",
-  "CORRECTIONS",
-  "PRISON",
-  "SPC",
-  "HOSPITAL",
-  "HOSP",
-  "MEDICAL",
-  "MED",
-  "HEALTH",
-  "HEALTHCARE",
-  "CLINIC",
-  "PROCESSING" # for PROCESSING CENTER patterns
-)
+# generic_type <- c(
+#   "JAIL",
+#   "DETENTION",
+#   "DETENTIONCENTER",
+#   "DET",
+#   "CORR",
+#   "CORRECTION",
+#   "CORRECTIONAL",
+#   "CORRECTIONS",
+#   "PRISON",
+#   "SPC",
+#   "HOSPITAL",
+#   "HOSP",
+#   "MEDICAL",
+#   "MED",
+#   "HEALTH",
+#   "HEALTHCARE",
+#   "CLINIC",
+#   "PROCESSING" # for PROCESSING CENTER patterns
+# )
 
-prep_match_core <- function(x) {
-  x |>
-    norm() |>
-    str_replace_all(
-      paste0(
-        "\\b(",
-        paste(c(generic_core, generic_type), collapse = "|"),
-        ")\\b"
-      ),
-      " "
-    ) |>
-    str_squish()
-}
+# prep_match_core <- function(x) {
+#   x |>
+#     norm() |>
+#     str_replace_all(
+#       paste0(
+#         "\\b(",
+#         paste(c(generic_core, generic_type), collapse = "|"),
+#         ")\\b"
+#       ),
+#       " "
+#     ) |>
+#     str_squish()
+# }
 
-prep_match_typed <- function(x) {
-  x |>
-    norm() |>
-    str_replace_all(
-      paste0("\\b(", paste(generic_core, collapse = "|"), ")\\b"),
-      " "
-    ) |>
-    str_squish()
-}
+# prep_match_typed <- function(x) {
+#   x |>
+#     norm() |>
+#     str_replace_all(
+#       paste0("\\b(", paste(generic_core, collapse = "|"), ")\\b"),
+#       " "
+#     ) |>
+#     str_squish()
+# }
 
-# ============================================================
-# 2) TYPE DETECTOR (block opposite types only if BOTH known)
-# ============================================================
+# # ============================================================
+# # 2) TYPE DETECTOR (block opposite types only if BOTH known)
+# # ============================================================
 
-facility_type <- function(x) {
-  x <- norm(x)
-  case_when(
-    str_detect(
-      x,
-      "\\b(HOSPITAL|HOSP\\b|MEDICAL|MED\\b|HEALTH|HEALTHCARE|CLINIC|VA\\b|UNIV|UVA)\\b"
-    ) ~ "medical",
-    str_detect(
-      x,
-      "\\b(JAIL|DETENTION|DET\\b|CORR\\b|CORRECTION(AL)?|PRISON|STATE\\s+PRISON|SPC|PROCESSING\\s+CENTER|PROCESSING\\b)\\b"
-    ) ~ "carceral",
-    TRUE ~ "other"
-  )
-}
+# facility_type <- function(x) {
+#   x <- norm(x)
+#   case_when(
+#     str_detect(
+#       x,
+#       "\\b(HOSPITAL|HOSP\\b|MEDICAL|MED\\b|HEALTH|HEALTHCARE|CLINIC|VA\\b|UNIV|UVA)\\b"
+#     ) ~ "medical",
+#     str_detect(
+#       x,
+#       "\\b(JAIL|DETENTION|DET\\b|CORR\\b|CORRECTION(AL)?|PRISON|STATE\\s+PRISON|SPC|PROCESSING\\s+CENTER|PROCESSING\\b)\\b"
+#     ) ~ "carceral",
+#     TRUE ~ "other"
+#   )
+# }
 
-type_compatible <- function(type_a, type_b) {
-  type_a <- ifelse(is.na(type_a), "other", type_a)
-  type_b <- ifelse(is.na(type_b), "other", type_b)
-  !(type_a != "other" & type_b != "other" & type_a != type_b)
-}
+# type_compatible <- function(type_a, type_b) {
+#   type_a <- ifelse(is.na(type_a), "other", type_a)
+#   type_b <- ifelse(is.na(type_b), "other", type_b)
+#   !(type_a != "other" & type_b != "other" & type_a != type_b)
+# }
 
-# ============================================================
-# 3) ANCHOR-ONLY / LOW-OVERLAP GATE
-#   Reject matches where overlap(core) < 2 unless both are COUNTY.
-# ============================================================
+# # ============================================================
+# # 3) ANCHOR-ONLY / LOW-OVERLAP GATE
+# #   Reject matches where overlap(core) < 2 unless both are COUNTY.
+# # ============================================================
 
-token_set <- function(x) {
-  t <- unique(str_split(norm(x), "\\s+", simplify = FALSE)[[1]])
-  t[t != ""]
-}
+# token_set <- function(x) {
+#   t <- unique(str_split(norm(x), "\\s+", simplify = FALSE)[[1]])
+#   t[t != ""]
+# }
 
-overlap_n <- function(x, y) {
-  length(intersect(token_set(x), token_set(y)))
-}
+# overlap_n <- function(x, y) {
+#   length(intersect(token_set(x), token_set(y)))
+# }
 
-looks_like_county <- function(x) {
-  str_detect(norm(x), "\\bCOUNTY\\b")
-}
+# looks_like_county <- function(x) {
+#   str_detect(norm(x), "\\bCOUNTY\\b")
+# }
 
-# ============================================================
-# 4) MATCHER: block within state, filter opposite types (when known),
-#    gate on typed similarity, score on core similarity, reject anchor-only.
-# ============================================================
+# # ============================================================
+# # 4) MATCHER: block within state, filter opposite types (when known),
+# #    gate on typed similarity, score on core similarity, reject anchor-only.
+# # ============================================================
 
-match_facilities_blocked_state <- function(
-  a,
-  b,
-  id_a = "id_a",
-  id_b = "id_b",
-  state = "state",
-  name_a = "name",
-  name_b = "name",
-  # columns that contain precomputed keys:
-  key_core_a = "name_key_core",
-  key_core_b = "name_key_core",
-  key_typed_a = "name_key_typed",
-  key_typed_b = "name_key_typed",
-  # tuning knobs:
-  min_score = 90, # threshold on core score
-  gate_min = 80, # threshold on typed-key agreement
-  min_overlap = 2 # required core-token overlap unless COUNTY/COUNTY
-) {
-  a2 <- a |>
-    mutate(
-      .id_a = .data[[id_a]],
-      .state = .data[[state]],
-      .name_a = .data[[name_a]],
-      .name_a_norm = norm(.name_a),
-      .core_a = .data[[key_core_a]],
-      .typed_a = .data[[key_typed_a]],
-      .core_a_norm = norm(.core_a),
-      .typed_a_norm = norm(.typed_a),
-      .type_a = facility_type(.name_a)
-    )
+# match_facilities_blocked_state <- function(
+#   a,
+#   b,
+#   id_a = "id_a",
+#   id_b = "id_b",
+#   state = "state",
+#   name_a = "name",
+#   name_b = "name",
+#   # columns that contain precomputed keys:
+#   key_core_a = "name_key_core",
+#   key_core_b = "name_key_core",
+#   key_typed_a = "name_key_typed",
+#   key_typed_b = "name_key_typed",
+#   # tuning knobs:
+#   min_score = 90, # threshold on core score
+#   gate_min = 80, # threshold on typed-key agreement
+#   min_overlap = 2 # required core-token overlap unless COUNTY/COUNTY
+# ) {
+#   a2 <- a |>
+#     mutate(
+#       .id_a = .data[[id_a]],
+#       .state = .data[[state]],
+#       .name_a = .data[[name_a]],
+#       .name_a_norm = norm(.name_a),
+#       .core_a = .data[[key_core_a]],
+#       .typed_a = .data[[key_typed_a]],
+#       .core_a_norm = norm(.core_a),
+#       .typed_a_norm = norm(.typed_a),
+#       .type_a = facility_type(.name_a)
+#     )
 
-  b2 <- b |>
-    mutate(
-      .id_b = .data[[id_b]],
-      .state = .data[[state]],
-      .name_b = .data[[name_b]],
-      .name_b_norm = norm(.name_b),
-      .core_b = .data[[key_core_b]],
-      .typed_b = .data[[key_typed_b]],
-      .core_b_norm = norm(.core_b),
-      .typed_b_norm = norm(.typed_b),
-      .type_b = facility_type(.name_b)
-    )
+#   b2 <- b |>
+#     mutate(
+#       .id_b = .data[[id_b]],
+#       .state = .data[[state]],
+#       .name_b = .data[[name_b]],
+#       .name_b_norm = norm(.name_b),
+#       .core_b = .data[[key_core_b]],
+#       .typed_b = .data[[key_typed_b]],
+#       .core_b_norm = norm(.core_b),
+#       .typed_b_norm = norm(.typed_b),
+#       .type_b = facility_type(.name_b)
+#     )
 
-  a2 |>
-    group_by(.state) |>
-    group_modify(\(a_state, key) {
-      b_state_all <- b2 |> filter(.state == key$.state)
-      if (nrow(b_state_all) == 0) {
-        return(tibble(
-          .id_a = a_state$.id_a,
-          .id_b = NA_integer_,
-          score = NA_real_
-        ))
-      }
+#   a2 |>
+#     group_by(.state) |>
+#     group_modify(\(a_state, key) {
+#       b_state_all <- b2 |> filter(.state == key$.state)
+#       if (nrow(b_state_all) == 0) {
+#         return(tibble(
+#           .id_a = a_state$.id_a,
+#           .id_b = NA_integer_,
+#           score = NA_real_
+#         ))
+#       }
 
-      map_dfr(seq_len(nrow(a_state)), \(i) {
-        # ---- 1) type filter: only drop if both known & conflict ----
-        keep <- type_compatible(a_state$.type_a[i], b_state_all$.type_b)
-        b_state <- b_state_all[keep, , drop = FALSE]
+#       map_dfr(seq_len(nrow(a_state)), \(i) {
+#         # ---- 1) type filter: only drop if both known & conflict ----
+#         keep <- type_compatible(a_state$.type_a[i], b_state_all$.type_b)
+#         b_state <- b_state_all[keep, , drop = FALSE]
 
-        if (nrow(b_state) == 0) {
-          return(tibble(
-            .id_a = a_state$.id_a[i],
-            .id_b = NA_integer_,
-            score = NA_real_
-          ))
-        }
+#         if (nrow(b_state) == 0) {
+#           return(tibble(
+#             .id_a = a_state$.id_a[i],
+#             .id_b = NA_integer_,
+#             score = NA_real_
+#           ))
+#         }
 
-        # ---- 2) typed gate + core score over remaining candidates ----
-        scores <- vapply(
-          seq_len(nrow(b_state)),
-          \(k) {
-            # gate: typed-key must agree (prevents FLORENCE-only subset matches)
-            gate <- RapidFuzz::fuzz_WRatio(
-              a_state$.typed_a_norm[i],
-              b_state$.typed_b_norm[k]
-            )
-            if (!is.finite(gate) || gate < gate_min) {
-              return(NA_real_)
-            }
+#         # ---- 2) typed gate + core score over remaining candidates ----
+#         scores <- vapply(
+#           seq_len(nrow(b_state)),
+#           \(k) {
+#             # gate: typed-key must agree (prevents FLORENCE-only subset matches)
+#             gate <- RapidFuzz::fuzz_WRatio(
+#               a_state$.typed_a_norm[i],
+#               b_state$.typed_b_norm[k]
+#             )
+#             if (!is.finite(gate) || gate < gate_min) {
+#               return(NA_real_)
+#             }
 
-            # score: core key similarity
-            RapidFuzz::fuzz_token_set_ratio(
-              a_state$.core_a_norm[i],
-              b_state$.core_b_norm[k]
-            )
-          },
-          numeric(1)
-        )
+#             # score: core key similarity
+#             RapidFuzz::fuzz_token_set_ratio(
+#               a_state$.core_a_norm[i],
+#               b_state$.core_b_norm[k]
+#             )
+#           },
+#           numeric(1)
+#         )
 
-        j <- which.max(replace(scores, is.na(scores), -Inf))
-        best <- scores[j]
+#         j <- which.max(replace(scores, is.na(scores), -Inf))
+#         best <- scores[j]
 
-        if (!is.finite(best)) {
-          return(tibble(
-            .id_a = a_state$.id_a[i],
-            .id_b = NA_integer_,
-            score = NA_real_
-          ))
-        }
+#         if (!is.finite(best)) {
+#           return(tibble(
+#             .id_a = a_state$.id_a[i],
+#             .id_b = NA_integer_,
+#             score = NA_real_
+#           ))
+#         }
 
-        # ---- 3) anchor-only rejection: require token overlap in core ----
-        ov <- overlap_n(a_state$.core_a_norm[i], b_state$.core_b_norm[j])
+#         # ---- 3) anchor-only rejection: require token overlap in core ----
+#         ov <- overlap_n(a_state$.core_a_norm[i], b_state$.core_b_norm[j])
 
-        county_ok <- looks_like_county(a_state$.name_a_norm[i]) &&
-          looks_like_county(b_state$.name_b_norm[j])
+#         county_ok <- looks_like_county(a_state$.name_a_norm[i]) &&
+#           looks_like_county(b_state$.name_b_norm[j])
 
-        if (!county_ok && ov < min_overlap) {
-          return(tibble(
-            .id_a = a_state$.id_a[i],
-            .id_b = NA_integer_,
-            score = NA_real_
-          ))
-        }
+#         if (!county_ok && ov < min_overlap) {
+#           return(tibble(
+#             .id_a = a_state$.id_a[i],
+#             .id_b = NA_integer_,
+#             score = NA_real_
+#           ))
+#         }
 
-        tibble(
-          .id_a = a_state$.id_a[i],
-          .id_b = if (best >= min_score) b_state$.id_b[j] else NA_integer_,
-          score = if (best >= min_score) best else NA_real_
-        )
-      })
-    }) |>
-    ungroup() |>
-    left_join(
-      a2 |>
-        select(
-          .id_a,
-          state = .state,
-          name_a = .name_a,
-          core_a = .core_a,
-          typed_a = .typed_a
-        ),
-      by = ".id_a"
-    ) |>
-    left_join(
-      b2 |>
-        select(.id_b, name_b = .name_b, core_b = .core_b, typed_b = .typed_b),
-      by = ".id_b"
-    ) |>
-    select(
-      .id_a,
-      .id_b,
-      state,
-      name_a,
-      name_b,
-      core_a,
-      core_b,
-      typed_a,
-      typed_b,
-      score
-    )
-}
+#         tibble(
+#           .id_a = a_state$.id_a[i],
+#           .id_b = if (best >= min_score) b_state$.id_b[j] else NA_integer_,
+#           score = if (best >= min_score) best else NA_real_
+#         )
+#       })
+#     }) |>
+#     ungroup() |>
+#     left_join(
+#       a2 |>
+#         select(
+#           .id_a,
+#           state = .state,
+#           name_a = .name_a,
+#           core_a = .core_a,
+#           typed_a = .typed_a
+#         ),
+#       by = ".id_a"
+#     ) |>
+#     left_join(
+#       b2 |>
+#         select(.id_b, name_b = .name_b, core_b = .core_b, typed_b = .typed_b),
+#       by = ".id_b"
+#     ) |>
+#     select(
+#       .id_a,
+#       .id_b,
+#       state,
+#       name_a,
+#       name_b,
+#       core_a,
+#       core_b,
+#       typed_a,
+#       typed_b,
+#       score
+#     )
+# }
 
-# ============================================================
-# 5) BUILD YOUR INPUTS (exactly like you were doing)
-# ============================================================
+# # ============================================================
+# # 5) BUILD YOUR INPUTS (exactly like you were doing)
+# # ============================================================
 
-df_a <- exact_non_matches |>
-  mutate(
-    name_key_core = prep_match_core(name),
-    name_key_typed = prep_match_typed(name),
-    id_a = row_number()
-  )
+# df_a <- exact_non_matches |>
+#   mutate(
+#     name_key_core = prep_match_core(name),
+#     name_key_typed = prep_match_typed(name),
+#     id_a = row_number()
+#   )
 
-df_b <- name_city_state_match |>
-  mutate(
-    name_key_core = prep_match_core(name),
-    name_key_typed = prep_match_typed(name),
-    id_b = row_number()
-  )
+# df_b <- name_city_state_match |>
+#   mutate(
+#     name_key_core = prep_match_core(name),
+#     name_key_typed = prep_match_typed(name),
+#     id_b = row_number()
+#   )
 
-# ============================================================
-# 6) RUN
-# ============================================================
+# # ============================================================
+# # 6) RUN
+# # ============================================================
 
-out <- match_facilities_blocked_state(
-  df_a,
-  df_b,
-  id_a = "id_a",
-  id_b = "id_b",
-  state = "state",
-  name_a = "name",
-  name_b = "name",
-  key_core_a = "name_key_core",
-  key_core_b = "name_key_core",
-  key_typed_a = "name_key_typed",
-  key_typed_b = "name_key_typed",
-  min_score = 90,
-  gate_min = 80,
-  min_overlap = 2
-)
+# out <- match_facilities_blocked_state(
+#   df_a,
+#   df_b,
+#   id_a = "id_a",
+#   id_b = "id_b",
+#   state = "state",
+#   name_a = "name",
+#   name_b = "name",
+#   key_core_a = "name_key_core",
+#   key_core_b = "name_key_core",
+#   key_typed_a = "name_key_typed",
+#   key_typed_b = "name_key_typed",
+#   min_score = 90,
+#   gate_min = 80,
+#   min_overlap = 2
+# )
 
-fuzzy_matches_3 <- out |>
-  filter(!is.na(.id_b)) |>
-  left_join(
-    df_b |> select(id_b, detention_facility_code),
-    by = c(".id_b" = "id_b")
-  ) |>
-  select(.id_a, name_a, name_b, state, detention_facility_code)
+# fuzzy_matches_3 <- out |>
+#   filter(!is.na(.id_b)) |>
+#   left_join(
+#     df_b |> select(id_b, detention_facility_code),
+#     by = c(".id_b" = "id_b")
+#   ) |>
+#   select(.id_a, name_a, name_b, state, detention_facility_code)
 
-fuzzy_matches_1 <-
-  link_facilities(
-    exact_non_matches,
-    name_city_state_match,
-    name_a = "name",
-    name_b = "name",
-    block_vars = c("state"),
-    top_n = 1,
-    min_score = 0.75
-  ) |>
-  select(
-    .id_a,
-    name.a,
-    name.b,
-    state,
-    detention_facility_code,
-    contains("score")
-  )
+# fuzzy_matches_1 <-
+#   link_facilities(
+#     exact_non_matches,
+#     name_city_state_match,
+#     name_a = "name",
+#     name_b = "name",
+#     block_vars = c("state"),
+#     top_n = 1,
+#     min_score = 0.75
+#   ) |>
+#   select(
+#     .id_a,
+#     name.a,
+#     name.b,
+#     state,
+#     detention_facility_code,
+#     contains("score")
+#   )
 
-fuzzy_matches_2 <-
-  link_facilities2(
-    exact_non_matches,
-    name_city_state_match,
-    name_a = "name",
-    name_b = "name",
-    block_vars = c("state"),
-    top_n = 1,
-    min_score = 0.7,
-    greedy = TRUE
-  ) |>
-  select(.id_a, name.a, name.b, state, detention_facility_code)
+# fuzzy_matches_2 <-
+#   link_facilities2(
+#     exact_non_matches,
+#     name_city_state_match,
+#     name_a = "name",
+#     name_b = "name",
+#     block_vars = c("state"),
+#     top_n = 1,
+#     min_score = 0.7,
+#     greedy = TRUE
+#   ) |>
+#   select(.id_a, name.a, name.b, state, detention_facility_code)
 
-fuzzy_matches <-
-  bind_rows(
-    fuzzy_matches_1,
-    fuzzy_matches_2,
-    fuzzy_matches_3 |> rename(name.a = name_a, name.b = name_b)
-  ) |>
-  distinct(name.a, name.b, state, detention_facility_code)
+# fuzzy_matches <-
+#   bind_rows(
+#     fuzzy_matches_1,
+#     fuzzy_matches_2,
+#     fuzzy_matches_3 |> rename(name.a = name_a, name.b = name_b)
+#   ) |>
+#   distinct(name.a, name.b, state, detention_facility_code)
 
-fuzzy_matches_new <-
-  fuzzy_matches |>
-  anti_join(
-    fuzzy_matches_manual,
-    by = c("name.a", "state")
-  )
+# fuzzy_matches_new <-
+#   fuzzy_matches |>
+#   anti_join(
+#     fuzzy_matches_manual,
+#     by = c("name.a", "state")
+#   )
 
 # name_city_state_match |> filter(str_detect(str_to_lower(name), "pickens"))
 
