@@ -2,10 +2,20 @@ library(tidyverse)
 library(tidylog)
 
 detentions_41855 <-
-  list.files("2024-ICFO-41855", full.names = TRUE) |>
+  list.files(
+    "~/Library/CloudStorage/Box-Box/deportationdata/data/ICE/September 2025 Release/2024-ICFO-41855",
+    full.names = TRUE
+  ) |>
   set_names() |>
   map(~ readxl::read_excel(.x, skip = 4), .id = "file") |>
-  map(~ select(.x, contains("Detention Facility"), `Book Out Date Time`)) |>
+  map(
+    ~ select(
+      .x,
+      contains("Detention Facility"),
+      # `Book in DCO`, # note there is DCO information in here.
+      `Book Out Date Time`
+    )
+  ) |>
   bind_rows(.id = "file")
 
 detentions_41855_df <-
@@ -40,7 +50,8 @@ detentions_41855_df <-
     type_detailed = detention_facility_type_detailed,
     ice_funded = detention_facility_ice_funded,
     male_female = detention_facility_male_female,
-    over_under_72 = detention_facility_over_under_72
+    over_under_72 = detention_facility_over_under_72,
+    operator = detention_facility_operator
   ) |>
   mutate(date = as.Date("2024-01-01"))
 

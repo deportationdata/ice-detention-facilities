@@ -5,6 +5,7 @@ source("code/functions.R")
 
 # analysis on all fields
 all_fields <- c(
+  "detention_facility_code",
   "name",
   "address",
   "city",
@@ -18,8 +19,7 @@ all_fields <- c(
   "docket",
   "ice_funded",
   "over_under_72",
-  "field_office",
-  "zip_4"
+  "operator"
 )
 
 facilities_2017 <-
@@ -49,9 +49,19 @@ detentions_41855 <-
     "data/facilities-foia-41855.feather"
   )
 
+detentions_22955 <-
+  arrow::read_feather(
+    "data/facilities-foia-22955.feather"
+  )
+
 ice_facilities_eoir <-
   arrow::read_feather(
     "data/facilities-eoir.feather"
+  )
+
+facilities_vera <-
+  arrow::read_feather(
+    "data/facilities-vera.feather"
   )
 
 hospitals <-
@@ -95,17 +105,19 @@ facility_attributes <-
     "dedicated" = facilities_dedicated_nondedicated |>
       select(any_of(all_fields), date),
     "2017" = facilities_2017 |>
-      select(detention_facility_code, any_of(all_fields), date),
+      select(any_of(all_fields), date),
     "05655" = detentions_05655 |>
-      select(detention_facility_code, any_of(all_fields), date),
+      select(any_of(all_fields), date),
     "website" = facility_addresses_from_ice_website |>
       select(any_of(all_fields), date),
     "detention_management" = facilities_detention_management |>
       select(any_of(all_fields), date),
     "41855" = detentions_41855 |>
-      select(detention_facility_code, any_of(all_fields), date),
+      select(any_of(all_fields), date),
+    "22955" = detentions_22955 |>
+      select(any_of(all_fields), date),
     "detentions" = facilities_from_detentions |>
-      select(detention_facility_code, any_of(all_fields), date),
+      select(any_of(all_fields), date),
     "eoir" = ice_facilities_eoir |>
       select(
         eoir_detention_facility_code,
@@ -113,6 +125,8 @@ facility_attributes <-
         any_of(all_fields),
         date
       ),
+    "vera" = facilities_vera |>
+      select(any_of(all_fields), date),
     "hospitals" = hospitals |>
       select(medicare_facility_ID, any_of(all_fields), date),
     "jails_prisons" = jails_prisons |>

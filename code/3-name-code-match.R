@@ -10,7 +10,7 @@ facility_attributes <- arrow::read_feather(
 )
 
 detention_stints <- arrow::read_feather(
-  "data/detention-stints-latest.feather"
+  "~/github/ice/data/detention-stints-latest.feather"
 )
 
 hold_rooms_all <-
@@ -23,7 +23,8 @@ hold_rooms_definitive <-
   hold_rooms_all |>
   filter(
     !is.na(name),
-    !is.na(state)
+    !is.na(state),
+    !is.na(detention_facility_code)
   ) |>
   distinct(detention_facility_code, name, state)
 
