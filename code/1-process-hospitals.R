@@ -1,11 +1,25 @@
 library(tidyverse)
 
-hospitals <- read_csv(
+hospitals_hhs <- read_csv(
   "inputs/Hospital_General_Information.csv"
 )
 
+hospitals_dhs <-
+  st_read("inputs/datalumos-239108-V1/hospitals-3-shapefile/Hospitals.shp") |>
+  st_drop_geometry() |>
+  as_tibble() |>
+  select(
+    dhs_id = ID,
+    name = NAME,
+    address = ADDRESS,
+    city = CITY,
+    state = STATE,
+    zip = ZIP,
+    hospital_type = TYPE
+  )
+
 hospitals <-
-  hospitals |>
+  hospitals_hhs |>
   transmute(
     name = `Facility Name`,
     address = `Address`,
@@ -14,33 +28,15 @@ hospitals <-
     zip = `ZIP Code`,
     medicare_facility_ID = `Facility ID`,
     date = as.Date("2025-10-14") # last modified date
+  ) |>
+  full_join(
+    hospitals_dhs |> select(dhs_id, name, city, state, hospital_type), # TODO handle duplicates on both sides
+    by = c("name", "city", "state")
   )
+
+stop()
 
 arrow::write_feather(
   hospitals,
   "data/hospitals.feather"
-)
-
-jails_prisons <- haven::read_dta("inputs/ICPSR-38323-0001-Data.dta")
-
-jails_prisons <-
-  jails_prisons |>
-  transmute(
-    bjs_facility_ID = JURISID,
-    name = FACNAME,
-    address = FACADDRESS,
-    city = FACCITY,
-    state = FACSTATE,
-    zip = FACZIP,
-    hold_72 = case_when(
-      HOLD72PLUS == 1 ~ "Over 72",
-      HOLD72PLUS == 0 ~ "Under 72",
-      TRUE ~ NA_character_
-    ),
-    date = as.Date("2020-01-01") # approximate date of data release
-  )
-
-arrow::write_feather(
-  jails_prisons,
-  "data/jails_prisons.feather"
 )

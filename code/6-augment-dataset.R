@@ -24,10 +24,23 @@ best_values_wide <-
     "data/facilities-best-values-wide.feather"
   )
 
+stats_from_detention_stints <- arrow::read_feather(
+  "data/facilities-from-detentions.feather"
+)
+
 facility_final <-
   facility_list |>
   left_join(
     best_values_wide,
+    by = "detention_facility_code"
+  ) |>
+  left_join(
+    stats_from_detention_stints |>
+      select(
+        detention_facility_code,
+        first_book_in,
+        latest_book_in = last_book_in
+      ),
     by = "detention_facility_code"
   ) |>
   relocate(
@@ -136,7 +149,8 @@ counties_sf <-
     year = 2024,
     class = "sf",
     progress = FALSE
-  )
+  ) |>
+  st_transform(crs = 4326)
 
 federal_court_districts_df <-
   read_csv("inputs/federal_court_districts.csv", skip = 1)
@@ -176,17 +190,39 @@ federal_court_districts_county_sf <-
   # collapse into districts
   summarise(
     geometry = st_union(geometry),
-    .by = c(STATEFP, STATE_NAME, judicial_district)
+    .by = judicial_district
   )
 
+ice_field_offices <- sfarrow::st_read_feather(
+  "https://github.com/deportationdata/ice/raw/refs/heads/main/data/ice-aor-shp.feather"
+) |>
+  st_transform(crs = 4326)
 
 facility_final <-
   facility_final |>
+  st_as_sf(
+    coords = c("longitude", "latitude"),
+    na.fail = FALSE,
+    crs = 4326,
+    remove = FALSE
+  ) |>
   select(-circuit) |>
   left_join(
     circuits,
     by = c("state" = "code")
-  )
+  ) |>
+  st_join(
+    federal_court_districts_county_sf, #|> mutate(in_districts = 1),
+    join = st_within
+  ) |>
+  st_join(
+    ice_field_offices |>
+      filter(area_of_responsibility_name != "HQ") |>
+      transmute(field_office = office_name), #|> mutate(in_aor = 1),
+    join = st_within
+  ) |>
+  st_drop_geometry() |>
+  as_tibble()
 
 arrow::write_feather(
   facility_final,
