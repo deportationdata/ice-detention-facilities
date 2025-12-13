@@ -42,7 +42,8 @@ detentions_05655_df <-
     type_detailed = detention_facility_type_detailed,
     ice_funded = detention_facility_ice_funded,
     male_female = detention_facility_male_female,
-    over_under_72 = detention_facility_over_under_72
+    over_under_72 = detention_facility_over_under_72,
+    operator = detention_facility_operator
   ) |>
   mutate(date = as.Date("2024-02-01"))
 

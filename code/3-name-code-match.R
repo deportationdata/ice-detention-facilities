@@ -10,7 +10,7 @@ facility_attributes <- arrow::read_feather(
 )
 
 detention_stints <- arrow::read_feather(
-  "data/detention-stints-latest.feather"
+  "~/github/ice/data/detention-stints-latest.feather"
 )
 
 hold_rooms_all <-
@@ -23,25 +23,27 @@ hold_rooms_definitive <-
   hold_rooms_all |>
   filter(
     !is.na(name),
-    !is.na(state)
+    !is.na(state),
+    !is.na(detention_facility_code)
   ) |>
   distinct(detention_facility_code, name, state)
 
-# hold_rooms_all |>
-#   anti_join(
-#     hold_rooms_definitive,
-#     by = "detention_facility_code"
-#   ) |>
-#   distinct(detention_facility_code, name) |>
-#   clipr::write_clip()
+hold_rooms_all |>
+  anti_join(
+    hold_rooms_definitive,
+    by = "detention_facility_code"
+  ) |>
+  distinct(detention_facility_code, name) |>
+  clipr::write_clip()
 # pasted below
 
 hold_rooms_manual <-
   tribble(
     ~detention_facility_code , ~name                    , ~state ,
-    "DULHOLD"                , "DULUTH HOLD ROOM"       , "MN"   , # https://github.com/vera-institute/ice-detention-trends/blob/main/metadata/facilities.csv
-    "RICHOLD"                , "RICHLAND HOLD ROOM"     , "WA"   , # https://www.ice.gov/node/62177
-    "SYRHOLD"                , "SYRACUSE HOLD ROOM"     , "NY"   , # https://github.com/vera-institute/ice-detention-trends/blob/main/metadata/facilities.csv
+    # first three are in vera, commented out for now
+    # "DULHOLD"                , "DULUTH HOLD ROOM"       , "MN"   , # https://www.vera.org/ice-detention-trends
+    # "RICHOLD"                , "RICHLAND HOLD ROOM"     , "WA"   , # https://www.ice.gov/node/62177
+    # "SYRHOLD"                , "SYRACUSE HOLD ROOM"     , "NY"   , # https://www.vera.org/ice-detention-trends
     "CBPHOLD"                , "BUFFALO USBP HOLD ROOM" , "NY" # https://www.cbp.gov/border-security/along-us-borders/border-patrol-sectors/buffalo-sector-new-york
   )
 
@@ -307,7 +309,8 @@ name_city_state_match <-
     code_name_state_definitive,
     code_name_state_short,
     code_name_state_manual
-  )
+  ) |>
+  mutate(source = "detentions")
 
 # goal here is for the data where there is no code to fuzzy match by name within states to get a code
 # then later we can just merge on code
@@ -317,7 +320,7 @@ facility_code <-
   filter(
     !is.na(detention_facility_code)
   ) |>
-  transmute(name, state = str_to_upper(state), detention_facility_code)
+  transmute(name, state = str_to_upper(state), detention_facility_code, source)
 
 facility_no_code <-
   facility_attributes |>
@@ -328,34 +331,496 @@ facility_no_code <-
 
 exact_matches <-
   facility_no_code |>
-  inner_join(
-    name_city_state_match,
-    by = c("state" = "state", "name" = "name")
+  mutate(
+    name_join = name |>
+      str_to_lower() |>
+      str_remove_all("[[:punct:]]") |>
+      str_squish()
   ) |>
-  distinct(detention_facility_code, name, state)
+  inner_join(
+    name_city_state_match |>
+      mutate(
+        name_join = name |>
+          str_to_lower() |>
+          str_remove_all("[[:punct:]]") |>
+          str_squish()
+      ),
+    by = c("state", "name_join")
+  ) |>
+  group_by(detention_facility_code, name = name.x, state) |>
+  summarize(source = first(source.x), .groups = "drop")
+
+name_city_state_match <-
+  bind_rows(
+    name_city_state_match,
+    exact_matches
+  ) |>
+  group_by(detention_facility_code, name, state) |>
+  summarize(source = first(source), .groups = "drop")
 
 exact_non_matches <-
   facility_no_code |>
-  anti_join(
-    name_city_state_match,
-    by = c("state" = "state", "name" = "name")
+  mutate(
+    name_join = name |>
+      str_to_lower() |>
+      str_remove_all("[[:punct:]]") |>
+      str_squish()
   ) |>
-  distinct(name, state)
+  anti_join(
+    name_city_state_match |>
+      mutate(
+        name_join = name |>
+          str_to_lower() |>
+          str_remove_all("[[:punct:]]") |>
+          str_squish()
+      ),
+    by = c("state", "name_join")
+  ) |>
+  group_by(name, state) |>
+  summarize(source = first(source), .groups = "drop")
 
-# link_facilities(
-#   exact_non_matches |> filter(source %in% c("jails_prisons", "hospitals")),
-#   name_city_state_match,
+
+# library(dplyr)
+# library(stringr)
+# library(purrr)
+# library(RapidFuzz)
+
+# # ============================================================
+# # 1) NORMALIZE + KEYS
+# #   - core key: strips generic + type words (good for robust matching)
+# #   - typed key: strips generic words but keeps type words (good gating)
+# # ============================================================
+
+# norm <- function(x) {
+#   x |>
+#     str_to_upper() |>
+#     str_replace_all("[[:punct:]]", " ") |>
+#     str_squish()
+# }
+
+# generic_core <- c(
+#   "COUNTY",
+#   "CO",
+#   "CITY",
+#   "TOWN",
+#   "PARISH",
+#   "CENTER",
+#   "CENTRE",
+#   "CTR",
+#   "FACILITY",
+#   "COMPLEX",
+#   "REGIONAL",
+#   "REG",
+#   "AUTH",
+#   "AUTHORITY",
+#   "SHERIFF",
+#   "SHERIFFS",
+#   "ADULT",
+#   "INMATE",
+#   "WORK",
+#   "RELEASE",
+#   "UNIVERSITY",
+#   "SYSTEM",
+#   "UNIT",
+#   "DEPARTMENT",
+#   "OF" # optional; can help reduce "DEPARTMENT OF" noise
+# )
+
+# generic_type <- c(
+#   "JAIL",
+#   "DETENTION",
+#   "DETENTIONCENTER",
+#   "DET",
+#   "CORR",
+#   "CORRECTION",
+#   "CORRECTIONAL",
+#   "CORRECTIONS",
+#   "PRISON",
+#   "SPC",
+#   "HOSPITAL",
+#   "HOSP",
+#   "MEDICAL",
+#   "MED",
+#   "HEALTH",
+#   "HEALTHCARE",
+#   "CLINIC",
+#   "PROCESSING" # for PROCESSING CENTER patterns
+# )
+
+# prep_match_core <- function(x) {
+#   x |>
+#     norm() |>
+#     str_replace_all(
+#       paste0(
+#         "\\b(",
+#         paste(c(generic_core, generic_type), collapse = "|"),
+#         ")\\b"
+#       ),
+#       " "
+#     ) |>
+#     str_squish()
+# }
+
+# prep_match_typed <- function(x) {
+#   x |>
+#     norm() |>
+#     str_replace_all(
+#       paste0("\\b(", paste(generic_core, collapse = "|"), ")\\b"),
+#       " "
+#     ) |>
+#     str_squish()
+# }
+
+# # ============================================================
+# # 2) TYPE DETECTOR (block opposite types only if BOTH known)
+# # ============================================================
+
+# facility_type <- function(x) {
+#   x <- norm(x)
+#   case_when(
+#     str_detect(
+#       x,
+#       "\\b(HOSPITAL|HOSP\\b|MEDICAL|MED\\b|HEALTH|HEALTHCARE|CLINIC|VA\\b|UNIV|UVA)\\b"
+#     ) ~ "medical",
+#     str_detect(
+#       x,
+#       "\\b(JAIL|DETENTION|DET\\b|CORR\\b|CORRECTION(AL)?|PRISON|STATE\\s+PRISON|SPC|PROCESSING\\s+CENTER|PROCESSING\\b)\\b"
+#     ) ~ "carceral",
+#     TRUE ~ "other"
+#   )
+# }
+
+# type_compatible <- function(type_a, type_b) {
+#   type_a <- ifelse(is.na(type_a), "other", type_a)
+#   type_b <- ifelse(is.na(type_b), "other", type_b)
+#   !(type_a != "other" & type_b != "other" & type_a != type_b)
+# }
+
+# # ============================================================
+# # 3) ANCHOR-ONLY / LOW-OVERLAP GATE
+# #   Reject matches where overlap(core) < 2 unless both are COUNTY.
+# # ============================================================
+
+# token_set <- function(x) {
+#   t <- unique(str_split(norm(x), "\\s+", simplify = FALSE)[[1]])
+#   t[t != ""]
+# }
+
+# overlap_n <- function(x, y) {
+#   length(intersect(token_set(x), token_set(y)))
+# }
+
+# looks_like_county <- function(x) {
+#   str_detect(norm(x), "\\bCOUNTY\\b")
+# }
+
+# # ============================================================
+# # 4) MATCHER: block within state, filter opposite types (when known),
+# #    gate on typed similarity, score on core similarity, reject anchor-only.
+# # ============================================================
+
+# match_facilities_blocked_state <- function(
+#   a,
+#   b,
+#   id_a = "id_a",
+#   id_b = "id_b",
+#   state = "state",
 #   name_a = "name",
 #   name_b = "name",
-#   block_vars = c("state"),
-#   top_n = 1,
-#   min_score = 0.7,
-#   greedy = TRUE
-# ) |>
-#   select(.id_a, name.a, name.b, state, detention_facility_code) #|>
-# # clipr::write_clip()
+#   # columns that contain precomputed keys:
+#   key_core_a = "name_key_core",
+#   key_core_b = "name_key_core",
+#   key_typed_a = "name_key_typed",
+#   key_typed_b = "name_key_typed",
+#   # tuning knobs:
+#   min_score = 90, # threshold on core score
+#   gate_min = 80, # threshold on typed-key agreement
+#   min_overlap = 2 # required core-token overlap unless COUNTY/COUNTY
+# ) {
+#   a2 <- a |>
+#     mutate(
+#       .id_a = .data[[id_a]],
+#       .state = .data[[state]],
+#       .name_a = .data[[name_a]],
+#       .name_a_norm = norm(.name_a),
+#       .core_a = .data[[key_core_a]],
+#       .typed_a = .data[[key_typed_a]],
+#       .core_a_norm = norm(.core_a),
+#       .typed_a_norm = norm(.typed_a),
+#       .type_a = facility_type(.name_a)
+#     )
 
-# name_city_state_match |> filter(str_detect(str_to_lower(name), "pickens"))
+#   b2 <- b |>
+#     mutate(
+#       .id_b = .data[[id_b]],
+#       .state = .data[[state]],
+#       .name_b = .data[[name_b]],
+#       .name_b_norm = norm(.name_b),
+#       .core_b = .data[[key_core_b]],
+#       .typed_b = .data[[key_typed_b]],
+#       .core_b_norm = norm(.core_b),
+#       .typed_b_norm = norm(.typed_b),
+#       .type_b = facility_type(.name_b)
+#     )
+
+#   a2 |>
+#     group_by(.state) |>
+#     group_modify(\(a_state, key) {
+#       b_state_all <- b2 |> filter(.state == key$.state)
+#       if (nrow(b_state_all) == 0) {
+#         return(tibble(
+#           .id_a = a_state$.id_a,
+#           .id_b = NA_integer_,
+#           score = NA_real_
+#         ))
+#       }
+
+#       map_dfr(seq_len(nrow(a_state)), \(i) {
+#         # ---- 1) type filter: only drop if both known & conflict ----
+#         keep <- type_compatible(a_state$.type_a[i], b_state_all$.type_b)
+#         b_state <- b_state_all[keep, , drop = FALSE]
+
+#         if (nrow(b_state) == 0) {
+#           return(tibble(
+#             .id_a = a_state$.id_a[i],
+#             .id_b = NA_integer_,
+#             score = NA_real_
+#           ))
+#         }
+
+#         # ---- 2) typed gate + core score over remaining candidates ----
+#         scores <- vapply(
+#           seq_len(nrow(b_state)),
+#           \(k) {
+#             # gate: typed-key must agree (prevents FLORENCE-only subset matches)
+#             gate <- RapidFuzz::fuzz_WRatio(
+#               a_state$.typed_a_norm[i],
+#               b_state$.typed_b_norm[k]
+#             )
+#             if (!is.finite(gate) || gate < gate_min) {
+#               return(NA_real_)
+#             }
+
+#             # score: core key similarity
+#             RapidFuzz::fuzz_token_set_ratio(
+#               a_state$.core_a_norm[i],
+#               b_state$.core_b_norm[k]
+#             )
+#           },
+#           numeric(1)
+#         )
+
+#         j <- which.max(replace(scores, is.na(scores), -Inf))
+#         best <- scores[j]
+
+#         if (!is.finite(best)) {
+#           return(tibble(
+#             .id_a = a_state$.id_a[i],
+#             .id_b = NA_integer_,
+#             score = NA_real_
+#           ))
+#         }
+
+#         # ---- 3) anchor-only rejection: require token overlap in core ----
+#         ov <- overlap_n(a_state$.core_a_norm[i], b_state$.core_b_norm[j])
+
+#         county_ok <- looks_like_county(a_state$.name_a_norm[i]) &&
+#           looks_like_county(b_state$.name_b_norm[j])
+
+#         if (!county_ok && ov < min_overlap) {
+#           return(tibble(
+#             .id_a = a_state$.id_a[i],
+#             .id_b = NA_integer_,
+#             score = NA_real_
+#           ))
+#         }
+
+#         tibble(
+#           .id_a = a_state$.id_a[i],
+#           .id_b = if (best >= min_score) b_state$.id_b[j] else NA_integer_,
+#           score = if (best >= min_score) best else NA_real_
+#         )
+#       })
+#     }) |>
+#     ungroup() |>
+#     left_join(
+#       a2 |>
+#         select(
+#           .id_a,
+#           state = .state,
+#           name_a = .name_a,
+#           core_a = .core_a,
+#           typed_a = .typed_a
+#         ),
+#       by = ".id_a"
+#     ) |>
+#     left_join(
+#       b2 |>
+#         select(.id_b, name_b = .name_b, core_b = .core_b, typed_b = .typed_b),
+#       by = ".id_b"
+#     ) |>
+#     select(
+#       .id_a,
+#       .id_b,
+#       state,
+#       name_a,
+#       name_b,
+#       core_a,
+#       core_b,
+#       typed_a,
+#       typed_b,
+#       score
+#     )
+# }
+
+# # ============================================================
+# # 5) BUILD YOUR INPUTS (exactly like you were doing)
+# # ============================================================
+
+# df_a <- exact_non_matches |>
+#   mutate(
+#     name_key_core = prep_match_core(name),
+#     name_key_typed = prep_match_typed(name),
+#     id_a = row_number()
+#   )
+
+# df_b <- name_city_state_match |>
+#   mutate(
+#     name_key_core = prep_match_core(name),
+#     name_key_typed = prep_match_typed(name),
+#     id_b = row_number()
+#   )
+
+# # ============================================================
+# # 6) RUN
+# # ============================================================
+
+# out <- match_facilities_blocked_state(
+#   df_a,
+#   df_b,
+#   id_a = "id_a",
+#   id_b = "id_b",
+#   state = "state",
+#   name_a = "name",
+#   name_b = "name",
+#   key_core_a = "name_key_core",
+#   key_core_b = "name_key_core",
+#   key_typed_a = "name_key_typed",
+#   key_typed_b = "name_key_typed",
+#   min_score = 90,
+#   gate_min = 80,
+#   min_overlap = 2
+# )
+
+# fuzzy_matches_3 <- out |>
+#   filter(!is.na(.id_b)) |>
+#   left_join(
+#     df_b |> select(id_b, detention_facility_code),
+#     by = c(".id_b" = "id_b")
+#   ) |>
+#   select(.id_a, name_a, name_b, state, detention_facility_code)
+
+# fuzzy_matches_1 <-
+#   link_facilities(
+#     exact_non_matches,
+#     name_city_state_match,
+#     name_a = "name",
+#     name_b = "name",
+#     block_vars = c("state"),
+#     top_n = 1,
+#     min_score = 0.75
+#   ) |>
+#   select(
+#     .id_a,
+#     name.a,
+#     name.b,
+#     state,
+#     detention_facility_code,
+#     contains("score")
+#   )
+
+# fuzzy_matches_2 <-
+#   link_facilities2(
+#     exact_non_matches,
+#     name_city_state_match,
+#     name_a = "name",
+#     name_b = "name",
+#     block_vars = c("state"),
+#     top_n = 1,
+#     min_score = 0.7,
+#     greedy = TRUE
+#   ) |>
+#   select(.id_a, name.a, name.b, state, detention_facility_code)
+
+# fuzzy_matches <-
+#   bind_rows(
+#     fuzzy_matches_1,
+#     fuzzy_matches_2,
+#     fuzzy_matches_3 |> rename(name.a = name_a, name.b = name_b)
+#   ) |>
+#   distinct(name.a, name.b, state, detention_facility_code)
+
+# fuzzy_matches_new <-
+#   fuzzy_matches |>
+#   anti_join(
+#     fuzzy_matches_manual,
+#     by = c("name.a", "state")
+#   )
+
+name_city_state_match |>
+  filter(str_detect(str_to_upper(name), "LOCKPORT"))
+exact_non_matches |>
+  filter(str_detect(str_to_upper(name), "LOCKPORT"))
+hospitals |>
+  filter(str_detect(str_to_upper(name), "LOCKPORT")) |>
+  print(n = 500)
+
+missing_from_vera <-
+  tribble(
+    ~state , ~detention_facility_code , ~name                                                                        ,
+    # "TX"       ,  "URSLATX"                , "URSULA CENTRALIZED PROCESSING CNTR" , # no matches
+    # "FL"       ,  "FLDSSFS"                , "FLORIDA SOFT-SIDED FACILITY-SOUTH"  , # no matches
+    # "GA"       ,  "FIPCDGA"                , "FOLKSTON D RAY ICE PROCESSING CTR"  ,
+    "GA"   , "FIPCDGA"                , "FOLKSTON D RAY ICE PROCES"                                                  ,
+    "GA"   , "FIPCDGA"                , "FOLKSTON ICE PROCESSING CENTER (D. RAY JAMES)"                              ,
+    "GA"   , "FIPCDGA"                , "Folkston D Ray ICE Processing Center"                                       ,
+    "GA"   , "FIPCDGA"                , "Folkston ICE Processing Center (Main)"                                      ,
+    "GA"   , "FIPCDGA"                , "MAIN - FOLKSTON IPC (D RAY JAMES)"                                          ,
+    # NA_character_, "UCBPMCA"                , "CBP MOVEMENT COORDINATION AREA"     , # no matches
+    # "CBPHOLD"                , "BUFFALO USBP HOLD ROOM"             , # no matches
+    # "VA", "UVACVVA"                , "UVA UNIV Hospital Center"           ,
+    "VA"   , "UVACVVA"                , "UNIVERSITY OF VIRGINIA MEDICAL CENTER"                                      ,
+    # "KY", "WOODFKY"                , "WOODFORD COUNTY SHERIFF/JAIL"       ,
+    "KY"   , "WOODFKY"                , "Woodford County Detention Center"                                           ,
+    # "NY", "UHSHONY"                , "UHS WILSON MEDICAL CENTER"          , # not in hospitals list, added to addresses_manual.csv
+    # "IL", "UCCHIIL"                , "UCHICAGO MEDICINE HOSPITAL CHICAGO" ,
+    "IL"   , "UCHCHIIL"               , "THE UNIVERSITY OF CHICAGO MEDICAL CENTER"                                   ,
+    # "IL", "UCHRVIL"                , "UCHICAGO MEDICINE INGALLS MEMORIAL" ,
+    "IL"   , "UCHRVIL"                , "INGALLS MEMORIAL HOSPITAL"                                                  ,
+    # "KS", "PRVMDKS"                , "PROVIDENCE MEDICAL GROUP"           ,
+    "KS"   , "PRVMDKS"                , "PROVIDENCE MEDICAL CENTER"                                                  , # not 100% sure on this one pls verify
+    # "MS", "HARRIMS"                , "HARRISON DETENTION CENTER"          ,
+    "MS"   , "HARRIMS"                , "HARRISON COUNTY JAIL"                                                       ,
+    "MS"   , "HARRIMS"                , "Harrison County Adult Detention Center"                                     ,
+    # "PA", "UPMCPPA"                , "UPMC PRESBYTERIAN HOSPITAL"         ,
+    "PA"   , "UPMCPPA"                , "UPMC PRESBYTERIAN SHADYSIDE"                                                , # note this is a misleading name but the address is correct
+    # "CO", "LIRSFCO"                , "LIRS - LFSRM FORT COLLINS LTFC CO"  , # can't find anything
+    # "VA", "CHPHOVA"                , "CHIPPENHAM HOSPITAL - RICHMOND"     , # can't find anything - bring back in other hospital data
+    # "CA", "STJHCCA"                , "ST JOHN'S HOSPITAL CAMARILLO"       , # not in hospitals data
+    # "VA", "HLFRJVA"                , "B.R.R.J. HALIFAX"                   ,
+    "VA"   , "HLFRJVA"                , "Blue Ridge Regional Jail Authority - Halifax County Adult Detention Center" ,
+    # "TX", "JOPSHTX"                , "JOHN PETER SMITH HOSPITAL"          , # not in hospitals data
+    # "NY", "LOCMHNY"                , "LOCKPORT MEMORIAL HOSPITAL"         , # not in hospitals data
+    # "NY", "NYWASHC"                , "WASHINGTON CORRECTIONAL"            ,
+    "NY"   , "NYWASHC"                , "WASHINGTON CORRECTIONAL FACILITY"                                           , # not 100% sure but this appears to be the NYS facility
+    # "WV", "UBRKHWV"                , "WVU MEDICINE BERKELEY MEDICAL CNTR" ,
+    # "IN", "PVHOSIN"                , "PARKVIEW HOSPITAL RANDALLIA"        ,
+    # "MI", "BTSHOMI"                , "COREWELL HLTH GR HOSP-BUTTERWORTH"  ,
+    # "NJ", "PHRCENJ"                , "PLAZA HEALTHCARE REHAB CENTER"      ,
+    # "MI", "MMMCSMI"                , "MYMICHIGAN MEDICAL CENTER SAULT"    ,
+    # "TX", "THPMCTX"                , "THOP MEMORIAL CAMPUS ELP"           ,
+    # "CU", "GTMOBCU"                , "MIGRANT OPS CENTER EAST" # need to geocode, not addressable
+  )
 
 # TODO: verify these fuzzy matches
 fuzzy_matches_manual <-
@@ -1064,7 +1529,156 @@ fuzzy_matches_manual <-
     "8182" , "Northern Regional Jail"                                               , "NORTHERN REGIONAL JAIL"             , "WV"   , "WVNORTH"                ,
     "8189" , "Brown County Jail"                                                    , "BROWN COUNTY JAIL"                  , "WI"   , "BROWNWI"                ,
     "8203" , "Fond du Lac County Jail"                                              , "FOND DU LAC COUNTY SHERIFF/JAIL"    , "WI"   , "FNDDUWI"                ,
-    "8253" , "Waukesha County Jail"                                                 , "WAUKESHA COUNTY JAIL"               , "WI"   , "WAUKEWI"
+    "8253" , "Waukesha County Jail"                                                 , "WAUKESHA COUNTY JAIL"               , "WI"   , "WAUKEWI"                ,
+
+    # new ones
+    "1111" , "PRINCE WILLIAM COUNTY ADC"                                            , "PRINCE WILLIAM"                     , "VA"   , "PWILLVA"                ,
+    "1111" , "BAKER C.I."                                                           , "BAKER C. I."                        , "FL"   , "FLBAKCI"                ,
+    "1111" , "MARCY CORRECTIONAL FACILITY"                                          , "MARCY CORRECTIONAL"                 , "NY"   , "NYMARCC"                ,
+    "1111" , "WASHINGTON CORRECTIONAL FACILITY"                                     , "WASHINGTON CORRECTIONAL"            , "NY"   , "NYWASHC"                ,
+    "1111" , "CIMMARON CORRECTIONAL FACILITY"                                       , "CIMARRON CORRECTIONAL FACILITY"     , "OK"   , "OKCIMMC"                ,
+    # "1111" , "EDINBURG"                                                             , "EDINBURG POLICE DEPT."              , "TX"   , "EDNBGTX"                ,
+    "1111" , "ARIZONA STATE PRISON - CB6"                                           , "ARIZONA STATE PRISON - YUMA"        , "AZ"   , "AZSVCPC"                ,
+    # "1111" , "ASPC FLORENCE WEST"                                                   , "FLORENCE SPC"                       , "AZ"   , "FLO"                    ,
+    "1111" , "WINN CORRECTIONAL CENTER, C/O SHEILA BRAXTON"                         , "WINN CORRECTIONAL CENTER"           , "LA"   , "LAWINCI"                ,
+    # "1111" , "ARIZONA STATE PRISON"                                                 , "ARIZONA STATE PRISON - YUMA"        , "AZ"   , "AZSVCPC"                ,
+    "1111" , "COOK INLET PRETRIAL FACILITY"                                         , "COOK INLET PRETRIAL, ANCH"          , "AK"   , "AKCOOKI"                ,
+    "1111" , "Aguadilla SPC Service Processing Center"                              , "AGUADILLA SPC"                      , "PR"   , "AGC"                    ,
+    "1111" , "FLORENCE CORRECTIONAL CENTER"                                         , "CCA, FLORENCE CORRECTIONAL CENTER"  , "AZ"   , "CCAFLAZ"                ,
+    "1111" , "NORTHERN NEVADA CORR. CTR."                                           , "NORTHERN NEVADA MED CTR"            , "NV"   , "NNVMCNV"                ,
+    "1111" , "MIAMI CORRECTIONAL FACILITY"                                          , "MIAMI CORRECTIONAL CENTER"          , "IN"   , "INMIAMI"                ,
+    "1111" , "MCRAE CORRECTIONAL FACILITY"                                          , "MCRAE CORRECTIONAL FACILITY, CCA"   , "GA"   , "BOPRAE"                 ,
+    "1111" , "DELANEY HALL"                                                         , "DELANEY HALL DETENTION FACILITY"    , "NJ"   , "DHDFNJ"                 ,
+    "1111" , "PROVIDENCE ST MARY MEDICAL CENTER"                                    , "ST MARY MEDICAL CENTER"             , "CA"   , "STMARCA"                ,
+    "1111" , "LOMA LINDA UNIVERSITY MEDICAL CENTER-MURRIETA"                        , "LOMA LINDA UNIVERSITY MED CENTER"   , "CA"   , "LLUMCCA"                ,
+    "1111" , "HCA FLORIDA CITRUS HOSPITAL"                                          , "HCA FLORIDA MEMORIAL HOSPITAL"      , "FL"   , "HCAFMFL"                ,
+    "1111" , "HCA FLORIDA HIGHLANDS HOSPITAL"                                       , "HCA FLORIDA MEMORIAL HOSPITAL"      , "FL"   , "HCAFMFL"                ,
+    # "1111" , "LARKIN COMMUNITY HOSPITAL PALM SPRINGS CAMPUS"                        , "LARKIN HOSPITAL"                    , "FL"   , "LRKNHFL"                ,
+    # "1111" , "LARKIN COMMUNITY HOSPITAL BEHAVIORAL HEALTH SRVS"                     , "LARKIN HOSPITAL"                    , "FL"   , "LRKNHFL"                ,
+    "1111" , "UNION HOSPITAL CLINTON"                                               , "UNION HOSPITAL"                     , "IN"   , "UHOSPIN"                ,
+    "1111" , "BETH ISRAEL DEACONESS MEDICAL CENTER"                                 , "BETH ISRAEL DEACONESS HOSP"         , "MA"   , "BIDHPMA"                ,
+    "1111" , "HENRY FORD HEALTH HOSPITAL"                                           , "HENRY FORD HOSPITAL"                , "MI"   , "HNYHOMI"                ,
+    # "1111" , "COOPER UNIVERSITY HOSPITAL"                                           , "UNIVERSITY HOSPITAL"                , "NJ"   , "UNIVHNJ"                ,
+    # "1111" , "ROBERT WOOD JOHNSON UNIVERSITY HOSPITAL AT RAHWAY"                    , "UNIVERSITY HOSPITAL"                , "NJ"   , "UNIVHNJ"                ,
+    # "1111" , "ROBERT WOOD JOHNSON UNIVERSITY HOSPITAL - SOMERSET"                   , "UNIVERSITY HOSPITAL"                , "NJ"   , "UNIVHNJ"                ,
+    # "1111" , "SAINT PETER'S UNIVERSITY HOSPITAL"                                    , "UNIVERSITY HOSPITAL"                , "NJ"   , "UNIVHNJ"                ,
+    # "1111" , "UNITY SPECIALTY HOSPITAL"                                             , "UNITY HOSPITAL"                     , "NY"   , "UNIHONY"                ,
+    # "1111" , "GEISINGER-COMMUNITY MEDICAL CENTER"                                   , "GEISINGER MEDICAL CENTER"           , "PA"   , "GSMCDPA"                ,
+    # "1111" , "TEXAS HEALTH HARRIS METHODIST HOSPITAL CLEBURNE"                      , "METHODIST HOSPITAL"                 , "TX"   , "METHOTX"                ,
+    # "1111" , "CHRISTUS SANTA ROSA HOSPITAL-SAN MARCOS"                              , "CHRISTUS SANTA ROSA HOSPITAL - MED" , "TX"   , "CHSRHTX"                ,
+    "1111" , "TEXAS HEALTH HARRIS METHODIST HOSPITAL STEPHENVILL"                   , "METHODIST HOSPITAL"                 , "TX"   , "METHOTX"                ,
+    "1111" , "HOUSTON METHODIST HOSPITAL"                                           , "METHODIST HOSPITAL"                 , "TX"   , "METHOTX"                ,
+    "1111" , "TEXAS HEALTH HARRIS METHODIST HOSPITAL AZLE"                          , "METHODIST HOSPITAL"                 , "TX"   , "METHOTX"                ,
+    "1111" , "HOUSTON METHODIST BAYTOWN HOSPITAL"                                   , "METHODIST HOSPITAL"                 , "TX"   , "METHOTX"                ,
+    "1111" , "HOUSTON METHODIST CLEAR LAKE HOSPITAL"                                , "METHODIST HOSPITAL"                 , "TX"   , "METHOTX"                ,
+    "1111" , "RIO GRANDE REGIONAL HOSPITAL"                                         , "FRIO REGIONAL HOSPITAL"             , "TX"   , "FRIRHTX"                ,
+    "1111" , "HOUSTON METHODIST SUGARLAND HOSPITAL"                                 , "METHODIST HOSPITAL"                 , "TX"   , "METHOTX"                ,
+    "1111" , "HOUSTON METHODIST WILLOWBROOK HOSPITAL"                               , "METHODIST HOSPITAL"                 , "TX"   , "METHOTX"                ,
+    "1111" , "TEXAS HEALTH HARRIS METHODIST HOSPITAL SOUTHLAKE"                     , "METHODIST HOSPITAL"                 , "TX"   , "METHOTX"                ,
+    "1111" , "NOVANT PRINCE WILLIAM MEDICAL CENTER"                                 , "PRINCE WILLIAM"                     , "VA"   , "PWILLVA"                ,
+    "1111" , "SENTARA VIRGINIA BEACH GENERAL HOSPITAL"                              , "VIRGINIA BEACH"                     , "VA"   , "VIRBEVA"                ,
+    "1111" , "CAMPBELL COUNTY HEALTH"                                               , "CAMPBELL COUNTY JAIL"               , "WY"   , "CAMCOWY"                ,
+    "1111" , "PLATTE COUNTY HOSPITAL"                                               , "PLATTE COUNTY JAIL"                 , "WY"   , "PLATTWY"                ,
+    "1111" , "METHODIST MCKINNEY HOSPITAL"                                          , "METHODIST HOSPITAL"                 , "TX"   , "METHOTX"                ,
+    "1111" , "METHODIST HOSPITAL FOR SURGERY"                                       , "METHODIST HOSPITAL"                 , "TX"   , "METHOTX"                ,
+    "1111" , "HOUSTON METHODIST WEST HOSPITAL"                                      , "METHODIST HOSPITAL"                 , "TX"   , "METHOTX"                ,
+    "1111" , "TEXAS HEALTH HARRIS METHODIST HOSPITAL ALLIANCE"                      , "METHODIST HOSPITAL"                 , "TX"   , "METHOTX"                ,
+    "1111" , "HOUSTON METHODIST THE WOODLANDS HOSPITAL"                             , "METHODIST HOSPITAL"                 , "TX"   , "METHOTX"                ,
+    "1111" , "Ventura County East Valley Jail"                                      , "VENTURA COUNTY JAIL"                , "CA"   , "VENTUCA"                ,
+    "1111" , "Marion County Jail II"                                                , "MARION COUNTY JAIL"                 , "IN"   , "MARIOIN"                ,
+    "1111" , "Boone County Jail Workcamp"                                           , "BOONE COUNTY JAIL"                  , "KY"   , "BOONEKY"                ,
+    "1111" , "Madison County Detention Center"                                      , "GRAYSON COUNTY DETENTION CENTER"    , "KY"   , "GRAYSKY"                ,
+    "1111" , "Taylor County Detention Center"                                       , "GRAYSON COUNTY DETENTION CENTER"    , "KY"   , "GRAYSKY"                ,
+    "1111" , "Erie County Holding Center"                                           , "ERIE COUNTY MEDICAL CENTER"         , "NY"   , "ECMCBNY"                ,
+    "1111" , "Bell County Central Jail"                                             , "BELL COUNTY JAIL"                   , "TX"   , "BELCOTX"                ,
+    "1111" , "El Paso County Detention Facility - Downtown Jail"                    , "EL PASO COUNTY DETENTION FACILITY"  , "TX"   , "EPCDFTX"                ,
+    "1111" , "Henrico County Regional Jail East - New Kent County"                  , "HENRICO COUNTY JAIL"                , "VA"   , "HENRIVA"                ,
+    "1111" , "Virginia Beach Municipal Correctional Center"                         , "VIRGINIA BEACH"                     , "VA"   , "VIRBEVA"                ,
+    "1111" , "Central Regional Jail"                                                , "SOUTH CENTRAL REGIONAL JAIL"        , "WV"   , "WVSCENT"                ,
+    "1111" , "Western Regional Jail"                                                , "EASTERN REGIONAL JAIL"              , "WV"   , "WVEASTR"                ,
+    "1111" , "Juneau County Jail"                                                   , "DODGE COUNTY JAIL, JUNEAU"          , "WI"   , "DODGEWI"                ,
+    "1111" , "ADAMS COUNTY DET CENTER"                                              , "ADAMS COUNTY CORRECTIONAL CENTER"   , "MS"   , "ADAMSMS"                ,
+    "1111" , "ALBANY COUNTY JAIL"                                                   , "ALLEGANY COUNTY JAIL"               , "NY"   , "ALLEGNY"                ,
+    "1111" , "ANDERSON COUNTY DETENTION CENTER"                                     , "ANDERSON COUNTY DET CENTER"         , "SC"   , "ANDERSC"                ,
+    "1111" , "NEW HANOVER CORRECTIONAL CENTER"                                      , "NEW HANOVER CO DET CENTER"          , "NC"   , "NWHNVNC"                ,
+    "1111" , "FISKILL"                                                              , "FISHKILL C.F. BEACON NY"            , "NY"   , "NYFISHC"                ,
+    "1111" , "PINE PRAIRIE CORRECTIONAL CENTER"                                     , "PINE PRAIRIE ICE PROCESSING CENTER" , "LA"   , "PINEPLA"                ,
+    "1111" , "D. RAY JAMES CORRECTIONAL FACILITY"                                   , "D. RAY JAMES PRISON"                , "GA"   , "GADRYJM"                ,
+    "1111" , "ALLEN PARISH HOSPITAL"                                                , "ALLEN PARISH PUBLIC SAFETY COMPLEX" , "LA"   , "APPSCLA"                ,
+    "1111" , "MERCY HEALTH - WEST HOSPITAL"                                         , "MERCY HEALTH - TIFFIN HOSPITAL"     , "OH"   , "MHTFHOH"                ,
+    "1111" , "RIO GRANDE STATE CENTER"                                              , "RIO GRANDE DETENTION CENTER"        , "TX"   , "RGRNDTX"                ,
+    "1111" , "Escambia County Detention Center"                                     , "DEKALB COUNTY DETENTION CENTER"     , "AL"   , "DEKALAL"                ,
+    "1111" , "Sebastian County Adult Detention Center"                              , "SEBASTIAN COUNTY DET CNT"           , "AR"   , "SEBASAR"                ,
+    # "1111" , "ARIZONA STATE PRISON - COMPLEX DETENTION"                             , "ARIZONA STATE PRISON - YUMA"        , "AZ"   , "AZSVCPC"                ,
+    "1111" , "SAN LUIS REGIONAL DETENTION FACILITY"                                 , "SAN LUIS REGIONAL DET CENTER"       , "AZ"   , "SLRDCAZ"                ,
+    "1111" , "BANNER - UNIVERSITY MEDICAL CENTER TUCSON CAMPUS"                     , "BANNER MEDICAL CTR TUCSON"          , "AZ"   , "BNMCTAZ"                ,
+    "1111" , "Pima County Adult Detention Complex"                                  , "PIMA COUNTY JAIL"                   , "AZ"   , "PIMAJAZ"                ,
+    # "1111" , "ADVENTIST HEALTH WHITE MEMORIAL MONTEBELLO"                           , "WHITE MEMORIAL HOSPITAL"            , "CA"   , "WMHOSCA"                ,
+    "1111" , "LOMA LINDA VA MEDICAL CENTER"                                         , "LOMA LINDA UNIVERSITY MED CENTER"   , "CA"   , "LLUMCCA"                ,
+    # "1111" , "San Bernardino County W. Valley Detention Center"                     , "SAN BERNARDINO CO. JAIL"            , "CA"   , "SBERNCA"                ,
+    # "1111" , "San Bernardino County Glen Helen Rehab Center"                        , "SAN BERNARDINO CO. JAIL"            , "CA"   , "SBERNCA"                ,
+    # "1111" , "San Bernardino County Central Detention Center"                       , "SAN BERNARDINO CO. JAIL"            , "CA"   , "SBERNCA"                ,
+    # "1111" , "San Diego County George F. Bailey Detention Facility"                 , "SAN DIEGO COUNTY JAIL"              , "CA"   , "SNDCOCA"                ,
+    # "1111" , "San Diego County East Mesa Reentry Facility"                          , "SAN DIEGO COUNTY JAIL"              , "CA"   , "SNDCOCA"                ,
+    # "1111" , "San Diego County South Bay Detention Facility"                        , "SAN DIEGO COUNTY JAIL"              , "CA"   , "SNDCOCA"                ,
+    # "1111" , "San Diego County Vista Detention Facility"                            , "SAN DIEGO COUNTY JAIL"              , "CA"   , "SNDCOCA"                ,
+    # "1111" , "San Diego County Las Colinas Detention and Reentry  Facility"         , "SAN DIEGO COUNTY JAIL"              , "CA"   , "SNDCOCA"                ,
+    "1111" , "Arapahoe County Sheriffs Office Detention Facility"                   , "ARAPAHOE COUNTY JAIL"               , "CO"   , "ARAPACO"                ,
+    "1111" , "Mesa County Detention Facility"                                       , "MESA COUNTY JAIL"                   , "CO"   , "MESJACO"                ,
+    "1111" , "SANTA ROSA CORRECTIONAL INSTITUTION"                                  , "SANTA ROSA COUNTY JAIL"             , "FL"   , "SROSAFL"                ,
+    "1111" , "HCA FLORIDA UNIVERSITY HOSPITAL"                                      , "HCA FLORIDA KENDALL HOSPITAL"       , "FL"   , "CKHOSFL"                ,
+    "1111" , "Collier County Immokalee Jail Center"                                 , "COLLIER COUNTY SHERIFF"             , "FL"   , "COLLIFL"                ,
+    "1111" , "Flagler County - Inmate Facility"                                     , "FLAGLER COUNTY JAIL"                , "FL"   , "FLGLRFL"                ,
+    "1111" , "Manatee County Jail"                                                  , "MANATEE COUNTY DETENTION-ANNEX"     , "FL"   , "MANATFL"                ,
+    "1111" , "Monroe County Detention Center Plantation Key"                        , "MONROE COUNTY JAIL"                 , "FL"   , "MONROFL"                ,
+    "1111" , "Monroe County Detention Center Marathon"                              , "MONROE COUNTY JAIL"                 , "FL"   , "MONROFL"                ,
+    "1111" , "Orange County Corrections Department"                                 , "ORANGE COUNTY JAIL"                 , "FL"   , "ORANGFL"                ,
+    "1111" , "Osceola County Corrections Department"                                , "OSCEOLA COUNTY JAIL"                , "FL"   , "OSCEOFL"                ,
+    "1111" , "Palm Beach County West Detention Center"                              , "PALM BEACH COUNTY JAIL"             , "FL"   , "PALMBFL"                ,
+    "1111" , "Citrus County Detention Facility - CCA"                               , "CITRUS COUNTY JAIL"                 , "FL"   , "CITRUFL"                ,
+    "1111" , "FLOYD COUNTY CORRECTIONAL INSTITUTION"                                , "FLOYD COUNTY JAIL"                  , "GA"   , "FLOYDGA"                ,
+    "1111" , "Floyd County Work Release Center"                                     , "FLOYD COUNTY JAIL"                  , "GA"   , "FLOYDGA"                ,
+    "1111" , "ST LUKES REGIONAL MEDICAL CENTER"                                     , "UNITY POINT HLTH ST LUKES HOSP"     , "IA"   , "UPSLHIA"                ,
+    "1111" , "Linn County Correctional Center"                                      , "LINN COUNTY JAIL"                   , "IA"   , "LINNJIA"                ,
+    "1111" , "McHenry County Jail"                                                  , "MCHENRY COUNTY SHERIFF'S"           , "IL"   , "MCHENIL"                ,
+    "1111" , "Chase County Detention Center"                                        , "CHASE COUNTY JAIL"                  , "KS"   , "CHASEKS"                ,
+    "1111" , "Lexington-Fayette County Jail Detention Division"                     , "FAYETTE COUNTY DETENTION CENTER"    , "KY"   , "FAYETKY"                ,
+    "1111" , "UMASS MEMORIAL HEALTHALLIANCE HOSPITALS"                              , "UMASS MEMORIAL MEDICAL CENTER"      , "MA"   , "UMASSMA"                ,
+    "1111" , "UMASS MEMORIAL HEALTH - HARRINGTON HOSPITAL"                          , "UMASS MEMORIAL MEDICAL CENTER"      , "MA"   , "UMASSMA"                ,
+    "1111" , "UMASS MEMORIAL HEALTHCARE-MARLBOROUGH HOSPITAL"                       , "UMASS MEMORIAL MEDICAL CENTER"      , "MA"   , "UMASSMA"                ,
+    "1111" , "Frederick County Adult Detention Center"                              , "FREDERICK COUNTY DET. CEN"          , "MD"   , "FREDEMD"                ,
+    "1111" , "Frederick County Work Release Center"                                 , "FREDERICK COUNTY DET. CEN"          , "MD"   , "FREDEMD"                ,
+    "1111" , "Hennepin County Workhouse"                                            , "HENNEPIN COUNTY MED CTR"            , "MN"   , "HCMCMMN"                ,
+    "1111" , "ADAMS COUNTY CORR."                                                   , "ADAMS COUNTY CORRECTIONAL CENTER"   , "MS"   , "ADAMSMS"                ,
+    "1111" , "Adams County Jail"                                                    , "ADAMS COUNTY CORRECTIONAL CENTER"   , "MS"   , "ADAMSMS"                ,
+    "1111" , "New Hanover County Sheriffs Office Detention Facility"                , "NEW HANOVER CO DET CENTER"          , "NC"   , "NWHNVNC"                ,
+    "1111" , "Ward County Detention Center"                                         , "WARD COUNTY JAIL"                   , "ND"   , "WARDCND"                ,
+    "1111" , "Cass County Detention Facility"                                       , "CASS COUNTY JAIL"                   , "NE"   , "CASSCNE"                ,
+    "1111" , "Hall County Department of Corrections"                                , "HALL COUNTY SHERIFF"                , "NE"   , "HASHENE"                ,
+    "1111" , "Phelps County Correctional"                                           , "PHELPS COUNTY JAIL"                 , "NE"   , "PHELPNE"                ,
+    "1111" , "Hudson County Correctional Facility"                                  , "HUDSON COUNTY JAIL"                 , "NJ"   , "HUDSONJ"                ,
+    "1111" , "Monmouth County Correctional Institution"                             , "MONMOUTH COUNTY JAIL"               , "NJ"   , "MONMONJ"                ,
+    "1111" , "GREAT MEADOW CORRECTIONAL FACILITY"                                   , "GREAT MEADOW C.F."                  , "NY"   , "NYGREAC"                ,
+    "1111" , "Broome County Sheriffs Correctional Facility"                         , "BROOME COUNTY JAIL"                 , "NY"   , "BROMMNY"                ,
+    "1111" , "Niagara County Correctional Facility"                                 , "NIAGARA COUNTY JAIL"                , "NY"   , "NIAGANY"                ,
+    "1111" , "Butler County Correctional Center"                                    , "BUTLER COUNTY JAIL"                 , "OH"   , "BUTLEOH"                ,
+    "1111" , "Logan County Detention Center"                                        , "LOGAN COUNTY JAIL"                  , "OK"   , "LOGANOK"                ,
+    "1111" , "JACKSON-MADISON COUNTY GENERAL HOSPITAL"                              , "JACKSON COUNTY SHERIFF"             , "TN"   , "JACKSTN"                ,
+    "1111" , "Jackson County Jail"                                                  , "JACKSON COUNTY SHERIFF"             , "TN"   , "JACKSTN"                ,
+    "1111" , "Knox County Jail"                                                     , "KNOX COUNTY DETENTION FACILITY"     , "TN"   , "KNXDFTN"                ,
+    "1111" , "Knox County Work Release Center"                                      , "KNOX COUNTY DETENTION FACILITY"     , "TN"   , "KNXDFTN"                ,
+    "1111" , "Putnam County Jail"                                                   , "PUTNAM COUNTY SHERIFF"              , "TN"   , "PUTNMTN"                ,
+    "1111" , "HOLIDAY INN EXPRESS & SUITES EL PASO"                                 , "EL PASO COUNTY DETENTION FACILITY"  , "TX"   , "EPCDFTX"                ,
+    "1111" , "BEST WESTERN PLUS EL PASO AIRPORT HOTEL & CONFEREN"                   , "EL PASO COUNTY DETENTION FACILITY"  , "TX"   , "EPCDFTX"                ,
+    "1111" , "COMFORT INN & SUITES - EL PASO"                                       , "EL PASO COUNTY DETENTION FACILITY"  , "TX"   , "EPCDFTX"                ,
+    "1111" , "HAWTHORN STES EL PASO AIRP"                                           , "EL PASO COUNTY DETENTION FACILITY"  , "TX"   , "EPCDFTX"                ,
+    "1111" , "MEMORIAL HERMANN NORTHEAST HOSPITAL"                                  , "MEMORIAL HERMANN NE HOSP"           , "TX"   , "MHNHHTX"                ,
+    "1111" , "RIO GRANDE REGIONAL HOSPITAL"                                         , "RIO GRANDE ST.HOSPITAL"             , "TX"   , "RGHOSTX"                ,
+    # "1111" , "Cameron County Facilities"                                            , "CAMERON COUNTY JAIL"                , "TX"   , "CAMERTX"                ,
+    "1111" , "Weber County Correctional Facility"                                   , "WEBER COUNTY JAIL"                  , "UT"   , "WEBERUT"                ,
+    # "1111" , "PROVIDENCE ST JOSEPH HOSPITAL"                                        , "ST JOSEPH MEDICAL CENTER"           , "WA"   , "STJMCWA"                ,
+    "1111" , "Sauk County Jail"                                                     , "SAUK COUNTY SHERIFF"                , "WI"   , "SAUKCWI"                ,
+    "1111" , "Uinta County Detention Center"                                        , "UINTA COUNTY JAIL"                  , "WY"   , "UINTAWY"
   )
 
 exact_non_matches_no_manual <-
@@ -1080,7 +1694,8 @@ matches <-
     exact_matches,
     fuzzy_matches_manual |>
       select(name = name.a, state, detention_facility_code),
-    hold_rooms_final
+    hold_rooms_final,
+    missing_from_vera
   ) |>
   distinct(detention_facility_code, name, state)
 

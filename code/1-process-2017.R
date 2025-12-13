@@ -20,7 +20,7 @@ facilities_2017 <-
 
 facilities_2017 <-
   facilities_2017 |>
-  rename(detention_facility_code = detloc) |>
+  rename(detention_facility_code = detloc, operator = facility_operator) |>
   mutate(zip = as.character(zip)) |>
   mutate(date = as.Date("2017-11-06")) # date in file
 
