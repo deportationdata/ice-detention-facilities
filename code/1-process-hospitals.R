@@ -1,4 +1,5 @@
 library(tidyverse)
+library(sf)
 
 hospitals_hhs <- read_csv(
   "inputs/Hospital_General_Information.csv"
