@@ -1,8 +1,6 @@
 library(tidyverse)
 library(tidylog)
 
-library(stringdist)
-
 source("code/functions.R")
 
 facility_attributes <- arrow::read_feather(
@@ -37,6 +35,7 @@ hold_rooms_all |>
   clipr::write_clip()
 # pasted below
 
+# TODO: get verified links
 hold_rooms_manual <-
   tribble(
     ~detention_facility_code , ~name                    , ~state ,
@@ -356,7 +355,8 @@ name_city_state_match <-
     exact_matches
   ) |>
   group_by(detention_facility_code, name, state) |>
-  summarize(source = first(source), .groups = "drop")
+  summarize(source = first(source), .groups = "drop") |>
+  mutate(name_join = clean_facility_name(name))
 
 exact_non_matches <-
   facility_no_code |>
@@ -377,452 +377,50 @@ exact_non_matches <-
     by = c("state", "name_join")
   ) |>
   group_by(name, state) |>
-  summarize(source = first(source), .groups = "drop")
+  summarize(source = first(source), .groups = "drop") |>
+  mutate(name_join = clean_facility_name(name)) |>
+  filter(!is.na(name_join), name_join != "")
 
+library(fuzzylink)
 
-# library(dplyr)
-# library(stringr)
-# library(purrr)
-# library(RapidFuzz)
-
-# # ============================================================
-# # 1) NORMALIZE + KEYS
-# #   - core key: strips generic + type words (good for robust matching)
-# #   - typed key: strips generic words but keeps type words (good gating)
-# # ============================================================
-
-# norm <- function(x) {
-#   x |>
-#     str_to_upper() |>
-#     str_replace_all("[[:punct:]]", " ") |>
-#     str_squish()
-# }
-
-# generic_core <- c(
-#   "COUNTY",
-#   "CO",
-#   "CITY",
-#   "TOWN",
-#   "PARISH",
-#   "CENTER",
-#   "CENTRE",
-#   "CTR",
-#   "FACILITY",
-#   "COMPLEX",
-#   "REGIONAL",
-#   "REG",
-#   "AUTH",
-#   "AUTHORITY",
-#   "SHERIFF",
-#   "SHERIFFS",
-#   "ADULT",
-#   "INMATE",
-#   "WORK",
-#   "RELEASE",
-#   "UNIVERSITY",
-#   "SYSTEM",
-#   "UNIT",
-#   "DEPARTMENT",
-#   "OF" # optional; can help reduce "DEPARTMENT OF" noise
-# )
-
-# generic_type <- c(
-#   "JAIL",
-#   "DETENTION",
-#   "DETENTIONCENTER",
-#   "DET",
-#   "CORR",
-#   "CORRECTION",
-#   "CORRECTIONAL",
-#   "CORRECTIONS",
-#   "PRISON",
-#   "SPC",
-#   "HOSPITAL",
-#   "HOSP",
-#   "MEDICAL",
-#   "MED",
-#   "HEALTH",
-#   "HEALTHCARE",
-#   "CLINIC",
-#   "PROCESSING" # for PROCESSING CENTER patterns
-# )
-
-# prep_match_core <- function(x) {
-#   x |>
-#     norm() |>
-#     str_replace_all(
-#       paste0(
-#         "\\b(",
-#         paste(c(generic_core, generic_type), collapse = "|"),
-#         ")\\b"
-#       ),
-#       " "
-#     ) |>
-#     str_squish()
-# }
-
-# prep_match_typed <- function(x) {
-#   x |>
-#     norm() |>
-#     str_replace_all(
-#       paste0("\\b(", paste(generic_core, collapse = "|"), ")\\b"),
-#       " "
-#     ) |>
-#     str_squish()
-# }
-
-# # ============================================================
-# # 2) TYPE DETECTOR (block opposite types only if BOTH known)
-# # ============================================================
-
-# facility_type <- function(x) {
-#   x <- norm(x)
-#   case_when(
-#     str_detect(
-#       x,
-#       "\\b(HOSPITAL|HOSP\\b|MEDICAL|MED\\b|HEALTH|HEALTHCARE|CLINIC|VA\\b|UNIV|UVA)\\b"
-#     ) ~ "medical",
-#     str_detect(
-#       x,
-#       "\\b(JAIL|DETENTION|DET\\b|CORR\\b|CORRECTION(AL)?|PRISON|STATE\\s+PRISON|SPC|PROCESSING\\s+CENTER|PROCESSING\\b)\\b"
-#     ) ~ "carceral",
-#     TRUE ~ "other"
-#   )
-# }
-
-# type_compatible <- function(type_a, type_b) {
-#   type_a <- ifelse(is.na(type_a), "other", type_a)
-#   type_b <- ifelse(is.na(type_b), "other", type_b)
-#   !(type_a != "other" & type_b != "other" & type_a != type_b)
-# }
-
-# # ============================================================
-# # 3) ANCHOR-ONLY / LOW-OVERLAP GATE
-# #   Reject matches where overlap(core) < 2 unless both are COUNTY.
-# # ============================================================
-
-# token_set <- function(x) {
-#   t <- unique(str_split(norm(x), "\\s+", simplify = FALSE)[[1]])
-#   t[t != ""]
-# }
-
-# overlap_n <- function(x, y) {
-#   length(intersect(token_set(x), token_set(y)))
-# }
-
-# looks_like_county <- function(x) {
-#   str_detect(norm(x), "\\bCOUNTY\\b")
-# }
-
-# # ============================================================
-# # 4) MATCHER: block within state, filter opposite types (when known),
-# #    gate on typed similarity, score on core similarity, reject anchor-only.
-# # ============================================================
-
-# match_facilities_blocked_state <- function(
-#   a,
-#   b,
-#   id_a = "id_a",
-#   id_b = "id_b",
-#   state = "state",
-#   name_a = "name",
-#   name_b = "name",
-#   # columns that contain precomputed keys:
-#   key_core_a = "name_key_core",
-#   key_core_b = "name_key_core",
-#   key_typed_a = "name_key_typed",
-#   key_typed_b = "name_key_typed",
-#   # tuning knobs:
-#   min_score = 90, # threshold on core score
-#   gate_min = 80, # threshold on typed-key agreement
-#   min_overlap = 2 # required core-token overlap unless COUNTY/COUNTY
-# ) {
-#   a2 <- a |>
-#     mutate(
-#       .id_a = .data[[id_a]],
-#       .state = .data[[state]],
-#       .name_a = .data[[name_a]],
-#       .name_a_norm = norm(.name_a),
-#       .core_a = .data[[key_core_a]],
-#       .typed_a = .data[[key_typed_a]],
-#       .core_a_norm = norm(.core_a),
-#       .typed_a_norm = norm(.typed_a),
-#       .type_a = facility_type(.name_a)
-#     )
-
-#   b2 <- b |>
-#     mutate(
-#       .id_b = .data[[id_b]],
-#       .state = .data[[state]],
-#       .name_b = .data[[name_b]],
-#       .name_b_norm = norm(.name_b),
-#       .core_b = .data[[key_core_b]],
-#       .typed_b = .data[[key_typed_b]],
-#       .core_b_norm = norm(.core_b),
-#       .typed_b_norm = norm(.typed_b),
-#       .type_b = facility_type(.name_b)
-#     )
-
-#   a2 |>
-#     group_by(.state) |>
-#     group_modify(\(a_state, key) {
-#       b_state_all <- b2 |> filter(.state == key$.state)
-#       if (nrow(b_state_all) == 0) {
-#         return(tibble(
-#           .id_a = a_state$.id_a,
-#           .id_b = NA_integer_,
-#           score = NA_real_
-#         ))
-#       }
-
-#       map_dfr(seq_len(nrow(a_state)), \(i) {
-#         # ---- 1) type filter: only drop if both known & conflict ----
-#         keep <- type_compatible(a_state$.type_a[i], b_state_all$.type_b)
-#         b_state <- b_state_all[keep, , drop = FALSE]
-
-#         if (nrow(b_state) == 0) {
-#           return(tibble(
-#             .id_a = a_state$.id_a[i],
-#             .id_b = NA_integer_,
-#             score = NA_real_
-#           ))
-#         }
-
-#         # ---- 2) typed gate + core score over remaining candidates ----
-#         scores <- vapply(
-#           seq_len(nrow(b_state)),
-#           \(k) {
-#             # gate: typed-key must agree (prevents FLORENCE-only subset matches)
-#             gate <- RapidFuzz::fuzz_WRatio(
-#               a_state$.typed_a_norm[i],
-#               b_state$.typed_b_norm[k]
-#             )
-#             if (!is.finite(gate) || gate < gate_min) {
-#               return(NA_real_)
-#             }
-
-#             # score: core key similarity
-#             RapidFuzz::fuzz_token_set_ratio(
-#               a_state$.core_a_norm[i],
-#               b_state$.core_b_norm[k]
-#             )
-#           },
-#           numeric(1)
-#         )
-
-#         j <- which.max(replace(scores, is.na(scores), -Inf))
-#         best <- scores[j]
-
-#         if (!is.finite(best)) {
-#           return(tibble(
-#             .id_a = a_state$.id_a[i],
-#             .id_b = NA_integer_,
-#             score = NA_real_
-#           ))
-#         }
-
-#         # ---- 3) anchor-only rejection: require token overlap in core ----
-#         ov <- overlap_n(a_state$.core_a_norm[i], b_state$.core_b_norm[j])
-
-#         county_ok <- looks_like_county(a_state$.name_a_norm[i]) &&
-#           looks_like_county(b_state$.name_b_norm[j])
-
-#         if (!county_ok && ov < min_overlap) {
-#           return(tibble(
-#             .id_a = a_state$.id_a[i],
-#             .id_b = NA_integer_,
-#             score = NA_real_
-#           ))
-#         }
-
-#         tibble(
-#           .id_a = a_state$.id_a[i],
-#           .id_b = if (best >= min_score) b_state$.id_b[j] else NA_integer_,
-#           score = if (best >= min_score) best else NA_real_
-#         )
-#       })
-#     }) |>
-#     ungroup() |>
-#     left_join(
-#       a2 |>
-#         select(
-#           .id_a,
-#           state = .state,
-#           name_a = .name_a,
-#           core_a = .core_a,
-#           typed_a = .typed_a
-#         ),
-#       by = ".id_a"
-#     ) |>
-#     left_join(
-#       b2 |>
-#         select(.id_b, name_b = .name_b, core_b = .core_b, typed_b = .typed_b),
-#       by = ".id_b"
-#     ) |>
-#     select(
-#       .id_a,
-#       .id_b,
-#       state,
-#       name_a,
-#       name_b,
-#       core_a,
-#       core_b,
-#       typed_a,
-#       typed_b,
-#       score
-#     )
-# }
-
-# # ============================================================
-# # 5) BUILD YOUR INPUTS (exactly like you were doing)
-# # ============================================================
-
-# df_a <- exact_non_matches |>
-#   mutate(
-#     name_key_core = prep_match_core(name),
-#     name_key_typed = prep_match_typed(name),
-#     id_a = row_number()
-#   )
-
-# df_b <- name_city_state_match |>
-#   mutate(
-#     name_key_core = prep_match_core(name),
-#     name_key_typed = prep_match_typed(name),
-#     id_b = row_number()
-#   )
-
-# # ============================================================
-# # 6) RUN
-# # ============================================================
-
-# out <- match_facilities_blocked_state(
-#   df_a,
-#   df_b,
-#   id_a = "id_a",
-#   id_b = "id_b",
-#   state = "state",
-#   name_a = "name",
-#   name_b = "name",
-#   key_core_a = "name_key_core",
-#   key_core_b = "name_key_core",
-#   key_typed_a = "name_key_typed",
-#   key_typed_b = "name_key_typed",
-#   min_score = 90,
-#   gate_min = 80,
-#   min_overlap = 2
-# )
-
-# fuzzy_matches_3 <- out |>
-#   filter(!is.na(.id_b)) |>
-#   left_join(
-#     df_b |> select(id_b, detention_facility_code),
-#     by = c(".id_b" = "id_b")
-#   ) |>
-#   select(.id_a, name_a, name_b, state, detention_facility_code)
-
-# fuzzy_matches_1 <-
-#   link_facilities(
-#     exact_non_matches,
-#     name_city_state_match,
-#     name_a = "name",
-#     name_b = "name",
-#     block_vars = c("state"),
-#     top_n = 1,
-#     min_score = 0.75
-#   ) |>
-#   select(
-#     .id_a,
-#     name.a,
-#     name.b,
-#     state,
-#     detention_facility_code,
-#     contains("score")
-#   )
-
-# fuzzy_matches_2 <-
-#   link_facilities2(
-#     exact_non_matches,
-#     name_city_state_match,
-#     name_a = "name",
-#     name_b = "name",
-#     block_vars = c("state"),
-#     top_n = 1,
-#     min_score = 0.7,
-#     greedy = TRUE
-#   ) |>
-#   select(.id_a, name.a, name.b, state, detention_facility_code)
-
-# fuzzy_matches <-
-#   bind_rows(
-#     fuzzy_matches_1,
-#     fuzzy_matches_2,
-#     fuzzy_matches_3 |> rename(name.a = name_a, name.b = name_b)
-#   ) |>
-#   distinct(name.a, name.b, state, detention_facility_code)
-
-# fuzzy_matches_new <-
-#   fuzzy_matches |>
-#   anti_join(
-#     fuzzy_matches_manual,
-#     by = c("name.a", "state")
-#   )
-
-name_city_state_match |>
-  filter(str_detect(str_to_upper(name), "LOCKPORT"))
-exact_non_matches |>
-  filter(str_detect(str_to_upper(name), "LOCKPORT"))
-hospitals |>
-  filter(str_detect(str_to_upper(name), "LOCKPORT")) |>
-  print(n = 500)
-
-missing_from_vera <-
-  tribble(
-    ~state , ~detention_facility_code , ~name                                                                        ,
-    # "TX"       ,  "URSLATX"                , "URSULA CENTRALIZED PROCESSING CNTR" , # no matches
-    # "FL"       ,  "FLDSSFS"                , "FLORIDA SOFT-SIDED FACILITY-SOUTH"  , # no matches
-    # "GA"       ,  "FIPCDGA"                , "FOLKSTON D RAY ICE PROCESSING CTR"  ,
-    "GA"   , "FIPCDGA"                , "FOLKSTON D RAY ICE PROCES"                                                  ,
-    "GA"   , "FIPCDGA"                , "FOLKSTON ICE PROCESSING CENTER (D. RAY JAMES)"                              ,
-    "GA"   , "FIPCDGA"                , "Folkston D Ray ICE Processing Center"                                       ,
-    "GA"   , "FIPCDGA"                , "Folkston ICE Processing Center (Main)"                                      ,
-    "GA"   , "FIPCDGA"                , "MAIN - FOLKSTON IPC (D RAY JAMES)"                                          ,
-    # NA_character_, "UCBPMCA"                , "CBP MOVEMENT COORDINATION AREA"     , # no matches
-    # "CBPHOLD"                , "BUFFALO USBP HOLD ROOM"             , # no matches
-    # "VA", "UVACVVA"                , "UVA UNIV Hospital Center"           ,
-    "VA"   , "UVACVVA"                , "UNIVERSITY OF VIRGINIA MEDICAL CENTER"                                      ,
-    # "KY", "WOODFKY"                , "WOODFORD COUNTY SHERIFF/JAIL"       ,
-    "KY"   , "WOODFKY"                , "Woodford County Detention Center"                                           ,
-    # "NY", "UHSHONY"                , "UHS WILSON MEDICAL CENTER"          , # not in hospitals list, added to addresses_manual.csv
-    # "IL", "UCCHIIL"                , "UCHICAGO MEDICINE HOSPITAL CHICAGO" ,
-    "IL"   , "UCHCHIIL"               , "THE UNIVERSITY OF CHICAGO MEDICAL CENTER"                                   ,
-    # "IL", "UCHRVIL"                , "UCHICAGO MEDICINE INGALLS MEMORIAL" ,
-    "IL"   , "UCHRVIL"                , "INGALLS MEMORIAL HOSPITAL"                                                  ,
-    # "KS", "PRVMDKS"                , "PROVIDENCE MEDICAL GROUP"           ,
-    "KS"   , "PRVMDKS"                , "PROVIDENCE MEDICAL CENTER"                                                  , # not 100% sure on this one pls verify
-    # "MS", "HARRIMS"                , "HARRISON DETENTION CENTER"          ,
-    "MS"   , "HARRIMS"                , "HARRISON COUNTY JAIL"                                                       ,
-    "MS"   , "HARRIMS"                , "Harrison County Adult Detention Center"                                     ,
-    # "PA", "UPMCPPA"                , "UPMC PRESBYTERIAN HOSPITAL"         ,
-    "PA"   , "UPMCPPA"                , "UPMC PRESBYTERIAN SHADYSIDE"                                                , # note this is a misleading name but the address is correct
-    # "CO", "LIRSFCO"                , "LIRS - LFSRM FORT COLLINS LTFC CO"  , # can't find anything
-    # "VA", "CHPHOVA"                , "CHIPPENHAM HOSPITAL - RICHMOND"     , # can't find anything - bring back in other hospital data
-    # "CA", "STJHCCA"                , "ST JOHN'S HOSPITAL CAMARILLO"       , # not in hospitals data
-    # "VA", "HLFRJVA"                , "B.R.R.J. HALIFAX"                   ,
-    "VA"   , "HLFRJVA"                , "Blue Ridge Regional Jail Authority - Halifax County Adult Detention Center" ,
-    # "TX", "JOPSHTX"                , "JOHN PETER SMITH HOSPITAL"          , # not in hospitals data
-    # "NY", "LOCMHNY"                , "LOCKPORT MEMORIAL HOSPITAL"         , # not in hospitals data
-    # "NY", "NYWASHC"                , "WASHINGTON CORRECTIONAL"            ,
-    "NY"   , "NYWASHC"                , "WASHINGTON CORRECTIONAL FACILITY"                                           , # not 100% sure but this appears to be the NYS facility
-    # "WV", "UBRKHWV"                , "WVU MEDICINE BERKELEY MEDICAL CNTR" ,
-    # "IN", "PVHOSIN"                , "PARKVIEW HOSPITAL RANDALLIA"        ,
-    # "MI", "BTSHOMI"                , "COREWELL HLTH GR HOSP-BUTTERWORTH"  ,
-    # "NJ", "PHRCENJ"                , "PLAZA HEALTHCARE REHAB CENTER"      ,
-    # "MI", "MMMCSMI"                , "MYMICHIGAN MEDICAL CENTER SAULT"    ,
-    # "TX", "THPMCTX"                , "THOP MEMORIAL CAMPUS ELP"           ,
-    # "CU", "GTMOBCU"                , "MIGRANT OPS CENTER EAST" # need to geocode, not addressable
+matches_cleaned <-
+  fuzzylink::fuzzylink(
+    exact_non_matches,
+    name_city_state_match,
+    record_type = "name of government facility",
+    model = "gpt-3.5-turbo-instruct",
+    learner = "ranger",
+    instructions = "compare facility names to find possible matches; some are hospitals or medical centers and some are detention facilities",
+    by = "name_join",
+    blocking.variables = "state",
+    max_labels = 50000,
+    openai_api_key = "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"
   )
 
-# TODO: verify these fuzzy matches
+fuzzy_matches_embeddings <-
+  exact_non_matches |>
+  left_join(
+    matches_cleaned |>
+      filter(match == "Yes") |>
+      select(
+        name.x,
+        detention_facility_code,
+        name_matched = name.y,
+        match,
+        match_probability
+      ) |>
+      group_by(name.x, detention_facility_code) |>
+      slice_max(order_by = match_probability, n = 1, with_ties = FALSE) |>
+      ungroup(),
+    by = c("name" = "name.x")
+  ) |>
+  filter(!is.na(detention_facility_code)) |>
+  arrange(name)
+
+# summarize(match = any(!is.na(match)), .groups = "drop") |>
+#   # count(match, source)
+#   filter(match == FALSE, source == "website")
+
 fuzzy_matches_manual <-
   tribble(
     ~.id_a , ~name.a                                                                , ~name.b                              , ~state , ~detention_facility_code ,
@@ -1663,17 +1261,11 @@ fuzzy_matches_manual <-
     "1111" , "Niagara County Correctional Facility"                                 , "NIAGARA COUNTY JAIL"                , "NY"   , "NIAGANY"                ,
     "1111" , "Butler County Correctional Center"                                    , "BUTLER COUNTY JAIL"                 , "OH"   , "BUTLEOH"                ,
     "1111" , "Logan County Detention Center"                                        , "LOGAN COUNTY JAIL"                  , "OK"   , "LOGANOK"                ,
-    "1111" , "JACKSON-MADISON COUNTY GENERAL HOSPITAL"                              , "JACKSON COUNTY SHERIFF"             , "TN"   , "JACKSTN"                ,
     "1111" , "Jackson County Jail"                                                  , "JACKSON COUNTY SHERIFF"             , "TN"   , "JACKSTN"                ,
     "1111" , "Knox County Jail"                                                     , "KNOX COUNTY DETENTION FACILITY"     , "TN"   , "KNXDFTN"                ,
-    "1111" , "Knox County Work Release Center"                                      , "KNOX COUNTY DETENTION FACILITY"     , "TN"   , "KNXDFTN"                ,
     "1111" , "Putnam County Jail"                                                   , "PUTNAM COUNTY SHERIFF"              , "TN"   , "PUTNMTN"                ,
-    "1111" , "HOLIDAY INN EXPRESS & SUITES EL PASO"                                 , "EL PASO COUNTY DETENTION FACILITY"  , "TX"   , "EPCDFTX"                ,
-    "1111" , "BEST WESTERN PLUS EL PASO AIRPORT HOTEL & CONFEREN"                   , "EL PASO COUNTY DETENTION FACILITY"  , "TX"   , "EPCDFTX"                ,
-    "1111" , "COMFORT INN & SUITES - EL PASO"                                       , "EL PASO COUNTY DETENTION FACILITY"  , "TX"   , "EPCDFTX"                ,
-    "1111" , "HAWTHORN STES EL PASO AIRP"                                           , "EL PASO COUNTY DETENTION FACILITY"  , "TX"   , "EPCDFTX"                ,
     "1111" , "MEMORIAL HERMANN NORTHEAST HOSPITAL"                                  , "MEMORIAL HERMANN NE HOSP"           , "TX"   , "MHNHHTX"                ,
-    "1111" , "RIO GRANDE REGIONAL HOSPITAL"                                         , "RIO GRANDE ST.HOSPITAL"             , "TX"   , "RGHOSTX"                ,
+    # "1111" , "RIO GRANDE REGIONAL HOSPITAL"                                         , "RIO GRANDE ST.HOSPITAL"             , "TX"   , "RGHOSTX"                ,
     # "1111" , "Cameron County Facilities"                                            , "CAMERON COUNTY JAIL"                , "TX"   , "CAMERTX"                ,
     "1111" , "Weber County Correctional Facility"                                   , "WEBER COUNTY JAIL"                  , "UT"   , "WEBERUT"                ,
     # "1111" , "PROVIDENCE ST JOSEPH HOSPITAL"                                        , "ST JOSEPH MEDICAL CENTER"           , "WA"   , "STJMCWA"                ,
@@ -1684,6 +1276,11 @@ fuzzy_matches_manual <-
 exact_non_matches_no_manual <-
   exact_non_matches |>
   anti_join(
+    fuzzy_matches_embeddings |>
+      select(name = name, state),
+    by = c("name", "state")
+  ) |>
+  anti_join(
     fuzzy_matches_manual |>
       select(name = name.a, state),
     by = c("name", "state")
@@ -1692,10 +1289,12 @@ exact_non_matches_no_manual <-
 matches <-
   bind_rows(
     exact_matches,
+    fuzzy_matches_embeddings |>
+      select(name, state, detention_facility_code, source),
     fuzzy_matches_manual |>
       select(name = name.a, state, detention_facility_code),
-    hold_rooms_final,
-    missing_from_vera
+    hold_rooms_final
+    # missing_from_vera
   ) |>
   distinct(detention_facility_code, name, state)
 
