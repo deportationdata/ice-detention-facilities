@@ -47,7 +47,6 @@ facilities_from_detentions <-
 #     openai_api_key = "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"
 #   )
 
-# write_rds(matches_cleaned, "~/desktop/tmp.rds")
 matches_cleaned <-
   tribble(
     ~name.x                              , ~name.y                                                             , ~state ,
