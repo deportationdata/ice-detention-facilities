@@ -269,6 +269,11 @@ value_histories <-
     .groups = "drop"
   )
 
+government_sources <- c(
+  "dedicated", "2017", "05655", "website", "detention_management",
+  "41855", "22955", "detentions", "eoir", "hospitals", "jails_prisons"
+)
+
 # implementing best values
 best_values <-
   value_histories |>

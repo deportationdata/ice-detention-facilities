@@ -43,7 +43,7 @@ hold_rooms_manual <-
     # "DULHOLD"                , "DULUTH HOLD ROOM"       , "MN"   , # https://www.vera.org/ice-detention-trends
     # "RICHOLD"                , "RICHLAND HOLD ROOM"     , "WA"   , # https://www.ice.gov/node/62177
     # "SYRHOLD"                , "SYRACUSE HOLD ROOM"     , "NY"   , # https://www.vera.org/ice-detention-trends
-    "CBPHOLD"                , "BUFFALO USBP HOLD ROOM" , "NY" # https://www.cbp.gov/border-security/along-us-borders/border-patrol-sectors/buffalo-sector-new-york
+    # "CBPHOLD"                , "BUFFALO USBP HOLD ROOM" , "NY" # https://www.cbp.gov/border-security/along-us-borders/border-patrol-sectors/buffalo-sector-new-york
   )
 
 hold_rooms_final <-
@@ -111,21 +111,21 @@ code_name_state_short <-
     "BOPSPG"                 , "SPRINGFIELD FED.MED.CNTR"           , "MO"   , # https://www.bop.gov/locations/institutions/spg/
     "BOPTCN"                 , "TUCSON FED.CORR.INST."              , "AZ"   , # https://www.bop.gov/locations/institutions/tcn/
     "BOPVIM"                 , "FCI VICTORVILLE"                    , "CA"   , # https://www.bop.gov/locations/institutions/vim/
-    "BPC"                    , "BOSTON SPC"                         , "MA"   ,
+    "BPC"                    , "BOSTON SPC"                         , "MA"   , # https://www.globaldetentionproject.org/countries/americas/united-states/detention-centres/502/boston-spc-coast-guard-support-facility
     "BTV"                    , "BUFFALO SPC"                        , "NY"   , # https://www.ice.gov/detain/detention-facilities/buffalo-batavia-service-processing-center
     "DHDFNJ"                 , "DELANEY HALL DETENTION FACILITY"    , "NJ"   , # https://www.ice.gov/detain/detention-facilities/delaney-hall-detention-facility
     "EAZ"                    , "ELOY FED CTR FACILITY (CORE CIVIC)" , "AZ"   , # https://www.ice.gov/detain/detention-facilities/eloy-detention-center
-    "EPC"                    , "EL PASO SPC"                        , "TX"   ,
+    "EPC"                    , "EL PASO SPC"                        , "TX"   , # https://www.ice.gov/detain/detention-facilities/el-paso-service-processing-center
     "EROFCB"                 , "ERO EL PASO CAMP EAST MONTANA"      , "TX"   , # https://www.ice.gov/detain/detention-facilities/camp-east-montana
     "FLO"                    , "FLORENCE SPC"                       , "AZ"   , # https://www.ice.gov/detain/detention-facilities/florence-spc
-    "FSF"                    , "FLORENCE STAGING FACILITY"          , "AZ"   ,
+    "FSF"                    , "FLORENCE STAGING FACILITY"          , "AZ"   , # https://www.globaldetentionproject.org/countries/americas/united-states/detention-centres/1451/florence-staging-facility
     "KRO"                    , "KROME NORTH SPC"                    , "FL"   , # https://www.ice.gov/detain/detention-facilities/krome-north-service-processing-center
-    "MSF"                    , "MIAMI STAGING FACILITY"             , "FL"   ,
+    "MSF"                    , "MIAMI STAGING FACILITY"             , "FL"   , # https://www.globaldetentionproject.org/countries/americas/united-states/detention-centres/1493/miami-staging-facility
     "PIC"                    , "PORT ISABEL SPC"                    , "TX"   , # https://www.ice.gov/detain/detention-facilities/port-isabel-service-processing-center
     "RGS"                    , "RIO GRANDE VALLEY STAGING"          , "TX"   , # https://www.ice.gov/detain/detention-facilities/rio-grande-detention-center
-    "SJS"                    , "SAN JUAN STAGING"                   , "PR"   ,
-    "STK"                    , "STOCKTON STAGING FACILITY"          , "CA"   ,
-    "VRK"                    , "VRK PRCS"                           , "NY"
+    "SJS"                    , "SAN JUAN STAGING"                   , "PR"   , # https://www.globaldetentionproject.org/countries/americas/united-states/detention-centres/1283/san-juan-staging-facility
+    "STK"                    , "STOCKTON STAGING FACILITY"          , "CA"   , # https://www.globaldetentionproject.org/countries/americas/united-states/detention-centres/1553/stockton-staging-facility
+    "VRK"                    , "VRK PRCS"                           , "NY" # https://www.globaldetentionproject.org/countries/americas/united-states/detention-centres/678/varick-federal-detention-centre-formerly-varick-street-service-processing-centre
   )
 
 # code_name_state_unknown <-
@@ -141,60 +141,60 @@ code_name_state_short <-
 code_name_state_manual <-
   tribble(
     ~detention_facility_code , ~name                                , ~state ,
-    "AKCOOKI"                , "COOK INLET PRETRIAL, ANCH"          , "AK"   ,
-    "AKFAIRB"                , "FAIRBANKS CORR CTR"                 , "AK"   ,
-    "AKGSCCC"                , "GOOSE CREEK CORRECTIONAL CENTER"    , "AK"   ,
-    "AKHIGHL"                , "HIGHLAND MTN COR CTR"               , "AK"   ,
-    "AKKETCH"                , "KETCHIKAN REGIONAL CC"              , "AK"   ,
-    "AKLEMON"                , "LEMON CREEK, JUNEAU,AK"             , "AK"   ,
-    "AKMATSU"                , "MATSU PRETRIAL, PALMER AK"          , "AK"   ,
-    "ALAMCNC"                , "ALAMANCE CO. DET. FACILITY"         , "NC"   ,
+    "AKCOOKI"                , "COOK INLET PRETRIAL, ANCH"          , "AK"   , # https://www.globaldetentionproject.org/countries/americas/united-states/detention-centres/1433/cook-inlet-pretrial-anchorage
+    "AKFAIRB"                , "FAIRBANKS CORR CTR"                 , "AK"   , # https://aws.state.ak.us/OnlinePublicNotices/Notices/Attachment.aspx?id=115416
+    "AKGSCCC"                , "GOOSE CREEK CORRECTIONAL CENTER"    , "AK"   , # https://alaskaprisonroster.org/alaska/state/goose-creek-correctional-center/
+    "AKHIGHL"                , "HIGHLAND MTN COR CTR"               , "AK"   , # https://www.globaldetentionproject.org/countries/americas/united-states/detention-centres/1325/hiland-mountain-correctional-center
+    "AKKETCH"                , "KETCHIKAN REGIONAL CC"              , "AK"   , # https://www.globaldetentionproject.org/countries/americas/united-states/detention-centres/1471/ketchikan-regional-cc
+    "AKLEMON"                , "LEMON CREEK, JUNEAU,AK"             , "AK"   , # https://www.globaldetentionproject.org/countries/americas/united-states/detention-centres/1337/lemon-creek
+    "AKMATSU"                , "MATSU PRETRIAL, PALMER AK"          , "AK"   , # https://alaskaprisonroster.org/alaska/state/mat-su-pretrial/
+    "ALAMCNC"                , "ALAMANCE CO. DET. FACILITY"         , "NC"   , # https://www.ice.gov/detain/detention-facilities/alamance-county-detention-center
     "ALAMOTX"                , "ALAMO POLICE DEPT."                 , "TX"   ,
-    "ALEXAVA"                , "ALEXANDRIA CITY JAIL"               , "VA"   ,
-    "ALHAMCA"                , "ALHAMBRA CITY JAIL"                 , "CA"   ,
-    "ALLEGNY"                , "ALLEGANY COUNTY JAIL"               , "NY"   ,
-    "ARAPACO"                , "ARAPAHOE COUNTY JAIL"               , "CO"   ,
-    "ARRMCCA"                , "ARROWHEAD REGIONAL MED CENTER"      , "CA"   ,
-    "AZSVCPC"                , "ARIZONA STATE PRISON - YUMA"        , "AZ"   ,
-    "CACFMES"                , "MESA VERDE ICE PROCESSING CENTER"   , "CA"   ,
-    "CACHEUT"                , "CACHE CO. JAIL"                     , "UT"   ,
-    "CACTYCA"                , "CAL CITY ICE PROCESSING CENTER"     , "CA"   ,
-    "CADESVI"                , "DESERT VIEW ANNEX"                  , "VI"   ,
-    "CALHOMI"                , "CALHOMI CALHOUN CO., BATTLE CR,MI"  , "MI"   ,
-    "CAMBRPA"                , "CAMBRIA COUNTY JAIL, PA"            , "PA"   ,
-    "CAMCOWY"                , "CAMPBELL COUNTY JAIL"               , "WY"   ,
-    "CAMENCW"                , "CALIF. MEN COLONY, WEST"            , "CA"   ,
-    "CAMERTX"                , "CAMERON COUNTY JAIL"                , "TX"   ,
-    "CARDFVA"                , "CAROLINE DETENTION FACILITY"        , "VA"   ,
-    "CASCAMT"                , "CASCADE COUNTY JAIL, MT"            , "MT"   ,
-    "CASPSAC"                , "CSP-SACRAMENTO"                     , "CA"   ,
-    "CASSCNE"                , "CASS COUNTY JAIL"                   , "NE"   ,
-    "COBBJGA"                , "COBB CO SHERIFFS OFC ADULT DET CTR" , "GA"   ,
-    "CODCCSP"                , "COLO DEPT OF CORRECTIONS"           , "CO"   ,
-    "COLCASC"                , "COLUMBIA CARE CENTER"               , "SC"   ,
-    "COLLIFL"                , "COLLIER COUNTY SHERIFF"             , "FL"   ,
-    "COLUMFL"                , "COLUMBIA COUNTY JAIL"               , "FL"   ,
+    "ALEXAVA"                , "ALEXANDRIA CITY JAIL"               , "VA"   , # https://www.globaldetentionproject.org/countries/americas/united-states/detention-centres/476/alexandria-city-jail
+    "ALHAMCA"                , "ALHAMBRA CITY JAIL"                 , "CA"   , # https://www.globaldetentionproject.org/countries/americas/united-states/detention-centres/1329/alhambra-city-jail
+    "ALLEGNY"                , "ALLEGANY COUNTY JAIL"               , "NY"   , # https://www.globaldetentionproject.org/countries/americas/united-states/detention-centres/1281/allegany-county-jail
+    "ARAPACO"                , "ARAPAHOE COUNTY JAIL"               , "CO"   , # https://www.globaldetentionproject.org/countries/americas/united-states/detention-centres/644/arapahoe-county-jail
+    "ARRMCCA"                , "ARROWHEAD REGIONAL MED CENTER"      , "CA"   , # https://www.arrowheadregional.org/
+    "AZSVCPC"                , "ARIZONA STATE PRISON - YUMA"        , "AZ"   , # https://corrections.az.gov/yuma
+    "CACFMES"                , "MESA VERDE ICE PROCESSING CENTER"   , "CA"   , # https://www.ice.gov/detain/detention-facilities/mesa-verde-ice-processing-facility
+    "CACHEUT"                , "CACHE CO. JAIL"                     , "UT"   , # https://www.ice.gov/node/61445
+    "CACTYCA"                , "CAL CITY ICE PROCESSING CENTER"     , "CA"   , # https://www.ice.gov/detain/detention-facilities/california-city-detention-facility
+    "CADESVI"                , "DESERT VIEW ANNEX"                  , "VI"   , # https://www.ice.gov/detain/detention-facilities/desert-view-annex
+    "CALHOMI"                , "CALHOMI CALHOUN CO., BATTLE CR,MI"  , "MI"   , # https://www.ice.gov/detain/detention-facilities/calhoun-county-correctional-center
+    "CAMBRPA"                , "CAMBRIA COUNTY JAIL, PA"            , "PA"   , # https://www.ice.gov/foia/2021-cambria-county-jail-edensburg-pa-mar-8-12-2021
+    "CAMCOWY"                , "CAMPBELL COUNTY JAIL"               , "WY"   , # https://www.ice.gov/detain/detention-facilities/campbell-county-detention-center
+    "CAMENCW"                , "CALIF. MEN COLONY, WEST"            , "CA"   , # https://www.cdcr.ca.gov/facility-locator/cmc/
+    "CAMERTX"                , "CAMERON COUNTY JAIL"                , "TX"   , # https://www.globaldetentionproject.org/countries/americas/united-states/detention-centres/1419/cameron-county-jail
+    "CARDFVA"                , "CAROLINE DETENTION FACILITY"        , "VA"   , # https://www.ice.gov/detain/detention-facilities/caroline-detention-facility
+    "CASCAMT"                , "CASCADE COUNTY JAIL, MT"            , "MT"   , # https://www.globaldetentionproject.org/countries/americas/united-states/detention-centres/597/cascade-county-jail-montana
+    "CASPSAC"                , "CSP-SACRAMENTO"                     , "CA"   , # https://www.cdcr.ca.gov/facility-locator/sac/
+    "CASSCNE"                , "CASS COUNTY JAIL"                   , "NE"   , # https://www.ice.gov/foia/2020-cass-county-jail-plattsmouth-ne-aug-10-13-2020
+    "COBBJGA"                , "COBB CO SHERIFFS OFC ADULT DET CTR" , "GA"   , # https://www.globaldetentionproject.org/countries/americas/united-states/detention-centres/1288/cobb-county-jail
+    "CODCCSP"                , "COLO DEPT OF CORRECTIONS"           , "CO"   , # https://cdoc.colorado.gov/
+    "COLCASC"                , "COLUMBIA CARE CENTER"               , "SC"   , # https://www.globaldetentionproject.org/countries/americas/united-states/detention-centres/1429/columbia-care-center
+    "COLLIFL"                , "COLLIER COUNTY SHERIFF"             , "FL"   , # https://www.globaldetentionproject.org/countries/americas/united-states/detention-centres/1290/collier-county-naples-jail-center
+    "COLUMFL"                , "COLUMBIA COUNTY JAIL"               , "FL"   , # https://columbiasheriff.org/detention-facility/
     "CONHOTX"                , "CONNALLY MEMORIAL MEDICAL CENTER"   , "TX"   ,
-    "COXMEMO"                , "COXHEALTH MEDICAL CENTER SOUTH"     , "MO"   ,
-    "CWHCCMP"                , "COMMONWEALTH HEALTHCARE CORP"       , "MP"   ,
-    "DEAPDMI"                , "DEARBORN POLICE DEPT."              , "MI"   ,
-    "DEKALAL"                , "DEKALB COUNTY DETENTION CENTER"     , "AL"   ,
-    "DENICDF"                , "DENVER CONTRACT DETENTION FACILITY" , "CO"   , # ICE website
-    "DENVECO"                , "DENVER COUNTY JAIL"                 , "CO"   ,
-    "ELZICDF"                , "ELIZABETH CONTRACT D.F."            , "NJ"   , # ICE website
+    "COXMEMO"                , "COXHEALTH MEDICAL CENTER SOUTH"     , "MO"   , # https://www.coxhealth.com/our-locations/cox-medical-center-south/
+    "CWHCCMP"                , "COMMONWEALTH HEALTHCARE CORP"       , "MP"   , # https://www.chcc.health/
+    "DEAPDMI"                , "DEARBORN POLICE DEPT."              , "MI"   , # https://www.globaldetentionproject.org/countries/americas/united-states/detention-centres/543/dearborn-police-department
+    "DEKALAL"                , "DEKALB COUNTY DETENTION CENTER"     , "AL"   , # https://www.ice.gov/foia/dekalb-county-detention-center-al
+    "DENICDF"                , "DENVER CONTRACT DETENTION FACILITY" , "CO"   , # https://www.ice.gov/detain/detention-facilities/aurora-contract-detention-facility
+    "DENVECO"                , "DENVER COUNTY JAIL"                 , "CO"   , # https://www.denvercriminalattorneylawyer.com/colorado-jail-prison-information/denver-county-jail
+    "ELZICDF"                , "ELIZABETH CONTRACT D.F."            , "NJ"   , # https://www.ice.gov/detain/detention-facilities/elizabeth-contract-detention-facility
     "FLBAKCI"                , "BAKER C. I."                        , "FL"   , # https://www.fdc.myflorida.com/institutions/institutions-list/279
-    "FLBHCFL"                , "FT LAUDERDALE BEHAVOR HLTH CTR"     , "FL"   ,
+    "FLBHCFL"                , "FT LAUDERDALE BEHAVOR HLTH CTR"     , "FL"   , # https://quality.dev.healthfinder.fl.gov/Facility-Provider/Profile/?LID=10066
     "FLCHACI"                , "CHARLOTTE CI, PUNTA GORDA"          , "FL"   , # https://www.fdc.myflorida.com/institutions/institutions-list/510
-    "FLDADCI"                , "DADE CORRECTIONAL INST"             , "FL"   ,
+    "FLDADCI"                , "DADE CORRECTIONAL INST"             , "FL"   , # https://www.fdc.myflorida.com/institutions/list-of-major-institutions/dade-correctional-institution
     "FLDSSFS"                , "FLORIDA SOFT-SIDED FACILITY-SOUTH"  , "FL"   ,
-    "FLGLRFL"                , "FLAGLER COUNTY JAIL"                , "FL"   ,
+    "FLGLRFL"                , "FLAGLER COUNTY JAIL"                , "FL"   , # https://www.flaglersheriff.com/divisions/court-and-correction
     "FLHOSFL"                , "FORT LAUDERDALE HOSPITAL"           , "FL"   ,
     "FLORHAZ"                , "FLORENCE HOSPITAL"                  , "AZ"   ,
-    "FLOYDGA"                , "FLOYD COUNTY JAIL"                  , "GA"   ,
+    "FLOYDGA"                , "FLOYD COUNTY JAIL"                  , "GA"   , # https://www.floydsheriffga.gov/jail-detention
     "GADRYJM"                , "D. RAY JAMES PRISON"                , "GA"   , # https://www.geogroup.com/facilities/d-ray-james-correctional-facility/
-    "GALLAMT"                , "GALLATIN COUNTY JAIL"               , "MT"   ,
-    "GARVIOK"                , "GARVIN COUNTY JAIL"                 , "OK"   ,
-    "GASTNNC"                , "GASTON COUNTY JAIL"                 , "NC"   ,
+    "GALLAMT"                , "GALLATIN COUNTY JAIL"               , "MT"   , # https://gallatincountysheriff.com/detention-center/
+    "GARVIOK"                , "GARVIN COUNTY JAIL"                 , "OK"   , # https://www.ice.gov/node/64728
+    "GASTNNC"                , "GASTON COUNTY JAIL"                 , "NC"   , # https://www.globaldetentionproject.org/countries/americas/united-states/detention-centres/589/gaston-county-jail
     "GTMOACU"                , "WINDWARD HOLDING FACILITY"          , "CU"   , # note this is CU = Cuba
     "GTMOBCU"                , "MIGRANT OPS CENTER EAST"            , "CU"   , # note this is CU = Cuba
     "GTMODCU"                , "MIGRANT OPS CENTER MAIN AV622"      , "CU"   , # note this is CU = Cuba
