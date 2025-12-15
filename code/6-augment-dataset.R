@@ -4,29 +4,63 @@ library(tigris)
 
 source("code/functions.R")
 
+county_sf <-
+  tigris::counties(
+    # cb = TRUE,
+    year = 2024,
+    # resolution = "5m",
+    class = "sf",
+    progress = FALSE
+  ) |>
+  left_join(
+    tigris::fips_codes |>
+      distinct(state_code = state_code, STATE_NAME = state_name),
+    by = c("STATEFP" = "state_code")
+  ) |>
+  st_transform(crs = 4326) |>
+  select(
+    county_name = NAME,
+    state_name = STATE_NAME,
+    county_fips_code = GEOID,
+    state_fips_code = STATEFP,
+    geometry
+  )
+
 # temporarily just use the facilities in the recent data
+# facility_list <-
+#   arrow::read_feather(
+#     "https://github.com/deportationdata/ice/raw/refs/heads/main/data/detention-stints-latest.feather"
+#   ) |>
+#   as_tibble() |>
+#   # mutate(
+#   #   cnt = sum(
+#   #     year(book_in_date_time) == 2025 | year(book_out_date_time) == 2025
+#   #   ),
+#   #   .by = detention_facility_code
+#   # ) |>
+#   # filter(cnt >= 1) |>
+#   distinct(detention_facility_code, name = detention_facility)
+
 facility_list <-
   arrow::read_feather(
-    "https://github.com/deportationdata/ice/raw/refs/heads/main/data/detention-stints-latest.feather"
+    "data/facilities-from-detentions.feather"
   ) |>
   as_tibble() |>
-  # mutate(
-  #   cnt = sum(
-  #     year(book_in_date_time) == 2025 | year(book_out_date_time) == 2025
-  #   ),
-  #   .by = detention_facility_code
-  # ) |>
-  # filter(cnt >= 1) |>
-  distinct(detention_facility_code, name = detention_facility)
+  select(
+    detention_facility_code,
+    name = detention_facility,
+    first_book_in,
+    latest_book_in = last_book_in
+  )
 
 best_values_wide <-
   arrow::read_feather(
     "data/facilities-best-values-wide.feather"
   )
 
-stats_from_detention_stints <- arrow::read_feather(
-  "data/facilities-from-detentions.feather"
-)
+# stats_from_detention_stints <- arrow::read_feather(
+#   "data/facilities-from-detentions.feather"
+# )
 
 facility_final <-
   facility_list |>
@@ -34,15 +68,15 @@ facility_final <-
     best_values_wide,
     by = "detention_facility_code"
   ) |>
-  left_join(
-    stats_from_detention_stints |>
-      select(
-        detention_facility_code,
-        first_book_in,
-        latest_book_in = last_book_in
-      ),
-    by = "detention_facility_code"
-  ) |>
+  # left_join(
+  #   stats_from_detention_stints |>
+  #     select(
+  #       detention_facility_code,
+  #       first_book_in,
+  #       latest_book_in = last_book_in
+  #     ),
+  #   by = "detention_facility_code"
+  # ) |>
   relocate(
     detention_facility_code,
     name,
@@ -55,6 +89,8 @@ facility_final <-
     type_detailed
   ) |>
   as_tibble()
+
+# bring in geocoding
 
 vera_df <- arrow::read_feather("data/facilities-vera.feather")
 
@@ -81,6 +117,8 @@ facility_final <-
 #   filter(is.na(address)) |>
 #   select(1:2) |>
 #   clipr::write_clip()
+
+# bring in court data
 
 # from https://www.uscourts.gov/file/18039/download map
 circuits <- tribble(
@@ -143,15 +181,6 @@ circuits <- tribble(
   "MP"  ,        9
 )
 
-counties_sf <-
-  tigris::counties(
-    cb = TRUE,
-    year = 2024,
-    class = "sf",
-    progress = FALSE
-  ) |>
-  st_transform(crs = 4326)
-
 federal_court_districts_df <-
   read_csv("inputs/federal_court_districts.csv", skip = 1)
 
@@ -165,21 +194,21 @@ federal_court_districts_partial_states <-
   filter(county != "All Counties")
 
 federal_court_districts_county_sf_partial_states <-
-  counties_sf |>
+  county_sf |>
   anti_join(
     federal_court_districts_entire_states,
-    by = c("STATE_NAME" = "state")
+    by = c("state_name" = "state")
   ) |>
   anti_join(
     federal_court_districts_partial_states,
-    by = c("NAMELSAD" = "county", "STATE_NAME" = "state")
+    by = c("county_name" = "county", "state_name" = "state")
   )
 
 federal_court_districts_county_sf_entire_states <-
-  counties_sf |>
+  county_sf |>
   inner_join(
     federal_court_districts_entire_states,
-    by = c("STATE_NAME" = "state")
+    by = c("state_name" = "state")
   )
 
 federal_court_districts_county_sf <-
@@ -192,6 +221,8 @@ federal_court_districts_county_sf <-
     geometry = st_union(geometry),
     .by = judicial_district
   )
+
+# bring in ICE field office
 
 ice_field_offices <- sfarrow::st_read_feather(
   "https://github.com/deportationdata/ice/raw/refs/heads/main/data/ice-aor-shp.feather"
@@ -219,6 +250,10 @@ facility_final <-
     ice_field_offices |>
       filter(area_of_responsibility_name != "HQ") |>
       transmute(field_office = office_name), #|> mutate(in_aor = 1),
+    join = st_within
+  ) |>
+  st_join(
+    county_sf,
     join = st_within
   ) |>
   st_drop_geometry() |>
