@@ -117,7 +117,7 @@ detentions_41855 <-
 
 detentions_facilities <-
   bind_rows(
-    "41855" = detentions_41855 |>
+    "1" = detentions_41855 |>
       transmute(
         detention_facility_code,
         detention_facility,
@@ -127,7 +127,7 @@ detentions_facilities <-
         gender,
         birth_year
       ),
-    "2012-2023" = detentions_2012_2023 |>
+    "2" = detentions_2012_2023 |>
       select(
         detention_facility_code,
         detention_facility,
@@ -137,7 +137,7 @@ detentions_facilities <-
         gender,
         birth_year
       ),
-    "current" = detentions_current |>
+    "3" = detentions_current |>
       select(
         detention_facility_code,
         detention_facility,
@@ -146,10 +146,13 @@ detentions_facilities <-
         anonymized_identifier = unique_identifier,
         gender,
         birth_year
-      )
+      ),
+    .id = "source"
   ) |>
-  group_by(detention_facility_code, detention_facility) |>
+  arrange(detention_facility_code, source) |>
+  group_by(detention_facility_code) |>
   summarize(
+    detention_facility = last(detention_facility),
     first_book_in = as.Date(min(
       pmin(detention_book_out_date, detention_book_in_date, na.rm = TRUE),
       na.rm = TRUE

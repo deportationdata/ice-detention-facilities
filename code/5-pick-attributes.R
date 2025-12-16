@@ -17,7 +17,9 @@ all_fields <- c(
   "docket",
   "ice_funded",
   "over_under_72",
-  "operator"
+  "operator",
+  "eoir_base_city",
+  "eoir_detention_facility_code"
 )
 
 facility_attributes <-
