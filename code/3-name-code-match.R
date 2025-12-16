@@ -137,7 +137,6 @@ code_name_state_short <-
 # pasted below
 
 # coded based on reading the codes and names, and additional research only when ambiguous
-# TODO: verify
 code_name_state_manual <-
   tribble(
     ~detention_facility_code , ~name                                , ~state ,
