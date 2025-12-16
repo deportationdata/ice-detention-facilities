@@ -268,13 +268,17 @@ value_histories <-
     dates = list(date),
     sources = list(source),
     n_changes = sum(changed, na.rm = TRUE),
+    has_gov_source = any(!is.na(source) & source != "vera"),
+    most_recent_source = source[which.max(dates)],
     .groups = "drop"
   )
 
-government_sources <- c(
-  "dedicated", "2017", "05655", "website", "detention_management",
-  "41855", "22955", "detentions", "eoir", "hospitals", "jails_prisons"
-)
+is_po_box <- function(values) {
+  str_detect(
+    str_to_upper(values),
+    "\\bP\\s*\\.?\\s*O\\s*\\.?\\s*BOX\\b"
+  )
+}
 
 # implementing best values
 best_values <-
@@ -288,19 +292,44 @@ best_values <-
     ends_with_original = values[length(values)] == values[1],
     has_reversion = has_reversion(values),
     is_aba = is_aba(values),
+    non_po_values = list(values[!is_po_box(values)]),
+    has_non_po = length(non_po_values[[1]]) > 0,
 
     best_value = case_when(
-      # rule 1: never changes
-      n_changes == 0 ~ values[1],
+      most_recent_source == "vera" & !has_gov_source ~ values[length(values)],
+      
+      variable == "address" & has_non_po ~ {
+        v <- non_po_values[[1]]
+        if (n_changes == 0) v[1]
+        else if (!has_reversion) v[length(v)]
+        else if (has_reversion & length(get_modes(v)) == 1) get_modes(v)[1]
+        else v[length(v)]
+      },
 
-      # rules 2 and 3: changes but does not revert (keep final)
-      !has_reversion ~ values[length(values)],
+      TRUE ~ case_when(
+        # rule 1: never changes
+        n_changes == 0 ~ values[1],
 
-      # rule 4: A → B → A (use modal value)
-      has_reversion & n_modes == 1 ~ modes[[1]],
+        # rule 2: changes but does not revert (keep final)
+        !has_reversion ~ values[length(values)],
 
-      # rule 5: multiple modes or more than 5 changes
-      TRUE ~ NA_character_
+        # rule 3: A → B → A (use modal value)
+        has_reversion & n_modes == 1 ~ modes[[1]],
+
+        # rule 4: multiple modes or more than 5 changes
+        TRUE ~ values[length(values)]
+      )
+    ),
+
+    best_address_any = if_else(
+      variable == "address",
+      case_when(
+        n_changes == 0 ~ values[1],
+        !has_reversion ~ values[length(values)],
+        has_reversion & n_modes == 1 ~ modes[[1]],
+        TRUE ~ NA_character_
+      ),
+      NA_character_
     ),
 
     # manual review flag
@@ -309,7 +338,9 @@ best_values <-
       n_changes > 5 ~ "many_changes",
       has_reversion & n_modes > 1 ~ "reversion_multiple_modes",
       TRUE ~ NA_character_
-    )
+    ),
+
+    has_problem = !is.na(review_flag)
   ) |>
   ungroup()
 
@@ -335,7 +366,7 @@ reversion_counts_summary <-
 # merging best_values with facilities data
 best_values_wide <-
   best_values |>
-  select(detention_facility_code, variable, best_value) |>
+  select(detention_facility_code, variable, best_value, best_address_any) |>
   pivot_wider(
     names_from = variable,
     values_from = best_value
@@ -347,9 +378,25 @@ best_values_wide <-
         detention_facility_code_alt = detention_facility_code_2
       ),
     by = "detention_facility_code"
+  ) |>
+  rename(address_any = best_address_any)
+
+problem_flags_wide <-
+  best_values |>
+  mutate(problem_var = paste0("problem_", variable)) |>
+  select(detention_facility_code, problem_var, has_problem) |>
+  pivot_wider(
+    names_from = problem_var,
+    values_from = has_problem,
+    values_fill = FALSE
   )
+
+best_values_wide <-
+  best_values_wide |>
+  left_join(problem_flags_wide, by = "detention_facility_code")
 
 arrow::write_feather(
   best_values_wide,
   "data/facilities-best-values-wide.feather"
 )
+  
