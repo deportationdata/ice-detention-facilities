@@ -269,7 +269,7 @@ value_histories <-
     sources = list(source),
     n_changes = sum(changed, na.rm = TRUE),
     has_gov_source = any(!is.na(source) & source != "vera"),
-    most_recent_source = source[which.max(dates)],
+    most_recent_source = source[which.max(date)],
     .groups = "drop"
   )
 
@@ -292,15 +292,15 @@ best_values <-
     ends_with_original = values[length(values)] == values[1],
     has_reversion = has_reversion(values),
     is_aba = is_aba(values),
-    non_po_values = list(values[!is_po_box(values)]),
-    has_non_po = length(non_po_values[[1]]) > 0,
+    has_non_po = length(values[!is_po_box(values)]) > 0,
 
     best_value = case_when(
       most_recent_source == "vera" & !has_gov_source ~ values[length(values)],
       
       variable == "address" & has_non_po ~ {
-        v <- non_po_values[[1]]
-        if (n_changes == 0) v[1]
+        v <- values[!is_po_box(values)]
+        if (length(v) == 0) NA_character_
+        else if (n_changes == 0) v[1]
         else if (!has_reversion) v[length(v)]
         else if (has_reversion & length(get_modes(v)) == 1) get_modes(v)[1]
         else v[length(v)]
