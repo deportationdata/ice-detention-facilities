@@ -43,7 +43,7 @@ hold_rooms_manual <-
     # "DULHOLD"                , "DULUTH HOLD ROOM"       , "MN"   , # https://www.vera.org/ice-detention-trends
     # "RICHOLD"                , "RICHLAND HOLD ROOM"     , "WA"   , # https://www.ice.gov/node/62177
     # "SYRHOLD"                , "SYRACUSE HOLD ROOM"     , "NY"   , # https://www.vera.org/ice-detention-trends
-    # "CBPHOLD"                , "BUFFALO USBP HOLD ROOM" , "NY" # https://www.cbp.gov/border-security/along-us-borders/border-patrol-sectors/buffalo-sector-new-york
+    "CBPHOLD"                , "BUFFALO USBP HOLD ROOM" , "NY" # https://www.cbp.gov/border-security/along-us-borders/border-patrol-sectors/buffalo-sector-new-york
   )
 
 hold_rooms_final <-
