@@ -41,7 +41,7 @@ hold_rooms_manual <-
     # "DULHOLD"                , "DULUTH HOLD ROOM"       , "MN"   , # https://www.vera.org/ice-detention-trends
     # "RICHOLD"                , "RICHLAND HOLD ROOM"     , "WA"   , # https://www.ice.gov/node/62177
     # "SYRHOLD"                , "SYRACUSE HOLD ROOM"     , "NY"   , # https://www.vera.org/ice-detention-trends
-    "CBPHOLD"                , "BUFFALO USBP HOLD ROOM" , "NY" # https://www.cbp.gov/border-security/along-us-borders/border-patrol-sectors/buffalo-sector-new-york and confirmed arrests are in Buffalo NY via matching to arrests table
+    # "CBPHOLD"                , "BUFFALO USBP HOLD ROOM" , "NY" # https://www.cbp.gov/border-security/along-us-borders/border-patrol-sectors/buffalo-sector-new-york and confirmed arrests are in Buffalo NY via matching to arrests table
   )
 
 hold_rooms_final <-
@@ -138,90 +138,90 @@ code_name_state_short <-
     "VRK"                    , "VRK PRCS"                           , "NY"   , # https://www.globaldetentionproject.org/countries/americas/united-states/detention-centres/678/varick-federal-detention-centre-formerly-varick-street-service-processing-centre
 
     # new
-    "AFRC"                   , "ARTESIA FAMILY RESIDENTIAL CENTER"  , ""     ,
-    "BOPALF"                 , "ALLENWOOD (LOW) FCI"                , ""     ,
+    "AFRC"                   , "ARTESIA FAMILY RESIDENTIAL CENTER"  , "NM"   , # https://www.detentionwatchnetwork.org/sites/default/files/reports/DWN%20Expose%20and%20Close%20Artesia%20Report.pdf
+    "BOPALF"                 , "ALLENWOOD (LOW) FCI"                , "PA"   , # https://www.bop.gov/locations/institutions/alf/
     "BOPALM"                 , "ALLENWOOD (MED) FCI"                , "PA"   , # https://www.bop.gov/locations/institutions/alm/
-    "BOPALP"                 , "ALLENWOOD U.S.PEN."                 , ""     ,
-    "BOPASH"                 , "ASHLAND FED.CORR.INST."             , ""     ,
-    "BOPATW"                 , "U.S.P. ATWATER"                     , ""     ,
-    "BOPBAS"                 , "BASTROP FED.CORR.INST."             , ""     ,
-    "BOPBEC"                 , "BECKLEY  FED.CORR.INST."            , ""     ,
-    "BOPBIG"                 , "BIG SPRING FED.CORR.INST."          , ""     ,
-    "BOPBMA"                 , "BEAUMONT FED.CORR.CTR"              , ""     ,
-    "BOPBML"                 , "BEAUMONT FCC, LOW"                  , ""     ,
-    "BOPBMM"                 , "BEAUMONT FCC, MEDIUM"               , ""     ,
-    "BOPBMP"                 , "BEAUMONT FEDERAL PRISON"            , ""     ,
-    "BOPBUT"                 , "BUTNER FED.CORR.INST."              , ""     ,
-    "BOPCCC"                 , "CHICAGO MCC"                        , ""     ,
-    "BOPCOL"                 , "COLEMAN FCI"                        , ""     ,
-    "BOPCRW"                 , "CARSWELL FED.MED.CTR"               , ""     ,
-    "BOPCUM"                 , "CUMBERLAND FCI"                     , ""     ,
-    "BOPDAL"                 , "DALBY CORRECTIONAL INSTITUTE"       , ""     ,
-    "BOPDAN"                 , "DANBURY FED.CORR.INST."             , ""     ,
-    "BOPDTH"                 , "DULUTH FED.PRISON CAMP"             , ""     ,
-    "BOPDUB"                 , "DUBLIN FED.CORR.INST."              , ""     ,
-    "BOPEDG"                 , "EDGEFIELD FED.CORR.INST."           , ""     ,
-    "BOPELK"                 , "ELKTON FED.CORR.INST."              , ""     ,
-    "BOPENG"                 , "ENGLEWOOD FED.CORR.INST."           , ""     ,
-    "BOPERE"                 , "EL RENO FED.CORR.INST."             , ""     ,
-    "BOPEST"                 , "ESTILL FED.CORR.INST."              , ""     ,
-    "BOPFAI"                 , "FAIRTON FCI"                        , ""     ,
-    "BOPFLF"                 , "FLORENCE FED.CORR.INST."            , ""     ,
-    "BOPFLM"                 , "FLORENCE ADMAX US PEN."             , ""     ,
-    "BOPFLP"                 , "FLORENCE US PEN"                    , ""     ,
-    "BOPFOR"                 , "FORREST CITY FED.CORR.INST"         , ""     ,
-    "BOPFTD"                 , "FORT DIX FED.CORR.INST."            , ""     ,
-    "BOPFTW"                 , "FORT WORTH FED.MED.CENTER"          , ""     ,
-    "BOPGIL"                 , "FCI GILMER"                         , ""     ,
-    "BOPGRE"                 , "GREENVILLE FCI"                     , ""     ,
-    "BOPJES"                 , "JESUP FED.CORR.INST."               , ""     ,
-    "BOPLEW"                 , "LEWISBURG U.S. PEN."                , ""     ,
-    "BOPLEX"                 , "LEXINTON FED.MED CENTER"            , ""     ,
-    "BOPLOR"                 , "LORETTO FED.CORR.INST."             , ""     ,
+    "BOPALP"                 , "ALLENWOOD U.S.PEN."                 , "PA"   , # https://www.bop.gov/locations/institutions/alp/
+    "BOPASH"                 , "ASHLAND FED.CORR.INST."             , "KY"   , # https://www.bop.gov/locations/institutions/ash/
+    "BOPATW"                 , "U.S.P. ATWATER"                     , "CA"   , # https://www.bop.gov/locations/institutions/atw/
+    "BOPBAS"                 , "BASTROP FED.CORR.INST."             , "TX"   , # https://www.bop.gov/locations/institutions/bas/
+    "BOPBEC"                 , "BECKLEY  FED.CORR.INST."            , "WV"   , # https://www.bop.gov/locations/institutions/bec/
+    "BOPBIG"                 , "BIG SPRING FED.CORR.INST."          , "TX"   , # https://www.bop.gov/locations/institutions/big/
+    "BOPBMA"                 , "BEAUMONT FED.CORR.CTR"              , "TX"   , # https://www.globaldetentionproject.org/wp-content/uploads/2021/01/US_Department_of_Homeland_Security_2007_1_1.pdf
+    "BOPBML"                 , "BEAUMONT FCC, LOW"                  , "TX"   , # https://www.bop.gov/locations/institutions/bml/
+    "BOPBMM"                 , "BEAUMONT FCC, MEDIUM"               , "TX"   , # https://www.bop.gov/locations/institutions/bmm/
+    "BOPBMP"                 , "BEAUMONT FEDERAL PRISON"            , "TX"   , # https://www.bop.gov/locations/institutions/bmp/
+    "BOPBUT"                 , "BUTNER FED.CORR.INST."              , "NC"   , # https://www.bop.gov/locations/institutions/but/
+    "BOPCCC"                 , "CHICAGO MCC"                        , "IL"   , # https://www.bop.gov/locations/institutions/ccc/
+    "BOPCOL"                 , "COLEMAN FCI"                        , "FL"   , # https://www.bop.gov/locations/institutions/col/
+    "BOPCRW"                 , "CARSWELL FED.MED.CTR"               , "TX"   , # https://www.bop.gov/locations/institutions/crw/
+    "BOPCUM"                 , "CUMBERLAND FCI"                     , "MD"   , # https://www.bop.gov/locations/institutions/cum/
+    "BOPDAL"                 , "DALBY CORRECTIONAL INSTITUTE"       , "TX"   ,
+    "BOPDAN"                 , "DANBURY FED.CORR.INST."             , "CT"   , # https://www.bop.gov/locations/institutions/dan/
+    "BOPDTH"                 , "DULUTH FED.PRISON CAMP"             , "MN"   , # https://www.bop.gov/locations/institutions/dth/
+    "BOPDUB"                 , "DUBLIN FED.CORR.INST."              , "CA"   , # https://www.bop.gov/locations/institutions/dub/
+    "BOPEDG"                 , "EDGEFIELD FED.CORR.INST."           , "SC"   , # https://www.bop.gov/locations/institutions/edg/
+    "BOPELK"                 , "ELKTON FED.CORR.INST."              , "OH"   , # https://www.bop.gov/locations/institutions/elk/
+    "BOPENG"                 , "ENGLEWOOD FED.CORR.INST."           , "CO"   , # https://www.bop.gov/locations/institutions/eng/
+    "BOPERE"                 , "EL RENO FED.CORR.INST."             , "OK"   , # https://www.bop.gov/locations/institutions/ere/
+    "BOPEST"                 , "ESTILL FED.CORR.INST."              , "SC"   , # https://www.bop.gov/locations/institutions/est/
+    "BOPFAI"                 , "FAIRTON FCI"                        , "NJ"   , # https://www.bop.gov/locations/institutions/fai/
+    "BOPFLF"                 , "FLORENCE FED.CORR.INST."            , "CO"   , # https://www.bop.gov/locations/institutions/flf/
+    "BOPFLM"                 , "FLORENCE ADMAX US PEN."             , "CO"   , # https://www.bop.gov/locations/institutions/flm/
+    "BOPFLP"                 , "FLORENCE US PEN"                    , "CO"   , # https://www.bop.gov/locations/institutions/flp/
+    "BOPFOR"                 , "FORREST CITY FED.CORR.INST"         , "AR"   , # https://www.bop.gov/locations/institutions/for/
+    "BOPFTD"                 , "FORT DIX FED.CORR.INST."            , "NJ"   , # https://www.bop.gov/locations/institutions/ftd/
+    "BOPFTW"                 , "FORT WORTH FED.MED.CENTER"          , "TX"   , # https://www.bop.gov/locations/institutions/ftw/
+    "BOPGIL"                 , "FCI GILMER"                         , "WV"   , # https://www.bop.gov/locations/institutions/gil/
+    "BOPGRE"                 , "GREENVILLE FCI"                     , "IL"   , # https://www.bop.gov/locations/institutions/gre/
+    "BOPJES"                 , "JESUP FED.CORR.INST."               , "GA"   , # https://www.bop.gov/locations/institutions/jes/
+    "BOPLEW"                 , "LEWISBURG U.S. PEN."                , "PA"   , # https://www.bop.gov/locations/institutions/lew/
+    "BOPLEX"                 , "LEXINTON FED.MED CENTER"            , "KY"   , # https://www.bop.gov/locations/institutions/lex/
+    "BOPLOR"                 , "LORETTO FED.CORR.INST."             , "PA"   , # https://www.bop.gov/locations/institutions/lor/
     "BOPLTL"                 , "LA TUNA FEDERAL SATTELITE, LOW"     , ""     ,
-    "BOPMAN"                 , "MANCHESTER FED CORR INSTR"          , ""     ,
-    "BOPMAR"                 , "MARION USP"                         , ""     ,
-    "BOPMCK"                 , "MCKEAN FED.CORR.INST."              , ""     ,
-    "BOPMCR"                 , "MCCREARY USP"                       , ""     ,
-    "BOPMEM"                 , "MEMPHIS FED.CORR.INST."             , ""     ,
-    "BOPMIA"                 , "MIAMI FCI (FORMER MCC)"             , ""     ,
-    "BOPMIL"                 , "MILAN FED.CORR.INST."               , ""     ,
-    "BOPMNA"                 , "MARIANNA FED.CORR.INST."            , ""     ,
-    "BOPMVC"                 , "MOSHANNON VALLEY CORRECTIONAL"      , ""     ,
-    "BOPNEO"                 , "NORTHEAST OHIO CORRECTIONAL CENTER" , ""     ,
-    "BOPNYM"                 , "NEW YORK MCC"                       , ""     ,
-    "BOPOAK"                 , "OAKDALE FED.CORR.INST."             , ""     ,
-    "BOPOKL"                 , "OKLAHOMA FED.TRANSFER CTR"          , ""     ,
-    "BOPOTV"                 , "OTISVILLE FED.CORR.INST."           , ""     ,
-    "BOPOXF"                 , "OXFORD FED.CORR.INST."              , ""     ,
-    "BOPPEK"                 , "PEKIN FED.CORR.INST."               , ""     ,
-    "BOPPOL"                 , "POLLOCK USP"                        , ""     ,
-    "BOPRBK"                 , "RAY BROOK FED.CORR.INST."           , ""     ,
-    "BOPRCH"                 , "ROCHESTER FED.MED.CENTER"           , ""     ,
-    "BOPSAF"                 , "SAFFORD FED.CORR.INST."             , ""     ,
-    "BOPSCH"                 , "SCHUYLKILL FED.CORR.INST."          , ""     ,
-    "BOPSDC"                 , "SAN DIEGO MCC"                      , ""     ,
-    "BOPSEA"                 , "SEAGOVILLE FED.CORR.INST."          , ""     ,
-    "BOPSHE"                 , "SHERIDAN FED.CORR.INST."            , ""     ,
-    "BOPSST"                 , "SANDSTONE FED.CORR.INST."           , ""     ,
-    "BOPTAL"                 , "TALLAHASSEE FED.CORR.INST"          , ""     ,
-    "BOPTCP"                 , "US PENITENTIARY TUCSON"             , ""     ,
-    "BOPTDG"                 , "TALLADEGA FCI"                      , ""     ,
-    "BOPTEX"                 , "TEXARKANA FED.CORR.INST."           , ""     ,
-    "BOPTHA"                 , "TERRE HAUTE USP"                    , ""     ,
-    "BOPTRV"                 , "THREE RIVERS FCI"                   , ""     ,
-    "BOPWAS"                 , "WASECA FED.CORR.INST."              , ""     ,
-    "BOPYAM"                 , "YAZOO CITY MEDIUM FCI"              , ""     ,
-    "BOPYAZ"                 , "YAZOO CITY FCI"                     , ""     ,
-    "ECC"                    , "EL CENTRO SPC"                      , ""     ,
-    "HSF"                    , "HARLINGEN STAGING FACILITY"         , ""     ,
-    "OAK"                    , "OAKDALE FED. DET. CENTER"           , ""     ,
-    "SPP"                    , "SAN PEDRO SPC"                      , ""     ,
-    "USMCO"                  , "US MARSHALS, COLORADO"              , ""     ,
-    "USMHI"                  , "US MARSHALS, HAWAII"                , ""     ,
-    "USMMD"                  , "US MARSHALS,MARYLAND"               , ""     ,
-    "USMOR"                  , "US MARSHALS, OREGON"                , ""     ,
-    "USMVT"                  , "US MARSHAL'S, VERMONT"              , ""
+    "BOPMAN"                 , "MANCHESTER FED CORR INSTR"          , "KY"   , # https://www.bop.gov/locations/institutions/man/
+    "BOPMAR"                 , "MARION USP"                         , "IL"   , # https://www.bop.gov/locations/institutions/mar/
+    "BOPMCK"                 , "MCKEAN FED.CORR.INST."              , "PA"   , # https://www.bop.gov/locations/institutions/mck/
+    "BOPMCR"                 , "MCCREARY USP"                       , "KY"   , # https://www.bop.gov/locations/institutions/mcr/
+    "BOPMEM"                 , "MEMPHIS FED.CORR.INST."             , "TN"   , # https://www.bop.gov/locations/institutions/mem/
+    "BOPMIA"                 , "MIAMI FCI (FORMER MCC)"             , "FL"   , # https://www.bop.gov/locations/institutions/mia/
+    "BOPMIL"                 , "MILAN FED.CORR.INST."               , "MI"   , # https://www.bop.gov/locations/institutions/mil/
+    "BOPMNA"                 , "MARIANNA FED.CORR.INST."            , "FL"   , # https://www.bop.gov/locations/institutions/mna/
+    "BOPMVC"                 , "MOSHANNON VALLEY CORRECTIONAL"      , "PA"   , # https://www.ice.gov/detain/detention-facilities/moshannon-valley-processing-center
+    "BOPNEO"                 , "NORTHEAST OHIO CORRECTIONAL CENTER" , "OH"   , # https://www.ice.gov/detain/detention-facilities/northeast-ohio-correctional-center
+    "BOPNYM"                 , "NEW YORK MCC"                       , "NY"   , # https://www.bop.gov/locations/institutions/nym/
+    "BOPOAK"                 , "OAKDALE FED.CORR.INST."             , "LA"   , # https://www.bop.gov/locations/institutions/oak/
+    "BOPOKL"                 , "OKLAHOMA FED.TRANSFER CTR"          , "OK"   , # https://www.bop.gov/locations/institutions/okl/
+    "BOPOTV"                 , "OTISVILLE FED.CORR.INST."           , "NY"   , # https://www.bop.gov/locations/institutions/otv/
+    "BOPOXF"                 , "OXFORD FED.CORR.INST."              , "WI"   , # https://www.bop.gov/locations/institutions/oxf/
+    "BOPPEK"                 , "PEKIN FED.CORR.INST."               , "IL"   , # https://www.bop.gov/locations/institutions/pek/
+    "BOPPOL"                 , "POLLOCK USP"                        , "LA"   , # https://www.bop.gov/locations/institutions/pol/
+    "BOPRBK"                 , "RAY BROOK FED.CORR.INST."           , "NY"   , # https://www.bop.gov/locations/institutions/rbk/
+    "BOPRCH"                 , "ROCHESTER FED.MED.CENTER"           , "MN"   , # https://www.bop.gov/locations/institutions/rch/
+    "BOPSAF"                 , "SAFFORD FED.CORR.INST."             , "AZ"   , # https://www.bop.gov/locations/institutions/saf/
+    "BOPSCH"                 , "SCHUYLKILL FED.CORR.INST."          , "PA"   , # https://www.bop.gov/locations/institutions/sch/
+    "BOPSDC"                 , "SAN DIEGO MCC"                      , "CA"   , # https://www.bop.gov/locations/institutions/sdc/
+    "BOPSEA"                 , "SEAGOVILLE FED.CORR.INST."          , "TX"   , # https://www.bop.gov/locations/institutions/sea/
+    "BOPSHE"                 , "SHERIDAN FED.CORR.INST."            , "OR"   , # https://www.bop.gov/locations/institutions/she/
+    "BOPSST"                 , "SANDSTONE FED.CORR.INST."           , "MN"   , # https://www.bop.gov/locations/institutions/sst/
+    "BOPTAL"                 , "TALLAHASSEE FED.CORR.INST"          , "FL"   , # https://www.bop.gov/locations/institutions/tal/
+    "BOPTCP"                 , "US PENITENTIARY TUCSON"             , "AZ"   , # https://www.bop.gov/locations/institutions/tcp/
+    "BOPTDG"                 , "TALLADEGA FCI"                      , "AL"   , # https://www.bop.gov/locations/institutions/tdg/
+    "BOPTEX"                 , "TEXARKANA FED.CORR.INST."           , "TX"   , # https://www.bop.gov/locations/institutions/tex/
+    "BOPTHA"                 , "TERRE HAUTE USP"                    , "IN"   , # https://www.bop.gov/locations/institutions/thp/
+    "BOPTRV"                 , "THREE RIVERS FCI"                   , "TX"   , # https://www.bop.gov/locations/institutions/trv/
+    "BOPWAS"                 , "WASECA FED.CORR.INST."              , "MN"   , # https://www.bop.gov/locations/institutions/was/
+    "BOPYAM"                 , "YAZOO CITY MEDIUM FCI"              , "MS"   , # https://www.globaldetentionproject.org/wp-content/uploads/2021/01/US_Department_of_Homeland_Security_2007_1_1.pdf
+    "BOPYAZ"                 , "YAZOO CITY FCI"                     , "MS"   , # https://www.globaldetentionproject.org/wp-content/uploads/2021/01/US_Department_of_Homeland_Security_2007_1_1.pdf
+    "ECC"                    , "EL CENTRO SPC"                      , "CA"   , # https://www.globaldetentionproject.org/countries/americas/united-states/detention-centres/554/el-centro-detention-facility-service-processing-centre
+    "HSF"                    , "HARLINGEN STAGING FACILITY"         , "TX"   , # https://www.ice.gov/node/62072
+    "OAK"                    , "OAKDALE FED. DET. CENTER"           , "LA"   , # https://www.globaldetentionproject.org/countries/americas/united-states/detention-centres/682/oakdale-federal-detention-center
+    "SPP"                    , "SAN PEDRO SPC"                      , "CA"   , # https://www.globaldetentionproject.org/wp-content/uploads/2021/01/US_Department_of_Homeland_Security_2007_1_1.pdf
+    "USMCO"                  , "US MARSHALS, COLORADO"              , "CO"   , # https://www.usmarshals.gov/local-districts
+    "USMHI"                  , "US MARSHALS, HAWAII"                , "HI"   , # https://www.usmarshals.gov/local-districts
+    "USMMD"                  , "US MARSHALS,MARYLAND"               , "MD"   , # https://www.usmarshals.gov/local-districts
+    "USMOR"                  , "US MARSHALS, OREGON"                , "OR"   , # https://www.usmarshals.gov/local-districts
+    "USMVT"                  , "US MARSHAL'S, VERMONT"              , "VT" # https://www.usmarshals.gov/local-districts
   ) |>
   filter(!is.na(state), state != "")
 
@@ -374,8 +374,8 @@ code_name_state_manual <-
     "ARTESNM"                , "ARTESIA CITY JAIL"                  , "NM"   ,
     "ARTSINM"                , "ARTESIA LAW ENFORCEMENT CENTER"     , "NM"   ,
     "CACFBAK"                , "BAKER CCF"                          , "CA"   ,
-    "CADCCAL"                , "CDC CALIPATRIA IHP"                 , "CA"   , # need to check
-    "CAJUVMN"                , "CARVER CO. JUVY DETENTION"          , "MN"   , # need to check
+    "CADCCAL"                , "CDC CALIPATRIA IHP"                 , "CA"   , # https://www.cdcr.ca.gov/facility-locator/cal/
+    "CAJUVMN"                , "CARVER CO. JUVY DETENTION"          , "MN"   , # https://www.carvercountymn.gov/departments/court-services-probation/juvenile-division
     "CALCALA"                , "CALCASIEU PARISH PRISON"            , "LA"   ,
     "CALDWMO"                , "CALDWELL COUNTY JAIL"               , "MO"   ,
     "CALDWTX"                , "CALDWELL COUNTY JAIL"               , "TX"   ,
@@ -436,7 +436,7 @@ code_name_state_manual <-
     "DEVILND"                , "DEVILS LAKE LAW ENF CENTR"          , "ND"   ,
     "DEWITIL"                , "DEWITT COUNTY JAIL"                 , "IL"   ,
     "DEWITTX"                , "DE WITT COUNTY JAIL"                , "TX"   ,
-    "EPCJUVI"                , "EL PASO SPC JUVENILE"               , "TX"   , # need source for sure
+    "EPCJUVI"                , "EL PASO SPC JUVENILE"               , "TX"   , # https://juv.epcounty.com/Units/Detention/Default?id=5
     "FLATHMT"                , "FLATHEAD COUNTY JAIL"               , "MT"   ,
     "FLOYDIN"                , "FLOYD COUNTY JAIL"                  , "IN"   ,
     "GAGCONE"                , "GAGE COUNTY JAIL"                   , "NE"   ,
@@ -458,7 +458,7 @@ code_name_state_manual <-
     "HISMCTX"                , "HAMPTON INN & STES MCALLEN"         , "TX"   ,
     "HISPAAZ"                , "HOLIDAY INN & STE PHO AP"           , "AZ"   ,
     "IAHSFTX"                , "GEORGE BUSH INTERCONTINENTAL"       , "TX"   ,
-    "IBPSYUM"                , "YUMA BORDER PATROL"                 , "AZ"   , # need to check
+    "IBPSYUM"                , "YUMA BORDER PATROL"                 , "AZ"   , # https://www.cbp.gov/border-security/along-us-borders/border-patrol-sectors/yuma-sector-arizona/yuma-station
     "IDACOIA"                , "IDA COUNTY JAIL"                    , "IA"   ,
     "INDIAFL"                , "INDIAN RIVER COUNTY JAIL"           , "FL"   ,
     "LAFERTX"                , "LA FERIA POLICE DEPT."              , "TX"   ,
@@ -476,7 +476,7 @@ code_name_state_manual <-
     "LAURITX"                , "LAUREL RIDGE TREATMENT CTR"         , "TX"   ,
     "LAVACTX"                , "LAVACA COUNTY JAIL"                 , "TX"   ,
     "LAWREPA"                , "LAWRENCE COUNTY JAIL"               , "PA"   ,
-    # "LIRSJUV"                , "LUTHERAN IMM & REF SERVICES"        , "LI UV" , # need to find
+    # "LIRSJUV"                , "LUTHERAN IMM & REF SERVICES"        , "MD" , # https://2022.lirs.org/#top
     "MACCOMI"                , "MACOMB CO.MT.CLEMENS,MI."           , "MI"   ,
     "MACISHI"                , "MCI SHIRLEY"                        , "MA"   , # https://www.mass.gov/locations/mci-shirley
     "MADISIA"                , "MADISON COUNTY JAIL"                , "IA"   ,
@@ -495,7 +495,7 @@ code_name_state_manual <-
     "MASONWA"                , "MASON COUNTY JAIL"                  , "WA"   ,
     "MATEWKS"                , "TEWKSBURY STATE HOSPITAL"           , "KS"   ,
     "MEADESD"                , "MEADE CO. JAIL, SD"                 , "SD"   ,
-    "MECCWIN"                , "MAINE CORRECTIONAL CENTER"          , "ME"   , # need cite
+    "MECCWIN"                , "MAINE CORRECTIONAL CENTER"          , "ME"   , # https://www.maine.gov/corrections/mcc
     "MECKLNC"                , "MECKLENBURG (NC) CO JAIL"           , "NC"   ,
     "MEDINOH"                , "MEDINA COUNTY JAIL"                 , "OH"   ,
     "MEDINTX"                , "MEDINA COUNTY JAIL"                 , "TX"   ,
@@ -534,10 +534,10 @@ code_name_state_manual <-
     "NEWTOMO"                , "NEWTON COUNTY JAIL"                 , "MO"   ,
     "NEWTOTX"                , "NEWTON COUNTY CORR. CTR."           , "TX"   ,
     "NVJDCVA"                , "NO. VA. JUVENILE DET - ICE"         , "VA"   ,
-    "NYCLINC"                , "CLINTON C.F. DANNEMMORA"            , "NY"   , # need to check
-    "NYFRANC"                , "FRANKLIN C.F."                      , "NY"   , # need to check
-    "NYOGDNC"                , "OGDENSBURG CORRECTIONAL"            , "NY"   , # need to check
-    "NYORLNC"                , "ORLEANS CORRECTIONAL"               , "NY"   , # need to check
+    "NYCLINC"                , "CLINTON C.F. DANNEMMORA"            , "NY"   , # https://doccs.ny.gov/location/clinton-correctional-facility
+    "NYFRANC"                , "FRANKLIN C.F."                      , "NY"   , # https://doccs.ny.gov/location/franklin-correctional-facility
+    "NYOGDNC"                , "OGDENSBURG CORRECTIONAL"            , "NY"   , # https://doccs.ny.gov/location/riverview-correctional-facility
+    "NYORLNC"                , "ORLEANS CORRECTIONAL"               , "NY"   , # https://doccs.ny.gov/location/orleans-correctional-facility
     "OKANOWA"                , "OKANOGAN CO. JAIL"                  , "WA"   ,
     "ORLEANY"                , "ORLEANS COUNTY JAIL"                , "NY"   ,
     "ORLEAVT"                , "ORLEANS COUNTY JAIL"                , "VT"   ,
@@ -579,11 +579,11 @@ code_name_state_manual <-
     "SCSOUCA"                , "SANTA CLARA COUNTY JAIL"            , "CA"   ,
     "SDHOSCA"                , "SAN DIEGO AREA HOSPITAL"            , "CA"   ,
     "SDPROCA"                , "S.D. COUNTY PROBATION"              , "CA"   ,
-    "SDSPRIN"                , "SPRINGFIELD CORR. FAC SD"           , "SD"   , # need to check
+    "SDSPRIN"                , "SPRINGFIELD CORR. FAC SD"           , "SD"   , # https://www.doc.sd.gov/adult-corrections/facilities/mike-durfee-state-prison
     "SEAICDF"                , "SEATTLE CONTRACT DET.FAC."          , "WA"   , # need to check
-    "STCANVI"                , "ST X ANNA'S HOPE"                   , "VI"   , # need to check
-    "STCGOVI"                , "ST X GOLDEN GROVE"                  , "VI"   , # need to check
-    "STTCJVI"                , "ST T CRIMINAL JUST COMPLX"          , "VI"   , # need to check
+    "STCANVI"                , "ST X ANNA'S HOPE"                   , "VI"   , # https://www.usviodr.com/procurement/annas-hope-emergency-housing-renovation-buildings-9-10/
+    "STCGOVI"                , "ST X GOLDEN GROVE"                  , "VI"   , # https://www.justice.gov/d9/goldengrove_mtrrpt10_3-8-16.pdf
+    "STTCJVI"                , "ST T CRIMINAL JUST COMPLX"          , "VI"   , # https://www.justice.gov/usao-vi
     "TXDOMIN"                , "TDC-DOMINGUEZ UNIT"                 , "TX"   ,
     "VALCONE"                , "VALLEY COUNTY JAIL"                 , "NE"   ,
     "VANBUMI"                , "VAN BUREN COUNTY JAIL, MI"          , "MI"   ,
@@ -608,7 +608,7 @@ code_name_state_manual <-
     "WASHCIA"                , "WASHINGTON COUNTY JAIL"             , "IA"   ,
     "WASHICO"                , "WASHINGTON COUNTY JAIL"             , "CO"   ,
     "WASHIME"                , "WASHINGTON COUNTY JAIL"             , "ME"   ,
-    "WASHINE"                , "WASHINGTON CO JAIL, BLAIR"          , "NE"   , # need to check
+    "WASHINE"                , "WASHINGTON CO JAIL, BLAIR"          , "NE"   , # https://www.washcountysheriff.org/jail-list/
     "WASHIPA"                , "WASHINGTON CO. JAIL, PA"            , "PA"   ,
     "WASHTMI"                , "WASHTENAW CO, AN ARBOR,MI"          , "MI"   ,
     "WAUKEIL"                , "WAUKEGAN CITY JAIL"                 , "IL"   ,
@@ -623,7 +623,7 @@ code_name_state_manual <-
     "WINWYAZ"                , "WINGATE WYNDHAM CASA ESPERANZA"     , "AZ"   ,
     "WISCOTX"                , "WISE COUNTY JAIL"                   , "TX"   ,
     "WYMCONY"                , "WYOMING COUNTY JAIL"                , "NY"   ,
-    "WVIRGVA"                , "WESTERN VIRGINIA REGIONAL JAIL"     , "WV" # need to check
+    "WVIRGVA"                , "WESTERN VIRGINIA REGIONAL JAIL"     , "VA" # https://www.wvarj.org/
   )
 
 name_city_state_match <-
