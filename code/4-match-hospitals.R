@@ -17,7 +17,13 @@ facilities_from_detentions <-
     "data/facilities-from-detentions.feather"
   ) |>
   mutate(name_join = clean_text(detention_facility)) |>
-  filter(str_detect(name_join, "hosp|\\bmed\\b|health|clinic|emerg")) |>
+  filter(
+    str_detect(
+      name_join,
+      "hosp|medicine|\\bnurs\\b|nursing|medical|\\bmed\\b|health|clinic|emerg|kaiser|hca|surgic|surger|orthop|spine|shriners|transplant|hlth|mayo|infirmary|wellness|physician|ambulatory|\\beye\\b|medstar"
+    ) |
+      name_join %in% c("samaritan behavioral center", "Scan inc")
+  ) |>
   select(detention_facility_code, name = detention_facility, name_join) |>
   filter(!str_detect(detention_facility_code, "^BOP")) |>
   mutate(

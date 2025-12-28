@@ -38,9 +38,9 @@ hospitals_dhs <-
 
 hospitals <-
   hospitals_hhs |>
-  select(name, address, city, state, zip, medicare_facility_ID) |>
+  select(name, address, city, state, zip, medicare_facility_ID, date) |>
   full_join(
-    hospitals_dhs |> select(dhs_id, address, name, city, state, zip),
+    hospitals_dhs |> select(dhs_id, address, name, city, state, zip, date),
     by = c("name", "city", "state")
   ) |>
   mutate(
@@ -48,7 +48,8 @@ hospitals <-
     zip = coalesce(zip.x, zip.y),
     .keep = "unused"
   ) |>
-  relocate(name, address, city, state, zip)
+  relocate(name, address, city, state, zip) |>
+  mutate(date = pmax(date.x, date.y), .keep = "unused")
 
 arrow::write_feather(
   hospitals,

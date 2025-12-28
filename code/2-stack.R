@@ -64,6 +64,11 @@ facilities_vera <-
     "data/facilities-vera.feather"
   )
 
+facilities_marshall <-
+  arrow::read_feather(
+    "data/facilities-marshall.feather"
+  )
+
 hospitals <-
   arrow::read_feather(
     "data/hospitals.feather"
@@ -126,6 +131,8 @@ facility_attributes <-
         date
       ),
     "vera" = facilities_vera |>
+      select(any_of(all_fields), date),
+    "marshall" = facilities_marshall |>
       select(any_of(all_fields), date),
     "hospitals" = hospitals |>
       select(medicare_facility_ID, any_of(all_fields), date),
