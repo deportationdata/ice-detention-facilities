@@ -79,6 +79,16 @@ jails_prisons <-
     "data/jails_prisons.feather"
   )
 
+hfild_local_law_enforcement_facilities <-
+  arrow::read_feather(
+    "data/hifld-local-law-enforcement-facilities.feather"
+  )
+
+hfild_prisons <-
+  arrow::read_feather(
+    "data/hifld-prisons.feather"
+  )
+
 detentions_current <- arrow::read_feather(
   "~/github/ice/data/detention-stints-latest.feather"
 )
@@ -138,6 +148,10 @@ facility_attributes <-
       select(medicare_facility_ID, any_of(all_fields), date),
     "jails_prisons" = jails_prisons |>
       select(bjs_facility_ID, any_of(all_fields), date),
+    "hifld_local_law_enforcement" = hfild_local_law_enforcement_facilities |>
+      select(hifld_id, any_of(all_fields), date),
+    "hifld_prisons" = hfild_prisons |>
+      select(hifld_id, any_of(all_fields), date),
     .id = "source"
   ) |>
   relocate(detention_facility_code, all_of(all_fields), source, date)
