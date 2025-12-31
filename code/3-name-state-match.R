@@ -36,7 +36,7 @@ hold_rooms_definitive <-
 # TODO: get verified links
 hold_rooms_manual <-
   tribble(
-    ~detention_facility_code , ~name                    , ~state ,
+    ~detention_facility_code , ~name , ~state ,
     # first three are in vera, commented out for now
     # "DULHOLD"                , "DULUTH HOLD ROOM"       , "MN"   , # https://www.vera.org/ice-detention-trends
     # "RICHOLD"                , "RICHLAND HOLD ROOM"     , "WA"   , # https://www.ice.gov/node/62177
@@ -135,9 +135,7 @@ code_name_state_short <-
     "RGS"                    , "RIO GRANDE VALLEY STAGING"          , "TX"   , # https://www.ice.gov/detain/detention-facilities/rio-grande-detention-center
     "SJS"                    , "SAN JUAN STAGING"                   , "PR"   , # https://www.globaldetentionproject.org/countries/americas/united-states/detention-centres/1283/san-juan-staging-facility
     "STK"                    , "STOCKTON STAGING FACILITY"          , "CA"   , # https://www.globaldetentionproject.org/countries/americas/united-states/detention-centres/1553/stockton-staging-facility
-    "VRK"                    , "VRK PRCS"                           , "NY"   , # https://www.globaldetentionproject.org/countries/americas/united-states/detention-centres/678/varick-federal-detention-centre-formerly-varick-street-service-processing-centre
-
-    # new
+    "VRK"                    , "VRK PRCS"                           , "NY"   , # https://www.ice.gov/doclib/foia/prea_audit/varickStreetDetCntr_Jun26-27_2018.pdf
     "AFRC"                   , "ARTESIA FAMILY RESIDENTIAL CENTER"  , "NM"   , # https://www.detentionwatchnetwork.org/sites/default/files/reports/DWN%20Expose%20and%20Close%20Artesia%20Report.pdf
     "BOPALF"                 , "ALLENWOOD (LOW) FCI"                , "PA"   , # https://www.bop.gov/locations/institutions/alf/
     "BOPALM"                 , "ALLENWOOD (MED) FCI"                , "PA"   , # https://www.bop.gov/locations/institutions/alm/
@@ -147,7 +145,7 @@ code_name_state_short <-
     "BOPBAS"                 , "BASTROP FED.CORR.INST."             , "TX"   , # https://www.bop.gov/locations/institutions/bas/
     "BOPBEC"                 , "BECKLEY  FED.CORR.INST."            , "WV"   , # https://www.bop.gov/locations/institutions/bec/
     "BOPBIG"                 , "BIG SPRING FED.CORR.INST."          , "TX"   , # https://www.bop.gov/locations/institutions/big/
-    "BOPBMA"                 , "BEAUMONT FED.CORR.CTR"              , "TX"   , # https://www.globaldetentionproject.org/wp-content/uploads/2021/01/US_Department_of_Homeland_Security_2007_1_1.pdf
+    "BOPBMA"                 , "BEAUMONT FED.CORR.CTR"              , "TX"   , # https://www.bop.gov/locations/institutions/bmp/index.jsp
     "BOPBML"                 , "BEAUMONT FCC, LOW"                  , "TX"   , # https://www.bop.gov/locations/institutions/bml/
     "BOPBMM"                 , "BEAUMONT FCC, MEDIUM"               , "TX"   , # https://www.bop.gov/locations/institutions/bmm/
     "BOPBMP"                 , "BEAUMONT FEDERAL PRISON"            , "TX"   , # https://www.bop.gov/locations/institutions/bmp/
@@ -156,7 +154,7 @@ code_name_state_short <-
     "BOPCOL"                 , "COLEMAN FCI"                        , "FL"   , # https://www.bop.gov/locations/institutions/col/
     "BOPCRW"                 , "CARSWELL FED.MED.CTR"               , "TX"   , # https://www.bop.gov/locations/institutions/crw/
     "BOPCUM"                 , "CUMBERLAND FCI"                     , "MD"   , # https://www.bop.gov/locations/institutions/cum/
-    "BOPDAL"                 , "DALBY CORRECTIONAL INSTITUTE"       , "TX"   ,
+    "BOPDAL"                 , "DALBY CORRECTIONAL INSTITUTE"       , "TX"   , # https://oig.justice.gov/sites/default/files/reports/20-096.pdf
     "BOPDAN"                 , "DANBURY FED.CORR.INST."             , "CT"   , # https://www.bop.gov/locations/institutions/dan/
     "BOPDTH"                 , "DULUTH FED.PRISON CAMP"             , "MN"   , # https://www.bop.gov/locations/institutions/dth/
     "BOPDUB"                 , "DUBLIN FED.CORR.INST."              , "CA"   , # https://www.bop.gov/locations/institutions/dub/
@@ -178,7 +176,7 @@ code_name_state_short <-
     "BOPLEW"                 , "LEWISBURG U.S. PEN."                , "PA"   , # https://www.bop.gov/locations/institutions/lew/
     "BOPLEX"                 , "LEXINTON FED.MED CENTER"            , "KY"   , # https://www.bop.gov/locations/institutions/lex/
     "BOPLOR"                 , "LORETTO FED.CORR.INST."             , "PA"   , # https://www.bop.gov/locations/institutions/lor/
-    "BOPLTL"                 , "LA TUNA FEDERAL SATTELITE, LOW"     , ""     ,
+    "BOPLTL"                 , "LA TUNA FEDERAL SATTELITE, LOW"     , "TX"   , # https://www.bop.gov/locations/institutions/lat/
     "BOPMAN"                 , "MANCHESTER FED CORR INSTR"          , "KY"   , # https://www.bop.gov/locations/institutions/man/
     "BOPMAR"                 , "MARION USP"                         , "IL"   , # https://www.bop.gov/locations/institutions/mar/
     "BOPMCK"                 , "MCKEAN FED.CORR.INST."              , "PA"   , # https://www.bop.gov/locations/institutions/mck/
@@ -211,11 +209,11 @@ code_name_state_short <-
     "BOPTHA"                 , "TERRE HAUTE USP"                    , "IN"   , # https://www.bop.gov/locations/institutions/thp/
     "BOPTRV"                 , "THREE RIVERS FCI"                   , "TX"   , # https://www.bop.gov/locations/institutions/trv/
     "BOPWAS"                 , "WASECA FED.CORR.INST."              , "MN"   , # https://www.bop.gov/locations/institutions/was/
-    "BOPYAM"                 , "YAZOO CITY MEDIUM FCI"              , "MS"   , # https://www.globaldetentionproject.org/wp-content/uploads/2021/01/US_Department_of_Homeland_Security_2007_1_1.pdf
-    "BOPYAZ"                 , "YAZOO CITY FCI"                     , "MS"   , # https://www.globaldetentionproject.org/wp-content/uploads/2021/01/US_Department_of_Homeland_Security_2007_1_1.pdf
+    "BOPYAM"                 , "YAZOO CITY MEDIUM FCI"              , "MS"   , # https://web.archive.org/web/20120621181643/http://www.bop.gov/locations/institutions/yam/index.jsp
+    "BOPYAZ"                 , "YAZOO CITY FCI"                     , "MS"   , # https://web.archive.org/web/20120621181643/http://www.bop.gov/locations/institutions/yaz/index.jsp
     "ECC"                    , "EL CENTRO SPC"                      , "CA"   , # https://www.globaldetentionproject.org/countries/americas/united-states/detention-centres/554/el-centro-detention-facility-service-processing-centre
     "HSF"                    , "HARLINGEN STAGING FACILITY"         , "TX"   , # https://www.ice.gov/node/62072
-    "OAK"                    , "OAKDALE FED. DET. CENTER"           , "LA"   , # https://www.globaldetentionproject.org/countries/americas/united-states/detention-centres/682/oakdale-federal-detention-center
+    "OAK"                    , "OAKDALE FED. DET. CENTER"           , "LA"   , # https://www.bop.gov/locations/institutions/oak/index.jsp
     "SPP"                    , "SAN PEDRO SPC"                      , "CA"   , # https://www.globaldetentionproject.org/wp-content/uploads/2021/01/US_Department_of_Homeland_Security_2007_1_1.pdf
     "USMCO"                  , "US MARSHALS, COLORADO"              , "CO"   , # https://www.usmarshals.gov/local-districts
     "USMHI"                  , "US MARSHALS, HAWAII"                , "HI"   , # https://www.usmarshals.gov/local-districts
@@ -436,7 +434,7 @@ code_name_state_manual <-
     "DEVILND"                , "DEVILS LAKE LAW ENF CENTR"          , "ND"   ,
     "DEWITIL"                , "DEWITT COUNTY JAIL"                 , "IL"   ,
     "DEWITTX"                , "DE WITT COUNTY JAIL"                , "TX"   ,
-    "EPCJUVI"                , "EL PASO SPC JUVENILE"               , "TX"   , # https://juv.epcounty.com/Units/Detention/Default?id=5
+    "EPCJUVI"                , "EL PASO SPC JUVENILE"               , "TX"   , # best guess is this refers to juvenile individuals held at the El Paso Service Processing Center, not a separate physical facility
     "FLATHMT"                , "FLATHEAD COUNTY JAIL"               , "MT"   ,
     "FLOYDIN"                , "FLOYD COUNTY JAIL"                  , "IN"   ,
     "GAGCONE"                , "GAGE COUNTY JAIL"                   , "NE"   ,
@@ -536,7 +534,7 @@ code_name_state_manual <-
     "NVJDCVA"                , "NO. VA. JUVENILE DET - ICE"         , "VA"   ,
     "NYCLINC"                , "CLINTON C.F. DANNEMMORA"            , "NY"   , # https://doccs.ny.gov/location/clinton-correctional-facility
     "NYFRANC"                , "FRANKLIN C.F."                      , "NY"   , # https://doccs.ny.gov/location/franklin-correctional-facility
-    "NYOGDNC"                , "OGDENSBURG CORRECTIONAL"            , "NY"   , # https://doccs.ny.gov/location/riverview-correctional-facility
+    "NYOGDNC"                , "OGDENSBURG CORRECTIONAL"            , "NY"   , # https://web.archive.org/web/20210915161108/https://doccs.ny.gov/location/OGDENSBURG-correctional-facility
     "NYORLNC"                , "ORLEANS CORRECTIONAL"               , "NY"   , # https://doccs.ny.gov/location/orleans-correctional-facility
     "OKANOWA"                , "OKANOGAN CO. JAIL"                  , "WA"   ,
     "ORLEANY"                , "ORLEANS COUNTY JAIL"                , "NY"   ,
@@ -552,17 +550,17 @@ code_name_state_manual <-
     "PASSANJ"                , "PASSAIC COUNTY JAIL"                , "NJ"   ,
     "PAULDGA"                , "PAULDING CO GEORGIA"                , "GA"   ,
     "PAULDOH"                , "PAULDING COUNTY JAIL"               , "OH"   ,
-    "PAVHRPR"                , "PAVIA HOSPITAL - HATO REY"          , "PR"   , # need to check
+    "PAVHRPR"                , "PAVIA HOSPITAL - HATO REY"          , "PR"   , # https://hospitalpaviahr.com
     "PRESITX"                , "PRESIDIO COUNTY JAIL"               , "TX"   ,
     "PROWECO"                , "PROWERS COUNTY JAIL"                , "CO"   ,
     "PRVEGAL"                , "VEGA ALTA DET. FACILITY"            , "AL"   ,
-    "QUEICDF"                , "INS/WACKENHUT CON/FAC, NY"          , "NY"   , # need to check
+    "QUEICDF"                , "INS/WACKENHUT CON/FAC, NY"          , "NY"   , # https://github.com/themarshallproject/dhs_immigration_detention/blob/master/locations.csv
     "RICECKS"                , "RICE COUNTY DET CENTER"             , "KS"   ,
     "RICECMN"                , "RICE COUNTY JAIL"                   , "MN"   ,
     "RICHLND"                , "RICHLAND CO. JAIL, ND"              , "ND"   ,
     "RICHMVA"                , "RICHMOND CITY JAIL"                 , "VA"   ,
     "RIKISNY"                , "RIKERS ISLAND, QUEENS, NY"          , "NY"   ,
-    "RIOBLCO"                , "RIO BLANCO COUNTY JAIL"             , "CO"   , # need to check
+    "RIOBLCO"                , "RIO BLANCO COUNTY JAIL"             , "CO"   , # https://rbc.us/297/Sheriffs-Office (verified also in Tigris data there is only one Rio Blanco county, in CO)
     "RIOCCCA"                , "RIO COSUMNES CORRECTIONS-RCCC"      , "CA"   ,
     "RIOGRCO"                , "RIO GRANDE COUNTY JAIL"             , "CO"   ,
     "RIVERCA"                , "RIVERSIDE COUNTY SHERIFF"           , "CA"   ,
@@ -580,10 +578,10 @@ code_name_state_manual <-
     "SDHOSCA"                , "SAN DIEGO AREA HOSPITAL"            , "CA"   ,
     "SDPROCA"                , "S.D. COUNTY PROBATION"              , "CA"   ,
     "SDSPRIN"                , "SPRINGFIELD CORR. FAC SD"           , "SD"   , # https://www.doc.sd.gov/adult-corrections/facilities/mike-durfee-state-prison
-    "SEAICDF"                , "SEATTLE CONTRACT DET.FAC."          , "WA"   , # need to check
+    "SEAICDF"                , "SEATTLE CONTRACT DET.FAC."          , "WA"   , # https://tracreports.org/immigration/reports/340/include/tableA2.html; 2017 facilities file
     "STCANVI"                , "ST X ANNA'S HOPE"                   , "VI"   , # https://www.usviodr.com/procurement/annas-hope-emergency-housing-renovation-buildings-9-10/
     "STCGOVI"                , "ST X GOLDEN GROVE"                  , "VI"   , # https://www.justice.gov/d9/goldengrove_mtrrpt10_3-8-16.pdf
-    "STTCJVI"                , "ST T CRIMINAL JUST COMPLX"          , "VI"   , # https://www.justice.gov/usao-vi
+    "STTCJVI"                , "ST T CRIMINAL JUST COMPLX"          , "VI"   , # https://www.justice.gov/usao-vi; https://tracreports.org/immigration/reports/340/include/tableA2.html
     "TXDOMIN"                , "TDC-DOMINGUEZ UNIT"                 , "TX"   ,
     "VALCONE"                , "VALLEY COUNTY JAIL"                 , "NE"   ,
     "VANBUMI"                , "VAN BUREN COUNTY JAIL, MI"          , "MI"   ,
