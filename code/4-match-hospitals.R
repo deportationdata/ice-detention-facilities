@@ -156,7 +156,7 @@ matches_cleaned <-
     "ED FRASER MEMORIAL HOSPITAL"        , "ED FRASER MEMORIAL HOSPITAL"                                                   , "FL"   , "EFMHMFL"                , "1"                ,
     "FORT LAUDERDALE HOSPITAL"           , "FORT LAUDERDALE BEHAVIORAL HEALTH CENTER"                                      , "FL"   , "FLHOSFL"                , "0.75"             ,
     "FT LAUDERDALE BEHAVOR HLTH CTR"     , "FORT LAUDERDALE BEHAVIORAL HEALTH CENTER"                                      , "FL"   , "FLBHCFL"                , "0.93"             ,
-    "HCA FLORIDA KENDALL HOSPITAL"       , "HCA FLORIDA KENDALL HOSPITAL"                                                  , "FL"   , "CKHOSFL"                , "1"                ,
+    "HCA FLORIDA KENDALL HOSPITAL"       , "HCA FLORIDA KENDALL HOSPITAL"                                                  , "FL"   , "CKHOSFL"                , "1"                , # https://www.hcafloridahealthcare.com/locations/kendall-hospital
     "HCA FLORIDA KENDALL HOSPITAL"       , "WEST KENDALL BAPTIST HOSPITAL"                                                 , "FL"   , "CKHOSFL"                , "0.85"             ,
     "HCA FLORIDA KENDALL HOSPITAL"       , "KENDALL REGIONAL MEDICAL CENTER"                                               , "FL"   , "CKHOSFL"                , "0.81"             ,
     "HCA FLORIDA MEMORIAL HOSPITAL"      , "HCA FLORIDA MERCY HOSPITAL"                                                    , "FL"   , "HCAFMFL"                , "0.9"              ,
@@ -166,7 +166,7 @@ matches_cleaned <-
     "LAKESIDE MEDICAL CENTER"            , "LAKESIDE MEDICAL CENTER"                                                       , "FL"   , "LAKMCFL"                , "1"                ,
     "LARKIN BEHAVIORAL HEALTH SVCS"      , "LARKIN COMMUNITY HOSPITAL BEHAVIORAL HEALTH SRVS"                              , "FL"   , "LRKBHFL"                , "0.9"              ,
     "LARKIN BEHAVIORAL HEALTH SVCS"      , "LARKIN COMMUNITY HOSPITAL BEHAVIORAL HEALTH SERVICES"                          , "FL"   , "LRKBHFL"                , "0.9"              ,
-    "LARKIN HOSPITAL"                    , "LARKIN COMMUNITY HOSPITAL"                                                     , "FL"   , "LRKNHFL"                , "0.85"             ,
+    "LARKIN HOSPITAL"                    , "LARKIN COMMUNITY HOSPITAL"                                                     , "FL"   , "LRKNHFL"                , "0.85"             , # https://www.ice.gov/news/releases/ice-detainee-passes-away-larkin-community-hospital
     "LARKIN HOSPITAL"                    , "LARKIN COMMUNITY HOSPITAL BEHAVIORAL HEALTH SRVS"                              , "FL"   , "LRKNHFL"                , "0.83"             ,
     "LARKIN HOSPITAL"                    , "LARKIN COMMUNITY HOSPITAL BEHAVIORAL HEALTH SERVICES"                          , "FL"   , "LRKNHFL"                , "0.85"             ,
     "LOWER KEYS MEDICAL CENTER"          , "LOWER KEYS MEDICAL CENTER"                                                     , "FL"   , "LRKMCFL"                , "1"                ,
@@ -232,7 +232,7 @@ matches_cleaned <-
     "LAHEY HOSPITAL & MED CTR"           , "LAHEY MEDICAL CTR, PEADODY - INPT ST"                                          , "MA"   , "LHMCBMA"                , "0.79"             ,
     "LEMUEL SHATTUCK HOSPITAL"           , "LEMUEL SHATTUCK HOSPITAL"                                                      , "MA"   , "LSHOSMA"                , "1"                ,
     "SOUTH SHORE HOSPITAL"               , "SOUTH SHORE HOSPITAL"                                                          , "MA"   , "SSHSWMA"                , "1"                ,
-    "TAUNTON STATE HOSPITAL"             , "TAUNTON STATE HOSPITAL"                                                        , "MA"   , "MATSHOS"                , "1"                ,
+    "TAUNTON STATE HOSPITAL"             , "TAUNTON STATE HOSPITAL"                                                        , "MA"   , "MATSHOS"                , "1"                , # https://www.mass.gov/locations/taunton-state-hospital
     "UMASS MEMORIAL MEDICAL CENTER"      , "UMASS MEMORIAL MEDICAL CENTER/UNIVERSITY CAMPUS"                               , "MA"   , "UMASSMA"                , "0.93"             ,
     "UNIV OF MARYLAND MEDICAL CENTER"    , "UNIVERSITY OF MARYLAND MEDICAL CENTER"                                         , "MD"   , "UNMEDMD"                , "0.92"             ,
     "BRONSON BATTLE CREEK HOSP"          , "BRONSON BATTLE CREEK HOSPITAL"                                                 , "MI"   , "BBCHPMI"                , "1"                ,
@@ -246,11 +246,11 @@ matches_cleaned <-
     "HENRY FORD HOSPITAL"                , "HENRY FORD WYANDOTTE HOSPITAL"                                                 , "MI"   , "HNYHOMI"                , "0.93"             ,
     "HENRY FORD HOSPITAL"                , "HENRY FORD WEST BLOOMFIELD HOSPITAL"                                           , "MI"   , "HNYHOMI"                , "0.87"             ,
     "HENRY FORD HOSPITAL"                , "HENRY FORD HEALTH WYANDOTTE HOSPITAL"                                          , "MI"   , "HNYHOMI"                , "0.94"             ,
-    "MCLAREN PORT HURON HOSP"            , "MCLAREN PORT HURON"                                                            , "MI"   , "MLPHHMI"                , "0.96"             ,
+    "MCLAREN PORT HURON HOSP"            , "MCLAREN PORT HURON"                                                            , "MI"   , "MLPHHMI"                , "0.96"             , # https://www.mclaren.org/port-huron/mclaren-port-huron-home
     "MUNSON HEALTHCARE CADILLAC HOSP"    , "MUNSON HEALTHCARE CADILLAC HOSPITAL"                                           , "MI"   , "MHCHSMI"                , "1"                ,
     "PROMEDICA MONROE REG HOSP"          , "PROMEDICA MONROE REGIONAL HOSPITAL"                                            , "MI"   , "PMMRHMI"                , "0.94"             ,
     "SAMARITAN BEHAVIORAL CENTER"        , "SAMARITAN BEHAVIORAL CENTER"                                                   , "MI"   , "SAMBCMI"                , "1"                ,
-    "ABBOTT NORTHWESTERN HOSP"           , "ABBOTT NORTHWESTERN HOSPITAL"                                                  , "MN"   , "ANWHMMN"                , "0.97"             ,
+    "ABBOTT NORTHWESTERN HOSP"           , "ABBOTT NORTHWESTERN HOSPITAL"                                                  , "MN"   , "ANWHMMN"                , "0.97"             , # https://www.allinahealth.org/abbott-northwestern-hospital
     "CENTRACARE RICE MEMORIAL HOSP"      , "CENTRACARE- RICE MEMORIAL HOSPITAL"                                            , "MN"   , "CCRMHMN"                , "1"                ,
     "CENTRACARE RICE MEMORIAL HOSP"      , "CENTRACARE HEALTH SYSTEM - MELROSE HOSPITAL"                                   , "MN"   , "CCRMHMN"                , "0.81"             ,
     "HENNEPIN COUNTY MED CTR"            , "HENNEPIN COUNTY MEDICAL CTR"                                                   , "MN"   , "HCMCMMN"                , "0.96"             ,
@@ -271,9 +271,9 @@ matches_cleaned <-
     "MERCY HOSPITAL SOUTH"               , "MERCY HOSPITAL ST. LOUIS"                                                      , "MO"   , "MRYHOMO"                , "0.88"             ,
     "MERCY HOSPITAL SOUTH"               , "MERCY HOSPITAL SOUTH"                                                          , "MO"   , "MRYHOMO"                , "1"                ,
     "MERCY HOSPITAL SOUTH"               , "MERCY HOSPITAL SOUTHEAST"                                                      , "MO"   , "MRYHOMO"                , "0.99"             ,
-    "CHI HEALTH MIDLANDS HOSPITAL"       , "CHI HEALTH MIDLANDS"                                                           , "NE"   , "MDLNDNE"                , "0.95"             ,
+    "CHI HEALTH MIDLANDS HOSPITAL"       , "CHI HEALTH MIDLANDS"                                                           , "NE"   , "MDLNDNE"                , "0.95"             , # https://www.chihealth.com/locations/midlands
     "NEBRASKA MED CTR OMAHA"             , "THE NEBRASKA MEDICAL CENTER"                                                   , "NE"   , "NMCOMNE"                , "0.79"             ,
-    "WENTWORTH DOUGLAS HOSPITAL"         , "WENTWORTH-DOUGLASS HOSPITAL"                                                   , "NH"   , "WWDHDNH"                , "1"                ,
+    "WENTWORTH DOUGLAS HOSPITAL"         , "WENTWORTH-DOUGLASS HOSPITAL"                                                   , "NH"   , "WWDHDNH"                , "1"                , # https://www.wdhospital.org/wdh
     "WENTWORTH DOUGLAS HOSPITAL"         , "WENTWORTH - DOUGLASS HOSPITAL"                                                 , "NH"   , "WWDHDNH"                , "1"                ,
     "HACKENSACK MED CTR"                 , "HACKENSACK UNIVERSITY MEDICAL CENTER"                                          , "NJ"   , "HACMCNJ"                , "0.9"              ,
     "HACKENSACK MED CTR"                 , "CAREPOINT HEALTH-HOBOKEN UNIVERSITY MEDICAL CENTER"                            , "NJ"   , "HACMCNJ"                , "0.76"             ,
@@ -304,8 +304,8 @@ matches_cleaned <-
     "ERIE COUNTY MEDICAL CENTER"         , "ERIE COUNTY MEDICAL CENTER"                                                    , "NY"   , "ECMCBNY"                , "1"                ,
     "Jamaica Hospital Med Ctr"           , "JAMAICA HOSPITAL MEDICAL CENTER"                                               , "NY"   , "JHMCJNY"                , "0.99"             ,
     "KENMORE MERCY HOSPITAL"             , "KENMORE MERCY HOSPITAL"                                                        , "NY"   , "KENMHNY"                , "1"                ,
-    "KINGS COUNTY HOSPITAL"              , "KINGS COUNTY HOSPITAL CENTER"                                                  , "NY"   , "KCHOSNY"                , "0.94"             ,
-    "LOCKPORT MEMORIAL HOSPITAL"         , "LOCKPORT MEMORIAL HOSPITAL, A CAMPUS OF MOUNT ST MARY'S"                       , "NY"   , "LOCMHNY"                , "0.82"             ,
+    "KINGS COUNTY HOSPITAL"              , "KINGS COUNTY HOSPITAL CENTER"                                                  , "NY"   , "KCHOSNY"                , "0.94"             , # https://www.nychealthandhospitals.org/locations/kings-county/
+    "LOCKPORT MEMORIAL HOSPITAL"         , "LOCKPORT MEMORIAL HOSPITAL, A CAMPUS OF MOUNT ST MARY'S"                       , "NY"   , "LOCMHNY"                , "0.82"             , # https://www.chsbuffalo.org/lockport-memorial-hospital/
     "NASSAU UNIV MED CTR"                , "NASSAU UNIVERSITY MEDICAL CENTER"                                              , "NY"   , "NUMCENY"                , "0.95"             ,
     "NEW YORK PRESBYTERIAN HOSPITAL"     , "NEW YORK-PRESBYTERIAN HOSPITAL"                                                , "NY"   , "PRESBNY"                , "1"                ,
     "NEW YORK PRESBYTERIAN HOSPITAL"     , "NEW YORK - PRESBYTERIAN BROOKLYN METHODIST HOSPITAL"                           , "NY"   , "PRESBNY"                , "0.83"             ,
@@ -328,7 +328,7 @@ matches_cleaned <-
     "ST ELIZABETH YOUNGSTOWN HOSPITAL"   , "MERCY HEALTH ST. ELIZABETH YOUNGSTOWN HOSPITAL"                                , "OH"   , "STELHOH"                , "0.94"             ,
     "ST ELIZABETH YOUNGSTOWN HOSPITAL"   , "MERCY HEALTH ST. ELIZABETH BOARDMAN HOSPITAL"                                  , "OH"   , "STELHOH"                , "0.83"             ,
     "UNIV HOSP GEAUGA MED CTR"           , "UHHS - GEAUGA REGIONAL HOSPITAL"                                               , "OH"   , "UHGMCOH"                , "0.84"             ,
-    "INTEGRIS HEALTH BAPTIST MEDICAL"    , "INTEGRIS BAPTIST MEDICAL CENTER, INC"                                          , "OK"   , "INTEGOK"                , "0.89"             ,
+    "INTEGRIS HEALTH BAPTIST MEDICAL"    , "INTEGRIS BAPTIST MEDICAL CENTER, INC"                                          , "OK"   , "INTEGOK"                , "0.89"             , # https://baptist.integrishealth.org/
     "INTEGRIS HEALTH BAPTIST MEDICAL"    , "INTEGRIS BASS BAPTIST HEALTH CENTER"                                           , "OK"   , "INTEGOK"                , "0.79"             ,
     "INTEGRIS HEALTH PONCA CITY HOSPITA" , "INTEGRIS HEALTH PONCA CITY"                                                    , "OK"   , "INTPOOK"                , "0.97"             ,
     "INTEGRIS HEALTH PONCA CITY HOSPITA" , "ALLIANCEHEALTH PONCA CITY"                                                     , "OK"   , "INTPOOK"                , "0.76"             ,
@@ -349,7 +349,7 @@ matches_cleaned <-
     "HOSPITAL PAVIA-SANTURCE"            , "HOSPITAL PAVIA SANTURCE"                                                       , "PR"   , "HOSPSPR"                , "1"                ,
     "HOSPITAL PAVIA-SANTURCE"            , "HOSPITAL PAVIA HATO REY, INC"                                                  , "PR"   , "HOSPSPR"                , "0.91"             ,
     "PAVIA HOSPITAL - HATO REY"          , "HOSPITAL PAVIA HATO REY, INC"                                                  , "PR"   , "PAVHRPR"                , "0.9"              ,
-    "MIRIAM HOSPITAL"                    , "THE MIRIAM HOSPITAL"                                                           , "RI"   , "MIRHPRI"                , "0.84"             ,
+    "MIRIAM HOSPITAL"                    , "THE MIRIAM HOSPITAL"                                                           , "RI"   , "MIRHPRI"                , "0.84"             , # https://www.brownhealth.org/locations/miriam-hospital
     "RHODE ISLAND HOSPITAL"              , "RHODE ISLAND HOSPITAL"                                                         , "RI"   , "RIHPRRI"                , "1"                ,
     "RHODE ISLAND HOSPITAL"              , "MEMORIAL HOSPITAL OF RHODE ISLAND"                                             , "RI"   , "RIHPRRI"                , "0.87"             ,
     "RHODE ISLAND HOSPITAL"              , "REHABILITATION HOSPITAL OF RHODE ISLAND"                                       , "RI"   , "RIHPRRI"                , "0.85"             ,
@@ -516,6 +516,6 @@ matches_cleaned <-
     "ST JOSEPH MEDICAL CENTER"           , "SAINT JOSEPH HOSPITAL - SOUTH CAMPUS"                                          , "WA"   , "STJMCWA"                , "0.87"             ,
     "TACOMA GENERAL HOSPITAL"            , "TACOMA GENERAL ALLENMORE HOSPITAL"                                             , "WA"   , "TACGHWA"                , "0.87"             ,
     "TACOMA GENERAL HOSPITAL"            , "MULTICARE TACOMA GENERAL HOSPITAL"                                             , "WA"   , "TACGHWA"                , "0.93"             ,
-    "WATERTOWN REGIONAL MEDICAL CENTER"  , "WATERTOWN MEMORIAL HOSPITAL"                                                   , "WI"   , "WRMEDWI"                , "0.87"             ,
+    "WATERTOWN REGIONAL MEDICAL CENTER"  , "WATERTOWN MEMORIAL HOSPITAL"                                                   , "WI"   , "WRMEDWI"                , "0.87"             , # https://www.watertownregional.com/
     "WATERTOWN REGIONAL MEDICAL CENTER"  , "WATERTOWN REGIONAL MEDICAL CENTER"                                             , "WI"   , "WRMEDWI"                , "1"
   )
