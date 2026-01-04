@@ -3,3 +3,4 @@ data/** filter=lfs diff=lfs merge=lfs -text
 *.csv filter=lfs diff=lfs merge=lfs -text
 *.dta filter=lfs diff=lfs merge=lfs -text
 *.sav filter=lfs diff=lfs merge=lfs -text
+inputs/facilities-2007.csv filter=lfs diff=lfs merge=lfs -text
