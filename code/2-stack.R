@@ -54,7 +54,12 @@ detentions_22955 <-
     "data/facilities-foia-22955.feather"
   )
 
-ice_facilities_eoir <-
+facilities_51185 <-
+  arrow::read_feather(
+    "data/facilities-foia-51185.feather"
+  )
+
+facilities_eoir <-
   arrow::read_feather(
     "data/facilities-eoir.feather"
   )
@@ -123,6 +128,8 @@ facility_attributes <-
       select(any_of(all_fields), date),
     "05655" = detentions_05655 |>
       select(any_of(all_fields), date),
+    "51185" = facilities_51185 |>
+      select(any_of(all_fields), date),
     "website" = facility_addresses_from_ice_website |>
       select(any_of(all_fields), date),
     "detention_management" = facilities_detention_management |>
@@ -133,7 +140,7 @@ facility_attributes <-
       select(any_of(all_fields), date),
     "detentions" = facilities_from_detentions |>
       select(any_of(all_fields), date),
-    "eoir" = ice_facilities_eoir |>
+    "eoir" = facilities_eoir |>
       select(
         eoir_detention_facility_code,
         eoir_base_city,

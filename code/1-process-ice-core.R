@@ -115,6 +115,22 @@ detentions_41855 <-
   bind_rows(.id = "file_original") |>
   janitor::clean_names()
 
+detentions_05655 <-
+  list.files(
+    "~/Library/CloudStorage/Box-Box/deportationdata/data/ICE/September 2025 Release/2024-ICFO-05655",
+    full.names = TRUE
+  ) |>
+  set_names() |>
+  map(
+    ~ readxl::read_excel(
+      .x, #col_types = col_defs_41855,
+      skip = 4
+    ),
+    .id = "file"
+  ) |>
+  bind_rows(.id = "file_original") |>
+  janitor::clean_names()
+
 detentions_facilities <-
   bind_rows(
     "1" = detentions_41855 |>
@@ -127,7 +143,17 @@ detentions_facilities <-
         gender,
         birth_year
       ),
-    "2" = detentions_2012_2023 |>
+    "2" = detentions_05655 |>
+      transmute(
+        detention_facility_code,
+        detention_facility,
+        detention_book_in_date = initial_book_in_date_time,
+        detention_book_out_date = detention_book_out_date_time,
+        anonymized_identifier,
+        gender,
+        birth_year
+      ),
+    "3" = detentions_2012_2023 |>
       select(
         detention_facility_code,
         detention_facility,
@@ -137,7 +163,7 @@ detentions_facilities <-
         gender,
         birth_year
       ),
-    "3" = detentions_current |>
+    "4" = detentions_current |>
       select(
         detention_facility_code,
         detention_facility,
@@ -179,5 +205,3 @@ arrow::write_feather(
   detentions_facilities,
   "data/facilities-from-detentions.feather"
 )
-
-# TODO: why isn't the 05655 data in here? I think there's a reason but can't remember.
