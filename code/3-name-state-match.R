@@ -33,21 +33,21 @@ hold_rooms_definitive <-
 #   clipr::write_clip()
 # pasted below
 
-# TODO: get verified links
-hold_rooms_manual <-
-  tribble(
-    ~detention_facility_code , ~name , ~state ,
-    # first three are in vera, commented out for now
-    # "DULHOLD"                , "DULUTH HOLD ROOM"       , "MN"   , # https://www.vera.org/ice-detention-trends
-    # "RICHOLD"                , "RICHLAND HOLD ROOM"     , "WA"   , # https://www.ice.gov/node/62177
-    # "SYRHOLD"                , "SYRACUSE HOLD ROOM"     , "NY"   , # https://www.vera.org/ice-detention-trends
-    # "CBPHOLD"                , "BUFFALO USBP HOLD ROOM" , "NY" # https://www.cbp.gov/border-security/along-us-borders/border-patrol-sectors/buffalo-sector-new-york and confirmed arrests are in Buffalo NY via matching to arrests table
-  )
+# none are missing now
+# hold_rooms_manual <-
+#   tribble(
+#     ~detention_facility_code , ~name , ~state ,
+#     # first three are in vera, commented out for now
+#     # "DULHOLD"                , "DULUTH HOLD ROOM"       , "MN"   , # https://www.vera.org/ice-detention-trends
+#     # "RICHOLD"                , "RICHLAND HOLD ROOM"     , "WA"   , # https://www.ice.gov/node/62177
+#     # "SYRHOLD"                , "SYRACUSE HOLD ROOM"     , "NY"   , # https://www.vera.org/ice-detention-trends
+#     # "CBPHOLD"                , "BUFFALO USBP HOLD ROOM" , "NY" # https://www.cbp.gov/border-security/along-us-borders/border-patrol-sectors/buffalo-sector-new-york and confirmed arrests are in Buffalo NY via matching to arrests table
+#   )
 
 hold_rooms_final <-
   bind_rows(
-    hold_rooms_definitive,
-    hold_rooms_manual
+    hold_rooms_definitive
+    # hold_rooms_manual
   )
 
 # need to treat hold rooms differently
@@ -93,7 +93,6 @@ code_name_state_definitive <-
 # pasted below
 
 # need better verification of the non-BOP facilities
-# TODO: fill in the missing ones
 code_name_state_short <-
   tribble(
     ~detention_facility_code , ~name                                , ~state ,
@@ -128,7 +127,7 @@ code_name_state_short <-
     "EPC"                    , "EL PASO SPC"                        , "TX"   , # https://www.ice.gov/detain/detention-facilities/el-paso-service-processing-center
     "EROFCB"                 , "ERO EL PASO CAMP EAST MONTANA"      , "TX"   , # https://www.ice.gov/detain/detention-facilities/camp-east-montana
     "FLO"                    , "FLORENCE SPC"                       , "AZ"   , # https://www.ice.gov/detain/detention-facilities/florence-spc
-    "FSF"                    , "FLORENCE STAGING FACILITY"          , "AZ"   , # https://www.globaldetentionproject.org/countries/americas/united-states/detention-centres/1451/florence-staging-facility
+    "FSF"                    , "FLORENCE STAGING FACILITY"          , "AZ"   , # https://www.ice.gov/doclib/foia/odo-compliance-inspections/florenceStagingFac_FlorenceAZ_Jun11-13_2024.pdf
     "KRO"                    , "KROME NORTH SPC"                    , "FL"   , # https://www.ice.gov/detain/detention-facilities/krome-north-service-processing-center
     "MSF"                    , "MIAMI STAGING FACILITY"             , "FL"   , # https://www.globaldetentionproject.org/countries/americas/united-states/detention-centres/1493/miami-staging-facility
     "PIC"                    , "PORT ISABEL SPC"                    , "TX"   , # https://www.ice.gov/detain/detention-facilities/port-isabel-service-processing-center
