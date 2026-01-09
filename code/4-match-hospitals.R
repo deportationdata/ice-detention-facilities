@@ -72,7 +72,7 @@ matches_cleaned |>
   clipr::write_clip()
 
 # Verification instructions:
-# it is ok to have more than one match for a single facility in name.x (detention facilities) -- one may be from medicare and one from dhs
+# it is ok to have more than one match for a single name.x facility (detention facilities) -- the name.y comes from multiple sources and we want to link to all of them
 # delete any matches that are CLEARLY wrong
 # for ones where there are multiple possible matches and you're unsure, comment them ALL out then do research to figure out which is right
 # if you figure out one that's commented, delete the wrong ones and uncomment the right one
@@ -508,6 +508,5 @@ matches_cleaned <-
     "ST JOSEPH MEDICAL CENTER"           , "SAINT JOSEPH HOSPITAL - SOUTH CAMPUS"                               , "WA"   , "STJMCWA"                , "0.87"             ,
     "TACOMA GENERAL HOSPITAL"            , "TACOMA GENERAL ALLENMORE HOSPITAL"                                  , "WA"   , "TACGHWA"                , "0.87"             ,
     "TACOMA GENERAL HOSPITAL"            , "MULTICARE TACOMA GENERAL HOSPITAL"                                  , "WA"   , "TACGHWA"                , "0.93"             ,
-    "WATERTOWN REGIONAL MEDICAL CENTER"  , "WATERTOWN MEMORIAL HOSPITAL"                                        , "WI"   , "WRMEDWI"                , "0.87"             , # https://www.watertownregional.com/
     "WATERTOWN REGIONAL MEDICAL CENTER"  , "WATERTOWN REGIONAL MEDICAL CENTER"                                  , "WI"   , "WRMEDWI"                , "1"
   )
