@@ -83,19 +83,19 @@ matches_cleaned <-
     "BARTLETT REGIONAL HOSPITAL"         , "BARTLETT REGIONAL HOSPITAL"                                         , "AK"   , "BRLHOAK"                , "1"                ,
     "BANNER IRONWOOD MED CTR"            , "BANNER IRONWOOD MEDICAL CENTER"                                     , "AZ"   , "BIMDCAZ"                , "0.99"             ,
     "BANNER MEDICAL CTR TUCSON"          , "BANNER - UNIVERSITY MEDICAL CENTER TUCSON CAMPUS"                   , "AZ"   , "BNMCTAZ"                , "0.76"             ,
-    # "BANNER UNIVERSITY MEDICAL PHOENIX"  , "BANNER - UNIVERSITY MEDICAL CENTER PHOENIX"                                    , "AZ"   , "BANHOAZ"                , "1"                ,
-    # "BANNER UNIVERSITY MEDICAL PHOENIX"  , "BANNER-UNIVERSITY MEDICAL CENTER PHOENIX"                                      , "AZ"   , "BANHOAZ"                , "1"                ,
-    # "BANNER UNIVERSITY MEDICAL PHOENIX"  , "BANNER-UNIVERSITY MEDICAL CENTER SOUTH CAMPUS"                                 , "AZ"   , "BANHOAZ"                , "0.93"             ,
-    # "BANNER UNIVERSITY MEDICAL PHOENIX"  , "BANNER - UNIVERSITY MEDICAL CENTER SOUTH CAMPUS"                               , "AZ"   , "BANHOAZ"                , "0.93"             ,
-    # "BANNER UNIVERSITY MEDICAL PHOENIX"  , "BANNER UNIVERSITY MEDICAL CENTER AT THE ARIZONA HEALTH SC"                     , "AZ"   , "BANHOAZ"                , "0.87"             ,
+    # "BANNER UNIVERSITY MEDICAL PHOENIX"  , "BANNER - UNIVERSITY MEDICAL CENTER PHOENIX"                                    , "AZ"   , "BANHOAZ"                , "1"                , # likely correct bc no mention of south campus: https://www.ice.gov/news/releases/ethiopian-national-ice-custody-passes-away-phoenix-area-hospital
+    # "BANNER UNIVERSITY MEDICAL PHOENIX"  , "BANNER-UNIVERSITY MEDICAL CENTER PHOENIX"                                      , "AZ"   , "BANHOAZ"                , "1"                , # keep
+    # "BANNER UNIVERSITY MEDICAL PHOENIX"  , "BANNER-UNIVERSITY MEDICAL CENTER SOUTH CAMPUS"                                 , "AZ"   , "BANHOAZ"                , "0.93"             , # delete
+    # "BANNER UNIVERSITY MEDICAL PHOENIX"  , "BANNER - UNIVERSITY MEDICAL CENTER SOUTH CAMPUS"                               , "AZ"   , "BANHOAZ"                , "0.93"             , # delete
+    # "BANNER UNIVERSITY MEDICAL PHOENIX"  , "BANNER UNIVERSITY MEDICAL CENTER AT THE ARIZONA HEALTH SC"                     , "AZ"   , "BANHOAZ"                , "0.87"             , # delete
     "CHANDLER REG MED CTR"               , "CHANDLER REGIONAL MEDICAL CENTER"                                   , "AZ"   , "CHANRAZ"                , "0.97"             ,
     "FLORENCE HOSPITAL"                  , "FLORENCE HOSPITAL"                                                  , "AZ"   , "FLORHAZ"                , "1"                ,
     "LA PAZ REGIONAL HOSPITAL"           , "LA PAZ REGIONAL HOSPITAL"                                           , "AZ"   , "LPZRHAZ"                , "1"                ,
-    # "MOUNTAIN VISTA MED CTR"             , "HONORHEALTH MOUNTAIN VISTA MEDICAL CENTER"                                     , "AZ"   , "MVMCMAZ"                , "0.8"              ,
-    # "MOUNTAIN VISTA MED CTR"             , "MOUNTAIN VISTA MEDICAL CENTER, LP"                                             , "AZ"   , "MVMCMAZ"                , "0.86"             ,
+    "MOUNTAIN VISTA MED CTR"             , "HONORHEALTH MOUNTAIN VISTA MEDICAL CENTER"                                     , "AZ"   , "MVMCMAZ"                , "0.8"              ,
+    "MOUNTAIN VISTA MED CTR"             , "MOUNTAIN VISTA MEDICAL CENTER, LP"                                             , "AZ"   , "MVMCMAZ"                , "0.86"             ,
     "ST MARY'S HOSPITAL"                 , "ST. MARY'S HOSPITAL"                                                , "AZ"   , "STMARAZ"                , "1"                ,
-    # "ST. JOSEPH'S HOSPITAL & MED. CEN."  , "ST JOSEPH'S HOSPITAL"                                                          , "AZ"   , "STJOSAZ"                , "0.84"             ,
-    # "ST. JOSEPH'S HOSPITAL & MED. CEN."  , "ST JOSEPHS HOSPITAL AND MEDICAL CENTER"                                        , "AZ"   , "STJOSAZ"                , "0.92"             ,
+    "ST. JOSEPH'S HOSPITAL & MED. CEN."  , "ST JOSEPH'S HOSPITAL"                                                          , "AZ"   , "STJOSAZ"                , "0.84"             ,
+    "ST. JOSEPH'S HOSPITAL & MED. CEN."  , "ST JOSEPHS HOSPITAL AND MEDICAL CENTER"                                        , "AZ"   , "STJOSAZ"                , "0.92"             ,
     "VALLEYWISE HEALTH MED CTR"          , "VALLEYWISE HEALTH MEDICAL CENTER"                                   , "AZ"   , "VWHMCAZ"                , "0.99"             ,
     "YUMA REGIONAL MED CTR"              , "YUMA REGIONAL MEDICAL CENTER"                                       , "AZ"   , "YRMDCAZ"                , "0.99"             ,
     "ADVENTIST HEALTH BAKERSFIELD"       , "ADVENTIST HEALTH BAKERSFIELD"                                       , "CA"   , "ADVHBCA"                , "1"                ,
@@ -106,156 +106,154 @@ matches_cleaned <-
     "COSTA MESA COLLEGE HOSP"            , "COLLEGE HOSPITAL COSTA MESA"                                        , "CA"   , "COSTACA"                , "0.9"              ,
     "DESERT VALLEY HOSPITAL"             , "DESERT VALLEY HOSPITAL"                                             , "CA"   , "DSRTVCA"                , "1"                ,
     "EL CENTRO REGIONAL MED CTR"         , "EL CENTRO REGIONAL MEDICAL CENTER"                                  , "CA"   , "ECRMCCA"                , "1"                ,
-    # "ENLOE MEDICAL CENTER"               , "ENLOE HEALTH"                                                                  , "CA"   , "ENLMCCA"                , "0.82"             ,
+    # "ENLOE MEDICAL CENTER"               , "ENLOE HEALTH"                                                                  , "CA"   , "ENLMCCA"                , "0.82"             , # here is a link to multiple locations but i'm still unsure: https://www.enloe.org/locations/
     # "ENLOE MEDICAL CENTER"               , "ENLOE MEDICAL CENTER - COHASSET"                                               , "CA"   , "ENLMCCA"                , "0.91"             ,
     # "ENLOE MEDICAL CENTER"               , "ENLOE MEDICAL CENTER - ESPLANADE"                                              , "CA"   , "ENLMCCA"                , "0.97"             ,
     "GOOD SAMARITAN HOSPITAL"            , "GOOD SAMARITAN HOSPITAL"                                            , "CA"   , "GSAMHCA"                , "1"                ,
-    # "KERN MEDICAL HOSPITAL"              , "KERN MEDICAL CENTER"                                                           , "CA"   , "KERNHCA"                , "0.86"             ,
-    # "LOMA LINDA UNIVERSITY MED CENTER"   , "LOMA LINDA UNIVERSITY MEDICAL CENTER"                                          , "CA"   , "LLUMCCA"                , "1"                ,
-    # "LOMA LINDA UNIVERSITY MED CENTER"   , "LOMA LINDA UNIVERSITY MEDICAL"                                                 , "CA"   , "LLUMCCA"                , "0.9"              ,
+    "KERN MEDICAL HOSPITAL"              , "KERN MEDICAL CENTER"                                                           , "CA"   , "KERNHCA"                , "0.86"             ,
+    "LOMA LINDA UNIVERSITY MED CENTER"   , "LOMA LINDA UNIVERSITY MEDICAL CENTER"                                          , "CA"   , "LLUMCCA"                , "1"                ,
+    "LOMA LINDA UNIVERSITY MED CENTER"   , "LOMA LINDA UNIVERSITY MEDICAL"                                                 , "CA"   , "LLUMCCA"                , "0.9"              ,
     "MARIAN REGIONAL MEDICAL CENTER"     , "MARIAN REGIONAL MEDICAL CENTER"                                     , "CA"   , "MRMCSCA"                , "1"                ,
     "MEMORIAL HOSPITAL BAKERSFIELD"      , "BAKERSFIELD MEMORIAL HOSPITAL"                                      , "CA"   , "MEMHOCA"                , "0.94"             ,
     "MERCY MEDICAL CTR REDDING"          , "MERCY MEDICAL CENTER REDDING"                                       , "CA"   , "MEMCRCA"                , "1"                ,
     "ORANGE CO GLOBAL MEDICAL CENTER"    , "ORANGE COUNTY GLOBAL MEDICAL CENTER"                                , "CA"   , "OGCMCCA"                , "0.97"             ,
     "PALMDALE REGIONAL MEDICAL CENTER"   , "PALMDALE REGIONAL MEDICAL CENTER"                                   , "CA"   , "PLRMCCA"                , "1"                ,
     "PARADISE VALLEY HOSPITAL"           , "PARADISE VALLEY HOSPITAL"                                           , "CA"   , "PVLYHCA"                , "1"                ,
-    # "SAN DIEGO AREA HOSPITAL"            , "UC SAN DIEGO HEALTH HILLCREST - HILLCREST MED CTR"                             , "CA"   , "SDHOSCA"                , "0.8"              ,
-    # "SAN DIEGO AREA HOSPITAL"            , "UC SAN DIEGO HEALTH HILLCREST - HILLCREST MEDICAL CENTER"                      , "CA"   , "SDHOSCA"                , "0.9"              ,
-    # "SAN DIEGO AREA HOSPITAL"            , "PROMISE HOSPITAL OF SAN DIEGO"                                                 , "CA"   , "SDHOSCA"                , "0.86"             ,
+    # "SAN DIEGO AREA HOSPITAL"            , "UC SAN DIEGO HEALTH HILLCREST - HILLCREST MED CTR"                             , "CA"   , "SDHOSCA"                , "0.8"              , # keep
+    # "SAN DIEGO AREA HOSPITAL"            , "UC SAN DIEGO HEALTH HILLCREST - HILLCREST MEDICAL CENTER"                      , "CA"   , "SDHOSCA"                , "0.9"              , # keep
+    # "SAN DIEGO AREA HOSPITAL"            , "PROMISE HOSPITAL OF SAN DIEGO"                                                 , "CA"   , "SDHOSCA"                , "0.86"             , # delete? seems like it's closed: https://www.molinahealthcare.com/~/media/Molina/PublicWebsite/PDF/providers/ca/Duals/JTF-04-03-2017-PROMISE-HOSPITAL-OF-SAN-DIEGO-CLOSED-SD.pdf
     "SHARP CHULA VISTA MEDICAL CENTER"   , "SHARP CHULA VISTA MEDICAL CENTER"                                   , "CA"   , "SCVMCCA"                , "1"                ,
     "ST JOHN'S HOSPITAL CAMARILLO"       , "ST. JOHN'S HOSPITAL CAMARILLO"                                      , "CA"   , "STJHCCA"                , "1"                ,
-    # note these should both be included because oen is from dhs and one from hhs
     "ST MARY MEDICAL CENTER"             , "ST MARY MEDICAL CENTER"                                             , "CA"   , "STMARCA"                , "1"                ,
     "ST MARY MEDICAL CENTER"             , "ST. MARY MEDICAL CENTER"                                            , "CA"   , "STMARCA"                , "1"                ,
     "SUTTER MED CTR SACRAMENTO"          , "SUTTER MEDICAL CENTER, SACRAMENTO"                                  , "CA"   , "SUTMCCA"                , "0.96"             ,
     "SUTTER MED CTR SACRAMENTO"          , "SUTTER MEDICAL CENTER - SACRAMENTO"                                 , "CA"   , "SUTMCCA"                , "0.96"             ,
-    # "UC SAN DIEGO MEDICAL CENTER"        , "UC SAN DIEGO HEALTH HILLCREST - HILLCREST MED CTR"                             , "CA"   , "UCSDMCA"                , "0.85"             ,
-    # "UC SAN DIEGO MEDICAL CENTER"        , "UC SAN DIEGO HEALTH HILLCREST - HILLCREST MEDICAL CENTER"                      , "CA"   , "UCSDMCA"                , "0.84"             ,
-    # "UC SAN DIEGO MEDICAL CENTER"        , "UC SAN DIEGO HEALTH LA JOLLA - JACOBS MEDICAL CENTER AND SULPIZIO CARDIOVASCU" , "CA"   , "UCSDMCA"                , "0.82"             ,
-    # "UNV CALIFORNIA SAN DIEGO HOSPITAL"  , "UC SAN DIEGO HEALTH HILLCREST - HILLCREST MED CTR"                             , "CA"   , "UCSDHCA"                , "0.89"             ,
-    # "UNV CALIFORNIA SAN DIEGO HOSPITAL"  , "UC SAN DIEGO HEALTH HILLCREST - HILLCREST MEDICAL CENTER"                      , "CA"   , "UCSDHCA"                , "0.86"             ,
+    # "UC SAN DIEGO MEDICAL CENTER"        , "UC SAN DIEGO HEALTH HILLCREST - HILLCREST MED CTR"                             , "CA"   , "UCSDMCA"                , "0.85"             , # couldn't find anything but seems like it's hillcrest
+    # "UC SAN DIEGO MEDICAL CENTER"        , "UC SAN DIEGO HEALTH HILLCREST - HILLCREST MEDICAL CENTER"                      , "CA"   , "UCSDMCA"                , "0.84"             , # keep
+    # "UC SAN DIEGO MEDICAL CENTER"        , "UC SAN DIEGO HEALTH LA JOLLA - JACOBS MEDICAL CENTER AND SULPIZIO CARDIOVASCU" , "CA"   , "UCSDMCA"                , "0.82"             , # delete? here's link to it anyway: https://healthlocations.ucsd.edu/san-diego/9300-campus-point-drive/10
+    # "UNV CALIFORNIA SAN DIEGO HOSPITAL"  , "UC SAN DIEGO HEALTH HILLCREST - HILLCREST MED CTR"                             , "CA"   , "UCSDHCA"                , "0.89"             , # keep
+    # "UNV CALIFORNIA SAN DIEGO HOSPITAL"  , "UC SAN DIEGO HEALTH HILLCREST - HILLCREST MEDICAL CENTER"                      , "CA"   , "UCSDHCA"                , "0.86"             , # keep
     "VICTOR VALLEY GLOBAL MED CENTER"    , "VICTOR VALLEY GLOBAL MEDICAL CENTER"                                , "CA"   , "VVGMCCA"                , "1"                ,
-    # "COLORADO MENTAL HEALTH INSTITUTE"   , "COLORADO MENTAL HEALTH HOSPITAL IN PUEBLO"                                     , "CO"   , "COMHICO"                , "0.88"             ,
-    # "COLORADO MENTAL HEALTH INSTITUTE"   , "COLORADO MENTAL HEALTH HOSPITAL IN FORT LOGAN"                                 , "CO"   , "COMHICO"                , "0.87"             ,
-    # "COLORADO MENTAL HEALTH INSTITUTE"   , "COLORADO MENTAL HEALTH INSTITUTE AT FT LOGAN"                                  , "CO"   , "COMHICO"                , "0.94"             ,
-    # "COLORADO MENTAL HEALTH INSTITUTE"   , "COLORADO MENTAL HEALTH INSTITUTE AT PUEBLO - PSYCH"                            , "CO"   , "COMHICO"                , "0.9"              ,
-
-    # stopped here
+    # "COLORADO MENTAL HEALTH INSTITUTE"   , "COLORADO MENTAL HEALTH HOSPITAL IN PUEBLO"                                     , "CO"   , "COMHICO"                , "0.88"             , # "serves individuals with pending criminal charges": https://cdhs.colorado.gov/CMHHIP
+    # "COLORADO MENTAL HEALTH INSTITUTE"   , "COLORADO MENTAL HEALTH HOSPITAL IN FORT LOGAN"                                 , "CO"   , "COMHICO"                , "0.87"             , # unsure which one it is but here is link for fort logan anyway: https://cdhs.colorado.gov/CMHHIFL
+    # "COLORADO MENTAL HEALTH INSTITUTE"   , "COLORADO MENTAL HEALTH INSTITUTE AT FT LOGAN"                                  , "CO"   , "COMHICO"                , "0.94"             , # same as above
+    # "COLORADO MENTAL HEALTH INSTITUTE"   , "COLORADO MENTAL HEALTH INSTITUTE AT PUEBLO - PSYCH"                            , "CO"   , "COMHICO"                , "0.9"              , # same as first
     "DENVER HEALTH MEDICAL CENTER"       , "DENVER HEALTH MEDICAL CENTER"                                       , "CO"   , "DNHMCCO"                , "1"                ,
     "HIGHLANDS BEHAVIORAL HEALTH"        , "HIGHLANDS BEHAVIORAL HEALTH SYSTEM"                                 , "CO"   , "HGHBECO"                , "0.98"             ,
     "SAINT JOSEPH HOSPITAL"              , "SAINT JOSEPH HOSPITAL"                                              , "CO"   , "STJOSCO"                , "1"                ,
     "BROWARD GENERAL MEDICAL CENTER"     , "BROWARD HEALTH MEDICAL CENTER"                                      , "FL"   , "BRGMCFL"                , "0.85"             ,
     "ED FRASER MEMORIAL HOSPITAL"        , "ED FRASER MEMORIAL HOSPITAL"                                        , "FL"   , "EFMHMFL"                , "1"                ,
-    # "FORT LAUDERDALE HOSPITAL"           , "FORT LAUDERDALE BEHAVIORAL HEALTH CENTER"                           , "FL"   , "FLHOSFL"                , "0.75"             ,
-    # "FT LAUDERDALE BEHAVOR HLTH CTR"     , "FORT LAUDERDALE BEHAVIORAL HEALTH CENTER"                           , "FL"   , "FLBHCFL"                , "0.93"             ,
-    # "HCA FLORIDA KENDALL HOSPITAL"       , "HCA FLORIDA KENDALL HOSPITAL"                                       , "FL"   , "CKHOSFL"                , "1"                , # https://www.hcafloridahealthcare.com/locations/kendall-hospital
-    # "HCA FLORIDA KENDALL HOSPITAL"       , "WEST KENDALL BAPTIST HOSPITAL"                                      , "FL"   , "CKHOSFL"                , "0.85"             ,
-    # "HCA FLORIDA KENDALL HOSPITAL"       , "KENDALL REGIONAL MEDICAL CENTER"                                    , "FL"   , "CKHOSFL"                , "0.81"             ,
-    # "HCA FLORIDA MEMORIAL HOSPITAL"      , "HCA FLORIDA MERCY HOSPITAL"                                         , "FL"   , "HCAFMFL"                , "0.9"              ,
-    # "HCA FLORIDA MEMORIAL HOSPITAL"      , "HCA FLORIDA MEMORIAL HOSPITAL"                                      , "FL"   , "HCAFMFL"                , "1"                ,
-    # "HENDRY REGIONAL MEDICAL CENTER"     , "HENDRY REGIONAL MEDICAL CENTER"                                     , "FL"   , "HNRMCFL"                , "1"                ,
+    "FORT LAUDERDALE HOSPITAL"           , "FORT LAUDERDALE BEHAVIORAL HEALTH CENTER"                           , "FL"   , "FLHOSFL"                , "0.75"             ,
+    "FT LAUDERDALE BEHAVOR HLTH CTR"     , "FORT LAUDERDALE BEHAVIORAL HEALTH CENTER"                           , "FL"   , "FLBHCFL"                , "0.93"             ,
+    # "HCA FLORIDA KENDALL HOSPITAL"       , "HCA FLORIDA KENDALL HOSPITAL"                                       , "FL"   , "CKHOSFL"                , "1"                , # keep: https://www.hcafloridahealthcare.com/locations/kendall-hospital
+    # "HCA FLORIDA KENDALL HOSPITAL"       , "WEST KENDALL BAPTIST HOSPITAL"                                      , "FL"   , "CKHOSFL"                , "0.85"             , # delete bc west kendall baptist hospital already exists below
+    # "HCA FLORIDA KENDALL HOSPITAL"       , "KENDALL REGIONAL MEDICAL CENTER"                                    , "FL"   , "CKHOSFL"                , "0.81"             , # keep
+    # "HCA FLORIDA MEMORIAL HOSPITAL"      , "HCA FLORIDA MERCY HOSPITAL"                                         , "FL"   , "HCAFMFL"                , "0.9"              , # not sure which one: https://www.hcafloridahealthcare.com/locations/mercy-hospital
+    # "HCA FLORIDA MEMORIAL HOSPITAL"      , "HCA FLORIDA MEMORIAL HOSPITAL"                                      , "FL"   , "HCAFMFL"                , "1"                , # not sure which one: https://www.hcafloridahealthcare.com/locations/memorial-hospital
+    "HENDRY REGIONAL MEDICAL CENTER"     , "HENDRY REGIONAL MEDICAL CENTER"                                     , "FL"   , "HNRMCFL"                , "1"                ,
     "JACKSON MEMORIAL HOSPITAL"          , "JACKSON MEMORIAL HOSPITAL"                                          , "FL"   , "JMHOSFL"                , "1"                ,
     "LAKESIDE MEDICAL CENTER"            , "LAKESIDE MEDICAL CENTER"                                            , "FL"   , "LAKMCFL"                , "1"                ,
-    # "LARKIN BEHAVIORAL HEALTH SVCS"      , "LARKIN COMMUNITY HOSPITAL BEHAVIORAL HEALTH SRVS"                   , "FL"   , "LRKBHFL"                , "0.9"              ,
-    # "LARKIN BEHAVIORAL HEALTH SVCS"      , "LARKIN COMMUNITY HOSPITAL BEHAVIORAL HEALTH SERVICES"               , "FL"   , "LRKBHFL"                , "0.9"              ,
-    # "LARKIN HOSPITAL"                    , "LARKIN COMMUNITY HOSPITAL"                                          , "FL"   , "LRKNHFL"                , "0.85"             , # https://www.ice.gov/news/releases/ice-detainee-passes-away-larkin-community-hospital
-    # "LARKIN HOSPITAL"                    , "LARKIN COMMUNITY HOSPITAL BEHAVIORAL HEALTH SRVS"                   , "FL"   , "LRKNHFL"                , "0.83"             ,
-    # "LARKIN HOSPITAL"                    , "LARKIN COMMUNITY HOSPITAL BEHAVIORAL HEALTH SERVICES"               , "FL"   , "LRKNHFL"                , "0.85"             ,
+    "LARKIN BEHAVIORAL HEALTH SVCS"      , "LARKIN COMMUNITY HOSPITAL BEHAVIORAL HEALTH SRVS"                   , "FL"   , "LRKBHFL"                , "0.9"              ,
+    "LARKIN BEHAVIORAL HEALTH SVCS"      , "LARKIN COMMUNITY HOSPITAL BEHAVIORAL HEALTH SERVICES"               , "FL"   , "LRKBHFL"                , "0.9"              ,
+    # "LARKIN HOSPITAL"                    , "LARKIN COMMUNITY HOSPITAL"                                          , "FL"   , "LRKNHFL"                , "0.85"             , # keep: https://www.ice.gov/news/releases/ice-detainee-passes-away-larkin-community-hospital
+    # "LARKIN HOSPITAL"                    , "LARKIN COMMUNITY HOSPITAL BEHAVIORAL HEALTH SRVS"                   , "FL"   , "LRKNHFL"                , "0.83"             , # delete?
+    # "LARKIN HOSPITAL"                    , "LARKIN COMMUNITY HOSPITAL BEHAVIORAL HEALTH SERVICES"               , "FL"   , "LRKNHFL"                , "0.85"             , # delete?
     "LOWER KEYS MEDICAL CENTER"          , "LOWER KEYS MEDICAL CENTER"                                          , "FL"   , "LRKMCFL"                , "1"                ,
     "MEMORIAL REGIONAL HOSP."            , "MEMORIAL REGIONAL HOSPITAL"                                         , "FL"   , "MEMRHFL"                , "0.99"             ,
     "MERCY HOSPITAL"                     , "MERCY HOSPITAL"                                                     , "FL"   , "MERCYFL"                , "1"                ,
     "NORTH BROWARD MEDICAL CENTER"       , "BROWARD HEALTH MEDICAL CENTER"                                      , "FL"   , "NBRMCFL"                , "0.88"             ,
     "PALMS WEST HOSPITAL"                , "HCA FLORIDA PALMS WEST HOSPITAL"                                    , "FL"   , "PWHOSFL"                , "0.79"             ,
     "PALMS WEST HOSPITAL"                , "PALMS WEST HOSPITAL"                                                , "FL"   , "PWHOSFL"                , "1"                ,
-    # "UNIVERSITY OF MIAMI HOSPITAL"       , "UNIVERSITY OF MIAMI HOSPITAL AND CLINICS - BASCOM PALMER EYE INST"  , "FL"   , "UMIAHFL"                , "0.8"              ,
-    # "UNIVERSITY OF MIAMI HOSPITAL"       , "UNIVERSITY OF MIAMI HOSPITAL AND CLINICS - SYLVESTER COMPREHENSIVE" , "FL"   , "UMIAHFL"                , "0.78"             ,
-    # "UNIVERSITY OF MIAMI HOSPITAL"       , "UNIVERSITY OF MIAMI HOSPITAL AND CLINICS - UHEALTH TOWER"           , "FL"   , "UMIAHFL"                , "0.9"              ,
-    # "WEST KENDALL BAPTIST HOSP"          , "BAPTIST HOSPITAL OF MIAMI"                                          , "FL"   , "WKBHMFL"                , "0.83"             ,
-    # "WEST KENDALL BAPTIST HOSP"          , "BAPTIST HOSPITAL"                                                   , "FL"   , "WKBHMFL"                , "0.83"             ,
-    # "WEST KENDALL BAPTIST HOSP"          , "HCA FLORIDA KENDALL HOSPITAL"                                       , "FL"   , "WKBHMFL"                , "0.77"             ,
-    # "WEST KENDALL BAPTIST HOSP"          , "WEST KENDALL BAPTIST HOSPITAL"                                      , "FL"   , "WKBHMFL"                , "1"                ,
-    # "WEST MIAMI DADE BAPT HEALTH EMERG"  , "BAPTIST HEALTH HOSPITAL AT DORAL"                                   , "FL"   , "WMDBHFL"                , "0.78"             ,
+    # "UNIVERSITY OF MIAMI HOSPITAL"       , "UNIVERSITY OF MIAMI HOSPITAL AND CLINICS - BASCOM PALMER EYE INST"  , "FL"   , "UMIAHFL"                , "0.8"              , # unsure of which one it is: https://umiamihealth.org/en/bascom-palmer-eye-institute
+    # "UNIVERSITY OF MIAMI HOSPITAL"       , "UNIVERSITY OF MIAMI HOSPITAL AND CLINICS - SYLVESTER COMPREHENSIVE" , "FL"   , "UMIAHFL"                , "0.78"             , # other option: https://umiamihealth.org/en/locations/sylvester-comprehensive-cancer-center
+    # "UNIVERSITY OF MIAMI HOSPITAL"       , "UNIVERSITY OF MIAMI HOSPITAL AND CLINICS - UHEALTH TOWER"           , "FL"   , "UMIAHFL"                , "0.9"              , # confusing bc also there's an east and west tower: https://umiamihealth.org/en/locations/uhealth-tower
+    # "WEST KENDALL BAPTIST HOSP"          , "BAPTIST HOSPITAL OF MIAMI"                                          , "FL"   , "WKBHMFL"                , "0.83"             , # doesn't seem to match the facility code, so probably wrong and we should delete: https://baptisthealth.net/locations/hospitals/baptist-hospital-of-miami
+    # "WEST KENDALL BAPTIST HOSP"          , "BAPTIST HOSPITAL"                                                   , "FL"   , "WKBHMFL"                , "0.83"             , # same as above
+    # "WEST KENDALL BAPTIST HOSP"          , "HCA FLORIDA KENDALL HOSPITAL"                                       , "FL"   , "WKBHMFL"                , "0.77"             , # delete bc hca florida kendall hospital already exists above
+    # "WEST KENDALL BAPTIST HOSP"          , "WEST KENDALL BAPTIST HOSPITAL"                                      , "FL"   , "WKBHMFL"                , "1"                , # keep
+    # "WEST MIAMI DADE BAPT HEALTH EMERG"  , "BAPTIST HEALTH HOSPITAL AT DORAL"                                   , "FL"   , "WMDBHFL"                , "0.78"             , # confused by this one
     "GRADY MEMORIAL HOSPITAL"            , "GRADY MEMORIAL HOSPITAL"                                            , "GA"   , "GMHATGA"                , "1"                ,
     "GRADY MEMORIAL HOSPITAL"            , "GRADY GENERAL HOSPITAL"                                             , "GA"   , "GMHATGA"                , "0.8"              ,
     "PHOEBE PUTNEY MEMORIAL HOSP"        , "PHOEBE PUTNEY MEMORIAL HOSPITAL"                                    , "GA"   , "PHPMHGA"                , "1"                ,
     "PHOEBE SUMTER MED CTR"              , "PHOEBE SUMTER MEDICAL CENTER"                                       , "GA"   , "PHOSMGA"                , "0.86"             ,
     "ST FRANCIS HOSPITAL"                , "ST FRANCIS HOSPITAL- EMORY HEALTHCARE"                              , "GA"   , "STFRHGA"                , "0.84"             ,
     "ST FRANCIS HOSPITAL"                , "ST FRANCIS HOSPITAL - EMORY HEALTHCARE"                             , "GA"   , "STFRHGA"                , "0.84"             ,
-    # "GUAM MEMORIAL HOSPITAL"             , "GUAM MEMORIAL  HOSPITAL AUTHORITY"                                  , "GU"   , "GUAMHGU"                , "0.96"             ,
-    # "GUAM MEMORIAL HOSPITAL"             , "GUAM MEMORIAL HOSPITAL AUTHORITY"                                   , "GU"   , "GUAMHGU"                , "0.96"             ,
-    # "GUAM MEMORIAL HOSPITAL"             , "NAVAL HOSPITAL GUAM"                                                , "GU"   , "GUAMHGU"                , "0.77"             ,
+    # "GUAM MEMORIAL HOSPITAL"             , "GUAM MEMORIAL  HOSPITAL AUTHORITY"                                  , "GU"   , "GUAMHGU"                , "0.96"             , # keep: https://www.gmha.org/
+    # "GUAM MEMORIAL HOSPITAL"             , "GUAM MEMORIAL HOSPITAL AUTHORITY"                                   , "GU"   , "GUAMHGU"                , "0.96"             , # keep
+    # "GUAM MEMORIAL HOSPITAL"             , "NAVAL HOSPITAL GUAM"                                                , "GU"   , "GUAMHGU"                , "0.77"             , # delete?
     "ADVENTIST HEALTH CASTLE"            , "ADVENTIST HEALTH CASTLE"                                            , "HI"   , "ADVHCHI"                , "1"                ,
     "PALI MOMI MEDICAL CENTER"           , "PALI MOMI MEDICAL CENTER"                                           , "HI"   , "PMMCAHI"                , "1"                ,
-    # "QUEEN'S MEDICAL CENTER"             , "THE QUEEN'S MEDICAL CENTER"                                         , "HI"   , "QUEMCHI"                , "0.95"             ,
-    # "QUEEN'S MEDICAL CENTER"             , "THE QUEEN'S MEDICAL CENTER - HALE PULAMA MAU"                       , "HI"   , "QUEMCHI"                , "0.78"             ,
+    # "QUEEN'S MEDICAL CENTER"             , "THE QUEEN'S MEDICAL CENTER"                                         , "HI"   , "QUEMCHI"                , "0.95"             , # keep: https://www.queens.org/locations/hospitals/qmc/
+    # "QUEEN'S MEDICAL CENTER"             , "THE QUEEN'S MEDICAL CENTER - HALE PULAMA MAU"                       , "HI"   , "QUEMCHI"                , "0.78"             , # this is a specific building but from my understanding, it's the same medical center
     "CHI HEALTH MERCY COUNCIL BLUFFS"    , "CHI HEALTH MERCY COUNCIL BLUFFS"                                    , "IA"   , "CHIHMIA"                , "1"                ,
     "MERCY MED CTR CEDAR RAPID"          , "MERCY MEDICAL CENTER - CEDAR RAPIDS"                                , "IA"   , "MMCCRIA"                , "0.85"             ,
-    # "UNITY POINT HLTH ST LUKES HOSP"     , "ST LUKES HOSPITAL"                                                  , "IA"   , "UPSLHIA"                , "0.85"             ,
-    # "UNITYPOINT HLTH ST LUKES HOSP SXC"  , "ST LUKES HOSPITAL"                                                  , "IA"   , "UPSLSIA"                , "0.76"             ,
-    # "UNITYPOINT HLTH ST LUKES HOSP SXC"  , "ST LUKES REGIONAL MEDICAL CENTER"                                   , "IA"   , "UPSLSIA"                , "0.76"             ,
-    # "COOK COUNTY HOSPITAL-PROVIDENT"     , "PROVIDENT HOSPITAL OF CHICAGO"                                      , "IL"   , "CCHOSIL"                , "0.89"             ,
-    # "COOK COUNTY HOSPITAL-PROVIDENT"     , "PROVIDENT HOSPITAL OF COOK COUNTY"                                  , "IL"   , "CCHOSIL"                , "0.93"             ,
+    "UNITY POINT HLTH ST LUKES HOSP"     , "ST LUKES HOSPITAL"                                                  , "IA"   , "UPSLHIA"                , "0.85"             ,
+    "UNITYPOINT HLTH ST LUKES HOSP SXC"  , "ST LUKES HOSPITAL"                                                  , "IA"   , "UPSLSIA"                , "0.76"             ,
+    "UNITYPOINT HLTH ST LUKES HOSP SXC"  , "ST LUKES REGIONAL MEDICAL CENTER"                                   , "IA"   , "UPSLSIA"                , "0.76"             ,
+    "COOK COUNTY HOSPITAL-PROVIDENT"     , "PROVIDENT HOSPITAL OF CHICAGO"                                      , "IL"   , "CCHOSIL"                , "0.89"             ,
+    "COOK COUNTY HOSPITAL-PROVIDENT"     , "PROVIDENT HOSPITAL OF COOK COUNTY"                                  , "IL"   , "CCHOSIL"                , "0.93"             ,
     "HOLY CROSS HOSPITAL"                , "HOLY CROSS HOSPITAL"                                                , "IL"   , "HLYCHIL"                , "1"                ,
     "LOYOLA CENTER FOR HEALTH"           , "LOYOLA UNIVERSITY MEDICAL CENTER"                                   , "IL"   , "LYOLAIL"                , "0.79"             ,
-    # "LOYOLA MEDICAL CENTER"              , "LOYOLA GOTTLIEB MEMORIAL HOSPITAL"                                  , "IL"   , "LOYMCIL"                , "0.78"             ,
-    # "LOYOLA MEDICAL CENTER"              , "LOYOLA UNIVERSITY MEDICAL CENTER"                                   , "IL"   , "LOYMCIL"                , "0.81"             ,
-    # "LOYOLA MEDICAL CENTER"              , "FOSTER G. MCGAW HOSPITAL LOYOLA UNIVERSITY MEDICAL CENTER"          , "IL"   , "LOYMCIL"                , "0.85"             ,
+    # "LOYOLA MEDICAL CENTER"              , "LOYOLA GOTTLIEB MEMORIAL HOSPITAL"                                  , "IL"   , "LOYMCIL"                , "0.78"             , # seems wrong based on facility code - delete?: https://www.loyolamedicine.org/location/gottlieb-memorial-hospital-0
+    # "LOYOLA MEDICAL CENTER"              , "LOYOLA UNIVERSITY MEDICAL CENTER"                                   , "IL"   , "LOYMCIL"                , "0.81"             , # keep?: https://www.loyolamedicine.org/
+    # "LOYOLA MEDICAL CENTER"              , "FOSTER G. MCGAW HOSPITAL LOYOLA UNIVERSITY MEDICAL CENTER"          , "IL"   , "LOYMCIL"                , "0.85"             , # keep?: https://hfsrb.illinois.gov/project.foster-g--mcgaw-hospital-loyola-university-medical-center--maywood-e-002-14.html
     "RIVEREDGE HOSPITAL"                 , "AERIES HEALTHCARE OF ILLINOIS, INC., DBA RIVEREDGE HOSPITAL"        , "IL"   , "REHOSIL"                , "0.9"              ,
     "RIVEREDGE HOSPITAL"                 , "RIVEREDGE HOSPITAL INC"                                             , "IL"   , "REHOSIL"                , "0.93"             ,
-    # "UCHICAGO MEDICINE HOSPITAL CHICAGO" , "THE UNIVERSITY OF CHICAGO MEDICAL CENTER"                           , "IL"   , "UCCHIIL"                , "0.83"             ,
-    # "UCHICAGO MEDICINE HOSPITAL CHICAGO" , "UNIVERSITY OF ILLINOIS HOSPITAL AT CHICAGO"                         , "IL"   , "UCCHIIL"                , "0.79"             ,
-    # "UCHICAGO MEDICINE HOSPITAL CHICAGO" , "UCHICAGO MEDICINE"                                                  , "IL"   , "UCCHIIL"                , "0.93"             ,
+    # "UCHICAGO MEDICINE HOSPITAL CHICAGO" , "THE UNIVERSITY OF CHICAGO MEDICAL CENTER"                           , "IL"   , "UCCHIIL"                , "0.83"             , # keep: https://www.uchicagomedicine.org/
+    # "UCHICAGO MEDICINE HOSPITAL CHICAGO" , "UNIVERSITY OF ILLINOIS HOSPITAL AT CHICAGO"                         , "IL"   , "UCCHIIL"                , "0.79"             , # seems wrong based on facility code - delete?: https://hospital.uillinois.edu/
+    # "UCHICAGO MEDICINE HOSPITAL CHICAGO" , "UCHICAGO MEDICINE"                                                  , "IL"   , "UCCHIIL"                , "0.93"             , # keep - same as first
     "ESKENAZI HEALTH"                    , "ESKENAZI HEALTH"                                                    , "IN"   , "ESKHLIN"                , "1"                ,
-    # "PARKVIEW HOSPITAL RANDALLIA"        , "PARKVIEW REGIONAL MEDICAL CENTER"                                   , "IN"   , "PVHOSIN"                , "0.83"             ,
-    # "PARKVIEW HOSPITAL RANDALLIA"        , "PARKVIEW HOSPITAL RANDALLIA"                                        , "IN"   , "PVHOSIN"                , "1"                ,
-    # "PARKVIEW REGIONAL MEDICAL CENTER"   , "PARKVIEW REGIONAL MEDICAL CENTER"                                   , "IN"   , "PKMEDIN"                , "1"                ,
-    # "PARKVIEW REGIONAL MEDICAL CENTER"   , "PARKVIEW HOSPITAL RANDALLIA"                                        , "IN"   , "PKMEDIN"                , "0.83"             ,
-    # "UNION HOSPITAL"                     , "UNION HOSPITAL INC"                                                 , "IN"   , "UHOSPIN"                , "0.97"             ,
-    # "UNION HOSPITAL"                     , "UNION HOSPITAL CLINTON"                                             , "IN"   , "UHOSPIN"                , "0.92"             ,
+    # "PARKVIEW HOSPITAL RANDALLIA"        , "PARKVIEW REGIONAL MEDICAL CENTER"                                   , "IN"   , "PVHOSIN"                , "0.83"             , # seems wrong based on facility code - delete?
+    # "PARKVIEW HOSPITAL RANDALLIA"        , "PARKVIEW HOSPITAL RANDALLIA"                                        , "IN"   , "PVHOSIN"                , "1"                , # keep: https://www.parkview.com/locations/parkview-hospital-randallia
+    # "PARKVIEW REGIONAL MEDICAL CENTER"   , "PARKVIEW REGIONAL MEDICAL CENTER"                                   , "IN"   , "PKMEDIN"                , "1"                , # keep: https://www.parkview.com/locations/parkview-regional-medical-center
+    # "PARKVIEW REGIONAL MEDICAL CENTER"   , "PARKVIEW HOSPITAL RANDALLIA"                                        , "IN"   , "PKMEDIN"                , "0.83"             , # seems wrong based on facility code - delete?
+    # "UNION HOSPITAL"                     , "UNION HOSPITAL INC"                                                 , "IN"   , "UHOSPIN"                , "0.97"             , # keep bc mentions Union Hospital in Terre Haute (which is this one) in detention inspection: https://www.ice.gov/doclib/facilityInspections/ClayCoJail_CL_05-20-2021.pdf
+    # "UNION HOSPITAL"                     , "UNION HOSPITAL CLINTON"                                             , "IN"   , "UHOSPIN"                , "0.92"             , # likely the wrong facility (see above) - delete
     "OSAWATAMIE STATE HOSPITAL"          , "ADAIR ACUTE CARE AT OSAWATOMIE STATE HOSPITAL"                      , "KS"   , "OSAHOKS"                , "0.76"             ,
     "OSAWATAMIE STATE HOSPITAL"          , "OSAWATOMIE STATE HOSPITAL"                                          , "KS"   , "OSAHOKS"                , "0.98"             ,
-    # "BETH ISRAEL DEACONESS HOSP"         , "BETH ISRAEL DEACONESS HOSPITAL PLYMOUTH"                            , "MA"   , "BIDHPMA"                , "0.86"             ,
-    # "BETH ISRAEL DEACONESS HOSP"         , "BETH ISRAEL DEACONESS HOSPITAL - PLYMOUTH"                          , "MA"   , "BIDHPMA"                , "0.86"             ,
-    # "BETH ISRAEL DEACONESS HOSP"         , "BETH ISRAEL DEACONESS MEDICAL CENTER"                               , "MA"   , "BIDHPMA"                , "0.95"             ,
-    # "BETH ISRAEL DEACONESS HOSP"         , "BETH ISRAEL DEACONESS HOSPITAL - MILTON"                            , "MA"   , "BIDHPMA"                , "0.93"             ,
-    # "BETH ISRAEL DEACONESS HOSP"         , "BETH ISRAEL DEACONESS HOSPITAL - MILTON INC"                        , "MA"   , "BIDHPMA"                , "0.9"              ,
-    # "BETH ISRAEL DEACONESS HOSP"         , "BETH ISRAEL DEACONESS MED CTR - WEST"                               , "MA"   , "BIDHPMA"                , "0.89"             ,
-    # "LAHEY HOSPITAL & MED CTR"           , "LAHEY HOSPITAL AND MEDICAL CENTER - BURLINGTON"                     , "MA"   , "LHMCBMA"                , "0.93"             ,
-    # "LAHEY HOSPITAL & MED CTR"           , "LAHEY MEDICAL CTR, PEADODY - INPT ST"                               , "MA"   , "LHMCBMA"                , "0.79"             ,
+    # i'm unsure of all of these. i found a link to an article about "Beth Israel Deaconess Hospital-Needham (none of hospitals below are this one): https://www.wgbh.org/news/local/2025-09-22/continued-ice-activity-leads-to-sightings-of-agents-at-local-hospitals"
+    # "BETH ISRAEL DEACONESS HOSP"         , "BETH ISRAEL DEACONESS HOSPITAL PLYMOUTH"                            , "MA"   , "BIDHPMA"                , "0.86"             , # keep?: https://bidplymouth.org/
+    # "BETH ISRAEL DEACONESS HOSP"         , "BETH ISRAEL DEACONESS HOSPITAL - PLYMOUTH"                          , "MA"   , "BIDHPMA"                , "0.86"             , # keep?
+    # "BETH ISRAEL DEACONESS HOSP"         , "BETH ISRAEL DEACONESS MEDICAL CENTER"                               , "MA"   , "BIDHPMA"                , "0.95"             , # seems wrong based on facility code - delete?: https://bidmc.org/locations/beth-israel-deaconess-medical-center
+    # "BETH ISRAEL DEACONESS HOSP"         , "BETH ISRAEL DEACONESS HOSPITAL - MILTON"                            , "MA"   , "BIDHPMA"                , "0.93"             , # seems wrong based on facility code - delete?: https://bidmilton.org/
+    # "BETH ISRAEL DEACONESS HOSP"         , "BETH ISRAEL DEACONESS HOSPITAL - MILTON INC"                        , "MA"   , "BIDHPMA"                , "0.9"              , # same as above
+    # "BETH ISRAEL DEACONESS HOSP"         , "BETH ISRAEL DEACONESS MED CTR - WEST"                               , "MA"   , "BIDHPMA"                , "0.89"             , # seems wrong based on facility code - delete?: https://bidmc.org/locations/beth-israel-deaconess-medical-center/west-campus
+    # "LAHEY HOSPITAL & MED CTR"           , "LAHEY HOSPITAL AND MEDICAL CENTER - BURLINGTON"                     , "MA"   , "LHMCBMA"                , "0.93"             , # multiple locations in burlington - which one?: https://www.lahey.org/locations?keyword=lahey%20hospital&listPage=1
+    # "LAHEY HOSPITAL & MED CTR"           , "LAHEY MEDICAL CTR, PEADODY - INPT ST"                               , "MA"   , "LHMCBMA"                , "0.79"             , # seems wrong based on facility code - delete?: https://www.lahey.org/locations/lahey-medical-center-peabody
     "LEMUEL SHATTUCK HOSPITAL"           , "LEMUEL SHATTUCK HOSPITAL"                                           , "MA"   , "LSHOSMA"                , "1"                ,
     "SOUTH SHORE HOSPITAL"               , "SOUTH SHORE HOSPITAL"                                               , "MA"   , "SSHSWMA"                , "1"                ,
-    "TAUNTON STATE HOSPITAL"             , "TAUNTON STATE HOSPITAL"                                             , "MA"   , "MATSHOS"                , "1"                , # https://www.mass.gov/locations/taunton-state-hospital
+    "TAUNTON STATE HOSPITAL"             , "TAUNTON STATE HOSPITAL"                                             , "MA"   , "MATSHOS"                , "1"                ,
     "UMASS MEMORIAL MEDICAL CENTER"      , "UMASS MEMORIAL MEDICAL CENTER/UNIVERSITY CAMPUS"                    , "MA"   , "UMASSMA"                , "0.93"             ,
     "UNIV OF MARYLAND MEDICAL CENTER"    , "UNIVERSITY OF MARYLAND MEDICAL CENTER"                              , "MD"   , "UNMEDMD"                , "0.92"             ,
     "BRONSON BATTLE CREEK HOSP"          , "BRONSON BATTLE CREEK HOSPITAL"                                      , "MI"   , "BBCHPMI"                , "1"                ,
     "BRONSON BATTLE CREEK HOSP"          , "BRONSON BATTLE CREEK HOSPITAL - FIELDSTONE CENTER"                  , "MI"   , "BBCHPMI"                , "0.87"             ,
     "BRONSON HOSPITAL FIELDSTONE CENTER" , "BRONSON BATTLE CREEK HOSPITAL - FIELDSTONE CENTER"                  , "MI"   , "BHFLDMI"                , "0.95"             ,
     "BRONSON METHODIST HOSPITAL"         , "BRONSON METHODIST HOSPITAL"                                         , "MI"   , "BROHOMI"                , "1"                ,
-    # "HENRY FORD HOSPITAL"                , "HENRY FORD HEALTH HOSPITAL"                                         , "MI"   , "HNYHOMI"                , "0.96"             ,
-    # "HENRY FORD HOSPITAL"                , "Henry Ford Health Warren Hospital"                                  , "MI"   , "HNYHOMI"                , "0.76"             ,
-    # "HENRY FORD HOSPITAL"                , "HENRY FORD HEALTH WEST BLOOMFIELD HOSPITAL"                         , "MI"   , "HNYHOMI"                , "0.87"             ,
-    # "HENRY FORD HOSPITAL"                , "HENRY FORD HOSPITAL"                                                , "MI"   , "HNYHOMI"                , "1"                ,
-    # "HENRY FORD HOSPITAL"                , "HENRY FORD WYANDOTTE HOSPITAL"                                      , "MI"   , "HNYHOMI"                , "0.93"             ,
-    # "HENRY FORD HOSPITAL"                , "HENRY FORD WEST BLOOMFIELD HOSPITAL"                                , "MI"   , "HNYHOMI"                , "0.87"             ,
-    # "HENRY FORD HOSPITAL"                , "HENRY FORD HEALTH WYANDOTTE HOSPITAL"                               , "MI"   , "HNYHOMI"                , "0.94"             ,
+    # "HENRY FORD HOSPITAL"                , "HENRY FORD HEALTH HOSPITAL"                                         , "MI"   , "HNYHOMI"                , "0.96"             , # no clue which of the following is correct: https://www.henryford.com/locations/henry-ford-hospital
+    # "HENRY FORD HOSPITAL"                , "Henry Ford Health Warren Hospital"                                  , "MI"   , "HNYHOMI"                , "0.76"             , # https://www.henryford.com/locations/warren-hospital
+    # "HENRY FORD HOSPITAL"                , "HENRY FORD HEALTH WEST BLOOMFIELD HOSPITAL"                         , "MI"   , "HNYHOMI"                , "0.87"             , # https://www.henryford.com/locations/west-bloomfield
+    # "HENRY FORD HOSPITAL"                , "HENRY FORD HOSPITAL"                                                , "MI"   , "HNYHOMI"                , "1"                , # same as first
+    # "HENRY FORD HOSPITAL"                , "HENRY FORD WYANDOTTE HOSPITAL"                                      , "MI"   , "HNYHOMI"                , "0.93"             , # https://www.henryford.com/locations/wyandotte
+    # "HENRY FORD HOSPITAL"                , "HENRY FORD WEST BLOOMFIELD HOSPITAL"                                , "MI"   , "HNYHOMI"                , "0.87"             , # same as third
+    # "HENRY FORD HOSPITAL"                , "HENRY FORD HEALTH WYANDOTTE HOSPITAL"                               , "MI"   , "HNYHOMI"                , "0.94"             , # same as fifth
     "MCLAREN PORT HURON HOSP"            , "MCLAREN PORT HURON"                                                 , "MI"   , "MLPHHMI"                , "0.96"             , # https://www.mclaren.org/port-huron/mclaren-port-huron-home
     "MUNSON HEALTHCARE CADILLAC HOSP"    , "MUNSON HEALTHCARE CADILLAC HOSPITAL"                                , "MI"   , "MHCHSMI"                , "1"                ,
     "PROMEDICA MONROE REG HOSP"          , "PROMEDICA MONROE REGIONAL HOSPITAL"                                 , "MI"   , "PMMRHMI"                , "0.94"             ,
     "SAMARITAN BEHAVIORAL CENTER"        , "SAMARITAN BEHAVIORAL CENTER"                                        , "MI"   , "SAMBCMI"                , "1"                ,
-    "ABBOTT NORTHWESTERN HOSP"           , "ABBOTT NORTHWESTERN HOSPITAL"                                       , "MN"   , "ANWHMMN"                , "0.97"             , # https://www.allinahealth.org/abbott-northwestern-hospital
-    # "CENTRACARE RICE MEMORIAL HOSP"      , "CENTRACARE- RICE MEMORIAL HOSPITAL"                                 , "MN"   , "CCRMHMN"                , "1"                ,
-    # "CENTRACARE RICE MEMORIAL HOSP"      , "CENTRACARE HEALTH SYSTEM - MELROSE HOSPITAL"                        , "MN"   , "CCRMHMN"                , "0.81"             ,
+    "ABBOTT NORTHWESTERN HOSP"           , "ABBOTT NORTHWESTERN HOSPITAL"                                       , "MN"   , "ANWHMMN"                , "0.97"             ,
+    # "CENTRACARE RICE MEMORIAL HOSP"      , "CENTRACARE- RICE MEMORIAL HOSPITAL"                                 , "MN"   , "CCRMHMN"                , "1"                , # keep: https://www.centracare.com/locations/profile/rice-memorial-hospital/
+    # "CENTRACARE RICE MEMORIAL HOSP"      , "CENTRACARE HEALTH SYSTEM - MELROSE HOSPITAL"                        , "MN"   , "CCRMHMN"                , "0.81"             , # seems wrong based on facility code - delete?: https://www.centracare.com/locations/profile/melrose-hospital/
     "HENNEPIN COUNTY MED CTR"            , "HENNEPIN COUNTY MEDICAL CTR"                                        , "MN"   , "HCMCMMN"                , "0.96"             ,
     "M HEALTH FAIRVIEW SOUTHDALE HOSP"   , "M HEALTH FAIRVIEW SOUTHDALE HOSPITAL"                               , "MN"   , "MHFSHMN"                , "1"                ,
     "M HEALTH FAIRVIEW SOUTHDALE HOSP"   , "FAIRVIEW SOUTHDALE HOSPITAL"                                        , "MN"   , "MHFSHMN"                , "0.81"             ,
-    # "MAYO CLINIC HEALTH SYS - MANKATO"   , "MAYO CLINIC HEALTH SYSTEM - ALBERT LEA AND AUSTIN"                  , "MN"   , "MYOMKMN"                , "0.83"             ,
-    # "MAYO CLINIC HEALTH SYS - MANKATO"   , "MAYO CLINIC HEALTH SYSTEM - MANKATO"                                , "MN"   , "MYOMKMN"                , "1"                ,
-    # "MAYO CLINIC HEALTH SYS - MANKATO"   , "MAYO CLINIC HEALTH SYS MANKATO"                                     , "MN"   , "MYOMKMN"                , "1"                ,
-    # "MAYO CLINIC HEALTH SYS - MANKATO"   , "MAYO CLINIC HEALTH SYS WASECA"                                      , "MN"   , "MYOMKMN"                , "0.81"             ,
-    # "MAYO CLINIC HEALTH SYS - MANKATO"   , "MAYO CLINIC HEALTH SYSTEM"                                          , "MN"   , "MYOMKMN"                , "0.9"              ,
-    # "MAYO CLINIC HEALTH SYS ALBERT LEA"  , "MAYO CLINIC HEALTH SYSTEM - ALBERT LEA AND AUSTIN"                  , "MN"   , "MCHALMN"                , "0.95"             ,
-    # "MAYO CLINIC HEALTH SYS ALBERT LEA"  , "MAYO CLINIC HEALTH SYSTEM - MANKATO"                                , "MN"   , "MCHALMN"                , "0.79"             ,
-    # "MAYO CLINIC HEALTH SYS ALBERT LEA"  , "MAYO CLINIC ALBERT LEA AUSTIN"                                      , "MN"   , "MCHALMN"                , "0.91"             ,
+    # "MAYO CLINIC HEALTH SYS - MANKATO"   , "MAYO CLINIC HEALTH SYSTEM - ALBERT LEA AND AUSTIN"                  , "MN"   , "MYOMKMN"                , "0.83"             , # seems wrong based on facility code - delete?
+    # "MAYO CLINIC HEALTH SYS - MANKATO"   , "MAYO CLINIC HEALTH SYSTEM - MANKATO"                                , "MN"   , "MYOMKMN"                , "1"                , # keep: https://www.mayoclinichealthsystem.org/locations/mankato
+    # "MAYO CLINIC HEALTH SYS - MANKATO"   , "MAYO CLINIC HEALTH SYS MANKATO"                                     , "MN"   , "MYOMKMN"                , "1"                , # keep
+    # "MAYO CLINIC HEALTH SYS - MANKATO"   , "MAYO CLINIC HEALTH SYS WASECA"                                      , "MN"   , "MYOMKMN"                , "0.81"             , # seems wrong based on facility code - delete?: https://www.mayoclinichealthsystem.org/locations/waseca
+    # "MAYO CLINIC HEALTH SYS - MANKATO"   , "MAYO CLINIC HEALTH SYSTEM"                                          , "MN"   , "MYOMKMN"                , "0.9"              , # same as second
+    # "MAYO CLINIC HEALTH SYS ALBERT LEA"  , "MAYO CLINIC HEALTH SYSTEM - ALBERT LEA AND AUSTIN"                  , "MN"   , "MCHALMN"                , "0.95"             , # keep: https://www.mayoclinichealthsystem.org/locations/albert-lea
+    # "MAYO CLINIC HEALTH SYS ALBERT LEA"  , "MAYO CLINIC HEALTH SYSTEM - MANKATO"                                , "MN"   , "MCHALMN"                , "0.79"             , # seems wrong based on facility code - delete?
+    # "MAYO CLINIC HEALTH SYS ALBERT LEA"  , "MAYO CLINIC ALBERT LEA AUSTIN"                                      , "MN"   , "MCHALMN"                , "0.91"             , # same as first
     # "MERCY HOSPITAL"                     , "MERCY HOSPITAL"                                                     , "MN"   , "MRYHPMN"                , "1"                ,
     # "MERCY HOSPITAL"                     , "MERCY HOSPITAL - UNITY CAMPUS"                                      , "MN"   , "MRYHPMN"                , "0.84"             ,
     # "REGIONS MEDICAL CENTER"             , "ST FRANCIS REGIONAL MEDICAL CENTER"                                 , "MN"   , "REMEDMN"                , "0.77"             ,
