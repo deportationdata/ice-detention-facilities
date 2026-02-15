@@ -796,29 +796,29 @@ matches_to_check <- tribble(
   # "ST MARTIN PARISH CORR CNT"          , "ST. MARTIN PARISH CORRECTIONAL (SUB-STATION)"                                                , "LA"   , # sub-station different address than correctional center/sheriff's department: https://stmartinsheriff.org/locations/stephensville-sub-station-lower-saint-martin/
   # "ST TAMMANY PARISH JAIL"             , "SAINT TAMMANY PARISH SHERIFFS OFFICE"                                                        , "LA"   , # sheriff's office different address than jail
   # "ST TAMMANY PARISH JAIL"             , "ST. TAMMANY PARISH JAIL"                                                                     , "LA"   ,
-  "ST. BERNARD PARISH JAIL ADULT FACI" , "St. Bernard Parish Prison"                                                                   , "LA"   ,
-  "ST. BERNARD PARISH JAIL ADULT FACI" , "ST. BERNARD PARISH PRISON"                                                                   , "LA"   ,
-  "ST. MARTIN PARISH PRISON"           , "St. Martin Parish Correctional Center Jail 1"                                                , "LA"   ,
-  "ST. MARTIN PARISH PRISON"           , "SAINT MARTIN PARISH SHERIFFS DEPARTMENT / SAINT MARTIN PARISH CORRECTIONAL CENTER"           , "LA"   ,
-  "ST. MARTIN PARISH PRISON"           , "ST. MARTIN PARISH CORRECTIONAL CENTER I"                                                     , "LA"   ,
-  "ST. MARTIN PARISH PRISON"           , "ST. MARTIN PARISH CORRECTIONAL (SUB-STATION)"                                                , "LA"   ,
+  # "ST. BERNARD PARISH JAIL ADULT FACI" , "St. Bernard Parish Prison"                                                                   , "LA"   , # found nothing about st. bernard parish jail adult facility
+  # "ST. BERNARD PARISH JAIL ADULT FACI" , "ST. BERNARD PARISH PRISON"                                                                   , "LA"   ,
+  # "ST. MARTIN PARISH PRISON"           , "St. Martin Parish Correctional Center Jail 1"                                                , "LA"   , # found nothing about center jail 1
+  # "ST. MARTIN PARISH PRISON"           , "SAINT MARTIN PARISH SHERIFFS DEPARTMENT / SAINT MARTIN PARISH CORRECTIONAL CENTER"           , "LA"   , # https://doc.la.gov/location/st-martin-parish/
+  # "ST. MARTIN PARISH PRISON"           , "ST. MARTIN PARISH CORRECTIONAL CENTER I"                                                     , "LA"   , # same as first
+  # "ST. MARTIN PARISH PRISON"           , "ST. MARTIN PARISH CORRECTIONAL (SUB-STATION)"                                                , "LA"   , # sub-station different address than parish prison: https://stmartinsheriff.org/locations/stephensville-sub-station-lower-saint-martin/
   "VERMILLION PARISH JAIL"             , "VERMILION PARISH JAIL"                                                                       , "LA"   ,
   "VERMILLION PARISH JAIL"             , "VERMILION PARISH JAIL"                                                                       , "LA"   ,
   "WEST BATON ROUGE DET CTR"           , "WEST BATON ROUGE PARISH DETENTION CENTER"                                                    , "LA"   ,
   "WINN CORRECTIONAL CENTER"           , "WINN CORRECTIONAL CENTER"                                                                    , "LA"   ,
-  "BOSTON POLICE DEPT"                 , "BOSTON POLICE DEPARTMENT - HEADQUARTERS"                                                     , "MA"   ,
-  "BOSTON POLICE DEPT"                 , "BOSTON POLICE DEPARTMENT HEADQUARTERS"                                                       , "MA"   ,
-  "BOSTON POLICE DEPT"                 , "BOSTON POLICE DEPARTMENT DISTRICT D-14"                                                      , "MA"   ,
-  "BOSTON POLICE DEPT"                 , "BOSTON POLICE DEPARTMENT DISTRICT E-13"                                                      , "MA"   ,
-  "BOSTON POLICE DEPT"                 , "BOSTON POLICE DEPARTMENT DISTRICT C-11"                                                      , "MA"   ,
-  "BOSTON POLICE DEPT"                 , "BOSTON POLICE DEPARTMENT DISTRICT A-1"                                                       , "MA"   ,
-  "BOSTON POLICE DEPT"                 , "BOSTON POLICE DEPARTMENT DISTRICT E-5"                                                       , "MA"   ,
-  "BOSTON POLICE DEPT"                 , "BOSTON POLICE DEPARTMENT DISTRICT B-2"                                                       , "MA"   ,
-  "BOSTON POLICE DEPT"                 , "BOSTON POLICE DEPARTMENT DISTRICT D-4"                                                       , "MA"   ,
-  "BOSTON POLICE DEPT"                 , "BOSTON POLICE DEPARTMENT DISTRICT C-6"                                                       , "MA"   ,
-  "BOSTON POLICE DEPT"                 , "BOSTON POLICE DEPARTMENT DISTRICT A-7"                                                       , "MA"   ,
-  "BOSTON POLICE DEPT"                 , "BOSTON POLICE DEPARTMENT DISTRICT E-18"                                                      , "MA"   ,
-  "BOSTON POLICE DEPT"                 , "BOSTON POLICE DEPARTMENT DISTRICT B3"                                                        , "MA"   ,
+  # "BOSTON POLICE DEPT"                 , "BOSTON POLICE DEPARTMENT - HEADQUARTERS"                                                     , "MA"   , # unsure which one it is
+  # "BOSTON POLICE DEPT"                 , "BOSTON POLICE DEPARTMENT HEADQUARTERS"                                                       , "MA"   ,
+  # "BOSTON POLICE DEPT"                 , "BOSTON POLICE DEPARTMENT DISTRICT D-14"                                                      , "MA"   ,
+  # "BOSTON POLICE DEPT"                 , "BOSTON POLICE DEPARTMENT DISTRICT E-13"                                                      , "MA"   ,
+  # "BOSTON POLICE DEPT"                 , "BOSTON POLICE DEPARTMENT DISTRICT C-11"                                                      , "MA"   ,
+  # "BOSTON POLICE DEPT"                 , "BOSTON POLICE DEPARTMENT DISTRICT A-1"                                                       , "MA"   ,
+  # "BOSTON POLICE DEPT"                 , "BOSTON POLICE DEPARTMENT DISTRICT E-5"                                                       , "MA"   ,
+  # "BOSTON POLICE DEPT"                 , "BOSTON POLICE DEPARTMENT DISTRICT B-2"                                                       , "MA"   ,
+  # "BOSTON POLICE DEPT"                 , "BOSTON POLICE DEPARTMENT DISTRICT D-4"                                                       , "MA"   ,
+  # "BOSTON POLICE DEPT"                 , "BOSTON POLICE DEPARTMENT DISTRICT C-6"                                                       , "MA"   ,
+  # "BOSTON POLICE DEPT"                 , "BOSTON POLICE DEPARTMENT DISTRICT A-7"                                                       , "MA"   ,
+  # "BOSTON POLICE DEPT"                 , "BOSTON POLICE DEPARTMENT DISTRICT E-18"                                                      , "MA"   ,
+  # "BOSTON POLICE DEPT"                 , "BOSTON POLICE DEPARTMENT DISTRICT B3"                                                        , "MA"   ,
   "DEVENS FMC"                         , "FMC DEVENS CAMP"                                                                             , "MA"   ,
   "ESSEX CO. JAIL, MIDDLETON"          , "ESSEX COUNTY CORRECTIONAL FACILITY AND SHERIFFS HEADQUARTERS"                                , "MA"   ,
   "FRANKLIN HOUSE OF CORRECTIONS"      , "Franklin County Jail & House of Corrections"                                                 , "MA"   ,
