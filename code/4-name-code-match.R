@@ -7,7 +7,7 @@ facility_attributes <- arrow::read_feather(
   "data/facilities-attributes-raw.feather"
 )
 
-name_city_state_match <-
+name_state_match <-
   arrow::read_feather(
     "data/facilities-name-state-match.feather"
   )
@@ -22,7 +22,7 @@ facility_code <-
   ) |>
   transmute(
     name,
-    state = str_to_upper(state),
+    state,
     detention_facility_code,
     date,
     source
@@ -33,23 +33,42 @@ facility_no_code <-
   filter(
     is.na(detention_facility_code)
   ) |>
-  filter(!source %in% c("hospitals", "jails_prisons", "eoir")) |>
-  transmute(name, state = str_to_upper(state), date, source)
+  filter(
+    !source %in%
+      c(
+        "hospitals",
+        "hifld_prisons",
+        "hifld_local_law_enforcement",
+        "jails_prisons",
+        "eoir",
+        "vera",
+        "marshall"
+      )
+  ) |>
+  transmute(name, state, date, source) |>
+  mutate(
+    # missing state for GTMO
+    state = case_when(
+      name ==
+        "Naval Station Guantanamo Bay (JTF Camp Six and Migrant Ops Center Main A)" ~ "GU",
+      TRUE ~ state
+    )
+  )
 
 exact_matches <-
   facility_no_code |>
   mutate(name_join = clean_text(name)) |>
   inner_join(
-    name_city_state_match |>
+    name_state_match |>
       mutate(name_join = clean_text(name)),
     by = c("state", "name_join")
   ) |>
   distinct(detention_facility_code, name = name.x, state, .keep_all = TRUE) |>
-  select(detention_facility_code, name, state, date, source = source.x)
+  select(detention_facility_code, name, state, date, source)
 
-name_city_state_match <-
+name_state_match <-
   bind_rows(
-    name_city_state_match,
+    name_state_match,
     exact_matches
   ) |>
   arrange(detention_facility_code, name, state, source, date) |>
@@ -59,7 +78,7 @@ exact_non_matches <-
   facility_no_code |>
   mutate(name_join = clean_text(name)) |>
   anti_join(
-    name_city_state_match |>
+    name_state_match |>
       mutate(name_join = clean_text(name)),
     by = c("state", "name_join")
   ) |>
@@ -68,21 +87,28 @@ exact_non_matches <-
 
 library(fuzzylink)
 
+# name_state_match |>
+#   mutate(name_join = clean_text(name)) |>
+#   select(1:3) |>
+#   # find any row with any missing value
+#   filter(if_any(everything(), ~ is.na(.x) | .x == ""))
+
 # matches_cleaned <-
 #   fuzzylink::fuzzylink(
-#     exact_non_matches,
-#     name_city_state_match |> mutate(name_join = clean_text(name)),
+#     exact_non_matches |> select(name, state, name_join),
+#     name_state_match |>
+#       mutate(name_join = clean_text(name)) |>
+#       select(name, state, name_join, detention_facility_code),
 #     record_type = "name of detention facility",
-#     model = "gpt-3.5-turbo-instruct",
 #     learner = "ranger",
-#     instructions = "compare facility names to find possible matches; some are hospitals or medical centers and some are detention facilities",
+#     instructions = "compare facility names to find possible matches; some are hospitals or medical centers and some are jails, prisons, or detention facilities",
 #     by = "name_join",
 #     blocking.variables = "state",
 #     max_labels = 50000,
 #     openai_api_key = "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"
 #   )
 
-# write_rds(matches_cleaned, "~/downloads/attributes-matches-cleaned.rds")
+# write_rds(matches_cleaned, "~/downloads/attributes-matches-cleaned-feb1626.rds")
 
 matches_cleaned |>
   filter(match == "Yes") |>
@@ -155,7 +181,7 @@ matches_embeddings <- tribble(
   "Baldwin County Correctional Center"                         , "BALDWIN COUNTY COR. CENTER"         , "AL"   , "BALDWAL"                , "99"               ,
   "Bluebonnet Detention Facility"                              , "BLUEBONNET DET FCLTY"               , "TX"   , "BLBNATX"                , "82"               ,
   "Buffalo (Batavia) Service Processing Center"                , "BUFFALO SPC"                        , "NY"   , "BTV"                    , "72"               ,
-  "Butler County Sheriff’s Office"                           , "BUTLER COUNTY JAIL"                 , "OH"   , "BUTLEOH"                , "99"               ,
+  "Butler County Sheriff’s Office"                             , "BUTLER COUNTY JAIL"                 , "OH"   , "BUTLEOH"                , "99"               ,
   "CACHE COUNTY JAIL"                                          , "CACHE CO. JAIL"                     , "UT"   , "CACHEUT"                , "63"               ,
   "CALDWELL COUNTY DETENTION CENTER"                           , "CALDWELL COUNTY JAIL"               , "MO"   , "CALDWMO"                , "98"               ,
   "CALIFORNIA CITY CORRECTIONAL CENTER"                        , "MCFARLAND CCF"                      , "CA"   , "CACFMCF"                , "41"               ,
@@ -656,7 +682,7 @@ matches_embeddings <- tribble(
   "SOUTH TEXAS FAMILY RESIDENTIAL CENTER1"                     , "SOUTH TEXAS FAM RESIDENTIAL CENTER" , "TX"   , "STFRCTX"                , "100"              ,
   "STRAFFORD COUNTY CORRECTIONS"                               , "STRAFFORD CO DEPT OF CORR"          , "NH"   , "STRAFNH"                , "91"               ,
   "SUFFOLK COUNTY HOUSE OF CORRECTIONS"                        , "SUFFOLK HOC SBAY"                   , "MA"   , "SUFFOMA"                , "60"               ,
-  "SUITES ON SCOTTSDALE-CASA DE ALEGRÍA"                      , "STES ON SCOTTSDALE CASA DE ALEGRIA" , "AZ"   , "ALESSAZ"                , "99"               ,
+  "SUITES ON SCOTTSDALE-CASA DE ALEGRÍA"                       , "STES ON SCOTTSDALE CASA DE ALEGRIA" , "AZ"   , "ALESSAZ"                , "99"               ,
   "SUPER  BY WYNDHAM"                                          , "SUPER 8 WYNDHAM WESLACO"            , "TX"   , "SP8WWTX"                , "62"               ,
   "SUPER  BY WYNDHAM"                                          , "SUPER 8 BY WYNDHAM"                 , "TX"   , "SUPHDTX"                , "94"               ,
   "Saipan Department Of Corrections (Suspe)"                   , "SAIPAN DEPARTMENT OF CORRECTIONS"   , "MP"   , "MPSIPAN"                , "100"              ,
