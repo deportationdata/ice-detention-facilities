@@ -5,7 +5,8 @@ library(tidygeocoder)
 # temporarily just use the facilities in the recent data
 facility_list <-
   arrow::read_feather(
-    "https://github.com/deportationdata/ice/raw/refs/heads/main/data/detention-stints-latest.feather"
+    # "https://github.com/deportationdata/ice/raw/refs/heads/main/data/detention-stints-latest.feather"
+    "~/github/ice/data/detention-stints-latest.feather"
   ) |>
   as_tibble() |>
   # mutate(
@@ -106,7 +107,7 @@ facilities_geocoded_df <-
     values_from = short_name
   ) |>
   mutate(
-    formatted_address = if ("premise" %in% names(cur_data())) {
+    formatted_address = if ("premise" %in% names(.data)) {
       str_remove(formatted_address, glue::glue("{premise}, "))
     } else {
       formatted_address

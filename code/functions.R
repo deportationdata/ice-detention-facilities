@@ -8,6 +8,7 @@ clean_text <- function(str) {
       ~ str_remove_all(.x, "\\.")
     ) |>
     str_replace_all("[[:punct:]]", " ") |>
+    iconv(from = "UTF-8", to = "ASCII//TRANSLIT") |>
     str_squish()
 }
 

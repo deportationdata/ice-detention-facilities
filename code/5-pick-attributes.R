@@ -82,27 +82,25 @@ facility_attributes <-
 
 # first, for those w/o codes, get codes from name-city-state match
 
-name_city_state_match <-
+name_code_match <-
   arrow::read_feather(
     "data/facilities-name-code-match.feather"
-  ) |>
-  filter(
-    !is.na(state),
-    !detention_facility_code %in% c("USMS2TX", "USMS3TX") # these are wrongly matched
   )
 
 facilities_with_multiple_codes <-
-  name_city_state_match |>
-  filter(n() > 1, .by = c("name", "state")) |>
-  arrange(name) |>
-  mutate(ID = factor(str_c(name, state)) |> as.numeric()) |>
+  name_code_match |>
+  mutate(name_join = clean_text(name)) |>
+  distinct(name_join, state, detention_facility_code, .keep_all = TRUE) |>
+  filter(n() > 1, .by = c("name_join", "state")) |>
+  arrange(state, name_join) |>
+  mutate(ID = factor(str_c(name_join, state)) |> as.numeric()) |>
   mutate(n = row_number(), .by = "ID") |>
   pivot_wider(
+    id_cols = c(name_join, state),
     names_from = n,
     values_from = detention_facility_code,
     names_glue = "detention_facility_code_{.name}"
-  ) |>
-  select(-ID)
+  )
 
 facility_attributes_nocodes <-
   facility_attributes |>
@@ -111,48 +109,42 @@ facility_attributes_nocodes <-
   ) |>
   select(-detention_facility_code) |>
   mutate(
-    name_join = name |>
-      str_to_lower() |>
-      str_remove_all("[[:punct:]]") |>
-      str_squish()
+    name_join = clean_text(name)
   ) |>
   left_join(
-    name_city_state_match |>
-      mutate(
-        name_join = name |>
-          str_to_lower() |>
-          str_remove_all("[[:punct:]]") |>
-          str_squish()
-      ) |>
+    name_code_match |>
+      mutate(name_join = clean_text(name)) |>
+      group_by(state, name_join) |>
+      slice_max(date_facility_code, n = 1, with_ties = FALSE) |>
+      ungroup() |>
       select(-name),
     by = c("state", "name_join")
   ) |>
   select(-name_join) |>
-  distinct()
-# left_join(
-#   name_city_state_match,
-#   by = c("name", "state")
-# )
+  distinct() # check this
 
 facility_attributes_unmatched <-
   facility_attributes_nocodes |>
   filter(is.na(detention_facility_code)) |>
   anti_join(
-    name_city_state_match |> mutate(state = str_to_lower(state)),
+    name_code_match,
     by = c("name", "state")
-  )
+  ) |>
+  # keep only ICE sources (NOTE: I selected the ICE ones based on currently the only ones that match)
+  filter(source %in% c("51185", "detention_management", "website"))
 
 # need to keep in the final data those with multiple codes -- multiple rows -- because those actually exist in the detentions data
 # then in the list we'll provide a column with multiple codes as a list for merging but there will be one row when we display it
 
 facility_attributes <-
-  facility_attributes |>
-  filter(!is.na(detention_facility_code)) |>
-  bind_rows(facility_attributes_nocodes) |>
+  bind_rows(
+    facility_attributes,
+    facility_attributes_nocodes
+  ) |>
   filter(!is.na(detention_facility_code)) |>
   left_join(
-    facilities_with_multiple_codes |> select(-state, -name),
-    by = c("detention_facility_code" = "detention_facility_code_2")
+    facilities_with_multiple_codes,
+    by = c("detention_facility_code" = "detention_facility_code_2", "state")
   ) |>
   mutate(
     detention_facility_code = case_when(
@@ -296,14 +288,20 @@ best_values <-
 
     best_value = case_when(
       most_recent_source == "vera" & !has_gov_source ~ values[length(values)],
-      
+
       variable == "address" & has_non_po ~ {
         v <- values[!is_po_box(values)]
-        if (length(v) == 0) NA_character_
-        else if (n_changes == 0) v[1]
-        else if (!has_reversion) v[length(v)]
-        else if (has_reversion & length(get_modes(v)) == 1) get_modes(v)[1]
-        else v[length(v)]
+        if (length(v) == 0) {
+          NA_character_
+        } else if (n_changes == 0) {
+          v[1]
+        } else if (!has_reversion) {
+          v[length(v)]
+        } else if (has_reversion & length(get_modes(v)) == 1) {
+          get_modes(v)[1]
+        } else {
+          v[length(v)]
+        }
       },
 
       TRUE ~ case_when(
@@ -366,20 +364,19 @@ reversion_counts_summary <-
 # merging best_values with facilities data
 best_values_wide <-
   best_values |>
-  select(detention_facility_code, variable, best_value, best_address_any) |>
+  select(detention_facility_code, variable, best_value) |>
   pivot_wider(
+    id_cols = detention_facility_code,
     names_from = variable,
     values_from = best_value
   ) |>
   left_join(
-    facilities_with_multiple_codes |>
-      transmute(
-        detention_facility_code = detention_facility_code_1,
-        detention_facility_code_alt = detention_facility_code_2
-      ),
+    best_values |>
+      filter(variable == "address") |>
+      transmute(detention_facility_code, address_any = best_address_any),
     by = "detention_facility_code"
   ) |>
-  rename(address_any = best_address_any)
+  arrange(detention_facility_code)
 
 problem_flags_wide <-
   best_values |>
@@ -393,10 +390,15 @@ problem_flags_wide <-
 
 best_values_wide <-
   best_values_wide |>
-  left_join(problem_flags_wide, by = "detention_facility_code")
+  left_join(problem_flags_wide, by = "detention_facility_code") |>
+  left_join(
+    facilities_with_multiple_codes,
+    by = c("detention_facility_code" = "detention_facility_code_1", "state")
+  ) |>
+  rename(detention_facility_code_alt = detention_facility_code_2) |>
+  relocate(detention_facility_code_alt, .after = detention_facility_code)
 
 arrow::write_feather(
   best_values_wide,
   "data/facilities-best-values-wide.feather"
 )
-  

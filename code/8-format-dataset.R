@@ -20,63 +20,6 @@ make_abbr_caps <- function(x, abbr) {
   )
 }
 
-facility_augmented |>
-  # left_join(hospitals, by = c("name", "state")) |>
-  mutate(
-    name_ed = name |>
-      str_replace_all("\\.", " ") |>
-      str_to_lower() |>
-      str_replace_all(c(
-        abbrev_expansions
-      )) |>
-      str_replace_all("[’‘`]", "'") |>
-      str_to_title() |>
-      make_abbr_caps(
-        abbr = c(
-          "CCA",
-          "HCA",
-          "NYC",
-          "F",
-          "PD",
-          "YMCA",
-          "US",
-          "CF",
-          "C",
-          "WD",
-          "NE",
-          "NW",
-          "SE",
-          "SW",
-          "ICE",
-          "USBP",
-          "BHC",
-          "JFK",
-          "EGP",
-          "CPC",
-          state.abb
-        )
-      ) |>
-      str_replace_all(regex("'S\\b", ignore_case = TRUE), "'s") |> # fix 'S or 's
-      # ensure there is a space after commas
-      str_replace_all(",([^ ])", ", \\1") |>
-      # ensure there is a space before an open parenthesis
-      str_replace_all("([^ ])\\(", "\\1 (") |>
-      # and after close parenthesis
-      str_replace_all("\\)([^ ])", ") \\1") |>
-      # drop , at end of name
-      str_replace_all(",\\s*$", "") |>
-      # drop space before comma
-      str_replace_all("\\s+,", ",") |>
-      str_squish() |>
-      # make And Or lower case
-      str_replace_all("\\bAnd\\b", "and") |>
-      str_replace_all("\\bOr\\b", "or") |>
-      str_replace_all("\\bOf\\b", "of")
-  ) |>
-  distinct(name, name_ed) |>
-  filter(name == "WALTON COUNTY D.O.C.") |>
-  print(n = 2500)
-
 facility_formatted <-
   facility_augmented |>
   # left_join(hospitals, by = c("name", "state")) |>
@@ -133,7 +76,7 @@ facility_formatted <-
     address = address |> str_to_title(),
     city = city |> clean_city() |> str_to_title(),
     state = str_to_upper(state),
-    aor = str_to_upper(aor),
+    # aor = str_to_upper(aor),
     type = str_to_upper(type) |> str_replace_all("OTHER", "Other"),
     type_detailed = replace_na(type_detailed, ""),
     type_detailed = snakecase::to_title_case(
@@ -142,12 +85,13 @@ facility_formatted <-
     ) |>
       na_if(""),
     docket = str_to_upper(docket),
-    male_female = case_match(
-      male_female |> str_to_lower(),
-      "male" ~ "M",
-      "female" ~ "F",
-      "female/male" ~ "M/F"
-    ),
+    male_female = male_female |>
+      str_to_lower() |>
+      recode_values(
+        "male" ~ "M",
+        "female" ~ "F",
+        "female/male" ~ "M/F"
+      ),
     over_under_72 = str_to_title(over_under_72)
   ) |>
   arrange(name)

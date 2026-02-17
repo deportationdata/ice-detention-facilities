@@ -15,12 +15,17 @@ all_fields <- c(
   "type",
   "type_detailed",
   "male_female",
+  "capacity",
   "circuit",
   "docket",
   "ice_funded",
   "over_under_72",
-  "operator"
+  "operator",
+  "owner"
 )
+
+facilities_2015 <-
+  arrow::read_feather("data/facilities-2015.feather")
 
 facilities_2017 <-
   arrow::read_feather("data/facilities-2017.feather")
@@ -57,6 +62,11 @@ detentions_22955 <-
 facilities_51185 <-
   arrow::read_feather(
     "data/facilities-foia-51185.feather"
+  )
+
+facilities_hrw_output <-
+  arrow::read_feather(
+    "data/facilities-foia-hrw-output.feather"
   )
 
 facilities_eoir <-
@@ -102,22 +112,31 @@ detentions_2012_2023 <- arrow::read_feather(
   "~/github/ice/data/ice-detentions-2012-2023.feather"
 )
 
-facilities_from_detentions <-
-  bind_rows(
-    "2023-11-15" = detentions_2012_2023 |>
-      select(detention_facility_code, detention_facility),
-    "2025-10-15" = detentions_current |>
-      select(detention_facility_code, detention_facility),
-    .id = "date"
-  ) |>
-  transmute(
-    detention_facility_code,
-    name = detention_facility,
-    date = as.Date(date)
-  ) |>
-  distinct()
+facilities_manual <- arrow::read_feather(
+  "data/facilities-manual.feather"
+)
 
-rm(detentions_2012_2023)
+# facilities_from_detentions <-
+#   bind_rows(
+#     "2023-11-15" = detentions_2012_2023 |>
+#       select(detention_facility_code, detention_facility),
+#     "2025-10-15" = detentions_current |>
+#       select(detention_facility_code, detention_facility),
+#     .id = "date"
+#   ) |>
+#   transmute(
+#     detention_facility_code,
+#     name = detention_facility,
+#     date = as.Date(date)
+#   ) |>
+#   distinct()
+
+facilities_from_detentions <- arrow::read_feather(
+  "data/facilities-from-detentions.feather"
+) |>
+  mutate(date = last_book_in)
+
+# rm(detentions_2012_2023)
 
 # combine for each field one-by-one
 facility_attributes <-
@@ -126,9 +145,13 @@ facility_attributes <-
       select(any_of(all_fields), date),
     "2017" = facilities_2017 |>
       select(any_of(all_fields), date),
+    "2015" = facilities_2015 |>
+      select(any_of(all_fields), date),
     "05655" = detentions_05655 |>
       select(any_of(all_fields), date),
     "51185" = facilities_51185 |>
+      select(any_of(all_fields), date),
+    "hrw" = facilities_hrw_output |>
       select(any_of(all_fields), date),
     "website" = facility_addresses_from_ice_website |>
       select(any_of(all_fields), date),
@@ -159,9 +182,43 @@ facility_attributes <-
       select(hifld_id, any_of(all_fields), date),
     "hifld_prisons" = hfild_prisons |>
       select(hifld_id, any_of(all_fields), date),
+    "manual" = facilities_manual |>
+      select(any_of(all_fields), date),
     .id = "source"
   ) |>
   relocate(detention_facility_code, all_of(all_fields), source, date)
+
+state_abbr_join <-
+  tibble(
+    state = state.name,
+    state_abbr = state.abb
+  ) |>
+  bind_rows(
+    tribble(
+      ~state                     , ~state_abbr ,
+      "District of Columbia"     , "DC"        ,
+      "Puerto Rico"              , "PR"        ,
+      "Guam"                     , "GU"        ,
+      "American Samoa"           , "AS"        ,
+      "Virgin Islands"           , "VI"        ,
+      "Northern Mariana Islands" , "MP"
+    )
+  )
+
+facility_attributes <-
+  facility_attributes |>
+  left_join(
+    state_abbr_join |> mutate(state = str_to_upper(state)),
+    by = c("state" = "state")
+  ) |>
+  mutate(
+    # need to get two letter state abbreviations
+    state = case_when(
+      nchar(state) == 2 ~ state,
+      nchar(state) > 3 ~ state_abbr,
+    ),
+    .keep = "unused"
+  )
 
 arrow::write_feather(
   facility_attributes,

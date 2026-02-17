@@ -23,7 +23,7 @@ prison_boundaries <-
     name = NAME,
     address = ADDRESS,
     city = CITY,
-    state = ZIP,
+    state = STATE,
     zip = ZIP,
     type = TYPE,
     status = STATUS,

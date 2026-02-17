@@ -2,6 +2,8 @@ library(tidyverse)
 library(sf)
 library(tigris)
 
+options(tigris_use_cache = TRUE)
+
 source("code/functions.R")
 
 county_sf <-
@@ -48,10 +50,11 @@ facility_list <-
   as_tibble() |>
   select(
     detention_facility_code,
-    name = detention_facility,
+    name,
     first_book_in,
-    latest_book_in = last_book_in
-  )
+    last_book_in
+  ) |>
+  filter(last_book_in >= as.Date("2025-01-01")) # only keep facilities with book ins in 2025 or later
 
 best_values_wide <-
   arrow::read_feather(
@@ -62,8 +65,41 @@ best_values_wide <-
 #   "data/facilities-from-detentions.feather"
 # )
 
+# bring in geocoding
+
+vera_df <- arrow::read_feather("data/facilities-vera.feather")
+
+not_in_vera_geocoded_df <- arrow::read_feather(
+  "data/facilities-not-in-vera-geocoded.feather"
+)
+
+geocode_df <-
+  bind_rows(
+    vera_df |>
+      select(detention_facility_code, latitude, longitude) |>
+      anti_join(not_in_vera_geocoded_df, by = "detention_facility_code"),
+    not_in_vera_geocoded_df |>
+      select(detention_facility_code, latitude, longitude)
+  )
+
+# bring in court data
+
+federal_circuit_courts_sf <-
+  sfarrow::st_read_feather("data/federal-court-circuits.feather")
+
+federal_district_courts_sf <-
+  sfarrow::st_read_feather("data/federal-court-districts.feather")
+
+# bring in ICE field office
+
+ice_field_offices <- sfarrow::st_read_feather(
+  "https://github.com/deportationdata/ice/raw/refs/heads/main/data/ice-aor-shp.feather"
+) |>
+  st_transform(crs = 4326)
+
 facility_final <-
   facility_list |>
+  as_tibble() |>
   left_join(
     best_values_wide,
     by = "detention_facility_code"
@@ -88,162 +124,24 @@ facility_final <-
     type,
     type_detailed
   ) |>
-  as_tibble()
-
-# bring in geocoding
-
-vera_df <- arrow::read_feather("data/facilities-vera.feather")
-
-not_in_vera_geocoded_df <- arrow::read_feather(
-  "data/facilities-not-in-vera-geocoded.feather"
-)
-
-geocode_df <-
-  bind_rows(
-    vera_df |> select(detention_facility_code, latitude, longitude),
-    not_in_vera_geocoded_df |>
-      select(detention_facility_code, latitude, longitude)
-  )
-
-# add lat lon from Vera data
-facility_final <-
-  facility_final |>
   left_join(
     geocode_df |> distinct(detention_facility_code, latitude, longitude),
     by = c("detention_facility_code")
-  )
-
-# facility_final |>
-#   filter(is.na(address)) |>
-#   select(1:2) |>
-#   clipr::write_clip()
-
-# bring in court data
-
-# from https://www.uscourts.gov/file/18039/download map
-circuits <- tribble(
-  ~code , ~circuit ,
-  # states
-  "AL"  ,       11 ,
-  "AK"  ,        9 ,
-  "AZ"  ,        9 ,
-  "AR"  ,        8 ,
-  "CA"  ,        9 ,
-  "CO"  ,       10 ,
-  "CT"  ,        2 ,
-  "DE"  ,        3 ,
-  "FL"  ,       11 ,
-  "GA"  ,       11 ,
-  "HI"  ,        9 ,
-  "ID"  ,        9 ,
-  "IL"  ,        7 ,
-  "IN"  ,        7 ,
-  "IA"  ,        8 ,
-  "KS"  ,       10 ,
-  "KY"  ,        6 ,
-  "LA"  ,        5 ,
-  "ME"  ,        1 ,
-  "MD"  ,        4 ,
-  "MA"  ,        1 ,
-  "MI"  ,        6 ,
-  "MN"  ,        8 ,
-  "MS"  ,        5 ,
-  "MO"  ,        8 ,
-  "MT"  ,        9 ,
-  "NE"  ,        8 ,
-  "NV"  ,        9 ,
-  "NH"  ,        1 ,
-  "NJ"  ,        3 ,
-  "NM"  ,       10 ,
-  "NY"  ,        2 ,
-  "NC"  ,        4 ,
-  "ND"  ,        8 ,
-  "OH"  ,        6 ,
-  "OK"  ,       10 ,
-  "OR"  ,        9 ,
-  "PA"  ,        3 ,
-  "RI"  ,        1 ,
-  "SC"  ,        4 ,
-  "SD"  ,        8 ,
-  "TN"  ,        6 ,
-  "TX"  ,        5 ,
-  "UT"  ,       10 ,
-  "VT"  ,        2 ,
-  "VA"  ,        4 ,
-  "WA"  ,        9 ,
-  "WV"  ,        4 ,
-  "WI"  ,        7 ,
-  "WY"  ,       10 ,
-  # Non-states
-  "PR"  ,        1 ,
-  "VI"  ,        3 ,
-  "GU"  ,        9 ,
-  "MP"  ,        9
-)
-
-federal_court_districts_df <-
-  read_csv("inputs/federal_court_districts.csv", skip = 1)
-
-federal_court_districts_entire_states <-
-  federal_court_districts_df |>
-  filter(county == "All Counties") |>
-  select(-county)
-
-federal_court_districts_partial_states <-
-  federal_court_districts_df |>
-  filter(county != "All Counties")
-
-federal_court_districts_county_sf_partial_states <-
-  county_sf |>
-  anti_join(
-    federal_court_districts_entire_states,
-    by = c("state_name" = "state")
   ) |>
-  anti_join(
-    federal_court_districts_partial_states,
-    by = c("county_name" = "county", "state_name" = "state")
-  )
-
-federal_court_districts_county_sf_entire_states <-
-  county_sf |>
-  inner_join(
-    federal_court_districts_entire_states,
-    by = c("state_name" = "state")
-  )
-
-federal_court_districts_county_sf <-
-  bind_rows(
-    federal_court_districts_county_sf_partial_states,
-    federal_court_districts_county_sf_entire_states
-  ) |>
-  # collapse into districts
-  summarise(
-    geometry = st_union(geometry),
-    .by = judicial_district
-  )
-
-# bring in ICE field office
-
-ice_field_offices <- sfarrow::st_read_feather(
-  "https://github.com/deportationdata/ice/raw/refs/heads/main/data/ice-aor-shp.feather"
-) |>
-  st_transform(crs = 4326)
-
-facility_final <-
-  facility_final |>
+  select(-aor) |>
   st_as_sf(
     coords = c("longitude", "latitude"),
     na.fail = FALSE,
     crs = 4326,
     remove = FALSE
   ) |>
-  select(-circuit) |>
-  left_join(
-    circuits,
-    by = c("state" = "code")
+  st_join(
+    federal_circuit_courts_sf |>
+      select(federal_court_circuit_habeas = NAME),
+    join = st_within
   ) |>
   st_join(
-    federal_court_districts_county_sf, #|> mutate(in_districts = 1),
+    federal_district_courts_sf |> select(federal_court_district_habeas = NAME),
     join = st_within
   ) |>
   st_join(
@@ -253,11 +151,48 @@ facility_final <-
     join = st_within
   ) |>
   st_join(
-    county_sf,
+    county_sf |> select(-state_name) |> rename(county = county_name),
     join = st_within
   ) |>
+  mutate(
+    # 48 USC 1613(a) specifies that the Virgin Islands are in the 3st Circuit
+    federal_court_circuit_habeas = case_when(
+      state == "VI" ~ "THIRD CIRCUIT",
+      TRUE ~ federal_court_circuit_habeas
+    ),
+    # 48 USC 1611(b) specifies that the Virgin Islands are served by the Virgin Islands District Court
+    federal_court_district_habeas = case_when(
+      state == "VI" ~ "Virgin Islands District Court",
+      TRUE ~ federal_court_district_habeas
+    ),
+    # convert to integer
+    federal_court_circuit_habeas = federal_court_circuit_habeas |>
+      str_remove(" CIRCUIT") |>
+      recode_values(
+        "FIRST" ~ "1",
+        "SECOND" ~ "2",
+        "THIRD" ~ "3",
+        "FOURTH" ~ "4",
+        "FIFTH" ~ "5",
+        "SIXTH" ~ "6",
+        "SEVENTH" ~ "7",
+        "EIGHTH" ~ "8",
+        "NINTH" ~ "9",
+        "TENTH" ~ "10",
+        "ELEVENTH" ~ "11"
+      ) |>
+      as.integer(),
+    # Guantanamo Bay detention facility is served by the Miami field office see:
+    # https://www.ice.gov/detain/detention-facilities/naval-station-guantanamo-bay
+    field_office = case_when(
+      detention_facility_code %in% c("GTMOBCU", "GTMODCU", "GTMOACU") ~ "Miami",
+      TRUE ~ field_office
+    )
+  ) |>
   st_drop_geometry() |>
-  as_tibble()
+  as_tibble() |>
+  relocate(county, county_fips_code, .before = state) |>
+  relocate(state_fips_code, .after = state)
 
 arrow::write_feather(
   facility_final,
