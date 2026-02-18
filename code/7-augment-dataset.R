@@ -48,18 +48,27 @@ facility_list <-
     "data/facilities-from-detentions.feather"
   ) |>
   as_tibble() |>
-  select(
-    detention_facility_code,
-    name,
-    first_book_in,
-    last_book_in
-  ) |>
-  filter(last_book_in >= as.Date("2025-01-01")) # only keep facilities with book ins in 2025 or later
+  filter(last_book_in >= as.Date("2025-01-01")) |> # only keep facilities with book ins in 2025 or later
+  select(detention_facility_code, first_book_in, last_book_in)
 
-best_values_wide <-
+# best_values_wide <-
+#   arrow::read_feather(
+#     "data/facilities-best-values-wide.feather"
+#   )
+
+facility_latest_values <-
   arrow::read_feather(
-    "data/facilities-best-values-wide.feather"
+    "data/facilities-latest-values-long.feather"
   )
+
+facility_latest_values_wide <-
+  facility_latest_values |>
+  pivot_wider(
+    id_cols = c(detention_facility_code, detention_facility_code_alt),
+    names_from = variable,
+    values_from = value
+  )
+
 
 # stats_from_detention_stints <- arrow::read_feather(
 #   "data/facilities-from-detentions.feather"
@@ -67,20 +76,48 @@ best_values_wide <-
 
 # bring in geocoding
 
-vera_df <- arrow::read_feather("data/facilities-vera.feather")
+# vera_df <- arrow::read_feather("data/facilities-vera.feather")
 
-not_in_vera_geocoded_df <- arrow::read_feather(
-  "data/facilities-not-in-vera-geocoded.feather"
+# not_in_vera_geocoded_df <- arrow::read_feather(
+#   "data/facilities-not-in-vera-geocoded.feather"
+# )
+
+facilities_geocoded_df <- arrow::read_feather(
+  "data/facilities-geocoded-exact.feather"
 )
 
-geocode_df <-
-  bind_rows(
-    vera_df |>
-      select(detention_facility_code, latitude, longitude) |>
-      anti_join(not_in_vera_geocoded_df, by = "detention_facility_code"),
-    not_in_vera_geocoded_df |>
-      select(detention_facility_code, latitude, longitude)
-  )
+# facility_list |>
+#   inner_join(facilities_geocoded_df, by = "detention_facility_code") |>
+#   left_join(
+#     vera_df |>
+#       select(
+#         detention_facility_code,
+#         latitude_vera = latitude,
+#         longitude_vera = longitude
+#       ),
+#     by = "detention_facility_code"
+#   ) |>
+#   mutate(
+#     geometry_vera = map2(
+#       longitude_vera,
+#       latitude_vera,
+#       ~ st_point(c(.x, .y))
+#     ) |>
+#       st_sfc(crs = 4326),
+#     geometry_google = map2(longitude, latitude, ~ st_point(c(.x, .y))) |>
+#       st_sfc(crs = 4326),
+#     distance = st_distance(geometry_vera, geometry_google, by_element = TRUE) |>
+#       as.numeric()
+#   )
+
+# geocode_df <-
+# bind_rows(
+#   vera_df |>
+#     select(detention_facility_code, latitude, longitude) |>
+#     anti_join(not_in_vera_geocoded_df, by = "detention_facility_code"),
+#   not_in_vera_geocoded_df |>
+#     select(detention_facility_code, latitude, longitude)
+# )
 
 # bring in court data
 
@@ -97,11 +134,25 @@ ice_field_offices <- sfarrow::st_read_feather(
 ) |>
   st_transform(crs = 4326)
 
+name_code_match <-
+  arrow::read_feather(
+    "data/facilities-name-code-match.feather"
+  )
+
 facility_final <-
   facility_list |>
   as_tibble() |>
   left_join(
-    best_values_wide,
+    facility_latest_values_wide,
+    by = "detention_facility_code"
+  ) |>
+  select(-state) |>
+  left_join(
+    name_code_match |>
+      distinct(
+        detention_facility_code,
+        state
+      ),
     by = "detention_facility_code"
   ) |>
   # left_join(
@@ -124,9 +175,14 @@ facility_final <-
     type,
     type_detailed
   ) |>
+  # left_join(
+  #   geocode_df |> distinct(detention_facility_code, latitude, longitude),
+  #   by = c("detention_facility_code")
+  # ) |>
   left_join(
-    geocode_df |> distinct(detention_facility_code, latitude, longitude),
-    by = c("detention_facility_code")
+    facilities_geocoded_df |>
+      select(detention_facility_code, latitude, longitude),
+    by = "detention_facility_code"
   ) |>
   select(-aor) |>
   st_as_sf(
@@ -155,14 +211,20 @@ facility_final <-
     join = st_within
   ) |>
   mutate(
-    # 48 USC 1613(a) specifies that the Virgin Islands are in the 3st Circuit
     federal_court_circuit_habeas = case_when(
+      # 48 USC 1613(a) specifies that the Virgin Islands are in the 3st Circuit
       state == "VI" ~ "THIRD CIRCUIT",
+      # Rasul v Bush specifies that the Guantanamo Bay detention facility is in the District of Columbia Circuit
+      detention_facility_code %in%
+        c("GTMOBCU", "GTMODCU", "GTMOACU") ~ "DISTRICT OF COLUMBIA CIRCUIT",
       TRUE ~ federal_court_circuit_habeas
     ),
-    # 48 USC 1611(b) specifies that the Virgin Islands are served by the Virgin Islands District Court
     federal_court_district_habeas = case_when(
+      # 48 USC 1611(b) specifies that the Virgin Islands are served by the Virgin Islands District Court
       state == "VI" ~ "Virgin Islands District Court",
+      # Rasul v Bush specifies that the Guantanamo Bay detention facility is in the jurisdiction of the District of District of Columbia
+      detention_facility_code %in%
+        c("GTMOBCU", "GTMODCU", "GTMOACU") ~ "District of District of Columbia",
       TRUE ~ federal_court_district_habeas
     ),
     # convert to integer
@@ -179,7 +241,8 @@ facility_final <-
         "EIGHTH" ~ "8",
         "NINTH" ~ "9",
         "TENTH" ~ "10",
-        "ELEVENTH" ~ "11"
+        "ELEVENTH" ~ "11",
+        "DISTRICT OF COLUMBIA" ~ "DC"
       ) |>
       as.integer(),
     # Guantanamo Bay detention facility is served by the Miami field office see:
@@ -192,7 +255,8 @@ facility_final <-
   st_drop_geometry() |>
   as_tibble() |>
   relocate(county, county_fips_code, .before = state) |>
-  relocate(state_fips_code, .after = state)
+  relocate(state_fips_code, .after = state) |>
+  relocate(detention_facility_code_alt, .after = detention_facility_code)
 
 arrow::write_feather(
   facility_final,

@@ -76,12 +76,23 @@ facility_formatted <-
     address = address |> str_to_title(),
     city = city |> clean_city() |> str_to_title(),
     state = str_to_upper(state),
-    # aor = str_to_upper(aor),
     type = str_to_upper(type) |> str_replace_all("OTHER", "Other"),
     type_detailed = replace_na(type_detailed, ""),
     type_detailed = snakecase::to_title_case(
       type_detailed,
-      abbreviations = c("IGSA", "IGA", "USMS", "DIGSA", "CDF", "BOP")
+      abbreviations = c(
+        "IGSA",
+        "IGA",
+        "USMS",
+        "DIGSA",
+        "CDF",
+        "BOP",
+        "USBP",
+        "MOC",
+        "SPC",
+        "DOD",
+        "CBP"
+      )
     ) |>
       na_if(""),
     docket = str_to_upper(docket),

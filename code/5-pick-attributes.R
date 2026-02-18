@@ -5,6 +5,7 @@ source("code/functions.R")
 
 # analysis on all fields
 all_fields <- c(
+  "name",
   "address",
   "city",
   "state",
