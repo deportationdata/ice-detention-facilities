@@ -310,7 +310,7 @@ detentions_facilities <-
     .id = "source"
   ) |>
   arrange(detention_facility_code, source) |>
-  group_by(detention_facility_code, name) |>
+  group_by(detention_facility_code) |>
   summarize(
     name = last(name),
     first_book_in = as.Date(min(

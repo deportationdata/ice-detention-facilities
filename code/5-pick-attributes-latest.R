@@ -41,7 +41,7 @@ facilities_with_multiple_codes <-
   mutate(name_join = clean_text(name)) |>
   distinct(name_join, state, detention_facility_code, .keep_all = TRUE) |>
   filter(n() > 1, .by = c("name_join", "state")) |>
-  arrange(state, name_join) |>
+  arrange(state, name_join, desc(date_facility_code)) |>
   mutate(ID = factor(str_c(name_join, state)) |> as.numeric()) |>
   mutate(n = row_number(), .by = "ID") |>
   pivot_wider(
@@ -82,9 +82,6 @@ facility_attributes_unmatched <-
   # keep only ICE sources (NOTE: I selected the ICE ones based on currently the only ones that match)
   filter(source %in% c("51185", "detention_management", "website"))
 
-# need to keep in the final data those with multiple codes -- multiple rows -- because those actually exist in the detentions data
-# then in the list we'll provide a column with multiple codes as a list for merging but there will be one row when we display it
-
 facility_attributes <-
   bind_rows(
     facility_attributes,
@@ -92,10 +89,11 @@ facility_attributes <-
   ) |>
   filter(!is.na(detention_facility_code)) |>
   left_join(
-    facilities_with_multiple_codes,
-    by = c("detention_facility_code" = "detention_facility_code_2", "state")
+    facilities_with_multiple_codes |> select(-state),
+    by = c("detention_facility_code" = "detention_facility_code_2")
   ) |>
   mutate(
+    # detention_facility_code_orig = detention_facility_code,
     detention_facility_code = case_when(
       !is.na(detention_facility_code_1) ~ detention_facility_code_1,
       TRUE ~ detention_facility_code
@@ -108,11 +106,10 @@ arrow::write_feather(
   "data/facilities-attributes-cleaned-with-codes.feather"
 )
 
-is_po_box <- function(values) {
-  str_detect(
-    str_to_upper(values),
-    "\\bP\\s*\\.?\\s*O\\s*\\.?\\s*BOX\\b"
-  )
+is_likely_street_address <- function(values) {
+  precomma <- stringr::str_split_i(values, ",", 1)
+  !(str_detect(str_to_upper(values), "\\bP\\s*\\.?\\s*O\\s*\\.?\\s*BOX\\b") |
+    !str_detect(precomma, "\\d"))
 }
 
 facility_pivot <-
@@ -143,8 +140,18 @@ arrow::write_feather(
   "data/facilities-values-long.feather"
 )
 
+cells_with_errors <-
+  tribble(
+    ~detention_facility_code , ~source   , ~date                 , ~variable      , ~notes                                                                          ,
+    "CBENDTX"                , "website" , as.Date("2026-02-21") , "address_full" , "address is wrong; should be 4909 FM (Farm to Market) 2826, Robstown, TX 78380"
+  )
+
 facility_latest_values <-
   facility_pivot |>
+  anti_join(
+    cells_with_errors,
+    by = c("detention_facility_code", "date", "source", "variable")
+  ) |>
   mutate(
     source_hierarchy = case_when(
       source %in%
@@ -161,19 +168,21 @@ facility_latest_values <-
           "eoir",
           "hrw",
           "website"
-        ) ~ 1,
+        ) ~
+        1,
       source == "manual" ~ 2,
       TRUE ~ 0
     )
   ) |>
   filter(
-    !source %in% c("vera", "marshall")
+    variable == "address_full" |
+      !source %in% c("vera", "marshall")
   ) |>
   arrange(
     detention_facility_code,
     variable,
+    is_likely_street_address(value) | source == "manual",
     source_hierarchy,
-    !is_po_box(value),
     date
   ) |>
   group_by(detention_facility_code, variable) |>

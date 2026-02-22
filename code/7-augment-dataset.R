@@ -43,18 +43,31 @@ county_sf <-
 #   # filter(cnt >= 1) |>
 #   distinct(detention_facility_code, name = detention_facility)
 
+# bring in all facilities in detention file plus in any ICE source (DTM, web site, etc.)
 facility_list <-
   arrow::read_feather(
-    "data/facilities-from-detentions.feather"
+    "data/facilities-attributes-cleaned-with-codes.feather"
   ) |>
-  as_tibble() |>
-  filter(last_book_in >= as.Date("2025-01-01")) |> # only keep facilities with book ins in 2025 or later
-  select(detention_facility_code, first_book_in, last_book_in)
+  filter(
+    source %in%
+      c(
+        "05655",
+        "2015",
+        "2017",
+        "22955",
+        "41855",
+        "51185",
+        "dedicated",
+        "detention_management",
+        "detentions",
+        # "eoir",
+        "hrw",
+        "website"
+      ),
+    date >= as.Date("2025-01-01")
+  ) |>
+  distinct(detention_facility_code)
 
-# best_values_wide <-
-#   arrow::read_feather(
-#     "data/facilities-best-values-wide.feather"
-#   )
 
 facility_latest_values <-
   arrow::read_feather(
@@ -81,6 +94,13 @@ facility_latest_values_wide <-
 # not_in_vera_geocoded_df <- arrow::read_feather(
 #   "data/facilities-not-in-vera-geocoded.feather"
 # )
+
+facilities_open_dates <-
+  arrow::read_feather(
+    "data/facilities-from-detentions.feather"
+  ) |>
+  as_tibble() |>
+  select(detention_facility_code, first_book_in, last_book_in)
 
 facilities_geocoded_df <- arrow::read_feather(
   "data/facilities-geocoded-exact.feather"
@@ -155,6 +175,7 @@ facility_final <-
       ),
     by = "detention_facility_code"
   ) |>
+  left_join(facilities_open_dates, by = "detention_facility_code") |>
   # left_join(
   #   stats_from_detention_stints |>
   #     select(
@@ -257,6 +278,17 @@ facility_final <-
   relocate(county, county_fips_code, .before = state) |>
   relocate(state_fips_code, .after = state) |>
   relocate(detention_facility_code_alt, .after = detention_facility_code)
+
+duplicate_facilities_to_remove <-
+  facility_final |>
+  filter(!is.na(detention_facility_code_alt)) |>
+  select(detention_facility_code = detention_facility_code_alt, name) |>
+  distinct()
+
+# remove the extra rows for facilities that have two codes
+facility_final <-
+  facility_final |>
+  anti_join(duplicate_facilities_to_remove, by = "detention_facility_code")
 
 arrow::write_feather(
   facility_final,

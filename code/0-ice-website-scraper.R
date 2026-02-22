@@ -92,4 +92,7 @@ ice_facilities <- map_dfr(0:(n_facility_pages - 1), function(i) {
   scrape_facilities(url)
 })
 
-arrow::write_feather(ice_facilities, "data/facilities-from-ice-website.feather")
+arrow::write_feather(
+  ice_facilities,
+  glue::glue("data/facilities-from-ice-website-{Sys.Date()}.feather")
+)

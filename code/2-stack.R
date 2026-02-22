@@ -41,8 +41,7 @@ detentions_05655 <-
 facility_addresses_from_ice_website <-
   arrow::read_feather(
     "data/facilities-from-ice-website.feather"
-  ) |>
-  mutate(date = as.Date("2025-10-01")) #|> # approximate date of website scrape
+  )
 
 facilities_detention_management <-
   arrow::read_feather(
@@ -195,13 +194,20 @@ state_abbr_join <-
   ) |>
   bind_rows(
     tribble(
-      ~state                     , ~state_abbr ,
-      "District of Columbia"     , "DC"        ,
-      "Puerto Rico"              , "PR"        ,
-      "Guam"                     , "GU"        ,
-      "American Samoa"           , "AS"        ,
-      "Virgin Islands"           , "VI"        ,
-      "Northern Mariana Islands" , "MP"
+      ~state                     ,
+      ~state_abbr                ,
+      "District of Columbia"     ,
+      "DC"                       ,
+      "Puerto Rico"              ,
+      "PR"                       ,
+      "Guam"                     ,
+      "GU"                       ,
+      "American Samoa"           ,
+      "AS"                       ,
+      "Virgin Islands"           ,
+      "VI"                       ,
+      "Northern Mariana Islands" ,
+      "MP"
     )
   )
 
