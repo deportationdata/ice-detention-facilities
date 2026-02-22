@@ -31,11 +31,9 @@ norm <- function(x) {
     stringr::str_to_lower()
 }
 
-old_wide <- arrow::read_feather("data/facilities-best-values-wide.feather")
-
 # convert wide to long for comparison
 old_long <-
-  old_wide |>
+  arrow::read_feather("data/facilities-best-values-wide.feather") |>
   select(detention_facility_code, any_of(all_fields)) |>
   pivot_longer(
     cols = any_of(all_fields),
