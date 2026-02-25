@@ -131,7 +131,13 @@ detention_management_files <-
         "FY25_detentionStats11212024.xlsx",
         "FY25_detentionStats12112024.xlsx",
         "FY25_detentionStats12122024.xlsx",
-        "FY25_detentionStats12182024.xlsx"
+        "FY25_detentionStats12182024.xlsx",
+        "FY26_detentionStats_02122026.xlsx",
+        "FY26_detentionStats01082026.xlsx",
+        "FY26_detentionStats02022026.xlsx",
+        "FY26_detentionStats11202025.xlsx",
+        "FY26_detentionStats12032025.xlsx",
+        "FY26_detentionStats12222025.xlsx"
       ),
       id = c(
         "1836538549260",
@@ -260,7 +266,8 @@ detention_management_files <-
         "1836555637335",
         "1836546642190",
         "1836548019897",
-        "1836554106108"
+        "1836554106108",
+        # need to add the codes for the FY26 files
       ),
       skip = c(
         6,

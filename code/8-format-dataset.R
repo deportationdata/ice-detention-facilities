@@ -74,6 +74,7 @@ facility_formatted <-
       str_replace_all("\\bOr\\b", "or") |>
       str_replace_all("\\bOf\\b", "of"),
     address = address |> str_to_title(),
+    address_full = address_full |> str_to_title(),
     city = city |> clean_city() |> str_to_title(),
     state = str_to_upper(state),
     type = str_to_upper(type) |> str_replace_all("OTHER", "Other"),
@@ -95,7 +96,7 @@ facility_formatted <-
       )
     ) |>
       na_if(""),
-    docket = str_to_upper(docket),
+    # docket = str_to_upper(docket),
     male_female = male_female |>
       str_to_lower() |>
       recode_values(

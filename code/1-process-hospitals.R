@@ -46,10 +46,10 @@ hospitals <-
   mutate(
     address = coalesce(address.x, address.y),
     zip = coalesce(zip.x, zip.y),
+    date = pmax(date.x, date.y, na.rm = TRUE),
     .keep = "unused"
   ) |>
-  relocate(name, address, city, state, zip) |>
-  mutate(date = pmax(date.x, date.y), .keep = "unused")
+  relocate(name, address, city, state, zip)
 
 arrow::write_feather(
   hospitals,

@@ -68,7 +68,6 @@ facility_list <-
   ) |>
   distinct(detention_facility_code)
 
-
 facility_latest_values <-
   arrow::read_feather(
     "data/facilities-latest-values-long.feather"
@@ -82,62 +81,16 @@ facility_latest_values_wide <-
     values_from = value
   )
 
-
-# stats_from_detention_stints <- arrow::read_feather(
-#   "data/facilities-from-detentions.feather"
-# )
-
-# bring in geocoding
-
-# vera_df <- arrow::read_feather("data/facilities-vera.feather")
-
-# not_in_vera_geocoded_df <- arrow::read_feather(
-#   "data/facilities-not-in-vera-geocoded.feather"
-# )
-
-facilities_open_dates <-
-  arrow::read_feather(
-    "data/facilities-from-detentions.feather"
-  ) |>
-  as_tibble() |>
-  select(detention_facility_code, first_book_in, last_book_in)
+# facilities_open_dates <-
+#   arrow::read_feather(
+#     "data/facilities-from-detentions.feather"
+#   ) |>
+#   as_tibble() |>
+#   select(detention_facility_code, first_book_in, last_book_in)
 
 facilities_geocoded_df <- arrow::read_feather(
   "data/facilities-geocoded-exact.feather"
 )
-
-# facility_list |>
-#   inner_join(facilities_geocoded_df, by = "detention_facility_code") |>
-#   left_join(
-#     vera_df |>
-#       select(
-#         detention_facility_code,
-#         latitude_vera = latitude,
-#         longitude_vera = longitude
-#       ),
-#     by = "detention_facility_code"
-#   ) |>
-#   mutate(
-#     geometry_vera = map2(
-#       longitude_vera,
-#       latitude_vera,
-#       ~ st_point(c(.x, .y))
-#     ) |>
-#       st_sfc(crs = 4326),
-#     geometry_google = map2(longitude, latitude, ~ st_point(c(.x, .y))) |>
-#       st_sfc(crs = 4326),
-#     distance = st_distance(geometry_vera, geometry_google, by_element = TRUE) |>
-#       as.numeric()
-#   )
-
-# geocode_df <-
-# bind_rows(
-#   vera_df |>
-#     select(detention_facility_code, latitude, longitude) |>
-#     anti_join(not_in_vera_geocoded_df, by = "detention_facility_code"),
-#   not_in_vera_geocoded_df |>
-#     select(detention_facility_code, latitude, longitude)
-# )
 
 # bring in court data
 
@@ -175,7 +128,7 @@ facility_final <-
       ),
     by = "detention_facility_code"
   ) |>
-  left_join(facilities_open_dates, by = "detention_facility_code") |>
+  # left_join(facilities_open_dates, by = "detention_facility_code") |>
   # left_join(
   #   stats_from_detention_stints |>
   #     select(
@@ -248,7 +201,7 @@ facility_final <-
         c("GTMOBCU", "GTMODCU", "GTMOACU") ~ "District of District of Columbia",
       TRUE ~ federal_court_district_habeas
     ),
-    # convert to integer
+    # simplify circuit names
     federal_court_circuit_habeas = federal_court_circuit_habeas |>
       str_remove(" CIRCUIT") |>
       recode_values(
@@ -264,8 +217,7 @@ facility_final <-
         "TENTH" ~ "10",
         "ELEVENTH" ~ "11",
         "DISTRICT OF COLUMBIA" ~ "DC"
-      ) |>
-      as.integer(),
+      ),
     # Guantanamo Bay detention facility is served by the Miami field office see:
     # https://www.ice.gov/detain/detention-facilities/naval-station-guantanamo-bay
     field_office = case_when(

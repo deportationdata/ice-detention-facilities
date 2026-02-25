@@ -14,13 +14,13 @@ all_fields <- c(
   "type",
   "type_detailed",
   "male_female",
-  "circuit",
-  "docket",
+  # "circuit",
+  # "docket",
   "ice_funded",
   "over_under_72",
-  "operator",
-  "eoir_base_city",
-  "eoir_detention_facility_code"
+  "operator"
+  # "eoir_base_city",
+  # "eoir_detention_facility_code"
 )
 
 facility_attributes <-
@@ -28,58 +28,6 @@ facility_attributes <-
     "data/facilities-attributes-raw.feather"
   ) |>
   mutate(circuit = as.character(circuit))
-
-# facility_attributes_clean <-
-#   facility_attributes |>
-#   mutate(
-#     name,
-
-#     across(
-#       c(
-#         name,
-#         address,
-#         city,
-#         state,
-#         aor,
-#         type,
-#         type_detailed,
-#         male_female,
-#         circuit,
-#         docket,
-#         ice_funded,
-#         over_under_72,
-#         field_office
-#       ),
-#       ~ if_else(is.na(.x), NA_character_, clean_text(.x))
-#     ),
-
-#     address = if_else(
-#       is.na(address),
-#       NA_character_,
-#       clean_street_address(address)
-#     ),
-
-#     across(
-#       c(zip, zip_4),
-#       ~ if_else(is.na(.x), NA_character_, str_remove_all(.x, "[^0-9]"))
-#     ),
-
-#     zip = case_when(
-#       is.na(zip) ~ NA_character_,
-#       nchar(zip) == 5 ~ zip,
-#       nchar(zip) > 5 ~ str_sub(zip, 1, 5),
-#       TRUE ~ str_pad(zip, 5, pad = "0")
-#     ),
-
-#     zip_4 = case_when(
-#       is.na(zip_4) ~ NA_character_,
-#       nchar(zip_4) == 4 ~ zip_4,
-#       nchar(zip_4) > 4 ~ str_sub(zip_4, 1, 4),
-#       TRUE ~ str_pad(zip_4, 4, pad = "0")
-#     ),
-
-#     circuit = as.character(circuit)
-#   )
 
 # first, for those w/o codes, get codes from name-city-state match
 
@@ -124,6 +72,41 @@ facility_attributes_nocodes <-
   select(-name_join) |>
   distinct() # check this
 
+
+facility_attributes_unmatched_manual <-
+  tribble(
+    ~name                                                                       , ~state        , ~detention_facility_code ,
+    "JUVENILE FACILITY"                                                         , "IL"          , ""                       ,
+    "GUAYNABO ADC (SAN JUAN)"                                                   , "PR"          , "BOPGUA"                 ,
+    "CCA CHER-TAZ DET.CTR."                                                     , "AZ"          , ""                       ,
+    "AIRPORT DDP"                                                               , "PR"          , ""                       ,
+    "U.S IMMIGRATION"                                                           , "MI"          , ""                       ,
+    "JOHNSON COUNTY DETENTION CENTER"                                           , "NC"          , ""                       ,
+    "CENTE"                                                                     , "WA"          , ""                       ,
+    "MARSHFIELD E. CENTER"                                                      , "TX"          , ""                       ,
+    "Broome County Correctional Facility"                                       , "NY"          , "BROMMNY"                ,
+    "Burleigh County Detention Center"                                          , "ND"          , "BURLEND"                ,
+    "DOW Detention Facility at Fort Bliss"                                      , "TX"          , "XXFTBLS"                ,
+    "Diamondback Correctional Facility"                                         , "OK"          , "XXDIAMO"                ,
+    "FCI Lewisburg"                                                             , "PA"          , "BOPLEW"                 ,
+    "Lincoln County Detention Center"                                           , "NE"          , "LINCONE"                ,
+    "McCook Detention Center"                                                   , "NE"          , "XXMCCOO"                ,
+    "Naval Station Guantanamo Bay (JTF Camp Six and Migrant Ops Center Main A)" , NA_character_ , "GTMODCU"                ,
+    "Sarpy County Department of Corrections"                                    , "NE"          , "SARPYNE"                ,
+    "Uinta County Detention Center"                                             , "WY"          , "UINTAWY"                ,
+    "CBP SAN YSIDRO POE"                                                        , "CA"          , "XXSANYD"                ,
+    "CTR FAM SVS JUNTOS PRF"                                                    , "NJ"          , "XXSVSJU"                ,
+    "BEST WESTERN PLUS EL PASO AIRPORT HOTEL & CONFEREN"                        , "TX"          , "XXBESTW"                ,
+    "SUPER  BY WYNDHAM"                                                         , "TX"          , "XXSUPER"                ,
+    "PHARR POLICE DEPT"                                                         , "TX"          , "XXPHARR"                ,
+    "OMDC ENV USBP OFO TRNSPT"                                                  , "CA"          , "XXOMDCE"                ,
+    "TIMBER RIDGE SCHOOL"                                                       , "VA"          , "XXTIMBR"                ,
+    "JTF CAMP SIX"                                                              , "FL"          , "GTMODCU"                ,
+    "MIGRANT OPS CENTER MAIN A"                                                 , "FL"          , "GTMODCU"                ,
+    "WICHITA COUNTY JAIL"                                                       , "TX"          , "XXWICHI"                ,
+    "DOD DETENTION FACILITY AT FORT BLISS"                                      , "TX"          , "XXBLISS"
+  )
+
 facility_attributes_unmatched <-
   facility_attributes_nocodes |>
   filter(is.na(detention_facility_code)) |>
@@ -132,7 +115,29 @@ facility_attributes_unmatched <-
     by = c("name", "state")
   ) |>
   # keep only ICE sources (NOTE: I selected the ICE ones based on currently the only ones that match)
-  filter(source %in% c("51185", "detention_management", "website"))
+  filter(
+    source %in% c("51185", "detention_management", "website"),
+    date >= as.Date("2025-01-01")
+  ) |>
+  select(-detention_facility_code) |>
+  left_join(
+    facility_attributes_unmatched_manual |>
+      filter(!is.na(state)),
+    by = c("name", "state")
+  ) |>
+  left_join(
+    facility_attributes_unmatched_manual |>
+      filter(is.na(state)) |>
+      select(-state),
+    by = "name"
+  ) |>
+  mutate(
+    detention_facility_code = coalesce(
+      detention_facility_code.x,
+      detention_facility_code.y
+    ),
+    .keep = "unused"
+  )
 
 # need to keep in the final data those with multiple codes -- multiple rows -- because those actually exist in the detentions data
 # then in the list we'll provide a column with multiple codes as a list for merging but there will be one row when we display it
@@ -140,7 +145,8 @@ facility_attributes_unmatched <-
 facility_attributes <-
   bind_rows(
     facility_attributes,
-    facility_attributes_nocodes
+    facility_attributes_nocodes,
+    facility_attributes_unmatched
   ) |>
   filter(!is.na(detention_facility_code)) |>
   left_join(

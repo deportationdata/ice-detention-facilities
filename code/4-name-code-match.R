@@ -363,9 +363,8 @@ fuzzy_matches_manual <- tribble(
   "SUFFOLK HDC SBAY"                                           , "SUFFOLK HOC SBAY"                            , "MA"   , "SUFFOMA"                , NA                 ,
   # "JUVENILE FACILITY"                                                         , ""                                            , "IL"   , ""                       , NA                 ,
   "WAYNE COUNTY"                                               , "WAYNE COUNTY, DETROIT"                       , "MI"   , "WAYNEMI"                , NA                 ,
-  # "GUAYNABO ADC (SAN JUAN)"                                    , "GUAYNABO MDC (SAN JUAN)"                     , "PR"   , "BOPGUA"                 , NA                 , # this info is from Vera not ICE
+  "GUAYNABO ADC (SAN JUAN)"                                    , "GUAYNABO MDC (SAN JUAN)"                     , "PR"   , "BOPGUA"                 , NA                 , # this info is from Vera not ICE
   # "CCA CHER-TAZ DET.CTR."                                                     , ""                                            , "AZ"   , ""                       , NA                 ,
-  # "AIRPORT DDP"                                                               , ""                                            , "PR"   , ""                       , NA                 ,
   # "U.S IMMIGRATION"                                                           , ""                                            , "MI"   , ""                       , NA                 ,
   # "JOHNSON COUNTY DETENTION CENTER"                                           , ""                                            , "NC"   , ""                       , NA                 ,
   "US MARSHALS"                                                , "US MARSHALS, OREGON  OR"                     , "OR"   , "USMOR"                  , NA                 ,
@@ -381,7 +380,6 @@ fuzzy_matches_manual <- tribble(
   "FCI Leavenworth"                                            , "LEAVENWORTH USP"                             , "KS"   , "BOPLVN"                 , NA                 ,
   "Federal Correctional Institution - Berlin, NH"              , "FCI BERLIN"                                  , "NH"   , "BOPBER"                 , NA                 ,
   "Miami Correctional Facility (MCF)"                          , "MIAMI CORRECTIONAL CENTER"                   , "IN"   , "INMIAMI"                , NA                 ,
-  # "Naval Station Guantanamo Bay (JTF Camp Six and Migrant Ops Center Main A)" , ""                                            , "GU"   , ""                       , NA                 ,
   "Ozark County Jail"                                          , "OZARK COUNTY SHERIFF'S OFFICE"               , "MO"   , "OZARKMO"                , NA                 ,
   # "CBP SAN YSIDRO POE"                                                        , ""                                            , "CA"   , ""                       , NA                 ,
   # "CTR FAM SVS JUNTOS PRF"                                                    , ""                                            , "NJ"   , ""                       , NA                 ,
@@ -390,12 +388,16 @@ fuzzy_matches_manual <- tribble(
   # "PHARR POLICE DEPT"                                                         , ""                                            , "TX"   , ""                       , NA                 ,
   # "OMDC ENV USBP OFO TRNSPT"                                                  , ""                                            , "CA"   , ""                       , NA                 ,
   # "TIMBER RIDGE SCHOOL"                                                       , ""                                            , "VA"   , ""                       , NA                 ,
-  # "JTF CAMP SIX"                                                              , ""                                            , "FL"   , ""                       , NA                 ,
-  # "MIGRANT OPS CENTER MAIN A"                                  , ""               ,  , ""                , NA                 ,
   "DILLEY IMMIGRATION PROCESSING CENTER"                       , "TRUSTED ADULT SOUTH TEX DILLEY FSC"          , "TX"   , "TASTDTX"                , NA                 ,
   # "WICHITA COUNTY JAIL"                                                       , ""                                            , "TX"   , ""                       , NA                 ,
   # "DOD DETENTION FACILITY AT FORT BLISS"                                      , ""                                            , "TX"   , ""                       , NA                 ,
   "FCI ATLANTA"                                                , "ATLANTA US PEN"                              , "GA"   , "BOPATL"                 , NA                 ,
+
+  # TODO: CHECK THIS - I FILLED THESE IN
+  # "AIRPORT DDP"                                                               , ""                                            , "PR"   , ""                       , NA                 ,
+  # "Naval Station Guantanamo Bay (JTF Camp Six and Migrant Ops Center Main A)" , "MIGRANT OPERATIONS CENTER MAIN AV622"        , "CU"   , "GTMODCU"                , NA                 ,
+  # "JTF CAMP SIX"                                                              , "MIGRANT OPERATIONS CENTER MAIN AV622"        , "CU"   , "GTMODCU"                , NA                 ,
+  # "MIGRANT OPS CENTER MAIN A"                                                 , "MIGRANT OPERATIONS CENTER MAIN AV622"        , "CU"   , "GTMODCU"                , NA                 ,
 )
 
 fuzzy_matches_manual <-

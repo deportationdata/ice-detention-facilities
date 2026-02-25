@@ -63,9 +63,14 @@ facilities_51185 <-
     "data/facilities-foia-51185.feather"
   )
 
-facilities_hrw_output <-
+facilities_14_09300 <-
   arrow::read_feather(
-    "data/facilities-foia-hrw-output.feather"
+    "data/facilities-foia-14-09300.feather"
+  )
+
+facilities_10_2554_527 <-
+  arrow::read_feather(
+    "data/facilities-foia-10-2554-527.feather"
   )
 
 facilities_eoir <-
@@ -148,9 +153,11 @@ facility_attributes <-
       select(any_of(all_fields), date),
     "05655" = detentions_05655 |>
       select(any_of(all_fields), date),
-    "51185" = facilities_51185 |>
+    "51185" = facilities_51185 |> # 2007 facilities list
+      select(any_of(all_fields), date), #
+    "10-2554-527" = facilities_10_2554_527 |>
       select(any_of(all_fields), date),
-    "hrw" = facilities_hrw_output |>
+    "14-09300" = facilities_14_09300 |>
       select(any_of(all_fields), date),
     "website" = facility_addresses_from_ice_website |>
       select(any_of(all_fields), date),
