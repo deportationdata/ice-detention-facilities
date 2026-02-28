@@ -1,0 +1,1 @@
+Downloaded from https://www.datalumos.org/datalumos/project/239493/version/V1/view?path=/datalumos/239493/fcr:versions/V1/local-law-enforcement-locations-shapefile.zip&type=file by Graeme Blair on Dec 31 2025

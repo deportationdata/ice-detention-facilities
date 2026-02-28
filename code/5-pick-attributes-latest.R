@@ -14,13 +14,13 @@ all_fields <- c(
   "type",
   "type_detailed",
   "male_female",
-  "circuit",
-  "docket",
+  # "circuit",
+  # "docket",
   "ice_funded",
   "over_under_72",
-  "operator",
-  "eoir_base_city",
-  "eoir_detention_facility_code"
+  "operator"
+  # "eoir_base_city",
+  # "eoir_detention_facility_code"
 )
 
 facility_attributes <-
@@ -72,6 +72,40 @@ facility_attributes_nocodes <-
   select(-name_join) |>
   distinct() # check this
 
+facility_attributes_unmatched_manual <-
+  tribble(
+    ~name                                                                       , ~state        , ~detention_facility_code ,
+    "JUVENILE FACILITY"                                                         , "IL"          , ""                       ,
+    "GUAYNABO ADC (SAN JUAN)"                                                   , "PR"          , "BOPGUA"                 ,
+    "CCA CHER-TAZ DET.CTR."                                                     , "AZ"          , ""                       ,
+    "AIRPORT DDP"                                                               , "PR"          , ""                       ,
+    "U.S IMMIGRATION"                                                           , "MI"          , ""                       ,
+    "JOHNSON COUNTY DETENTION CENTER"                                           , "NC"          , ""                       ,
+    "CENTE"                                                                     , "WA"          , ""                       ,
+    "MARSHFIELD E. CENTER"                                                      , "TX"          , ""                       ,
+    "Broome County Correctional Facility"                                       , "NY"          , "BROMMNY"                ,
+    "Burleigh County Detention Center"                                          , "ND"          , "BURLEND"                ,
+    "DOW Detention Facility at Fort Bliss"                                      , "TX"          , "XXBLISS"                ,
+    "Diamondback Correctional Facility"                                         , "OK"          , "XXDIAMO"                ,
+    "FCI Lewisburg"                                                             , "PA"          , "BOPLEW"                 ,
+    "Lincoln County Detention Center"                                           , "NE"          , "LINCONE"                ,
+    "McCook Detention Center"                                                   , "NE"          , "XXMCCOO"                ,
+    "Naval Station Guantanamo Bay (JTF Camp Six and Migrant Ops Center Main A)" , NA_character_ , "GTMODCU"                ,
+    "Sarpy County Department of Corrections"                                    , "NE"          , "SARPYNE"                ,
+    "Uinta County Detention Center"                                             , "WY"          , "UINTAWY"                ,
+    "CBP SAN YSIDRO POE"                                                        , "CA"          , "XXSANYD"                ,
+    "CTR FAM SVS JUNTOS PRF"                                                    , "NJ"          , "XXSVSJU"                ,
+    "BEST WESTERN PLUS EL PASO AIRPORT HOTEL & CONFEREN"                        , "TX"          , "XXBESTW"                ,
+    "SUPER  BY WYNDHAM"                                                         , "TX"          , "XXSUPER"                ,
+    "PHARR POLICE DEPT"                                                         , "TX"          , "XXPHARR"                ,
+    "OMDC ENV USBP OFO TRNSPT"                                                  , "CA"          , "XXOMDCE"                ,
+    "TIMBER RIDGE SCHOOL"                                                       , "VA"          , "XXTIMBR"                ,
+    "JTF CAMP SIX"                                                              , "FL"          , "GTMODCU"                ,
+    "MIGRANT OPS CENTER MAIN A"                                                 , "FL"          , "GTMODCU"                ,
+    "WICHITA COUNTY JAIL"                                                       , "TX"          , "XXWICHI"                ,
+    "DOD DETENTION FACILITY AT FORT BLISS"                                      , "TX"          , "XXBLISS"
+  )
+
 facility_attributes_unmatched <-
   facility_attributes_nocodes |>
   filter(is.na(detention_facility_code)) |>
@@ -80,12 +114,35 @@ facility_attributes_unmatched <-
     by = c("name", "state")
   ) |>
   # keep only ICE sources (NOTE: I selected the ICE ones based on currently the only ones that match)
-  filter(source %in% c("51185", "detention_management", "website"))
+  filter(
+    source %in% c("51185", "detention_management", "website"),
+    date >= as.Date("2025-01-01")
+  ) |>
+  select(-detention_facility_code) |>
+  left_join(
+    facility_attributes_unmatched_manual |>
+      filter(!is.na(state)),
+    by = c("name", "state")
+  ) |>
+  left_join(
+    facility_attributes_unmatched_manual |>
+      filter(is.na(state)) |>
+      select(-state),
+    by = "name"
+  ) |>
+  mutate(
+    detention_facility_code = coalesce(
+      detention_facility_code.x,
+      detention_facility_code.y
+    ),
+    .keep = "unused"
+  )
 
 facility_attributes <-
   bind_rows(
     facility_attributes,
-    facility_attributes_nocodes
+    facility_attributes_nocodes,
+    facility_attributes_unmatched
   ) |>
   filter(!is.na(detention_facility_code)) |>
   left_join(
@@ -116,7 +173,9 @@ facility_pivot <-
   facility_attributes |>
   mutate(
     address_full = case_when(
-      !is.na(address) ~ glue::glue("{address}, {city}, {state} {zip}"),
+      !is.na(address) ~ glue::glue(
+        "{address}, {city}, {state}{if_else(!is.na(zip), str_c(' ', zip), '')}"
+      ),
       TRUE ~ NA_character_
     )
   ) |>
@@ -198,7 +257,8 @@ facility_latest_values <-
     by = c("detention_facility_code" = "detention_facility_code_1")
   ) |>
   rename(detention_facility_code_alt = detention_facility_code_2) |>
-  relocate(detention_facility_code_alt, .after = detention_facility_code)
+  relocate(detention_facility_code_alt, .after = detention_facility_code) |>
+  mutate(value = str_squish(value))
 
 arrow::write_feather(
   facility_latest_values,

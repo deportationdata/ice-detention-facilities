@@ -120,7 +120,6 @@ detentions_41855_df <-
     )
   )
 
-
 detentions_41855_df_summary <-
   detentions_41855_df |>
   arrange(detention_facility_code, book_out_date_time) |>
@@ -161,9 +160,25 @@ detentions_41855_df_summary <-
     )
   ) |>
   ungroup() |>
-  mutate(date = as.Date("2024-01-01"))
+  mutate(date = as.Date("2024-01-01")) |>
+  unnest(name) |>
+  mutate(name_n = row_number(), .by = detention_facility_code) |>
+  pivot_wider(
+    names_from = name_n,
+    values_from = name,
+    names_prefix = "name_"
+  ) |>
+  unnest(name) |>
+  mutate(name_n = row_number(), .by = detention_facility_code) |>
+  pivot_wider(
+    names_from = name_n,
+    values_from = name,
+    names_prefix = "name_"
+  ) |>
+  rename(name = name_1, name_alt = name_2) |>
+  relocate(name, name_alt, .after = detention_facility_code)
 
 arrow::write_feather(
-  detentions_41855_df,
+  detentions_41855_df_summary,
   "data/facilities-foia-41855.feather"
 )
