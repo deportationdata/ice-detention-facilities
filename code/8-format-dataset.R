@@ -22,6 +22,8 @@ make_abbr_caps <- function(x, abbr) {
 
 facility_formatted <-
   facility_augmented |>
+  # TODO: need to remove things from dtm that have 0 people detained
+  filter(detention_facility_code != "XXWICHI") |>
   # left_join(hospitals, by = c("name", "state")) |>
   mutate(
     name = name |>
@@ -30,8 +32,25 @@ facility_formatted <-
       str_replace_all(c(
         abbrev_expansions
       )) |>
-      str_replace_all("[’‘`]", "'") |>
-      str_to_title() |>
+      str_replace_all("[‘’`]", "’") |>
+      str_squish() |>
+      # collapse space-separated single letters into abbreviations (e.g. "u s" -> "US")
+      str_replace_all("(?:^|(?<= ))([a-z]( [a-z])+)(?= |$)", function(m) {
+        str_to_upper(str_replace_all(m, " ", ""))
+      }) |>
+      tools::toTitleCase() |>
+      # capitalize letter after apostrophe (O'hare -> O'Hare)
+      str_replace_all("'([a-z])", function(m) {
+        str_c("'", str_to_upper(str_sub(m, 2, 2)))
+      }) |>
+      # capitalize letter after "Mc" prefix (Mccreary -> McCreary)
+      str_replace_all("\\bMc([a-z])", function(m) {
+        str_c("Mc", str_to_upper(str_sub(m, 3, 3)))
+      }) |>
+      # uppercase standalone single letters (initials like "g" in "Dale g Haile")
+      str_replace_all("\\b([a-z])\\b", str_to_upper) |>
+      # fix possessive 's (the single-letter step above capitalizes it)
+      str_replace_all("'S\\b", "'s") |>
       make_abbr_caps(
         abbr = c(
           "CCA",
@@ -40,7 +59,12 @@ facility_formatted <-
           "F",
           "PD",
           "YMCA",
+          "HSI",
+          "FDC",
+          "APSO",
+          "LBJ",
           "US",
+          "SSM",
           "CF",
           "C",
           "WD",
@@ -54,10 +78,19 @@ facility_formatted <-
           "JFK",
           "EGP",
           "CPC",
+          "INS",
+          "FMC",
+          "CSP",
+          "EOR",
+          "SMC",
+          "CBP",
+          "MDC",
           state.abb
         )
       ) |>
-      str_replace_all(regex("'S\\b", ignore_case = TRUE), "'s") |> # fix 'S or 's
+      # normalize asymmetric spaces around hyphens: " -x" -> " - x", "x- " -> "x - "
+      str_replace_all(" -(?=\\S)", " - ") |>
+      str_replace_all("(?<=\\S)- ", " - ") |>
       # ensure there is a space after commas
       str_replace_all(",([^ ])", ", \\1") |>
       # ensure there is a space before an open parenthesis
@@ -68,11 +101,7 @@ facility_formatted <-
       str_replace_all(",\\s*$", "") |>
       # drop space before comma
       str_replace_all("\\s+,", ",") |>
-      str_squish() |>
-      # make And Or lower case
-      str_replace_all("\\bAnd\\b", "and") |>
-      str_replace_all("\\bOr\\b", "or") |>
-      str_replace_all("\\bOf\\b", "of"),
+      str_squish(),
     address = address |> str_to_title(),
     address_full = address_full |> str_to_title(),
     city = city |> clean_city() |> str_to_title(),

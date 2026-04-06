@@ -65,16 +65,16 @@ facilities_to_geocode <-
 #   geocode(address_full, method = "arcgis") |>
 #   as.data.frame()
 
-# facilities_geocoded_google <-
-#   facilities_to_geocode |>
-#   geocode(
-#     address_full,
-#     method = 'google',
-#     lat = latitude,
-#     long = longitude,
-#     limit = 1,
-#     full_results = TRUE
-#   )
+facilities_geocoded_google <-
+  facilities_to_geocode |>
+  geocode(
+    address_full,
+    method = 'google',
+    lat = latitude,
+    long = longitude,
+    limit = 1,
+    full_results = TRUE
+  )
 
 # write_rds(
 #   facilities_geocoded_google,
@@ -214,101 +214,101 @@ facilities_geocoded_df |>
       distinct(detention_facility_code, name),
     by = "detention_facility_code"
   ) |>
-  left_join(
-    vera |>
-      select(
-        detention_facility_code,
-        latitude_vera = latitude,
-        longitude_vera = longitude,
-        address_vera = address,
-        city_vera = city
-      ),
-    by = "detention_facility_code"
-  ) |>
-  left_join(
-    marshall |>
-      select(
-        detention_facility_code,
-        latitude_marshall = latitude,
-        longitude_marshall = longitude,
-        address_marshall = address,
-        city_marshall = city
-      ),
-    by = "detention_facility_code"
-  ) |>
-  mutate(
-    latitude_jan26 = latitude,
-    longitude_jan26 = longitude
-  ) |>
-  filter(
-    !is.na(latitude_vera),
-    !is.na(longitude_vera),
-    !is.na(latitude_marshall),
-    !is.na(longitude_marshall)
-  ) |>
-  mutate(
-    distance_vera = sf::st_distance(
-      sf::st_as_sf(
-        cur_data(),
-        coords = c("longitude_vera", "latitude_vera"),
-        crs = 4326,
-        remove = FALSE
-      ),
-      sf::st_as_sf(
-        cur_data(),
-        coords = c("longitude_jan26", "latitude_jan26"),
-        crs = 4326,
-        remove = FALSE
-      ),
-      by_element = TRUE
-    ),
-    distance_marshall = sf::st_distance(
-      sf::st_as_sf(
-        cur_data(),
-        coords = c("longitude_marshall", "latitude_marshall"),
-        crs = 4326,
-        remove = FALSE
-      ),
-      sf::st_as_sf(
-        cur_data(),
-        coords = c("longitude_jan26", "latitude_jan26"),
-        crs = 4326,
-        remove = FALSE
-      ),
-      by_element = TRUE
-    )
-  ) |>
-  filter(
-    distance_vera > units::set_units(5000, "meters") |
-      distance_marshall > units::set_units(5000, "meters")
-  ) |>
-  filter(
-    !detention_facility_code %in%
-      c(
-        "BOPCNV",
-        "BOPTCN",
-        "EHDLGTX",
-        "GREENMO",
-        "GSCHOLD",
-        "HARHOLD",
-        "HENRIVA",
-        "JMHOSFL",
-        "KENTOKY",
-        "KERCOCA",
-        "KRHUBFL",
-        "KRO",
-        "KROHOLD",
-        "LARELKY",
-        "MADISMS",
-        "MCCLETX",
-        "MONTGAL",
-        "NYCHOLD",
-        "PLATTMO",
-        "RAPPSVA",
-        "SLRDCAZ",
-        "VPREGVA"
-      )
-  ) |>
+  # left_join(
+  #   vera |>
+  #     select(
+  #       detention_facility_code,
+  #       latitude_vera = latitude,
+  #       longitude_vera = longitude,
+  #       address_vera = address,
+  #       city_vera = city
+  #     ),
+  #   by = "detention_facility_code"
+  # ) |>
+  # left_join(
+  #   marshall |>
+  #     select(
+  #       detention_facility_code,
+  #       latitude_marshall = latitude,
+  #       longitude_marshall = longitude,
+  #       address_marshall = address,
+  #       city_marshall = city
+  #     ),
+  #   by = "detention_facility_code"
+  # ) |>
+  # mutate(
+  #   latitude_jan26 = latitude,
+  #   longitude_jan26 = longitude
+  # ) |>
+  # filter(
+  #   !is.na(latitude_vera),
+  #   !is.na(longitude_vera),
+  #   !is.na(latitude_marshall),
+  #   !is.na(longitude_marshall)
+  # ) |>
+  # mutate(
+  #   distance_vera = sf::st_distance(
+  #     sf::st_as_sf(
+  #       cur_data(),
+  #       coords = c("longitude_vera", "latitude_vera"),
+  #       crs = 4326,
+  #       remove = FALSE
+  #     ),
+  #     sf::st_as_sf(
+  #       cur_data(),
+  #       coords = c("longitude_jan26", "latitude_jan26"),
+  #       crs = 4326,
+  #       remove = FALSE
+  #     ),
+  #     by_element = TRUE
+  #   ),
+  #   distance_marshall = sf::st_distance(
+  #     sf::st_as_sf(
+  #       cur_data(),
+  #       coords = c("longitude_marshall", "latitude_marshall"),
+  #       crs = 4326,
+  #       remove = FALSE
+  #     ),
+  #     sf::st_as_sf(
+  #       cur_data(),
+  #       coords = c("longitude_jan26", "latitude_jan26"),
+  #       crs = 4326,
+  #       remove = FALSE
+  #     ),
+  #     by_element = TRUE
+  #   )
+  # ) |>
+  # filter(
+  #   distance_vera > units::set_units(5000, "meters") |
+  #     distance_marshall > units::set_units(5000, "meters")
+  # ) |>
+  # filter(
+  #   !detention_facility_code %in%
+  #     c(
+  #       "BOPCNV",
+  #       "BOPTCN",
+  #       "EHDLGTX",
+  #       "GREENMO",
+  #       "GSCHOLD",
+  #       "HARHOLD",
+  #       "HENRIVA",
+  #       "JMHOSFL",
+  #       "KENTOKY",
+  #       "KERCOCA",
+  #       "KRHUBFL",
+  #       "KRO",
+  #       "KROHOLD",
+  #       "LARELKY",
+  #       "MADISMS",
+  #       "MCCLETX",
+  #       "MONTGAL",
+  #       "NYCHOLD",
+  #       "PLATTMO",
+  #       "RAPPSVA",
+  #       "SLRDCAZ",
+  #       "VPREGVA"
+  #     )
+  # ) |>
   select(
     -geocoder,
     # -contains("latitude"),

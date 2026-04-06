@@ -2,11 +2,17 @@ library(tidyverse)
 library(readxl)
 library(tidylog)
 
-detentions_current <- arrow::read_feather(
+detentions_39357 <- arrow::read_feather(
   # "https://github.com/deportationdata/ice/raw/refs/heads/main/data/detention-stints-latest.feather"
-  "~/github/ice/data/detention-stints-latest.feather"
+  "~/github/ice/data/detention-stints-oct25.feather"
 ) |>
   mutate(date = as.Date("2025-10-15"))
+
+detentions_latest <- arrow::read_parquet(
+  # "https://github.com/deportationdata/ice/raw/refs/heads/main/data/detention-stints-latest.feather"
+  "~/github/ice/data/detention-stints-latest.parquet"
+) |>
+  mutate(date = as.Date("2026-03-10"))
 
 detentions_2012_2023 <- arrow::read_feather(
   # "https://github.com/deportationdata/ice/raw/refs/heads/main/data/ice-detentions-2012-2023.feather"
@@ -219,6 +225,14 @@ detentions_05655 <-
 
 detentions_facilities <-
   bind_rows(
+    "2026-03-10" = detentions_latest |>
+      select(
+        detention_facility_code,
+        name = detention_facility,
+        detention_book_in_date = book_in_date_time,
+        detention_book_out_date = book_out_date_time,
+        anonymized_identifier
+      ),
     # "-1" = facilities_51185,
     "2010-01-01" = detentions_hrw_df |>
       transmute(
@@ -258,7 +272,7 @@ detentions_facilities <-
         gender,
         birth_year
       ),
-    "2025-10-15" = detentions_current |>
+    "2025-10-15" = detentions_39357 |>
       select(
         detention_facility_code,
         name = detention_facility,

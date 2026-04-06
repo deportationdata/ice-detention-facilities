@@ -15,13 +15,13 @@ all_fields <- c(
   "type",
   "type_detailed",
   "male_female",
-  "capacity",
-  "circuit",
-  "docket",
-  "ice_funded",
-  "over_under_72",
-  "operator",
-  "owner"
+  # "capacity",
+  # "circuit",
+  # "docket",
+  # "ice_funded",
+  "over_under_72"
+  # "operator",
+  # "owner"
 )
 
 facilities_2015 <-
@@ -108,10 +108,6 @@ hfild_prisons <-
     "data/hifld-prisons.feather"
   )
 
-detentions_current <- arrow::read_feather(
-  "~/github/ice/data/detention-stints-latest.feather"
-)
-
 detentions_2012_2023 <- arrow::read_feather(
   "~/github/ice/data/ice-detentions-2012-2023.feather"
 )
@@ -120,27 +116,14 @@ facilities_manual <- arrow::read_feather(
   "data/facilities-manual.feather"
 )
 
-# facilities_from_detentions <-
-#   bind_rows(
-#     "2023-11-15" = detentions_2012_2023 |>
-#       select(detention_facility_code, detention_facility),
-#     "2025-10-15" = detentions_current |>
-#       select(detention_facility_code, detention_facility),
-#     .id = "date"
-#   ) |>
-#   transmute(
-#     detention_facility_code,
-#     name = detention_facility,
-#     date = as.Date(date)
-#   ) |>
-#   distinct()
-
 facilities_from_detentions <- arrow::read_feather(
   "data/facilities-from-detentions.feather"
 ) |>
   mutate(date = last_book_in)
 
-# rm(detentions_2012_2023)
+hold_rooms <- arrow::read_feather(
+  "data/noccc-hold-rooms.feather"
+)
 
 # combine for each field one-by-one
 facility_attributes <-
@@ -189,6 +172,8 @@ facility_attributes <-
     "hifld_prisons" = hfild_prisons |>
       select(hifld_id, any_of(all_fields), date),
     "manual" = facilities_manual |>
+      select(any_of(all_fields), date),
+    "hold_rooms" = hold_rooms |>
       select(any_of(all_fields), date),
     .id = "source"
   ) |>

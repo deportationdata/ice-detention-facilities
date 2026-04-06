@@ -103,7 +103,7 @@ federal_district_courts_sf <-
 # bring in ICE field office
 
 ice_field_offices <- sfarrow::st_read_feather(
-  "https://github.com/deportationdata/ice/raw/refs/heads/main/data/ice-aor-shp.feather"
+  "https://github.com/deportationdata/ice-offices/raw/refs/heads/main/data/ice-aor-shp.feather"
 ) |>
   st_transform(crs = 4326)
 
@@ -241,6 +241,13 @@ duplicate_facilities_to_remove <-
 facility_final <-
   facility_final |>
   anti_join(duplicate_facilities_to_remove, by = "detention_facility_code")
+
+individual_counts <-
+  arrow::read_parquet("data/facility-individual-counts-2025-2026.parquet")
+
+facility_final <-
+  facility_final |>
+  left_join(individual_counts, by = "detention_facility_code")
 
 arrow::write_feather(
   facility_final,

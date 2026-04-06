@@ -30,7 +30,6 @@ set -e
 # Rscript code/4-match-jails-prisons.R
 # Rscript code/4-name-code-match.R
 Rscript code/2-stack.R
-# Rscript code/5-compare-picked-attributes.R
 Rscript code/5-pick-attributes-latest.R
 # Rscript code/6-facilities-geocode.R
 Rscript code/7-augment-dataset.R

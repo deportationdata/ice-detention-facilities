@@ -16,9 +16,9 @@ all_fields <- c(
   "male_female",
   # "circuit",
   # "docket",
-  "ice_funded",
-  "over_under_72",
-  "operator"
+  # "ice_funded",
+  "over_under_72"
+  # "operator"
   # "eoir_base_city",
   # "eoir_detention_facility_code"
 )
@@ -26,8 +26,7 @@ all_fields <- c(
 facility_attributes <-
   arrow::read_feather(
     "data/facilities-attributes-raw.feather"
-  ) |>
-  mutate(circuit = as.character(circuit))
+  )
 
 # first, for those w/o codes, get codes from name-city-state match
 
@@ -85,11 +84,11 @@ facility_attributes_unmatched_manual <-
     "MARSHFIELD E. CENTER"                                                      , "TX"          , ""                       ,
     "Broome County Correctional Facility"                                       , "NY"          , "BROMMNY"                ,
     "Burleigh County Detention Center"                                          , "ND"          , "BURLEND"                ,
-    "DOW Detention Facility at Fort Bliss"                                      , "TX"          , "XXBLISS"                ,
-    "Diamondback Correctional Facility"                                         , "OK"          , "XXDIAMO"                ,
+    "DOW Detention Facility at Fort Bliss"                                      , "TX"          , "EROFCB"                 ,
+    "Diamondback Correctional Facility"                                         , "OK"          , "OKDBACK"                ,
     "FCI Lewisburg"                                                             , "PA"          , "BOPLEW"                 ,
     "Lincoln County Detention Center"                                           , "NE"          , "LINCONE"                ,
-    "McCook Detention Center"                                                   , "NE"          , "XXMCCOO"                ,
+    "McCook Detention Center"                                                   , "NE"          , "NEMCCOI"                ,
     "Naval Station Guantanamo Bay (JTF Camp Six and Migrant Ops Center Main A)" , NA_character_ , "GTMODCU"                ,
     "Sarpy County Department of Corrections"                                    , "NE"          , "SARPYNE"                ,
     "Uinta County Detention Center"                                             , "WY"          , "UINTAWY"                ,
@@ -103,7 +102,7 @@ facility_attributes_unmatched_manual <-
     "JTF CAMP SIX"                                                              , "FL"          , "GTMODCU"                ,
     "MIGRANT OPS CENTER MAIN A"                                                 , "FL"          , "GTMODCU"                ,
     "WICHITA COUNTY JAIL"                                                       , "TX"          , "XXWICHI"                ,
-    "DOD DETENTION FACILITY AT FORT BLISS"                                      , "TX"          , "XXBLISS"
+    "DOD DETENTION FACILITY AT FORT BLISS"                                      , "TX"          , "EROFCB"
   )
 
 facility_attributes_unmatched <-

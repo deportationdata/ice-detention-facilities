@@ -156,7 +156,7 @@ exact_non_matches <-
 #   ) |>
 #   clipr::write_clip()
 
-# look into bighorn, is this matching right?
+# TODO: look into bighorn, is this matching right?
 fuzzy_matches_manual <- tribble(
   ~name.x                                                      , ~name_matched                                 , ~state , ~detention_facility_code , ~match_probability ,
   "ACI"                                                        , "ACI (CRANSTON, RHODE ISLAND)"                , "RI"   , "RICRANS"                , "53"               ,
