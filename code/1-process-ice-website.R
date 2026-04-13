@@ -7,8 +7,6 @@ files <- list.files(
   full.names = TRUE
 )
 
-arrow::read_parquet(files[1])
-
 facilities_from_website <-
   files |>
   set_names(basename(files)) |>

@@ -3,3 +3,14 @@ data/** filter=lfs diff=lfs merge=lfs -text
 *.dta filter=lfs diff=lfs merge=lfs -text
 *.sav filter=lfs diff=lfs merge=lfs -text
 inputs/facilities-2007.csv filter=lfs diff=lfs merge=lfs -text
+*.shp.xml filter=lfs diff=lfs merge=lfs -text
+*.shx filter=lfs diff=lfs merge=lfs -text
+*.prj filter=lfs diff=lfs merge=lfs -text
+*.sbx filter=lfs diff=lfs merge=lfs -text
+*.qix filter=lfs diff=lfs merge=lfs -text
+*.shp filter=lfs diff=lfs merge=lfs -text
+*.dbf filter=lfs diff=lfs merge=lfs -text
+*.cpg filter=lfs diff=lfs merge=lfs -text
+*.sbn filter=lfs diff=lfs merge=lfs -text
+*.qpj filter=lfs diff=lfs merge=lfs -text
+*.fix filter=lfs diff=lfs merge=lfs -text

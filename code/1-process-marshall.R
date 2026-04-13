@@ -1,8 +1,7 @@
 library(tidyverse)
 
 marshall <- read_csv(
-  # "https://github.com/themarshallproject/dhs_immigration_detention/raw/refs/heads/master/locations.csv"
-  "~/Downloads/locations (1).csv"
+  "https://github.com/themarshallproject/dhs_immigration_detention/raw/refs/heads/master/locations.csv"
 ) |>
   rename_with(.fn = ~ str_to_lower(.x) |> str_replace_all(" ", "_")) |>
   rename(

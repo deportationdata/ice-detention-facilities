@@ -29,21 +29,6 @@ county_sf <-
     geometry
   )
 
-# temporarily just use the facilities in the recent data
-# facility_list <-
-#   arrow::read_parquet(
-#     "https://github.com/deportationdata/ice/raw/refs/heads/main/data/detention-stints-latest.feather"
-#   ) |>
-#   as_tibble() |>
-#   # mutate(
-#   #   cnt = sum(
-#   #     year(book_in_date_time) == 2025 | year(book_out_date_time) == 2025
-#   #   ),
-#   #   .by = detention_facility_code
-#   # ) |>
-#   # filter(cnt >= 1) |>
-#   distinct(detention_facility_code, name = detention_facility)
-
 # bring in all facilities in detention file plus in any ICE source (DTM, web site, etc.)
 facility_list <-
   arrow::read_parquet(
@@ -158,10 +143,6 @@ facility_final <-
     type,
     type_detailed
   ) |>
-  # left_join(
-  #   geocode_df |> distinct(detention_facility_code, latitude, longitude),
-  #   by = c("detention_facility_code")
-  # ) |>
   left_join(
     facilities_geocoded_df |>
       select(detention_facility_code, latitude, longitude),
