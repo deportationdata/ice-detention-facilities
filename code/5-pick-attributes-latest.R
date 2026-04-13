@@ -35,6 +35,11 @@ name_code_match <-
     "data/facilities-name-code-match.feather"
   )
 
+hospitals_name_match <-
+  arrow::read_feather(
+    "data/hospitals-name-match.feather"
+  )
+
 facilities_with_multiple_codes <-
   name_code_match |>
   mutate(name_join = clean_text(name)) |>
@@ -65,8 +70,23 @@ facility_attributes_nocodes <-
       group_by(state, name_join) |>
       slice_max(date_facility_code, n = 1, with_ties = FALSE) |>
       ungroup() |>
-      select(-name),
+      select(-name) |>
+      rename(detention_facility_code_nc = detention_facility_code),
     by = c("state", "name_join")
+  ) |>
+  left_join(
+    hospitals_name_match |>
+      mutate(name_join = clean_text(name)) |>
+      distinct(state, name_join, detention_facility_code) |>
+      rename(detention_facility_code_hm = detention_facility_code),
+    by = c("state", "name_join")
+  ) |>
+  mutate(
+    detention_facility_code = coalesce(
+      detention_facility_code_nc,
+      detention_facility_code_hm
+    ),
+    .keep = "unused"
   ) |>
   select(-name_join) |>
   distinct() # check this

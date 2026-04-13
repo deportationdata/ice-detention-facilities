@@ -173,7 +173,7 @@ facility_attributes <-
       select(hifld_id, any_of(all_fields), date),
     "manual" = facilities_manual |>
       select(any_of(all_fields), date),
-    "hold_rooms" = hold_rooms |>
+    "noccc_hold_rooms" = hold_rooms |>
       select(any_of(all_fields), date),
     .id = "source"
   ) |>

@@ -56,20 +56,22 @@ facilities_from_detentions <-
 
 # write_rds(matches_cleaned, file = "~/downloads/matches_cleaned_hospitals.rds")
 
-matches_cleaned <- read_rds("~/downloads/matches_cleaned_hospitals.rds")
+if (interactive()) {
+  matches_cleaned_raw <- read_rds("~/downloads/matches_cleaned_hospitals.rds")
 
-matches_cleaned |>
-  as_tibble() |>
-  filter(match == "Yes", match_probability >= 0.75) |>
-  transmute(
-    name.x,
-    name.y,
-    state,
-    detention_facility_code,
-    match_probability = round(match_probability, 2)
-  ) |>
-  arrange(state, name.x) |>
-  clipr::write_clip()
+  matches_cleaned_raw |>
+    as_tibble() |>
+    filter(match == "Yes", match_probability >= 0.75) |>
+    transmute(
+      name.x,
+      name.y,
+      state,
+      detention_facility_code,
+      match_probability = round(match_probability, 2)
+    ) |>
+    arrange(state, name.x) |>
+    clipr::write_clip()
+}
 
 # Verification instructions:
 # it is ok to have more than one match for a single name.x facility (detention facilities) -- the name.y comes from multiple sources and we want to link to all of them
@@ -515,3 +517,21 @@ matches_cleaned <-
     # "TACOMA GENERAL HOSPITAL"            , "MULTICARE TACOMA GENERAL HOSPITAL"                                  , "WA"   , "TACGHWA"                , "0.93"             , # link: https://www.multicare.org/location/tacoma-general-hospital/
     "WATERTOWN REGIONAL MEDICAL CENTER"  , "WATERTOWN REGIONAL MEDICAL CENTER"                             , "WI"   , "WRMEDWI"                , "1"
   )
+
+hospitals_name_match <-
+  matches_cleaned |>
+  filter(!is.na(detention_facility_code), detention_facility_code != "") |>
+  transmute(
+    detention_facility_code,
+    name = name.y,
+    state,
+    match_probability = as.numeric(match_probability),
+    date_facility_code = as.Date(NA),
+    source_facility_code = "hospitals_match"
+  ) |>
+  distinct()
+
+arrow::write_feather(
+  hospitals_name_match,
+  "data/hospitals-name-match.feather"
+)
