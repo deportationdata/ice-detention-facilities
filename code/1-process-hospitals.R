@@ -4,7 +4,7 @@ library(sf)
 
 hospitals_hhs <-
   read_csv(
-    "inputs/Hospital_General_Information.csv"
+    "inputs/cms-hospital-general-information/Hospital_General_Information.csv"
   ) |>
   transmute(
     name = `Facility Name`,

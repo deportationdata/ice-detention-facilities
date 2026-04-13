@@ -5,7 +5,7 @@ library(tidyverse)
 # Download to temp file and read in 2017 data
 facilities_51185 <-
   read_csv(
-    "inputs/facilities-foia-51185.csv",
+    "inputs/ice-foia-51185/facilities-foia-51185.csv",
   ) |>
   janitor::clean_names() |>
   mutate(row_original = row_number(), .before = 0)

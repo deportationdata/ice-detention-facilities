@@ -1,6 +1,6 @@
 library(tidyverse)
 
-jails_prisons <- haven::read_dta("inputs/ICPSR-38323-0001-Data.dta")
+jails_prisons <- haven::read_dta("inputs/icpsr-38323/ICPSR-38323-0001-Data.dta")
 
 jails_prisons <-
   jails_prisons |>

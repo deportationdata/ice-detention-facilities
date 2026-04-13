@@ -1,11 +1,11 @@
 library(tidyverse)
 library(tidylog)
 
-base_city <- read_delim("inputs/tblLookupBaseCity.csv")
+base_city <- read_delim("inputs/eoir/tblLookupBaseCity.csv")
 
-# inmate_housing <- read_delim("inputs/tblInmateHousing.csv")
+# inmate_housing <- read_delim("inputs/eoir/tblInmateHousing.csv")
 
-lookup_inmate <- data.table::fread("inputs/tblLookupInmate.csv") |> as_tibble()
+lookup_inmate <- data.table::fread("inputs/eoir/tblLookupInmate.csv") |> as_tibble()
 
 ice_facilities_eoir_court <-
   lookup_inmate |>
