@@ -1,5 +1,4 @@
 data/** filter=lfs diff=lfs merge=lfs -text
-!inputs/immigration-court-administrative-control-list.csv -filter -diff -merge text
 *.csv filter=lfs diff=lfs merge=lfs -text
 *.dta filter=lfs diff=lfs merge=lfs -text
 *.sav filter=lfs diff=lfs merge=lfs -text
