@@ -1,5 +1,5 @@
 library(tidyverse)
-library(geoarrow)
+library(sfarrow)
 library(sf)
 library(tigris)
 
@@ -81,12 +81,10 @@ facilities_geocoded_df <- arrow::read_parquet(
 # bring in court data
 
 federal_circuit_courts_sf <-
-  arrow::read_parquet("data/federal-court-circuits.parquet") |>
-  sf::st_as_sf()
+  sfarrow::st_read_parquet("data/federal-court-circuits.parquet")
 
 federal_district_courts_sf <-
-  arrow::read_parquet("data/federal-court-districts.parquet") |>
-  sf::st_as_sf()
+  sfarrow::st_read_parquet("data/federal-court-districts.parquet")
 
 # bring in ICE field office — remote feather (sfarrow-written); download + read
 ice_field_offices <- local({
@@ -97,9 +95,8 @@ ice_field_offices <- local({
     mode = "wb",
     quiet = TRUE
   )
-  arrow::read_feather(tf) |> sf::st_as_sf()
-}) |>
-  st_transform(crs = 4326)
+  arrow::read_feather(tf) |> sf::st_as_sf(crs = 4326)
+})
 
 name_code_match <-
   arrow::read_parquet(

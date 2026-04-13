@@ -163,45 +163,6 @@
       "Repository": "RSPM",
       "Encoding": "UTF-8"
     },
-    "RSelenium": {
-      "Package": "RSelenium",
-      "Version": "1.7.10",
-      "Source": "Repository",
-      "Type": "Package",
-      "Title": "R Bindings for 'Selenium WebDriver'",
-      "Authors@R": "c( person(\"John\", \"Harrison\", , \"johndharrison0@gmail.com\", role = \"aut\", comment = \"original author\"), person(\"Ju Yeong\", \"Kim\", , \"jkim2345@fredhutch.org\", role = \"aut\", comment = \"rOpenSci maintainer\"), person(\"Jonathan\", \"Völkle\", , \"jonathan.voelkle@web.de\", role = c(\"aut\", \"cre\")), person(\"Indranil\", \"Gayen\", , \"nil.gayen@gmail.com\", role = \"ctb\") )",
-      "Description": "Provides a set of R bindings for the 'Selenium 2.0 WebDriver' (see <https://www.selenium.dev/documentation/> for more information) using the 'JsonWireProtocol' (see <https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol> for more information). 'Selenium 2.0 WebDriver' allows driving a web browser natively as a user would either locally or on a remote machine using the Selenium server it marks a leap forward in terms of web browser automation. Selenium automates web browsers (commonly referred to as browsers). Using RSelenium you can automate browsers locally or remotely.",
-      "License": "AGPL-3",
-      "URL": "https://docs.ropensci.org/RSelenium/",
-      "BugReports": "https://github.com/ropensci/RSelenium/issues",
-      "Depends": [
-        "R (>= 3.0.0)"
-      ],
-      "Imports": [
-        "methods",
-        "caTools",
-        "utils",
-        "httr",
-        "wdman(>= 0.2.2)"
-      ],
-      "Suggests": [
-        "binman",
-        "XML",
-        "testthat",
-        "knitr",
-        "covr",
-        "rmarkdown",
-        "selectr"
-      ],
-      "VignetteBuilder": "knitr",
-      "Collate": "'RSelenium.R' 'errorHandler.R' 'remoteDriver.R' 'rsDriver.R' 'selKeys-data.R' 'util.R' 'webElement.R'",
-      "Encoding": "UTF-8",
-      "RoxygenNote": "7.3.3",
-      "NeedsCompilation": "no",
-      "Author": "John Harrison [aut] (original author), Ju Yeong Kim [aut] (rOpenSci maintainer), Jonathan Völkle [aut, cre], Indranil Gayen [ctb]",
-      "Maintainer": "Jonathan Völkle <jonathan.voelkle@web.de>",
-      "Repository": "CRAN"
-    },
     "Rcpp": {
       "Package": "Rcpp",
       "Version": "1.1.1",
@@ -434,44 +395,6 @@
       "Repository": "CRAN",
       "Encoding": "UTF-8"
     },
-    "binman": {
-      "Package": "binman",
-      "Version": "0.1.3",
-      "Source": "Repository",
-      "Title": "A Binary Download Manager",
-      "Authors@R": "c( person(\"John\", \"Harrison\", , \"johndharrison0@gmail.com\", role = \"aut\", comment = \"original author\"), person(\"Ju Yeong\", \"Kim\", , \"jkim2345@fredhutch.org\", role = \"cre\", comment = \"rOpenSci maintainer\"))",
-      "Description": "Tools and functions for managing the download of binary files. Binary repositories are defined in 'YAML' format. Defining new  pre-download, download and post-download templates allow additional  repositories to be added.",
-      "Depends": [
-        "R (>= 3.3)"
-      ],
-      "License": "MIT + file LICENSE",
-      "Encoding": "UTF-8",
-      "Suggests": [
-        "testthat",
-        "covr",
-        "knitr",
-        "rmarkdown"
-      ],
-      "Imports": [
-        "rappdirs",
-        "yaml",
-        "httr",
-        "jsonlite",
-        "xml2",
-        "utils",
-        "stats",
-        "assertthat",
-        "semver"
-      ],
-      "URL": "https://docs.ropensci.org/binman/, https://github.com/ropensci/binman",
-      "BugReports": "https://github.com/ropensci/binman/issues",
-      "RoxygenNote": "7.2.1",
-      "VignetteBuilder": "knitr",
-      "NeedsCompilation": "no",
-      "Author": "John Harrison [aut] (original author), Ju Yeong Kim [cre] (rOpenSci maintainer)",
-      "Maintainer": "Ju Yeong Kim <jkim2345@fredhutch.org>",
-      "Repository": "CRAN"
-    },
     "bit": {
       "Package": "bit",
       "Version": "4.6.0",
@@ -538,23 +461,6 @@
       "Author": "Michael Chirico [aut, cre], Jens Oehlschlägel [aut], Leonardo Silvestri [ctb], Ofek Shilon [ctb]",
       "Maintainer": "Michael Chirico <michaelchirico4@gmail.com>",
       "Repository": "RSPM"
-    },
-    "bitops": {
-      "Package": "bitops",
-      "Version": "1.0-9",
-      "Source": "Repository",
-      "Date": "2024-10-03",
-      "Authors@R": "c( person(\"Steve\", \"Dutky\", role = \"aut\", email = \"sdutky@terpalum.umd.edu\", comment = \"S original; then (after MM's port) revised and modified\"), person(\"Martin\", \"Maechler\", role = c(\"cre\", \"aut\"), email = \"maechler@stat.math.ethz.ch\", comment = c(\"Initial R port; tweaks\", ORCID = \"0000-0002-8685-9910\")))",
-      "Title": "Bitwise Operations",
-      "Description": "Functions for bitwise operations on integer vectors.",
-      "License": "GPL (>= 2)",
-      "URL": "https://github.com/mmaechler/R-bitops",
-      "BugReports": "https://github.com/mmaechler/R-bitops/issues",
-      "NeedsCompilation": "yes",
-      "Author": "Steve Dutky [aut] (S original; then (after MM's port) revised and modified), Martin Maechler [cre, aut] (Initial R port; tweaks, <https://orcid.org/0000-0002-8685-9910>)",
-      "Maintainer": "Martin Maechler <maechler@stat.math.ethz.ch>",
-      "Repository": "CRAN",
-      "Encoding": "UTF-8"
     },
     "blob": {
       "Package": "blob",
@@ -776,32 +682,6 @@
       "RemoteRef": "HEAD",
       "RemoteSha": "c63aea06281a2231cf4521237aff6d4e9fc3c030",
       "RemoteHost": "api.github.com"
-    },
-    "caTools": {
-      "Package": "caTools",
-      "Version": "1.18.3",
-      "Source": "Repository",
-      "Type": "Package",
-      "Title": "Tools: Moving Window Statistics, GIF, Base64, ROC AUC, etc",
-      "Date": "2024-09-04",
-      "Authors@R": "c(person(given = \"Jarek\", family = \"Tuszynski\", role = \"aut\", email = \"jaroslaw.w.tuszynski@saic.com\"), person(given = \"Michael\", family = \"Dietze\", role = \"cre\", email = \"michael.dietze@uni-goettingen.de\"))",
-      "Maintainer": "Michael Dietze <michael.dietze@uni-goettingen.de>",
-      "Depends": [
-        "R (>= 3.6.0)"
-      ],
-      "Imports": [
-        "bitops"
-      ],
-      "Suggests": [
-        "MASS",
-        "rpart"
-      ],
-      "Description": "Contains several basic utility functions including: moving (rolling, running) window statistic functions, read/write for GIF and ENVI binary files, fast calculation of AUC, LogitBoost classifier, base64 encoder/decoder, round-off-error-free sum and cumsum, etc.",
-      "License": "GPL-3",
-      "NeedsCompilation": "yes",
-      "Repository": "CRAN",
-      "Author": "Jarek Tuszynski [aut], Michael Dietze [cre]",
-      "Encoding": "UTF-8"
     },
     "cachem": {
       "Package": "cachem",
@@ -1301,39 +1181,6 @@
       "Maintainer": "Hadley Wickham <hadley@posit.co>",
       "Repository": "CRAN"
     },
-    "debugme": {
-      "Package": "debugme",
-      "Version": "1.2.0",
-      "Source": "Repository",
-      "Title": "Debug R Packages",
-      "Authors@R": "c( person(\"Gábor\", \"Csárdi\", , \"csardi.gabor@gmail.com\", role = c(\"aut\", \"cre\")), person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\")) )",
-      "Description": "Specify debug messages as special string constants, and control debugging of packages via environment variables.",
-      "License": "MIT + file LICENSE",
-      "URL": "https://github.com/r-lib/debugme#readme, https://r-lib.github.io/debugme/",
-      "BugReports": "https://github.com/r-lib/debugme/issues",
-      "Depends": [
-        "R (>= 3.6)"
-      ],
-      "Imports": [
-        "crayon",
-        "grDevices"
-      ],
-      "Suggests": [
-        "covr",
-        "mockery",
-        "R6",
-        "testthat (>= 3.0.0)",
-        "withr"
-      ],
-      "Config/Needs/website": "tidyverse/tidytemplate",
-      "Config/testthat/edition": "3",
-      "Encoding": "UTF-8",
-      "RoxygenNote": "7.2.3",
-      "NeedsCompilation": "no",
-      "Author": "Gábor Csárdi [aut, cre], Posit Software, PBC [cph, fnd]",
-      "Maintainer": "Gábor Csárdi <csardi.gabor@gmail.com>",
-      "Repository": "CRAN"
-    },
     "digest": {
       "Package": "digest",
       "Version": "0.6.39",
@@ -1779,74 +1626,6 @@
       "Author": "Hadley Wickham [aut, cre] (ORCID: <https://orcid.org/0000-0003-4757-117X>), Max Kuhn [aut], Davis Vaughan [aut], Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
       "Maintainer": "Hadley Wickham <hadley@posit.co>",
       "Repository": "RSPM"
-    },
-    "geoarrow": {
-      "Package": "geoarrow",
-      "Version": "0.4.2",
-      "Source": "Repository",
-      "Title": "Extension Types for Spatial Data for Use with 'Arrow'",
-      "Authors@R": "c( person(given = \"Dewey\", family = \"Dunnington\", role = c(\"aut\", \"cre\"), email = \"dewey@dunnington.ca\", comment = c(ORCID = \"0000-0002-9415-4582\")), person(given = \"Anthony\", family = \"North\", email = \"anthony.jl.north@gmail.com\", role = c(\"ctb\")), person(\"Apache Software Foundation\", email = \"dev@arrow.apache.org\", role = c(\"cph\")), person(\"Ulf\", \"Adams\", role = \"cph\"), person(\"Daniel\", \"Lemire\", role = \"cph\"), person(\"Joao Paulo\", \"Magalhaes\", role = \"cph\") )",
-      "Description": "Provides extension types and conversions to between R-native object types and 'Arrow' columnar types. This includes integration among the 'arrow', 'nanoarrow', 'sf', and 'wk' packages such that spatial metadata is preserved wherever possible. Extension type implementations ensure first-class geometry data type support in the 'arrow' and 'nanoarrow' packages.",
-      "License": "Apache License (>= 2)",
-      "Encoding": "UTF-8",
-      "RoxygenNote": "7.3.3",
-      "Imports": [
-        "nanoarrow (>= 0.5.0)",
-        "wk (>= 0.9.0)"
-      ],
-      "LinkingTo": [
-        "wk"
-      ],
-      "Config/testthat/edition": "3",
-      "URL": "https://geoarrow.org/geoarrow-r/, https://github.com/geoarrow/geoarrow-r",
-      "BugReports": "https://github.com/geoarrow/geoarrow-r/issues",
-      "Depends": [
-        "R (>= 3.6.0)"
-      ],
-      "Suggests": [
-        "arrow",
-        "R6",
-        "sf",
-        "testthat (>= 3.0.0)"
-      ],
-      "SystemRequirements": "C++17",
-      "NeedsCompilation": "yes",
-      "Author": "Dewey Dunnington [aut, cre] (ORCID: <https://orcid.org/0000-0002-9415-4582>), Anthony North [ctb], Apache Software Foundation [cph], Ulf Adams [cph], Daniel Lemire [cph], Joao Paulo Magalhaes [cph]",
-      "Maintainer": "Dewey Dunnington <dewey@dunnington.ca>",
-      "Repository": "CRAN"
-    },
-    "geosphere": {
-      "Package": "geosphere",
-      "Version": "1.6-8",
-      "Source": "Repository",
-      "Type": "Package",
-      "Title": "Spherical Trigonometry",
-      "Date": "2026-04-04",
-      "LinkingTo": [
-        "Rcpp"
-      ],
-      "Imports": [
-        "Rcpp"
-      ],
-      "Depends": [
-        "R (>= 3.0.0)",
-        "methods"
-      ],
-      "Suggests": [
-        "terra",
-        "sf",
-        "sp"
-      ],
-      "Authors@R": "c( person(\"Robert J.\", \"Hijmans\", role = c(\"cre\", \"aut\"),  email = \"r.hijmans@gmail.com\"), person(\"Charles\", \"Karney\", role = \"ctb\", comment=\"GeographicLib\"),\t person(\"Ed\", \"Williams\", role = \"ctb\"), person(\"Chris\", \"Vennes\", role = \"ctb\"))",
-      "Description": "Spherical trigonometry for geographic applications. That is, compute distances and related measures for angular (longitude/latitude) locations.",
-      "BugReports": "https://github.com/rspatial/geosphere/issues/",
-      "License": "GPL (>= 3)",
-      "LazyLoad": "yes",
-      "NeedsCompilation": "yes",
-      "Author": "Robert J. Hijmans [cre, aut], Charles Karney [ctb] (GeographicLib), Ed Williams [ctb], Chris Vennes [ctb]",
-      "Maintainer": "Robert J. Hijmans <r.hijmans@gmail.com>",
-      "Repository": "CRAN",
-      "Encoding": "UTF-8"
     },
     "ggplot2": {
       "Package": "ggplot2",
@@ -2757,62 +2536,6 @@
       "Maintainer": "Hadley Wickham <hadley@posit.co>",
       "Repository": "RSPM"
     },
-    "nanoarrow": {
-      "Package": "nanoarrow",
-      "Version": "0.8.0",
-      "Source": "Repository",
-      "Title": "Interface to the 'nanoarrow' 'C' Library",
-      "Authors@R": "c( person(given = \"Dewey\", family = \"Dunnington\", role = c(\"aut\", \"cre\"), email = \"dewey@dunnington.ca\", comment = c(ORCID = \"0000-0002-9415-4582\")), person(\"Apache Arrow\", email = \"dev@arrow.apache.org\", role = c(\"aut\", \"cph\")), person(\"Apache Software Foundation\", email = \"dev@arrow.apache.org\", role = c(\"cph\")) )",
-      "Description": "Provides an 'R' interface to the 'nanoarrow' 'C' library and the 'Apache Arrow' application binary interface. Functions to import and export 'ArrowArray', 'ArrowSchema', and 'ArrowArrayStream' 'C' structures to and from 'R' objects are provided alongside helpers to facilitate zero-copy data transfer among 'R' bindings to libraries implementing the 'Arrow' 'C' data interface.",
-      "License": "Apache License (>= 2)",
-      "Encoding": "UTF-8",
-      "RoxygenNote": "7.3.3",
-      "URL": "https://arrow.apache.org/nanoarrow/latest/r/, https://github.com/apache/arrow-nanoarrow",
-      "BugReports": "https://github.com/apache/arrow-nanoarrow/issues",
-      "Suggests": [
-        "arrow (>= 9.0.0)",
-        "bit64",
-        "blob",
-        "dplyr",
-        "hms",
-        "jsonlite",
-        "reticulate",
-        "rlang",
-        "testthat (>= 3.0.0)",
-        "tibble",
-        "vctrs",
-        "withr"
-      ],
-      "SystemRequirements": "libzstd (optional)",
-      "Config/testthat/edition": "3",
-      "Config/build/bootstrap": "TRUE",
-      "NeedsCompilation": "yes",
-      "Author": "Dewey Dunnington [aut, cre] (ORCID: <https://orcid.org/0000-0002-9415-4582>), Apache Arrow [aut, cph], Apache Software Foundation [cph]",
-      "Maintainer": "Dewey Dunnington <dewey@dunnington.ca>",
-      "Repository": "CRAN"
-    },
-    "netstat": {
-      "Package": "netstat",
-      "Version": "0.1.2",
-      "Source": "Repository",
-      "Type": "Package",
-      "Title": "Retrieve Network Statistics Including Available TCP Ports",
-      "Authors@R": "c( person(\"Steve\", \"Condylios\", , \"steve.condylios@gmail.com\", c(\"aut\", \"cre\"),  comment = c(ORCID = \"0000-0003-0599-844X\")), person(\"Bob\", \"Rudis\", email = \"bob@rud.is\", role = c(\"aut\"),  comment = c(ORCID = \"0000-0001-5670-2640\")), person(\"Patrice\", \"Kiener\", email=\"fattailsr@inmodelia.com\", role=c(\"aut\"), comment = c(ORCID = \"0000-0002-0505-9920\")) )",
-      "Maintainer": "Steve Condylios <steve.condylios@gmail.com>",
-      "BugReports": "https://github.com/stevecondylios/netstat/issues",
-      "URL": "https://github.com/stevecondylios/netstat",
-      "Description": "R interface for the 'netstat' command line utility used to retrieve and parse  commonly used network statistics, including available and in-use  transmission control protocol (TCP) ports. Primers offering technical background information  on the 'netstat' command line utility are available in the \"Linux System Administrator's Manual\"  by Michael Kerrisk (2014)  <https://man7.org/linux/man-pages/man8/netstat.8.html>, and on the Microsoft website (2017)  <https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/netstat>.",
-      "License": "MIT + file LICENSE",
-      "Encoding": "UTF-8",
-      "RoxygenNote": "7.1.2",
-      "Imports": [
-        "utils"
-      ],
-      "Language": "en-US",
-      "NeedsCompilation": "no",
-      "Author": "Steve Condylios [aut, cre] (<https://orcid.org/0000-0003-0599-844X>), Bob Rudis [aut] (<https://orcid.org/0000-0001-5670-2640>), Patrice Kiener [aut] (<https://orcid.org/0000-0002-0505-9920>)",
-      "Repository": "CRAN"
-    },
     "openssl": {
       "Package": "openssl",
       "Version": "2.3.4",
@@ -2926,24 +2649,6 @@
       "Encoding": "UTF-8",
       "NeedsCompilation": "no",
       "Repository": "RSPM"
-    },
-    "png": {
-      "Package": "png",
-      "Version": "0.1-8",
-      "Source": "Repository",
-      "Title": "Read and write PNG images",
-      "Author": "Simon Urbanek <Simon.Urbanek@r-project.org>",
-      "Maintainer": "Simon Urbanek <Simon.Urbanek@r-project.org>",
-      "Depends": [
-        "R (>= 2.9.0)"
-      ],
-      "Description": "This package provides an easy and simple way to read, write and display bitmap images stored in the PNG format. It can read and write both files and in-memory raw vectors.",
-      "License": "GPL-2 | GPL-3",
-      "SystemRequirements": "libpng",
-      "URL": "http://www.rforge.net/png/",
-      "NeedsCompilation": "yes",
-      "Repository": "RSPM",
-      "Encoding": "UTF-8"
     },
     "prettyunits": {
       "Package": "prettyunits",
@@ -3807,40 +3512,6 @@
       "Repository": "RSPM",
       "Encoding": "UTF-8"
     },
-    "semver": {
-      "Package": "semver",
-      "Version": "0.2.1",
-      "Source": "Repository",
-      "Type": "Package",
-      "Title": "'Semantic Versioning V2.0.0' Parser",
-      "Authors@R": "c( person(\"John\", \"Harrison\", , \"johndharrison0@gmail.com\", role = c(\"aut\"), comment = \"R package semantic\"), person(\"Thomas\", \"Piernicke\", , email = \"thomasp@gfz.de\",  role = c(\"ctb\", \"cre\")), person(\"Marko\", \"Živanović\", role = c(\"aut\", \"cph\"), comment = \"semver cpp library, https://github.com/zmarko/semver\"))",
-      "Description": "Tools and functions for parsing, rendering and operating on semantic version strings. Semantic versioning is a simple set of rules and requirements that dictate how version numbers are assigned and incremented as outlined at <https://semver.org>.",
-      "License": "MIT + file LICENSE",
-      "Encoding": "UTF-8",
-      "Imports": [
-        "Rcpp (>= 0.12.8)",
-        "assertthat",
-        "utils"
-      ],
-      "LinkingTo": [
-        "Rcpp"
-      ],
-      "URL": "https://github.com/johndharrison/semver",
-      "URLNote": "https://github.com/johndharrison/semver",
-      "BugReports": "https://github.com/johndharrison/semver/issues",
-      "Suggests": [
-        "testthat",
-        "covr",
-        "knitr",
-        "rmarkdown"
-      ],
-      "RoxygenNote": "7.3.3",
-      "VignetteBuilder": "knitr",
-      "NeedsCompilation": "yes",
-      "Author": "John Harrison [aut] (R package semantic), Thomas Piernicke [ctb, cre], Marko Živanović [aut, cph] (semver cpp library, https://github.com/zmarko/semver)",
-      "Maintainer": "Thomas Piernicke <thomasp@gfz.de>",
-      "Repository": "CRAN"
-    },
     "sf": {
       "Package": "sf",
       "Version": "1.1-0",
@@ -3921,30 +3592,34 @@
       "Maintainer": "Edzer Pebesma <edzer.pebesma@uni-muenster.de>",
       "Repository": "CRAN"
     },
-    "showimage": {
-      "Package": "showimage",
-      "Version": "1.0.0",
+    "sfarrow": {
+      "Package": "sfarrow",
+      "Version": "0.4.1",
       "Source": "Repository",
-      "Title": "Show an Image on an 'R' Graphics Device",
-      "Author": "Gábor Csárdi",
-      "Maintainer": "Gábor Csárdi <csardi.gabor@gmail.com>",
-      "Description": "Sometimes it is handy to be able to view an image file on an 'R' graphics device. This package just does that. Currently it supports 'PNG' files.",
-      "License": "GPL-2 | GPL-3",
-      "LazyData": "true",
-      "URL": "https://github.com/r-lib/showimage#readme",
-      "BugReports": "https://github.com/r-lib/showimage/issues",
+      "Title": "Read/Write Simple Feature Objects ('sf') with 'Apache' 'Arrow'",
+      "Date": "2021-10-25",
+      "Authors@R": "person(given = \"Chris\", family = \"Jochem\", role = c(\"aut\", \"cre\"), email = \"w.c.jochem@soton.ac.uk\", comment = c(ORCID = \"0000-0003-2192-5988\"))",
+      "Description": "Support for reading/writing simple feature ('sf') spatial objects from/to 'Parquet' files. 'Parquet' files are an open-source, column-oriented data storage format from Apache (<https://parquet.apache.org/>), now popular across programming languages. This implementation converts simple feature list geometries into well-known binary format for use by 'arrow', and coordinate reference system information is maintained in a standard metadata format.",
+      "License": "MIT + file LICENSE",
+      "URL": "https://github.com/wcjochem/sfarrow, https://wcjochem.github.io/sfarrow/",
+      "BugReports": "https://github.com/wcjochem/sfarrow/issues",
+      "Encoding": "UTF-8",
+      "RoxygenNote": "7.1.1",
       "Imports": [
-        "png",
-        "tools"
+        "sf",
+        "arrow",
+        "jsonlite",
+        "dplyr"
       ],
       "Suggests": [
-        "covr",
-        "testthat"
+        "knitr",
+        "rmarkdown"
       ],
-      "RoxygenNote": "5.0.1",
-      "Encoding": "UTF-8",
+      "VignetteBuilder": "knitr",
       "NeedsCompilation": "no",
-      "Repository": "CRAN"
+      "Author": "Chris Jochem [aut, cre] (<https://orcid.org/0000-0003-2192-5988>)",
+      "Maintainer": "Chris Jochem <w.c.jochem@soton.ac.uk>",
+      "Repository": "RSPM"
     },
     "snakecase": {
       "Package": "snakecase",
@@ -4838,80 +4513,6 @@
       "NeedsCompilation": "yes",
       "Author": "Jim Hester [aut] (ORCID: <https://orcid.org/0000-0002-2739-7082>), Hadley Wickham [aut] (ORCID: <https://orcid.org/0000-0003-4757-117X>), Jennifer Bryan [aut, cre] (ORCID: <https://orcid.org/0000-0002-6983-2759>), Shelby Bearrows [ctb], https://github.com/mandreyel/ [cph] (mio library), Jukka Jylänki [cph] (grisu3 implementation), Mikkel Jørgensen [cph] (grisu3 implementation), Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
       "Maintainer": "Jennifer Bryan <jenny@posit.co>",
-      "Repository": "CRAN"
-    },
-    "wdman": {
-      "Package": "wdman",
-      "Version": "0.2.6",
-      "Source": "Repository",
-      "Type": "Package",
-      "Title": "'Webdriver'/'Selenium' Binary Manager",
-      "Authors@R": "c( person(\"John\", \"Harrison\", , \"johndharrison0@gmail.com\", role = \"aut\", comment = \"original author\"), person(\"Ju Yeong\", \"Kim\", , \"jkim2345@fredhutch.org\", role = \"cre\", comment = \"rOpenSci maintainer\"))",
-      "Description": "There are a number of binary files associated with the 'Webdriver'/'Selenium' project. This package provides functions to download these binaries and to manage processes involving them.",
-      "License": "MIT + file LICENSE",
-      "Encoding": "UTF-8",
-      "Depends": [
-        "R (>= 3.2)"
-      ],
-      "Suggests": [
-        "testthat",
-        "covr",
-        "knitr",
-        "rmarkdown"
-      ],
-      "Imports": [
-        "binman",
-        "assertthat",
-        "processx",
-        "yaml",
-        "semver(>= 0.2.0)",
-        "utils"
-      ],
-      "URL": "https://docs.ropensci.org/wdman/, https://github.com/ropensci/wdman",
-      "URLNote": "https://github.com/ropensci/wdman",
-      "BugReports": "https://github.com/ropensci/wdman/issues",
-      "RoxygenNote": "7.2.1",
-      "VignetteBuilder": "knitr",
-      "NeedsCompilation": "no",
-      "Author": "John Harrison [aut] (original author), Ju Yeong Kim [cre] (rOpenSci maintainer)",
-      "Maintainer": "Ju Yeong Kim <jkim2345@fredhutch.org>",
-      "Repository": "CRAN"
-    },
-    "webdriver": {
-      "Package": "webdriver",
-      "Version": "1.0.6",
-      "Source": "Repository",
-      "Title": "'WebDriver' Client for 'PhantomJS'",
-      "Author": "Ariya Hidayat, Gábor Csárdi, Gabor Torok, Ivan De Marino, Robert Gieseke, Steven Masala, Winston Chang, Zack Weinberg",
-      "Maintainer": "Gábor Csárdi <csardi.gabor@gmail.com>",
-      "Description": "A client for the 'WebDriver' 'API'. It allows driving a (probably headless) web browser, and can be used to test web applications, including 'Shiny' apps. In theory it works with any 'WebDriver' implementation, but it was only tested with 'PhantomJS'.",
-      "License": "MIT + file LICENSE",
-      "LazyData": "true",
-      "URL": "https://github.com/rstudio/webdriver",
-      "BugReports": "https://github.com/rstudio/webdriver/issues",
-      "RoxygenNote": "6.0.1",
-      "Imports": [
-        "callr (>= 3.4.0)",
-        "base64enc",
-        "curl (>= 2.0)",
-        "debugme",
-        "httr",
-        "jsonlite",
-        "R6",
-        "showimage",
-        "utils",
-        "withr"
-      ],
-      "Suggests": [
-        "covr",
-        "pingr",
-        "rprojroot",
-        "servr",
-        "testthat"
-      ],
-      "Encoding": "UTF-8",
-      "SystemRequirements": "PhantomJS (http://phantomjs.org/)",
-      "NeedsCompilation": "no",
       "Repository": "CRAN"
     },
     "withr": {

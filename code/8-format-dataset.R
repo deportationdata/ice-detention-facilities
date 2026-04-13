@@ -1,6 +1,6 @@
 library(tidyverse)
 library(sf)
-library(geoarrow)
+library(sfarrow)
 
 source("code/functions.R")
 
@@ -150,8 +150,7 @@ facility_formatted |>
     crs = 4326,
     remove = FALSE
   ) |>
-  tibble::as_tibble() |>
-  arrow::write_parquet("data/facilities-latest-sf.parquet")
+  sfarrow::st_write_parquet("data/facilities-latest-sf.parquet")
 
 # # metadata for diagnostics
 # best_values_metadata <-

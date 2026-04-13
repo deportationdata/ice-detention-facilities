@@ -2,7 +2,7 @@ library(tidyverse)
 library(sf)
 library(tigris)
 library(tidylog)
-library(geoarrow)
+library(sfarrow)
 
 # must cite this per license
 # http://doi.org/10.3886/E240727V2
@@ -16,8 +16,7 @@ federal_court_districts <- st_read(
   st_transform(crs = 4326)
 
 federal_court_districts |>
-  tibble::as_tibble() |>
-  arrow::write_parquet("data/federal-court-districts.parquet")
+  sfarrow::st_write_parquet("data/federal-court-districts.parquet")
 
 # run this to correct corrupt geometry
 # ogr2ogr -makevalid -nlt MULTIPOLYGON US_CourtOfAppealsCircuits-corrected.shp US_CourtOfAppealsCircuits.shp
@@ -28,5 +27,4 @@ federal_court_circuits <- st_read(
   st_transform(crs = 4326)
 
 federal_court_circuits |>
-  tibble::as_tibble() |>
-  arrow::write_parquet("data/federal-court-circuits.parquet")
+  sfarrow::st_write_parquet("data/federal-court-circuits.parquet")
