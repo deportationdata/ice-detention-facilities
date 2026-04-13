@@ -54,7 +54,7 @@ field_office_hold_rooms <-
 
 hold_rooms <- bind_rows(hold_rooms, field_office_hold_rooms) |> select(-name)
 
-arrow::write_feather(
+arrow::write_parquet(
   hold_rooms,
-  "data/noccc-hold-rooms.feather"
+  "data/noccc-hold-rooms.parquet"
 )

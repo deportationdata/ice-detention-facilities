@@ -3,13 +3,13 @@ library(tidylog)
 
 source("code/functions.R")
 
-facility_attributes <- arrow::read_feather(
-  "data/facilities-attributes-raw.feather"
+facility_attributes <- arrow::read_parquet(
+  "data/facilities-attributes-raw.parquet"
 )
 
 name_state_match <-
-  arrow::read_feather(
-    "data/facilities-name-state-match.feather"
+  arrow::read_parquet(
+    "data/facilities-name-state-match.parquet"
   )
 
 # goal here is for the data where there is no code to fuzzy match by name within states to get a code
@@ -465,7 +465,7 @@ code_name_state_match <-
   ungroup() |>
   rename(date_facility_code = date, source_facility_code = source)
 
-arrow::write_feather(
+arrow::write_parquet(
   code_name_state_match,
-  "data/facilities-name-code-match.feather"
+  "data/facilities-name-code-match.parquet"
 )

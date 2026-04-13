@@ -93,8 +93,8 @@ immigration_court_df <- read_delim(
   )
 
 name_city_state_match <-
-  arrow::read_feather(
-    "data/facilities-name-state-match.feather"
+  arrow::read_parquet(
+    "data/facilities-name-state-match.parquet"
   )
 
 # name_code_matches <-

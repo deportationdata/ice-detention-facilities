@@ -163,7 +163,7 @@ facilities_df <-
     by = c("name", "city", "state")
   )
 
-arrow::write_feather(
+arrow::write_parquet(
   facilities_df,
-  "data/facilities-detention-management.feather"
+  "data/facilities-detention-management.parquet"
 )

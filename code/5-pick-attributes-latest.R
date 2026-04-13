@@ -24,20 +24,20 @@ all_fields <- c(
 )
 
 facility_attributes <-
-  arrow::read_feather(
-    "data/facilities-attributes-raw.feather"
+  arrow::read_parquet(
+    "data/facilities-attributes-raw.parquet"
   )
 
 # first, for those w/o codes, get codes from name-city-state match
 
 name_code_match <-
-  arrow::read_feather(
-    "data/facilities-name-code-match.feather"
+  arrow::read_parquet(
+    "data/facilities-name-code-match.parquet"
   )
 
 hospitals_name_match <-
-  arrow::read_feather(
-    "data/hospitals-name-match.feather"
+  arrow::read_parquet(
+    "data/hospitals-name-match.parquet"
   )
 
 facilities_with_multiple_codes <-
@@ -177,9 +177,9 @@ facility_attributes <-
   ) |>
   select(-detention_facility_code_1)
 
-arrow::write_feather(
+arrow::write_parquet(
   facility_attributes,
-  "data/facilities-attributes-cleaned-with-codes.feather"
+  "data/facilities-attributes-cleaned-with-codes.parquet"
 )
 
 is_likely_street_address <- function(values) {
@@ -213,9 +213,9 @@ facility_pivot <-
   ) |>
   filter(!is.na(value) & value != "")
 
-arrow::write_feather(
+arrow::write_parquet(
   facility_pivot,
-  "data/facilities-values-long.feather"
+  "data/facilities-values-long.parquet"
 )
 
 cells_with_errors <-
@@ -279,7 +279,7 @@ facility_latest_values <-
   relocate(detention_facility_code_alt, .after = detention_facility_code) |>
   mutate(value = str_squish(value))
 
-arrow::write_feather(
+arrow::write_parquet(
   facility_latest_values,
-  "data/facilities-latest-values-long.feather"
+  "data/facilities-latest-values-long.parquet"
 )

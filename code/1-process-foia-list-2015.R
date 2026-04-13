@@ -15,7 +15,7 @@ detentions_hrw_facilities_2015 <-
   mutate(zip = as.character(zip)) |>
   mutate(date = as.Date("2015-12-08"))
 
-arrow::write_feather(
+arrow::write_parquet(
   detentions_hrw_facilities_2015,
-  "data/facilities-2015.feather"
+  "data/facilities-2015.parquet"
 )

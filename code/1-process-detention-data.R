@@ -344,7 +344,7 @@ detentions_facilities <-
     .groups = "drop"
   )
 
-arrow::write_feather(
+arrow::write_parquet(
   detentions_facilities,
-  "data/facilities-from-detentions.feather"
+  "data/facilities-from-detentions.parquet"
 )

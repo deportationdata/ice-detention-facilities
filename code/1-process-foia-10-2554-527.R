@@ -33,7 +33,7 @@ detentions_hrw_df <-
   distinct(detention_facility_code, name = detention_facility, city, state) |>
   mutate(date = as.Date("2010-01-01"))
 
-arrow::write_feather(
+arrow::write_parquet(
   detentions_hrw_df,
-  "data/facilities-foia-10-2554-527.feather"
+  "data/facilities-foia-10-2554-527.parquet"
 )

@@ -16,7 +16,7 @@ facilities_51185 <-
   mutate(zip = as.character(zip)) |> # for appending to other data more easily
   mutate(date = as.Date("2007-11-07")) # date in file
 
-arrow::write_feather(
+arrow::write_parquet(
   facilities_51185,
-  "data/facilities-foia-51185.feather"
+  "data/facilities-foia-51185.parquet"
 )

@@ -1,11 +1,12 @@
 library(tidyverse)
 library(sf)
+library(geoarrow)
 
 source("code/functions.R")
 
 facility_augmented <-
-  arrow::read_feather(
-    "data/facilities-augmented.feather"
+  arrow::read_parquet(
+    "data/facilities-augmented.parquet"
   ) |>
   as_tibble()
 
@@ -137,21 +138,20 @@ facility_formatted <-
   ) |>
   arrange(name)
 
-arrow::write_feather(
+arrow::write_parquet(
   facility_formatted,
-  "data/facilities-latest.feather"
+  "data/facilities-latest.parquet"
 )
 
-sfarrow::st_write_feather(
-  facility_formatted |>
-    st_as_sf(
-      coords = c("longitude", "latitude"),
-      na.fail = FALSE,
-      crs = 4326,
-      remove = FALSE
-    ),
-  "data/facilities-latest-sf.feather"
-)
+facility_formatted |>
+  st_as_sf(
+    coords = c("longitude", "latitude"),
+    na.fail = FALSE,
+    crs = 4326,
+    remove = FALSE
+  ) |>
+  tibble::as_tibble() |>
+  arrow::write_parquet("data/facilities-latest-sf.parquet")
 
 # # metadata for diagnostics
 # best_values_metadata <-

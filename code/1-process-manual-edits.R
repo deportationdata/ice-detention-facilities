@@ -11,7 +11,7 @@ manual_values <-
     zip = as.character(zip)
   )
 
-arrow::write_feather(
+arrow::write_parquet(
   manual_values,
-  "data/facilities-manual.feather"
+  "data/facilities-manual.parquet"
 )

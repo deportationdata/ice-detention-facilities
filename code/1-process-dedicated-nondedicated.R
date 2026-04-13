@@ -157,7 +157,7 @@ facilities_df <-
     date = file_original_date
   )
 
-arrow::write_feather(
+arrow::write_parquet(
   facilities_df,
-  "data/facilities-dedicated-nondedicated.feather"
+  "data/facilities-dedicated-nondedicated.parquet"
 )

@@ -18,7 +18,7 @@ detentions_14_09300 <-
   ) |>
   mutate(date = as.Date("2014-10-15"))
 
-arrow::write_feather(
+arrow::write_parquet(
   detentions_14_09300,
-  "data/facilities-foia-14-09300.feather"
+  "data/facilities-foia-14-09300.parquet"
 )

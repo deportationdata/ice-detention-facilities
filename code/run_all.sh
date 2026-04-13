@@ -26,10 +26,10 @@ set -e
 # Rscript code/1-process-marshall.R
 # Rscript code/1-process-vera.R
 # Rscript code/3-name-state-match.R
-# Rscript code/4-match-hospitals.R
 # Rscript code/4-match-jails-prisons.R
 # Rscript code/4-name-code-match.R
 Rscript code/2-stack.R
+Rscript code/4-match-hospitals.R
 Rscript code/5-pick-attributes-latest.R
 # Rscript code/6-facilities-geocode.R
 Rscript code/7-augment-dataset.R

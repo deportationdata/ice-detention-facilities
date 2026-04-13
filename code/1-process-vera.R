@@ -8,4 +8,4 @@ vera <- read_csv(
   ) |>
   mutate(date = as.Date("2025-07-01"))
 
-arrow::write_feather(vera, "data/facilities-vera.feather")
+arrow::write_parquet(vera, "data/facilities-vera.parquet")

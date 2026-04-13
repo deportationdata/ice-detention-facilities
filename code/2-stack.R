@@ -25,104 +25,104 @@ all_fields <- c(
 )
 
 facilities_2015 <-
-  arrow::read_feather("data/facilities-2015.feather")
+  arrow::read_parquet("data/facilities-2015.parquet")
 
 facilities_2017 <-
-  arrow::read_feather("data/facilities-2017.feather")
+  arrow::read_parquet("data/facilities-2017.parquet")
 
 facilities_dedicated_nondedicated <-
-  arrow::read_feather("data/facilities-dedicated-nondedicated.feather")
+  arrow::read_parquet("data/facilities-dedicated-nondedicated.parquet")
 
 detentions_05655 <-
-  arrow::read_feather(
-    "data/facilities-foia-05655.feather"
+  arrow::read_parquet(
+    "data/facilities-foia-05655.parquet"
   )
 
 facility_addresses_from_ice_website <-
-  arrow::read_feather(
-    "data/facilities-from-ice-website.feather"
+  arrow::read_parquet(
+    "data/facilities-from-ice-website.parquet"
   )
 
 facilities_detention_management <-
-  arrow::read_feather(
-    "data/facilities-detention-management.feather"
+  arrow::read_parquet(
+    "data/facilities-detention-management.parquet"
   )
 
 detentions_41855 <-
-  arrow::read_feather(
-    "data/facilities-foia-41855.feather"
+  arrow::read_parquet(
+    "data/facilities-foia-41855.parquet"
   )
 
 detentions_22955 <-
-  arrow::read_feather(
-    "data/facilities-foia-22955.feather"
+  arrow::read_parquet(
+    "data/facilities-foia-22955.parquet"
   )
 
 facilities_51185 <-
-  arrow::read_feather(
-    "data/facilities-foia-51185.feather"
+  arrow::read_parquet(
+    "data/facilities-foia-51185.parquet"
   )
 
 facilities_14_09300 <-
-  arrow::read_feather(
-    "data/facilities-foia-14-09300.feather"
+  arrow::read_parquet(
+    "data/facilities-foia-14-09300.parquet"
   )
 
 facilities_10_2554_527 <-
-  arrow::read_feather(
-    "data/facilities-foia-10-2554-527.feather"
+  arrow::read_parquet(
+    "data/facilities-foia-10-2554-527.parquet"
   )
 
 facilities_eoir <-
-  arrow::read_feather(
-    "data/facilities-eoir.feather"
+  arrow::read_parquet(
+    "data/facilities-eoir.parquet"
   )
 
 facilities_vera <-
-  arrow::read_feather(
-    "data/facilities-vera.feather"
+  arrow::read_parquet(
+    "data/facilities-vera.parquet"
   )
 
 facilities_marshall <-
-  arrow::read_feather(
-    "data/facilities-marshall.feather"
+  arrow::read_parquet(
+    "data/facilities-marshall.parquet"
   )
 
 hospitals <-
-  arrow::read_feather(
-    "data/hospitals.feather"
+  arrow::read_parquet(
+    "data/hospitals.parquet"
   )
 
 jails_prisons <-
-  arrow::read_feather(
-    "data/jails_prisons.feather"
+  arrow::read_parquet(
+    "data/jails_prisons.parquet"
   )
 
 hfild_local_law_enforcement_facilities <-
-  arrow::read_feather(
-    "data/hifld-local-law-enforcement-facilities.feather"
+  arrow::read_parquet(
+    "data/hifld-local-law-enforcement-facilities.parquet"
   )
 
 hfild_prisons <-
-  arrow::read_feather(
-    "data/hifld-prisons.feather"
+  arrow::read_parquet(
+    "data/hifld-prisons.parquet"
   )
 
 detentions_2012_2023 <- arrow::read_feather(
   "~/github/ice/data/ice-detentions-2012-2023.feather"
 )
 
-facilities_manual <- arrow::read_feather(
-  "data/facilities-manual.feather"
+facilities_manual <- arrow::read_parquet(
+  "data/facilities-manual.parquet"
 )
 
-facilities_from_detentions <- arrow::read_feather(
-  "data/facilities-from-detentions.feather"
+facilities_from_detentions <- arrow::read_parquet(
+  "data/facilities-from-detentions.parquet"
 ) |>
   mutate(date = last_book_in)
 
-hold_rooms <- arrow::read_feather(
-  "data/noccc-hold-rooms.feather"
+hold_rooms <- arrow::read_parquet(
+  "data/noccc-hold-rooms.parquet"
 )
 
 # combine for each field one-by-one
@@ -218,7 +218,7 @@ facility_attributes <-
     .keep = "unused"
   )
 
-arrow::write_feather(
+arrow::write_parquet(
   facility_attributes,
-  "data/facilities-attributes-raw.feather"
+  "data/facilities-attributes-raw.parquet"
 )

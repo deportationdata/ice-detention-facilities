@@ -1,4 +1,5 @@
 library(tidyverse)
+library(geoarrow)
 library(sf)
 library(tigris)
 
@@ -30,7 +31,7 @@ county_sf <-
 
 # temporarily just use the facilities in the recent data
 # facility_list <-
-#   arrow::read_feather(
+#   arrow::read_parquet(
 #     "https://github.com/deportationdata/ice/raw/refs/heads/main/data/detention-stints-latest.feather"
 #   ) |>
 #   as_tibble() |>
@@ -45,8 +46,8 @@ county_sf <-
 
 # bring in all facilities in detention file plus in any ICE source (DTM, web site, etc.)
 facility_list <-
-  arrow::read_feather(
-    "data/facilities-attributes-cleaned-with-codes.feather"
+  arrow::read_parquet(
+    "data/facilities-attributes-cleaned-with-codes.parquet"
   ) |>
   filter(
     source %in%
@@ -69,8 +70,8 @@ facility_list <-
   distinct(detention_facility_code)
 
 facility_latest_values <-
-  arrow::read_feather(
-    "data/facilities-latest-values-long.feather"
+  arrow::read_parquet(
+    "data/facilities-latest-values-long.parquet"
   )
 
 facility_latest_values_wide <-
@@ -82,34 +83,42 @@ facility_latest_values_wide <-
   )
 
 # facilities_open_dates <-
-#   arrow::read_feather(
-#     "data/facilities-from-detentions.feather"
+#   arrow::read_parquet(
+#     "data/facilities-from-detentions.parquet"
 #   ) |>
 #   as_tibble() |>
 #   select(detention_facility_code, first_book_in, last_book_in)
 
-facilities_geocoded_df <- arrow::read_feather(
-  "data/facilities-geocoded-exact.feather"
+facilities_geocoded_df <- arrow::read_parquet(
+  "data/facilities-geocoded-exact.parquet"
 )
 
 # bring in court data
 
 federal_circuit_courts_sf <-
-  sfarrow::st_read_feather("data/federal-court-circuits.feather")
+  arrow::read_parquet("data/federal-court-circuits.parquet") |>
+  sf::st_as_sf()
 
 federal_district_courts_sf <-
-  sfarrow::st_read_feather("data/federal-court-districts.feather")
+  arrow::read_parquet("data/federal-court-districts.parquet") |>
+  sf::st_as_sf()
 
-# bring in ICE field office
-
-ice_field_offices <- sfarrow::st_read_feather(
-  "https://github.com/deportationdata/ice-offices/raw/refs/heads/main/data/ice-aor-shp.feather"
-) |>
+# bring in ICE field office — remote feather (sfarrow-written); download + read
+ice_field_offices <- local({
+  tf <- tempfile(fileext = ".feather")
+  download.file(
+    "https://github.com/deportationdata/ice-offices/raw/refs/heads/main/data/ice-aor-shp.feather",
+    tf,
+    mode = "wb",
+    quiet = TRUE
+  )
+  arrow::read_feather(tf) |> sf::st_as_sf()
+}) |>
   st_transform(crs = 4326)
 
 name_code_match <-
-  arrow::read_feather(
-    "data/facilities-name-code-match.feather"
+  arrow::read_parquet(
+    "data/facilities-name-code-match.parquet"
   )
 
 facility_final <-
@@ -249,7 +258,7 @@ facility_final <-
   facility_final |>
   left_join(individual_counts, by = "detention_facility_code")
 
-arrow::write_feather(
+arrow::write_parquet(
   facility_final,
-  "data/facilities-augmented.feather"
+  "data/facilities-augmented.parquet"
 )

@@ -33,7 +33,7 @@ prison_boundaries <-
     date = as.Date("2024-10-07") # approximate date of data release based on file path
   )
 
-arrow::write_feather(
+arrow::write_parquet(
   prison_boundaries,
-  "data/hifld-prisons.feather"
+  "data/hifld-prisons.parquet"
 )

@@ -47,7 +47,7 @@ detentions_22955_df <-
   ) |>
   mutate(date = as.Date("2024-06-01"))
 
-arrow::write_feather(
+arrow::write_parquet(
   detentions_22955_df,
-  "data/facilities-foia-22955.feather"
+  "data/facilities-foia-22955.parquet"
 )

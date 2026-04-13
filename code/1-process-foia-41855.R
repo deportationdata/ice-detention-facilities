@@ -178,7 +178,7 @@ detentions_41855_df_summary <-
   rename(name = name_1, name_alt = name_2) |>
   relocate(name, name_alt, .after = detention_facility_code)
 
-arrow::write_feather(
+arrow::write_parquet(
   detentions_41855_df_summary,
-  "data/facilities-foia-41855.feather"
+  "data/facilities-foia-41855.parquet"
 )

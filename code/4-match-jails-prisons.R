@@ -4,18 +4,18 @@ library(tidylog)
 source("code/functions.R")
 
 icpsr_jails_prisons <-
-  arrow::read_feather("data/jails_prisons.feather") |>
+  arrow::read_parquet("data/jails_prisons.parquet") |>
   distinct(bjs_facility_ID, name, state) |>
   mutate(name_join = clean_text(name))
 
 hifld_lef <-
-  arrow::read_feather("data/hifld-local-law-enforcement-facilities.feather") |>
+  arrow::read_parquet("data/hifld-local-law-enforcement-facilities.parquet") |>
   # filter(str_detect(type, "Jail|Prison")) |>
   mutate(name_join = clean_text(name)) |>
   select(hifld_id, name, state, name_join)
 
 hifld_prisons <-
-  arrow::read_feather("data/hifld-prisons.feather") |>
+  arrow::read_parquet("data/hifld-prisons.parquet") |>
   mutate(name_join = clean_text(name)) |>
   select(hifld_id, name, state, name_join)
 
@@ -29,14 +29,14 @@ jail_prison_list <-
     .id = "source"
   )
 
-name_state_match <- arrow::read_feather(
-  "data/facilities-name-state-match.feather"
+name_state_match <- arrow::read_parquet(
+  "data/facilities-name-state-match.parquet"
 )
 
 # select places that are not
 facilities_from_detentions <-
-  arrow::read_feather(
-    "data/facilities-from-detentions.feather"
+  arrow::read_parquet(
+    "data/facilities-from-detentions.parquet"
   ) |>
   mutate(name_join = clean_text(detention_facility)) |>
   filter(

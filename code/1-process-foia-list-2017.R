@@ -24,7 +24,7 @@ facilities_2017 <-
   mutate(zip = as.character(zip)) |>
   mutate(date = as.Date("2017-11-06")) # date in file
 
-arrow::write_feather(
+arrow::write_parquet(
   facilities_2017,
-  "data/facilities-2017.feather"
+  "data/facilities-2017.parquet"
 )

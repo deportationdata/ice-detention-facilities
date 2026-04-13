@@ -19,13 +19,13 @@ library(tidygeocoder)
 #   distinct(detention_facility_code, name = detention_facility)
 
 facility_latest_values <-
-  arrow::read_feather(
-    "data/facilities-latest-values-long.feather"
+  arrow::read_parquet(
+    "data/facilities-latest-values-long.parquet"
   )
 
 facility_list <-
-  arrow::read_feather(
-    "data/facilities-attributes-cleaned-with-codes.feather"
+  arrow::read_parquet(
+    "data/facilities-attributes-cleaned-with-codes.parquet"
   ) |>
   filter(
     source %in%
@@ -197,14 +197,14 @@ facilities_geocoded_df <-
     formatted_address
   )
 
-arrow::write_feather(
+arrow::write_parquet(
   facilities_geocoded_df,
-  "data/facilities-geocoded-exact.feather"
+  "data/facilities-geocoded-exact.parquet"
 )
 
-vera <- arrow::read_feather("data/facilities-vera.feather")
+vera <- arrow::read_parquet("data/facilities-vera.parquet")
 
-marshall <- arrow::read_feather("data/facilities-marshall.feather")
+marshall <- arrow::read_parquet("data/facilities-marshall.parquet")
 
 facilities_geocoded_df |>
   left_join(
@@ -462,7 +462,7 @@ facilities_geocoded_df |>
 #     county
 #   )
 
-# arrow::write_feather(
+# arrow::write_parquet(
 #   facilities_geocoded_df,
-#   "data/facilities-not-in-vera-geocoded.feather"
+#   "data/facilities-not-in-vera-geocoded.parquet"
 # )

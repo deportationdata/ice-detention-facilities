@@ -17,4 +17,4 @@ marshall <- read_csv(
   ) |>
   mutate(date = as.Date("2019-09-24"))
 
-arrow::write_feather(marshall, "data/facilities-marshall.feather")
+arrow::write_parquet(marshall, "data/facilities-marshall.parquet")

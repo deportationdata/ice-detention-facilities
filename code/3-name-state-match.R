@@ -1,8 +1,8 @@
 library(tidyverse)
 library(tidylog)
 
-facility_attributes <- arrow::read_feather(
-  "data/facilities-attributes-raw.feather"
+facility_attributes <- arrow::read_parquet(
+  "data/facilities-attributes-raw.parquet"
 )
 
 name_state_match_inputs <-
@@ -603,7 +603,7 @@ name_state_match <-
     name_state_match_manual
   )
 
-arrow::write_feather(
+arrow::write_parquet(
   name_state_match,
-  "data/facilities-name-state-match.feather"
+  "data/facilities-name-state-match.parquet"
 )

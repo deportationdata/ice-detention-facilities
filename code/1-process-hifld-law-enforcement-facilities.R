@@ -24,7 +24,7 @@ local_law_enforcement_facilities <-
     date = as.Date("2024-10-07") # approximate date of data release based on file path
   )
 
-arrow::write_feather(
+arrow::write_parquet(
   local_law_enforcement_facilities,
-  "data/hifld-local-law-enforcement-facilities.feather"
+  "data/hifld-local-law-enforcement-facilities.parquet"
 )

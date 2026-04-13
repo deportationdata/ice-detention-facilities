@@ -51,7 +51,7 @@ hospitals <-
   ) |>
   relocate(name, address, city, state, zip)
 
-arrow::write_feather(
+arrow::write_parquet(
   hospitals,
-  "data/hospitals.feather"
+  "data/hospitals.parquet"
 )

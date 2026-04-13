@@ -3,25 +3,25 @@ library(tidylog)
 
 source("code/functions.R")
 
-facility_attributes <- arrow::read_feather(
-  "data/facilities-attributes-raw.feather"
+facility_attributes <- arrow::read_parquet(
+  "data/facilities-attributes-raw.parquet"
 )
 
 hospital_list_full <-
-  arrow::read_feather("data/hospitals.feather")
+  arrow::read_parquet("data/hospitals.parquet")
 
 hospital_list <-
   hospital_list_full |>
   distinct(name, state) |>
   mutate(name_join = clean_text(name))
 
-name_state_match <- arrow::read_feather(
-  "data/facilities-name-state-match.feather"
+name_state_match <- arrow::read_parquet(
+  "data/facilities-name-state-match.parquet"
 )
 
 facilities_from_detentions <-
-  arrow::read_feather(
-    "data/facilities-from-detentions.feather"
+  arrow::read_parquet(
+    "data/facilities-from-detentions.parquet"
   ) |>
   mutate(name_join = clean_text(name)) |>
   filter(
@@ -531,7 +531,7 @@ hospitals_name_match <-
   ) |>
   distinct()
 
-arrow::write_feather(
+arrow::write_parquet(
   hospitals_name_match,
-  "data/hospitals-name-match.feather"
+  "data/hospitals-name-match.parquet"
 )

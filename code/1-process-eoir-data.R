@@ -22,7 +22,7 @@ ice_facilities_eoir_court <-
     date = as.Date("2025-12-01")
   )
 
-arrow::write_feather(
+arrow::write_parquet(
   ice_facilities_eoir_court,
-  "data/facilities-eoir.feather"
+  "data/facilities-eoir.parquet"
 )

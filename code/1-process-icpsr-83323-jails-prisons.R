@@ -19,7 +19,7 @@ jails_prisons <-
     date = as.Date("2020-01-01") # approximate date of data release
   )
 
-arrow::write_feather(
+arrow::write_parquet(
   jails_prisons,
-  "data/jails_prisons.feather"
+  "data/jails_prisons.parquet"
 )

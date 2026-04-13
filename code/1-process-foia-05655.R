@@ -72,7 +72,7 @@ detentions_05655_df_summary <-
   ungroup() |>
   mutate(date = as.Date("2024-02-01"))
 
-arrow::write_feather(
+arrow::write_parquet(
   detentions_05655_df_summary,
-  "data/facilities-foia-05655.feather"
+  "data/facilities-foia-05655.parquet"
 )
