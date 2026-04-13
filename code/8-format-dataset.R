@@ -107,8 +107,8 @@ facility_formatted <-
     address_full = address_full |> str_to_title(),
     city = city |> clean_city() |> str_to_title(),
     state = str_to_upper(state),
-    type = str_to_upper(type) |> str_replace_all("OTHER", "Other"),
-    type_detailed = replace_na(type_detailed, ""),
+    type = type |> str_to_title() |> replace_na(""),
+    type_detailed = type_detailed |> str_to_title() |> replace_na(""),
     type_detailed = snakecase::to_title_case(
       type_detailed,
       abbreviations = c(
@@ -126,6 +126,36 @@ facility_formatted <-
       )
     ) |>
       na_if(""),
+    # medical, hold/staging, family, juvenile, dod
+    type_ddp = case_when(
+      str_detect(detention_facility_code, "HOLD") |
+        str_detect(type_detailed, "Hold|Staging|Transit") ~ "Hold",
+      str_detect(type_detailed, "Hospital") |
+        str_detect(type, "Hospital") ~ "Medical",
+      str_detect(type_detailed, "Fam") | str_detect(type, "Fam") ~ "Family",
+      str_detect(type_detailed, "Juv") | str_detect(type, "Juv") ~ "Juvenile",
+      str_detect(type_detailed, "DOD|MOC") |
+        str_detect(type, "DOD|MOC") ~ "DOD",
+      str_detect(type_detailed, "CDF") | str_detect(type, "CDF") ~ "CDF",
+      str_detect(type_detailed, "BOP") | str_detect(type, "BOP") ~ "BOP",
+      str_detect(type_detailed, "USBP") | str_detect(type, "USBP") ~ "USBP",
+      str_detect(type_detailed, "SPC") | str_detect(type, "SPC") ~ "SPC",
+      str_detect(type_detailed, "CBP") | str_detect(type, "CBP") ~ "CBP",
+      str_detect(
+        type_detailed,
+        "IGSA|IGA|DIGSA|County|Police|State"
+      ) |
+        str_detect(
+          type,
+          "IGSA|IGA|DIGSA|County|Police|State"
+        ) ~ "IGSA/IGA/DIGSA",
+      str_detect(
+        name,
+        "Hospital|Medical|Health|Memorial|Rehab|\\bMc\\b"
+      ) ~ "Medical",
+      TRUE ~ type
+    ),
+
     # docket = str_to_upper(docket),
     male_female = male_female |>
       str_to_lower() |>

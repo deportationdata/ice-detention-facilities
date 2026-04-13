@@ -65,24 +65,24 @@ facilities_to_geocode <-
 #   geocode(address_full, method = "arcgis") |>
 #   as.data.frame()
 
-facilities_geocoded_google <-
-  facilities_to_geocode |>
-  geocode(
-    address_full,
-    method = 'google',
-    lat = latitude,
-    long = longitude,
-    limit = 1,
-    full_results = TRUE
-  )
+# facilities_geocoded_google <-
+#   facilities_to_geocode |>
+#   geocode(
+#     address_full,
+#     method = 'google',
+#     lat = latitude,
+#     long = longitude,
+#     limit = 1,
+#     full_results = TRUE
+#   )
 
 # write_rds(
 #   facilities_geocoded_google,
-#   file = "data/facilities_geocoded_google_21feb26.rds"
+#   file = "data/facilities_geocoded_google_11may26.rds"
 # )
 
 facilities_geocoded_google <- read_rds(
-  "data/facilities_geocoded_google_21feb26.rds"
+  "data/facilities_geocoded_google_11may26.rds"
 )
 
 # facilities_geocoded_census <-
@@ -118,11 +118,11 @@ facilities_geocoded_google <- read_rds(
 
 # write_rds(
 #   facilities_geocoded_arcgis,
-#   file = "data/facilities_geocoded_arcgis_21feb26.rds"
+#   file = "data/facilities_geocoded_arcgis_11apr26.rds"
 # )
 
 facilities_geocoded_arcgis <- read_rds(
-  "data/facilities_geocoded_arcgis_21feb26.rds"
+  "data/facilities_geocoded_arcgis_11apr26.rds"
 )
 
 facilities_geocoded_df <-

@@ -218,6 +218,21 @@ arrow::write_parquet(
   "data/facilities-values-long.parquet"
 )
 
+ice_sources <- c(
+  "2015",
+  "2017",
+  "05655",
+  "10-2554-527",
+  "14-09300",
+  "22955",
+  "41855",
+  "51185",
+  "dedicated",
+  "detention_management",
+  "detentions",
+  "website"
+)
+
 cells_with_errors <-
   tribble(
     ~detention_facility_code , ~source   , ~date                 , ~variable      , ~notes                                                                          ,
@@ -254,7 +269,7 @@ facility_latest_values <-
   ) |>
   filter(
     variable == "address_full" |
-      !source %in% c("vera", "marshall")
+      !source %in% c("vera", "marshall", 'noccc_hold_rooms')
   ) |>
   arrange(
     detention_facility_code,
@@ -265,6 +280,12 @@ facility_latest_values <-
   ) |>
   group_by(detention_facility_code, variable) |>
   summarize(
+    value_all = str_c(
+      sort(unique(str_squish(value[
+        !is.na(value) & value != "" & source %in% ice_sources
+      ]))),
+      collapse = "; "
+    ),
     value = last(value[!is.na(value)]),
     source = last(source[!is.na(value)]),
     date = last(date[!is.na(value)]),

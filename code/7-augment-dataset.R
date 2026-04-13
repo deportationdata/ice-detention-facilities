@@ -65,6 +65,17 @@ facility_latest_values_wide <-
     id_cols = c(detention_facility_code, detention_facility_code_alt),
     names_from = variable,
     values_from = value
+  ) |>
+  left_join(
+    facility_latest_values |>
+      filter(variable %in% c("type", "type_detailed")) |>
+      mutate(variable = str_c(variable, "_all")) |>
+      pivot_wider(
+        id_cols = detention_facility_code,
+        names_from = variable,
+        values_from = value_all
+      ),
+    by = "detention_facility_code"
   )
 
 # facilities_open_dates <-
@@ -229,12 +240,12 @@ facility_final <-
   facility_final |>
   anti_join(duplicate_facilities_to_remove, by = "detention_facility_code")
 
-individual_counts <-
-  arrow::read_parquet("data/facility-individual-counts-2025-2026.parquet")
+# individual_counts <-
+#   arrow::read_parquet("data/facility-individual-counts-2025-2026.parquet")
 
-facility_final <-
-  facility_final |>
-  left_join(individual_counts, by = "detention_facility_code")
+# facility_final <-
+#   facility_final |>
+#   left_join(individual_counts, by = "detention_facility_code")
 
 arrow::write_parquet(
   facility_final,
