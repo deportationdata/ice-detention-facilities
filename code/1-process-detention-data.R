@@ -2,21 +2,19 @@ library(tidyverse)
 library(readxl)
 library(tidylog)
 
-detentions_39357 <- arrow::read_feather(
-  # "https://github.com/deportationdata/ice/raw/refs/heads/main/data/detention-stints-latest.feather"
-  "~/github/ice/data/detention-stints-oct25.feather"
+detentions_39357 <- arrow::read_parquet(
+  # Oct 15 2025 release
+  "https://github.com/deportationdata/ice/raw/350b3c5240f2c2d245b493b7b8434d26492a1894/data/detention-stints-latest.parquet"
 ) |>
   mutate(date = as.Date("2025-10-15"))
 
 detentions_latest <- arrow::read_parquet(
-  # "https://github.com/deportationdata/ice/raw/refs/heads/main/data/detention-stints-latest.feather"
-  "~/github/ice/data/detention-stints-latest.parquet"
+  "https://github.com/deportationdata/ice/raw/refs/heads/main/data/detention-stints-latest.feather"
 ) |>
   mutate(date = as.Date("2026-03-10"))
 
 detentions_2012_2023 <- arrow::read_feather(
-  # "https://github.com/deportationdata/ice/raw/refs/heads/main/data/ice-detentions-2012-2023.feather"
-  "~/github/ice/data/ice-detentions-2012-2023.feather"
+  "https://github.com/deportationdata/ice/raw/refs/heads/main/data/ice-detentions-2012-2023.feather"
 ) |>
   mutate(date = as.Date("2023-11-15"))
 
