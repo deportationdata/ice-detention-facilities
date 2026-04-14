@@ -263,7 +263,7 @@ facility_latest_values <-
           "website"
         ) ~
         1,
-      source == "manual" ~ 2,
+      source %in% c("manual", "noccc_hold_rooms") ~ 2,
       TRUE ~ 0
     )
   ) |>

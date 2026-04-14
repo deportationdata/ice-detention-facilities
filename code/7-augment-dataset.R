@@ -89,6 +89,15 @@ facilities_geocoded_df <- arrow::read_parquet(
   "data/facilities-geocoded-exact.parquet"
 )
 
+facilities_manual_latlon <-
+  arrow::read_parquet("data/facilities-manual.parquet") |>
+  filter(!is.na(latitude), !is.na(longitude)) |>
+  select(
+    detention_facility_code,
+    latitude_manual = latitude,
+    longitude_manual = longitude
+  )
+
 # bring in court data
 
 federal_circuit_courts_sf <-
@@ -156,6 +165,12 @@ facility_final <-
       select(detention_facility_code, latitude, longitude),
     by = "detention_facility_code"
   ) |>
+  left_join(facilities_manual_latlon, by = "detention_facility_code") |>
+  mutate(
+    latitude = coalesce(latitude_manual, latitude),
+    longitude = coalesce(longitude_manual, longitude)
+  ) |>
+  select(-latitude_manual, -longitude_manual) |>
   select(-aor) |>
   st_as_sf(
     coords = c("longitude", "latitude"),
