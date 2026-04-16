@@ -108,7 +108,23 @@ facility_formatted <-
     city = city |> clean_city() |> str_to_title(),
     state = str_to_upper(state),
     type = type |> str_to_title() |> replace_na(""),
-    type_detailed = type_detailed |> str_to_title() |> replace_na(""),
+    type_detailed = type_detailed |> replace_na(""),
+    type = snakecase::to_title_case(
+      type,
+      abbreviations = c(
+        "IGSA",
+        "IGA",
+        "USMS",
+        "DIGSA",
+        "CDF",
+        "BOP",
+        "USBP",
+        "MOC",
+        "SPC",
+        "DOD",
+        "CBP"
+      )
+    ),
     type_detailed = snakecase::to_title_case(
       type_detailed,
       abbreviations = c(
@@ -127,36 +143,57 @@ facility_formatted <-
     ) |>
       na_if(""),
     # medical, hold/staging, family, juvenile, dod
+    # type_detailed = ERROR,
+
+    # medical, hold, staging, dedicated govt contract, nondedicated govt contract, ice cdf, ice spc, cbp
     type_ddp = case_when(
+      detention_facility_code %in%
+        c("CBPORIL", "JFKTSNY", "URSLATX") |
+        str_detect(type_detailed, "CBP|USBP") |
+        str_detect(type, "CBP|USBP") ~ "CBP holding",
+
+      str_detect(type, "Staging") |
+        str_detect(type_detailed, "Staging") ~ "ICE staging",
+
       str_detect(detention_facility_code, "HOLD") |
-        str_detect(type_detailed, "Hold|Staging|Transit") ~ "Hold",
-      str_detect(type_detailed, "Hospital") |
+        str_detect(type_detailed, "Hold") |
+        str_detect(type, "Hold") ~ "ICE holding",
+
+      detention_facility_code %in%
+        c("CSLLFTX", "THPSCTX") |
+        str_detect(type_detailed, "Hospital") |
         str_detect(type, "Hospital") ~ "Medical",
-      str_detect(type_detailed, "Fam") | str_detect(type, "Fam") ~ "Family",
-      str_detect(type_detailed, "Juv") | str_detect(type, "Juv") ~ "Juvenile",
-      str_detect(type_detailed, "DOD|MOC") |
-        str_detect(type, "DOD|MOC") ~ "DOD",
-      str_detect(type_detailed, "CDF") | str_detect(type, "CDF") ~ "CDF",
-      str_detect(type_detailed, "BOP") | str_detect(type, "BOP") ~ "BOP",
-      str_detect(type_detailed, "USBP") | str_detect(type, "USBP") ~ "USBP",
+
+      detention_facility_code == "BIINCCO" |
+        str_detect(type_detailed, "CDF") |
+        str_detect(type, "CDF") ~ "CDF",
+
       str_detect(type_detailed, "SPC") | str_detect(type, "SPC") ~ "SPC",
-      str_detect(type_detailed, "CBP") | str_detect(type, "CBP") ~ "CBP",
-      str_detect(
-        type_detailed,
-        "IGSA|IGA|DIGSA|County|Police|State"
-      ) |
+
+      detention_facility_code %in%
+        c("TASTDTX", "DILLSAF", "HARRIMS", "FLDSSFS") |
+        str_starts(detention_facility_code, "GTMO") |
+        str_starts(detention_facility_code, "BOP") |
+        str_starts(detention_facility_code_alt, "BOP") |
+        str_detect(
+          type_detailed,
+          "IGSA|IGA|DIGSA|County|Police|State|BOP|DOD|MOC"
+        ) |
         str_detect(
           type,
-          "IGSA|IGA|DIGSA|County|Police|State"
-        ) ~ "IGSA/IGA/DIGSA",
+          "IGSA|IGA|DIGSA|County|Police|State|BOP|DOD|MOC"
+        ) ~ "Government contract",
+
       str_detect(
         name,
         "Hospital|Medical|Health|Memorial|Rehab|\\bMc\\b"
       ) ~ "Medical",
+
+      str_detect(name, "County|PD|BRRJ|Correctional|Parish") |
+        detention_facility_code %in% "FLBAKCI" ~ "Government contract",
+
       TRUE ~ type
     ),
-
-    # docket = str_to_upper(docket),
     male_female = male_female |>
       str_to_lower() |>
       recode_values(
@@ -164,9 +201,41 @@ facility_formatted <-
         "female" ~ "F",
         "female/male" ~ "M/F"
       ),
+    type_population = case_when(
+      str_detect(type_detailed, "Fam") |
+        str_detect(type, "Fam") ~ "Family",
+      str_detect(type_detailed, "Juv") | str_detect(type, "Juv") ~ "Juvenile",
+      male_female == "M/F" ~ "Adult (male/female)",
+      male_female == "M" ~ "Adult (male)",
+      male_female == "F" ~ "Adult (female)",
+      TRUE ~ "Adult (unknown gender)"
+    ),
+
+    # docket = str_to_upper(docket),
     over_under_72 = str_to_title(over_under_72)
   ) |>
-  arrange(name)
+  arrange(name) |>
+  # remove the cbp movement coordination area, not an actual facility
+  filter(!detention_facility_code == "UCBPMCA")
+
+facility_formatted <-
+  facility_formatted |>
+  select(
+    detention_facility_code,
+    detention_facility_code_alt,
+    name,
+    address,
+    city,
+    county,
+    county_fips_code,
+    state,
+    state_fips_code,
+    zip,
+    address_full,
+    latitude,
+    longitude,
+    field_office
+  )
 
 arrow::write_parquet(
   facility_formatted,
