@@ -106,17 +106,50 @@ federal_circuit_courts_sf <-
 federal_district_courts_sf <-
   sfarrow::st_read_parquet("data/federal-court-districts.parquet")
 
-# bring in ICE field office — remote feather (sfarrow-written); download + read
-ice_field_offices <- local({
-  tf <- tempfile(fileext = ".feather")
-  download.file(
-    "https://github.com/deportationdata/ice-offices/raw/refs/heads/main/data/ice-aor-shp.feather",
-    tf,
-    mode = "wb",
-    quiet = TRUE
+# bring in ICE field office — remote parquet (sfarrow-written)
+ice_field_offices <-
+  sfarrow::st_read_parquet(
+    "https://github.com/deportationdata/ice-offices/raw/refs/heads/main/data/ice-aor-shp.parquet"
+  ) |>
+  sf::st_transform(crs = 4326)
+
+# bring in facility daily population — remote parquet
+facility_daily_pop <-
+  arrow::read_parquet(
+    "https://github.com/deportationdata/ice/raw/refs/heads/main/data/facilities-daily-population-latest.parquet"
   )
-  arrow::read_feather(tf) |> sf::st_as_sf(crs = 4326)
-})
+
+# stats over the last 365 days of available data
+daily_pop_last_date <- max(facility_daily_pop$date, na.rm = TRUE)
+
+facility_daily_pop_stats <-
+  facility_daily_pop |>
+  filter(
+    date > daily_pop_last_date - 365,
+    date <= daily_pop_last_date
+  ) |>
+  group_by(detention_facility_code) |>
+  summarise(
+    days_with_detentions_daily_last_year = sum(
+      n_detained >= 1,
+      na.rm = TRUE
+    ),
+    days_with_detentions_midnight_last_year = sum(
+      n_detained_at_midnight >= 1,
+      na.rm = TRUE
+    ),
+    avg_population_daily_last_year = mean(n_detained, na.rm = TRUE),
+    avg_population_midnight_last_year = mean(
+      n_detained_at_midnight,
+      na.rm = TRUE
+    ),
+    max_population_daily_last_year = max(n_detained, na.rm = TRUE),
+    max_population_midnight_last_year = max(
+      n_detained_at_midnight,
+      na.rm = TRUE
+    ),
+    .groups = "drop"
+  )
 
 name_code_match <-
   arrow::read_parquet(
@@ -253,7 +286,8 @@ duplicate_facilities_to_remove <-
 # remove the extra rows for facilities that have two codes
 facility_final <-
   facility_final |>
-  anti_join(duplicate_facilities_to_remove, by = "detention_facility_code")
+  anti_join(duplicate_facilities_to_remove, by = "detention_facility_code") |>
+  left_join(facility_daily_pop_stats, by = "detention_facility_code")
 
 # individual_counts <-
 #   arrow::read_parquet("data/facility-individual-counts-2025-2026.parquet")

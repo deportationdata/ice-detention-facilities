@@ -234,7 +234,13 @@ facility_formatted <-
     address_full,
     latitude,
     longitude,
-    field_office
+    field_office,
+    days_with_detentions_daily_last_year,
+    days_with_detentions_midnight_last_year,
+    avg_population_daily_last_year,
+    avg_population_midnight_last_year,
+    max_population_daily_last_year,
+    max_population_midnight_last_year
   )
 
 arrow::write_parquet(
