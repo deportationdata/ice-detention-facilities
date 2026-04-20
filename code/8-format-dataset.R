@@ -32,6 +32,9 @@ facility_formatted <-
   # left_join(hospitals, by = c("name", "state")) |>
   mutate(
     name = name |>
+      # one-off typo correction: "Crt" (seen in "Chavez Det Crt") -> "Ctr" so
+      # the existing ctr -> center abbrev expansion handles it.
+      str_replace_all("\\b[Cc][Rr][Tt]\\b", "Ctr") |>
       # insert a space when a period sits between two letters (e.g. "St.hospital"
       # -> "St. hospital", "FED.CORR." -> "FED. CORR.") so title-case and word
       # boundaries work properly downstream.
@@ -69,16 +72,19 @@ facility_formatted <-
       str_replace_all("'S\\b", "'s") |>
       make_abbr_caps(
         abbr = c(
+          "BI",
           "CCA",
           "CCNO",
           "CNMI",
+          "DSMC",
           "HCA",
+          "IAH",
+          "LTAC",
           "NYC",
+          "THOP",
           "F",
           "PD",
           "YMCA",
-          "HSI",
-          "FDC",
           "APSO",
           "LBJ",
           "US",
@@ -281,10 +287,10 @@ facility_formatted <-
     field_office,
     days_with_detentions_daily_last_year,
     days_with_detentions_midnight_last_year,
-    avg_population_daily_last_year,
-    avg_population_midnight_last_year,
-    max_population_daily_last_year,
-    max_population_midnight_last_year
+    average_daily_population_last_year,
+    average_midnight_population_last_year,
+    max_daily_population_last_year,
+    max_midnight_population_last_year
   )
 
 # XXWICHI is a manual placeholder — clear the code in the final output so

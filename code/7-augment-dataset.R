@@ -147,42 +147,12 @@ ice_field_offices <-
   ) |>
   sf::st_transform(crs = 4326)
 
-# bring in facility daily population — remote parquet
-facility_daily_pop <-
+# rolling 365-day window stats computed from detention stints (covers
+# hospitals and other facilities missing from the ICE daily-population feed).
+# See code/1-process-individual-count.R for the computation.
+facility_window_stats <-
   arrow::read_parquet(
-    "https://github.com/deportationdata/ice/raw/refs/heads/main/data/facilities-daily-population-latest.parquet"
-  )
-
-# stats over the last 365 days of available data
-daily_pop_last_date <- max(facility_daily_pop$date, na.rm = TRUE)
-
-facility_daily_pop_stats <-
-  facility_daily_pop |>
-  filter(
-    date > daily_pop_last_date - 365,
-    date <= daily_pop_last_date
-  ) |>
-  group_by(detention_facility_code) |>
-  summarise(
-    days_with_detentions_daily_last_year = sum(
-      n_detained >= 1,
-      na.rm = TRUE
-    ),
-    days_with_detentions_midnight_last_year = sum(
-      n_detained_at_midnight >= 1,
-      na.rm = TRUE
-    ),
-    avg_population_daily_last_year = mean(n_detained, na.rm = TRUE),
-    avg_population_midnight_last_year = mean(
-      n_detained_at_midnight,
-      na.rm = TRUE
-    ),
-    max_population_daily_last_year = max(n_detained, na.rm = TRUE),
-    max_population_midnight_last_year = max(
-      n_detained_at_midnight,
-      na.rm = TRUE
-    ),
-    .groups = "drop"
+    "data/facility-individual-counts-2025-2026.parquet"
   )
 
 name_code_match <-
@@ -332,14 +302,7 @@ duplicate_facilities_to_remove <-
 facility_final <-
   facility_final |>
   anti_join(duplicate_facilities_to_remove, by = "detention_facility_code") |>
-  left_join(facility_daily_pop_stats, by = "detention_facility_code")
-
-# individual_counts <-
-#   arrow::read_parquet("data/facility-individual-counts-2025-2026.parquet")
-
-# facility_final <-
-#   facility_final |>
-#   left_join(individual_counts, by = "detention_facility_code")
+  left_join(facility_window_stats, by = "detention_facility_code")
 
 arrow::write_parquet(
   facility_final,
