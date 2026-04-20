@@ -32,11 +32,22 @@ facility_formatted <-
   # left_join(hospitals, by = c("name", "state")) |>
   mutate(
     name = name |>
-      str_replace_all("\\.", " ") |>
+      # insert a space when a period sits between two letters (e.g. "St.hospital"
+      # -> "St. hospital", "FED.CORR." -> "FED. CORR.") so title-case and word
+      # boundaries work properly downstream.
+      str_replace_all("(?<=[A-Za-z])\\.(?=[A-Za-z])", ". ") |>
+      # strip periods only from single-letter acronyms (U.S., C.F., L.E.C.) so
+      # the single-letter-collapse step can re-join them. Preserve periods in
+      # word abbreviations (St., Ste., Mt., Jr., Inc.).
+      str_replace_all("(?<=\\b[A-Za-z])\\.", " ") |>
       str_to_lower() |>
       str_replace_all(c(
         abbrev_expansions
       )) |>
+      # strip periods that now trail expanded abbreviations (e.g. "medical."
+      # after "med." was expanded). 4+ lowercase letters is long enough to
+      # exclude Saint/month/honorific abbreviations like St., Ste., Jr., Mt.
+      str_replace_all("(?<=[a-z]{4})\\.", "") |>
       str_replace_all("[‘’`]", "’") |>
       str_squish() |>
       # collapse space-separated single letters into abbreviations (e.g. "u s" -> "US")
@@ -59,6 +70,8 @@ facility_formatted <-
       make_abbr_caps(
         abbr = c(
           "CCA",
+          "CCNO",
+          "CNMI",
           "HCA",
           "NYC",
           "F",
@@ -106,9 +119,31 @@ facility_formatted <-
       str_replace_all(",\\s*$", "") |>
       # drop space before comma
       str_replace_all("\\s+,", ",") |>
+      # strip trailing period from state abbrev at end of name (e.g. "MS.")
+      str_replace_all(
+        paste0("\\b(", paste(state.abb, collapse = "|"), ")\\.\\s*$"),
+        "\\1"
+      ) |>
+      # expand SO -> Sheriff's Office when preceded by Parish/County
+      str_replace_all(
+        "\\b(Parish|County)\\s+[Ss][Oo]\\b",
+        "\\1 Sheriff's Office"
+      ) |>
+      # uppercase any remaining standalone SO (facility abbrev, either direction)
+      str_replace_all("\\b[Ss][Oo]\\b", "SO") |>
+      # add period to Saint abbreviations (St Luke's -> St. Luke's)
+      str_replace_all("\\bSt\\b(?=\\s+[A-Z])", "St.") |>
       str_squish(),
-    address = address |> str_to_title(),
-    address_full = address_full |> str_to_title(),
+    address = address |>
+      str_to_title() |>
+      # uppercase directional abbreviations NE/NW/SE/SW
+      str_replace_all("\\b(Ne|Nw|Se|Sw)\\b", toupper) |>
+      # uppercase two-letter state abbrev before a zip
+      str_replace_all("(?<=, )[A-Za-z]{2}(?=(?: \\d{5}|$))", toupper),
+    address_full = address_full |>
+      str_to_title() |>
+      str_replace_all("\\b(Ne|Nw|Se|Sw)\\b", toupper) |>
+      str_replace_all("(?<=, )[A-Za-z]{2}(?=(?: \\d{5}|$))", toupper),
     city = city |> clean_city() |> str_to_title(),
     state = str_to_upper(state),
     type = type |> str_to_title() |> replace_na(""),

@@ -216,6 +216,17 @@ facility_attributes <-
       nchar(state) > 3 ~ state_abbr,
     ),
     .keep = "unused"
+  ) |>
+  mutate(
+    # Step-1 sources parse zip as integer in some cases (e.g. data.table::fread
+    # in 1-process-hold-rooms.R), which strips leading zeros needed for MA/VT/
+    # CT/NH/NJ/RI/ME/VI zips. Pad numeric zips back to 5 digits here so the
+    # fix is applied uniformly across every source.
+    zip = if_else(
+      !is.na(zip) & str_detect(zip, "^\\d+$") & nchar(zip) < 5,
+      str_pad(zip, 5, "left", "0"),
+      zip
+    )
   )
 
 arrow::write_parquet(

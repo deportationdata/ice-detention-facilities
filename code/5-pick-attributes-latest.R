@@ -306,6 +306,7 @@ facility_latest_values <-
     variable,
     is_likely_street_address(value) | source == "manual",
     source_hierarchy,
+    variable == "name" & source == "website",
     date
   ) |>
   group_by(detention_facility_code, variable) |>

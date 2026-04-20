@@ -11,7 +11,11 @@ manual_values <-
   mutate(
     source = "ddp-manual",
     date = as.Date("2999-01-01"),
-    zip = as.character(zip)
+    zip = if_else(
+      !is.na(zip) & str_detect(as.character(zip), "^\\d+$") & nchar(as.character(zip)) < 5,
+      str_pad(as.character(zip), 5, "left", "0"),
+      as.character(zip)
+    )
   )
 
 arrow::write_parquet(
