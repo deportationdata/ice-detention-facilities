@@ -29,6 +29,36 @@ county_sf <-
     geometry
   )
 
+cbsa_sf <-
+  tigris::core_based_statistical_areas(
+    year = 2024,
+    class = "sf",
+    progress = FALSE
+  ) |>
+  st_transform(crs = 4326) |>
+  select(
+    cbsa = NAME,
+    cbsa_code = GEOID,
+    cbsa_type = LSAD,
+    geometry
+  ) |>
+  mutate(
+    cbsa_type = recode_values(
+      cbsa_type,
+      "M1" ~ "Metro",
+      "M2" ~ "Micro"
+    )
+  )
+
+csa_sf <-
+  tigris::combined_statistical_areas(
+    year = 2024,
+    class = "sf",
+    progress = FALSE
+  ) |>
+  st_transform(crs = 4326) |>
+  select(csa = NAME, csa_code = GEOID, geometry)
+
 # bring in all facilities in detention file plus in any ICE source (DTM, web site, etc.)
 facility_list <-
   arrow::read_parquet(
@@ -230,6 +260,8 @@ facility_final <-
     county_sf |> select(-state_name) |> rename(county = county_name),
     join = st_within
   ) |>
+  st_join(cbsa_sf, join = st_within) |>
+  st_join(csa_sf, join = st_within) |>
   mutate(
     federal_court_circuit_habeas = case_when(
       # 48 USC 1613(a) specifies that the Virgin Islands are in the 3st Circuit
@@ -273,7 +305,16 @@ facility_final <-
   ) |>
   st_drop_geometry() |>
   as_tibble() |>
-  relocate(county, county_fips_code, .before = state) |>
+  relocate(
+    county,
+    county_fips_code,
+    cbsa,
+    cbsa_code,
+    cbsa_type,
+    csa,
+    csa_code,
+    .before = state
+  ) |>
   relocate(state_fips_code, .after = state) |>
   relocate(detention_facility_code_alt, .after = detention_facility_code)
 
