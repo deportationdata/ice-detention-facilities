@@ -7,6 +7,7 @@ manual_values <-
   manual_values |>
   # remove empty columns
   select(-where(~ all(is.na(.)))) |>
+  select(-name) |>
   mutate(
     source = "ddp-manual",
     date = as.Date("2999-01-01"),

@@ -37,14 +37,14 @@ cbsa_sf <-
   ) |>
   st_transform(crs = 4326) |>
   select(
-    cbsa = NAME,
-    cbsa_code = GEOID,
-    cbsa_type = LSAD,
+    core_based_statistical_area = NAME,
+    core_based_statistical_area_code = GEOID,
+    core_based_statistical_area_type = LSAD,
     geometry
   ) |>
   mutate(
-    cbsa_type = recode_values(
-      cbsa_type,
+    core_based_statistical_area_type = recode_values(
+      core_based_statistical_area_type,
       "M1" ~ "Metro",
       "M2" ~ "Micro"
     )
@@ -57,7 +57,11 @@ csa_sf <-
     progress = FALSE
   ) |>
   st_transform(crs = 4326) |>
-  select(csa = NAME, csa_code = GEOID, geometry)
+  select(
+    combined_statistical_area = NAME,
+    combined_statistical_area_code = GEOID,
+    geometry
+  )
 
 # bring in all facilities in detention file plus in any ICE source (DTM, web site, etc.)
 facility_list <-
@@ -308,11 +312,11 @@ facility_final <-
   relocate(
     county,
     county_fips_code,
-    cbsa,
-    cbsa_code,
-    cbsa_type,
-    csa,
-    csa_code,
+    core_based_statistical_area,
+    core_based_statistical_area_code,
+    core_based_statistical_area_type,
+    combined_statistical_area,
+    combined_statistical_area_code,
     .before = state
   ) |>
   relocate(state_fips_code, .after = state) |>

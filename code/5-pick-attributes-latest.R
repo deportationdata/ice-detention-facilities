@@ -40,12 +40,42 @@ hospitals_name_match <-
     "data/hospitals-name-match.parquet"
   )
 
+last_detentions_date_per_code <-
+  facility_attributes |>
+  filter(source == "detentions") |>
+  group_by(detention_facility_code) |>
+  summarize(last_detentions_date = max(date, na.rm = TRUE), .groups = "drop")
+
+# Same-name pairs that ICE treats as administratively distinct facilities
+# (typically co-located BOP/IGSA complexes or separate offices in the same
+# district). These pairs are excluded from the name-based collapse so each
+# code retains its own record.
+do_not_collapse_pairs <- tribble(
+  ~code_a,   ~code_b,   ~reason,
+  "OAK",     "BOPOAD",  "Oakdale LA: IGSA and BOP complexes at 2105 E. Whatley Rd.",
+  "EDNDCTX", "EDENDTX", "Eden TX: USMS IGA and BOP facilities at Eden complex",
+  "GREENMA", "MAFRKHC", "Franklin House of Corrections MA: USMS IGA vs IGSA",
+  "USMS2TX", "USMS3TX", "US Marshals SDTX: Brownsville vs McAllen offices"
+)
+do_not_collapse_codes <- c(
+  do_not_collapse_pairs$code_a,
+  do_not_collapse_pairs$code_b
+)
+
 facilities_with_multiple_codes <-
   name_code_match |>
   mutate(name_join = clean_text(name)) |>
+  filter(!is.na(name_join), name_join != "") |>
+  filter(!detention_facility_code %in% do_not_collapse_codes) |>
   distinct(name_join, state, detention_facility_code, .keep_all = TRUE) |>
   filter(n() > 1, .by = c("name_join", "state")) |>
-  arrange(state, name_join, desc(date_facility_code)) |>
+  left_join(last_detentions_date_per_code, by = "detention_facility_code") |>
+  arrange(
+    state,
+    name_join,
+    desc(last_detentions_date),
+    desc(date_facility_code)
+  ) |>
   mutate(ID = factor(str_c(name_join, state)) |> as.numeric()) |>
   mutate(n = row_number(), .by = "ID") |>
   pivot_wider(

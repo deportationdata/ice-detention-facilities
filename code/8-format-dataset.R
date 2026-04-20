@@ -24,7 +24,11 @@ make_abbr_caps <- function(x, abbr) {
 facility_formatted <-
   facility_augmented |>
   # TODO: need to remove things from dtm that have 0 people detained
-  filter(detention_facility_code != "XXWICHI") |>
+  # XXWICHI is kept through the pipeline as a manual placeholder for Wichita
+  # County Jail (no ICE code yet); the code is blanked just before write.
+  mutate(
+    state = if_else(detention_facility_code == "XXWICHI", "TX", state)
+  ) |>
   # left_join(hospitals, by = c("name", "state")) |>
   mutate(
     name = name |>
@@ -222,17 +226,17 @@ facility_formatted <-
   facility_formatted |>
   select(
     detention_facility_code,
-    detention_facility_code_alt,
+    # detention_facility_code_alt, # not needed for the 2025 forward period
     name,
     address,
     city,
     county,
     county_fips_code,
-    cbsa,
-    cbsa_code,
-    cbsa_type,
-    csa,
-    csa_code,
+    core_based_statistical_area,
+    core_based_statistical_area_code,
+    core_based_statistical_area_type,
+    combined_statistical_area,
+    combined_statistical_area_code,
     state,
     state_fips_code,
     zip,
@@ -246,6 +250,18 @@ facility_formatted <-
     avg_population_midnight_last_year,
     max_population_daily_last_year,
     max_population_midnight_last_year
+  )
+
+# XXWICHI is a manual placeholder — clear the code in the final output so
+# downstream users see a blank code rather than the internal XX marker.
+facility_formatted <-
+  facility_formatted |>
+  mutate(
+    detention_facility_code = if_else(
+      detention_facility_code == "XXWICHI",
+      NA_character_,
+      detention_facility_code
+    )
   )
 
 arrow::write_parquet(
