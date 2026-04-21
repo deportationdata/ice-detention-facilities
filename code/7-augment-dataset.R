@@ -209,6 +209,21 @@ facility_final <-
   ) |>
   select(-latitude_manual, -longitude_manual) |>
   select(-aor) |>
+  # Hold rooms whose currently-picked address comes from NOCCC research that
+  # doesn't hold up on review (see audit notes). Blank address/city/zip/lat/lon
+  # so downstream spatial joins (county, CBSA, CSA, field office, courts) also
+  # come back NA; keep state so the record still sits in the right jurisdiction.
+  mutate(
+    across(
+      c(address, city, zip, latitude, longitude),
+      ~ if_else(
+        detention_facility_code %in%
+          c("OAKHOLD", "AUSHOLD", "PDNHOLD", "LRDHOLD", "BSCHOLD"),
+        NA,
+        .x
+      )
+    )
+  ) |>
   st_as_sf(
     coords = c("longitude", "latitude"),
     na.fail = FALSE,

@@ -35,6 +35,7 @@ facility_formatted <-
       # one-off typo correction: "Crt" (seen in "Chavez Det Crt") -> "Ctr" so
       # the existing ctr -> center abbrev expansion handles it.
       str_replace_all("\\b[Cc][Rr][Tt]\\b", "Ctr") |>
+      str_replace_all(regex("\\bmanhat\\b", ignore_case = TRUE), "Manhattan") |>
       # insert a space when a period sits between two letters (e.g. "St.hospital"
       # -> "St. hospital", "FED.CORR." -> "FED. CORR.") so title-case and word
       # boundaries work properly downstream.
