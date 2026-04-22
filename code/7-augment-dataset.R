@@ -215,10 +215,52 @@ facility_final <-
   # come back NA; keep state so the record still sits in the right jurisdiction.
   mutate(
     across(
-      c(address, city, zip, latitude, longitude),
+      c(address_full, address, city, zip, latitude, longitude),
       ~ if_else(
-        detention_facility_code %in%
-          c("OAKHOLD", "AUSHOLD", "PDNHOLD", "LRDHOLD", "BSCHOLD"),
+        str_ends(detention_facility_code, "HOLD") &
+          # don't blank out hand-verified hold facilities
+          !detention_facility_code %in%
+            c(
+              "SNDHOLD",
+              "SNJHOLD",
+              "VENHOLD",
+              "ALMHOLD",
+              "DENHOLD",
+              "DURHOLD",
+              "GSCHOLD",
+              "ORLHOLD",
+              "ATLHOLD",
+              "BOSHOLD",
+              "BALHOLD",
+              "SPMHOLD",
+              "EUGHOLD",
+              "POOHOLD",
+              "YRKHOLD",
+              "PROHOLD",
+              "OGUHOLD",
+              "STAHOLD",
+              "OKCHOLD",
+              "LOSHOLD",
+              "BSAHOLD",
+              "RMKHOLD",
+              "PRLHOLD",
+              "SEAHOLD",
+              "HOUHOLD",
+              "JAXHOLD",
+              "WASHOLD",
+              "OMAHOLD",
+              "NORHOLD",
+              "IMPHOLD",
+              "NYCHOLD",
+              "YAKHOLD",
+              "MEDHOLD",
+              "HHWHOLD",
+              "ANCHOLD",
+              "IWAHOLD",
+              "SAJHOLD",
+              "RCMHOLD",
+              "CBPHOLD"
+            ),
         NA,
         .x
       )
