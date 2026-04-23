@@ -311,14 +311,49 @@ arrow::write_parquet(
   "data/facilities-latest.parquet"
 )
 
-facility_formatted |>
+facility_formatted_sf <-
+  facility_formatted |>
   st_as_sf(
     coords = c("longitude", "latitude"),
     na.fail = FALSE,
     crs = 4326,
     remove = FALSE
-  ) |>
-  sfarrow::st_write_parquet("data/facilities-latest-sf.parquet")
+  )
+
+
+sfarrow::st_write_parquet(
+  facility_formatted_sf,
+  "data/facilities-latest-sf.parquet"
+)
+
+temp_dir <- tempdir()
+temp_shp_path <- file.path(temp_dir, "facilities-latest.shp")
+st_write(
+  facility_formatted_sf |>
+    set_names(
+      ~ .x |>
+        janitor::make_clean_names() |>
+        abbreviate(minlength = 8, strict = TRUE) |>
+        make.unique()
+    ),
+  temp_shp_path,
+  append = FALSE
+)
+
+# create a zip file with all necessary shapefile components
+if (file.exists("data/facilities-latest-shp.zip")) {
+  file.remove("data/facilities-latest-shp.zip")
+}
+zip(
+  zipfile = "data/facilities-latest-shp.zip",
+  files = c(
+    file.path(temp_dir, "facilities-latest.shp"),
+    file.path(temp_dir, "facilities-latest.dbf"),
+    file.path(temp_dir, "facilities-latest.prj"),
+    file.path(temp_dir, "facilities-latest.shx")
+  ),
+  flags = "-j"
+)
 
 # # metadata for diagnostics
 # best_values_metadata <-
