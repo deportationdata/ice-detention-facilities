@@ -90,9 +90,10 @@ n_facility_pages <- get_num_pages("https://www.ice.gov/detention-facilities")
 ice_facilities <- map_dfr(0:(n_facility_pages - 1), function(i) {
   url <- paste0("https://www.ice.gov/detention-facilities?page=", i)
   scrape_facilities(url)
-})
+}) |>
+  mutate(date = Sys.Date())
 
 arrow::write_parquet(
   ice_facilities,
-  glue::glue("data/facilities-from-ice-website-{Sys.Date()}.parquet")
+  "data/facilities-from-ice-website.parquet"
 )

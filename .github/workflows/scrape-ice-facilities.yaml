@@ -1,0 +1,114 @@
+name: "Scrape ICE detention facilities"
+
+on:
+  schedule:
+    - cron: '0 5 * * *' # every day at 05:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+
+  scrape:
+    runs-on: [self-hosted]
+
+    env:
+      RENV_PATHS_CACHE: ~/renv-cache
+      RENV_CONFIG_PPM_ENABLED: FALSE
+      RENV_CONFIG_REPOS_OVERRIDE: https://packagemanager.posit.co/cran/__linux__/manylinux_2_28/latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+          clean: true
+
+      - name: Ensure clean working tree and save current snapshot
+        run: |
+          git lfs pull
+          git checkout -- .
+          cp data/facilities-from-ice-website.parquet /tmp/old-facilities-from-ice-website.parquet
+
+      - name: Restore renv library
+        run: |
+          Rscript -e "
+            renv::hydrate(sources = '~/R/aarch64-unknown-linux-gnu-library/4.5')
+            renv::restore()
+          "
+
+      - name: Run scraper
+        run: Rscript code/0-ice-website-scraper.R
+
+      - name: Check for changes
+        id: check_changes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git checkout -b facilities-update-$(date +%Y-%m-%d)
+          git add data/facilities-from-ice-website.parquet
+          if git diff --cached --quiet; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # Check if any open PR already contains these files
+          changed_files=$(git diff --cached --name-only)
+          open_prs=$(gh pr list --state open --json number --jq '.[].number')
+          for pr in $open_prs; do
+            pr_files=$(gh pr view "$pr" --json files --jq '.files[].path')
+            for file in $changed_files; do
+              if echo "$pr_files" | grep -qF "$file"; then
+                echo "File '$file' already present in open PR #$pr — skipping."
+                echo "changed=false" >> $GITHUB_OUTPUT
+                exit 0
+              fi
+            done
+          done
+
+          # Generate change summary comparing old vs new facilities
+          Rscript code/0-ice-website-diff.R
+
+          # If binary files changed but data content is identical, discard and skip
+          if grep -qF 'NO_REAL_CHANGES' /tmp/facilities-changes.txt; then
+            echo "Binary files differ but data content is identical — skipping."
+            git reset HEAD -- data/facilities-from-ice-website.parquet
+            git checkout -- data/facilities-from-ice-website.parquet
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push
+        if: steps.check_changes.outputs.changed == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -m "Update ICE website facilities data [skip ci]"
+          git push --set-upstream origin HEAD
+
+      - name: Create pull request
+        if: steps.check_changes.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          {
+            echo "Automated update: changes detected in ICE detention facilities data."
+            echo ""
+            cat /tmp/facilities-changes.txt
+          } > /tmp/pr-body.txt
+
+          gh pr create \
+            --title "Facilities update $(date +%Y-%m-%d)" \
+            --body-file /tmp/pr-body.txt \
+            --reviewer graemeblair \
+            --base main
+
+      - name: Trigger deportationdata.org rebuild
+        if: steps.check_changes.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.DISPATCH_TOKEN }}
+        run: |
+          gh api repos/deportationdata/deportationdata.org/dispatches \
+            -f event_type=facilities-updated
