@@ -120,10 +120,20 @@ jobs:
             --reviewer graemeblair \
             --base main
 
+      - name: Generate DDO_BOT App token for deportationdata.org
+        if: steps.check_changes.outputs.changed == 'true'
+        id: ddo-app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.DDO_BOT_APP_ID }}
+          private-key: ${{ secrets.DDO_BOT_PRIVATE_KEY }}
+          owner: deportationdata
+          repositories: deportationdata.org
+
       - name: Trigger deportationdata.org rebuild
         if: steps.check_changes.outputs.changed == 'true'
         env:
-          GH_TOKEN: ${{ secrets.DISPATCH_TOKEN }}
+          GH_TOKEN: ${{ steps.ddo-app-token.outputs.token }}
         run: |
           gh api repos/deportationdata/deportationdata.org/dispatches \
             -f event_type=facilities-updated
