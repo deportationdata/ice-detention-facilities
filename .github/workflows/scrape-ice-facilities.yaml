@@ -4,6 +4,9 @@ on:
   schedule:
     - cron: '0 5 * * *' # every day at 05:00 UTC
   workflow_dispatch:
+  pull_request:
+    types: [closed]
+    branches: [main]
 
 permissions:
   contents: write
@@ -12,6 +15,7 @@ permissions:
 jobs:
 
   scrape:
+    if: github.event_name != 'pull_request'
     runs-on: [self-hosted]
 
     env:
@@ -120,8 +124,14 @@ jobs:
             --reviewer graemeblair \
             --base main
 
+  notify-ddo:
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.merged == true &&
+      startsWith(github.event.pull_request.head.ref, 'facilities-update-')
+    runs-on: ubuntu-latest
+    steps:
       - name: Generate DDO_BOT App token for deportationdata.org
-        if: steps.check_changes.outputs.changed == 'true'
         id: ddo-app-token
         uses: actions/create-github-app-token@v1
         with:
@@ -131,7 +141,6 @@ jobs:
           repositories: deportationdata.org
 
       - name: Trigger deportationdata.org rebuild
-        if: steps.check_changes.outputs.changed == 'true'
         env:
           GH_TOKEN: ${{ steps.ddo-app-token.outputs.token }}
         run: |
