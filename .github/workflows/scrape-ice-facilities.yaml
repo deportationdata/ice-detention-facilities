@@ -41,7 +41,6 @@ jobs:
         run: |
           Rscript -e "
             renv::hydrate(sources = '~/R/aarch64-unknown-linux-gnu-library/4.5')
-            renv::restore()
           "
 
       - name: Run scraper
