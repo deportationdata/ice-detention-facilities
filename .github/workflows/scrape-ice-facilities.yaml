@@ -25,11 +25,17 @@ jobs:
           lfs: true
           clean: true
 
-      - name: Ensure clean working tree and save current snapshot
+      - name: Ensure clean working tree and snapshot most recent dated file
         run: |
           git lfs pull
           git checkout -- .
-          cp data/facilities-from-ice-website.parquet /tmp/old-facilities-from-ice-website.parquet
+          latest=$(ls data/facilities-from-ice-website-*.parquet 2>/dev/null | sort | tail -n 1)
+          if [ -n "$latest" ]; then
+            cp "$latest" /tmp/old-facilities-from-ice-website.parquet
+          else
+            # no prior dated file — use empty placeholder so diff treats everything as new
+            cp data/facilities-from-ice-website.parquet /tmp/old-facilities-from-ice-website.parquet
+          fi
 
       - name: Restore renv library
         run: |
@@ -41,13 +47,22 @@ jobs:
       - name: Run scraper
         run: Rscript code/0-ice-website-scraper.R
 
+      - name: Run process script (refresh stable file)
+        run: Rscript code/1-process-ice-website.R
+
+      - name: Stage today's dated file for diff
+        run: |
+          today_file="data/facilities-from-ice-website-$(date -u +%Y-%m-%d).parquet"
+          cp "$today_file" /tmp/new-facilities-from-ice-website.parquet
+
       - name: Check for changes
         id: check_changes
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          today_file="data/facilities-from-ice-website-$(date -u +%Y-%m-%d).parquet"
           git checkout -b facilities-update-$(date +%Y-%m-%d)
-          git add data/facilities-from-ice-website.parquet
+          git add "$today_file" data/facilities-from-ice-website.parquet
           if git diff --cached --quiet; then
             echo "changed=false" >> $GITHUB_OUTPUT
             exit 0
@@ -67,14 +82,15 @@ jobs:
             done
           done
 
-          # Generate change summary comparing old vs new facilities
+          # Generate change summary comparing previous dated file vs today's
           Rscript code/0-ice-website-diff.R
 
-          # If binary files changed but data content is identical, discard and skip
+          # If binary files differ but data content is identical, discard and skip
           if grep -qF 'NO_REAL_CHANGES' /tmp/facilities-changes.txt; then
             echo "Binary files differ but data content is identical — skipping."
-            git reset HEAD -- data/facilities-from-ice-website.parquet
+            git reset HEAD -- "$today_file" data/facilities-from-ice-website.parquet
             git checkout -- data/facilities-from-ice-website.parquet
+            rm -f "$today_file"
             echo "changed=false" >> $GITHUB_OUTPUT
           else
             echo "changed=true" >> $GITHUB_OUTPUT

@@ -277,6 +277,7 @@ code_name_state_manual <-
     "FLDADCI"                , "DADE CORRECTIONAL INST"             , "FL"   , ""                                                                                     ,
     "FLDCTAL"                , "FL DEPT OF CORRECTIONS"             , "FL"   , ""                                                                                     ,
     "FLDSSFS"                , "FLORIDA SOFT-SIDED FACILITY-SOUTH"  , "FL"   , ""                                                                                     ,
+    "FLDSSFS"                , "FLORIDA SOFT SIDED FACILITY SOUTH"  , "FL"   , "ice.gov/detain/detention-facilities (no hyphens variant)"                             ,
     "FLHOSFL"                , "FORT LAUDERDALE HOSPITAL"           , "FL"   , ""                                                                                     ,
     "FLSPSTA"                , "FLORIDA ST. PRIS.,STARKE"           , "FL"   , ""                                                                                     ,
     "FNDDUWI"                , "FOND DU LAC COUNTY SHERIFF/JAIL"    , "WI"   , ""                                                                                     ,
@@ -585,6 +586,7 @@ code_name_state_manual <-
     "WVSWEST"                , ""                                   , "WV"   , "https://dcr.wv.gov/facilities/Pages/prisons-and-jails/swrjcf.aspx"                    ,
     "WVWESTR"                , ""                                   , "WV"   , "https://dcr.wv.gov/facilities/Pages/prisons-and-jails/wrjcf.aspx"                     ,
     # "XXWICHI"     Wichita County Jail           , "TX"                                 , "—"
+    "XXMRRCK"                , "MIDWEST REGIONAL RECEPTION CENTER"  , "KS"   , "https://www.ice.gov/detain/detention-facilities (Leavenworth; no ICE code yet)"
   ) |>
   select(-name)
 

@@ -4,7 +4,7 @@ suppressPackageStartupMessages({
 })
 
 old <- read_parquet("/tmp/old-facilities-from-ice-website.parquet")
-new <- read_parquet("data/facilities-from-ice-website.parquet")
+new <- read_parquet("/tmp/new-facilities-from-ice-website.parquet")
 
 key <- function(d) paste(d$name, d$state, sep = " | ")
 
