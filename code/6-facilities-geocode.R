@@ -49,41 +49,41 @@ facilities_to_geocode <-
 #   geocode(address_full, method = "arcgis") |>
 #   as.data.frame()
 
-facilities_geocoded_google <-
-  facilities_to_geocode |>
-  geocode(
-    address_full,
-    method = 'google',
-    lat = latitude,
-    long = longitude,
-    limit = 1,
-    full_results = TRUE
-  )
+# facilities_geocoded_google <-
+#   facilities_to_geocode |>
+#   geocode(
+#     address_full,
+#     method = 'google',
+#     lat = latitude,
+#     long = longitude,
+#     limit = 1,
+#     full_results = TRUE
+#   )
 
-write_rds(
-  facilities_geocoded_google,
-  file = "data/facilities_geocoded_google_28apr26.rds"
-)
+# write_rds(
+#   facilities_geocoded_google,
+#   file = "data/facilities_geocoded_google_28apr26.rds"
+# )
 
 facilities_geocoded_google <- read_rds(
   "data/facilities_geocoded_google_28apr26.rds"
 )
 
-facilities_geocoded_arcgis <-
-  facilities_to_geocode |>
-  geocode(
-    address_full,
-    method = 'arcgis',
-    lat = latitude,
-    long = longitude,
-    limit = 1,
-    full_results = TRUE
-  )
+# facilities_geocoded_arcgis <-
+#   facilities_to_geocode |>
+#   geocode(
+#     address_full,
+#     method = 'arcgis',
+#     lat = latitude,
+#     long = longitude,
+#     limit = 1,
+#     full_results = TRUE
+#   )
 
-write_rds(
-  facilities_geocoded_arcgis,
-  file = "data/facilities_geocoded_arcgis_28apr26.rds"
-)
+# write_rds(
+#   facilities_geocoded_arcgis,
+#   file = "data/facilities_geocoded_arcgis_28apr26.rds"
+# )
 
 facilities_geocoded_arcgis <- read_rds(
   "data/facilities_geocoded_arcgis_28apr26.rds"
