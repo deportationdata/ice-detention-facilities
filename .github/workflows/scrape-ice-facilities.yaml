@@ -132,18 +132,15 @@ jobs:
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
 
-      - name: Run full data pipeline
+      - name: Run CI-friendly data pipeline
         if: steps.check_changes.outputs.changed == 'true'
-        env:
-          # 1-process-ice-website.R already ran earlier; skip the duplicate
-          # invocation inside run_all.sh.
-          SKIP_ICE_WEBSITE_PROCESS: "1"
         run: |
-          # Regenerate every downstream parquet (facilities-attributes-raw,
-          # facilities-name-state-match, facilities-name-code-match,
-          # facilities-latest, facilities-latest-sf, etc.) so the PR contains
-          # the fully-processed dataset, not just today's website snapshot.
-          bash code/run_all.sh
+          # CI subset of run_all.sh — skips the 1-process-* scripts that read
+          # from local Box folders or sibling repos. Their outputs are already
+          # committed parquets that the rest of the pipeline picks up. Local
+          # users should still run `bash code/run_all.sh` to refresh those
+          # upstream inputs.
+          bash code/run_ci.sh
           git add data/
 
       - name: Commit and push
