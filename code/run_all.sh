@@ -18,7 +18,9 @@ Rscript code/1-process-hifld-law-enforcement-facilities.R
 Rscript code/1-process-hifld-prisons.R
 Rscript code/1-process-hold-rooms.R
 Rscript code/1-process-hospitals.R
-Rscript code/1-process-ice-website.R 
+if [ "${SKIP_ICE_WEBSITE_PROCESS:-0}" != "1" ]; then
+  Rscript code/1-process-ice-website.R
+fi
 Rscript code/1-process-icpsr-38323-jails-prisons.R
 Rscript code/1-process-manual-edits.R
 Rscript code/1-process-marshall.R

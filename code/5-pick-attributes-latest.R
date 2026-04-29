@@ -121,6 +121,14 @@ facility_attributes_nocodes <-
   select(-name_join) |>
   distinct() # check this
 
+# Auto-matched (name, state) -> code from code/0-match-website-new-facilities.R.
+# This file is regenerated daily by the scrape workflow. The hand-curated
+# tribble below wins ties on (name, state).
+website_matches <-
+  arrow::read_parquet("data/facilities-website-matches.parquet") |>
+  filter(!is.na(detention_facility_code)) |>
+  distinct(name, state, detention_facility_code)
+
 facility_attributes_unmatched_manual <-
   tribble(
     ~name                                                                       , ~state        , ~detention_facility_code ,
@@ -154,6 +162,10 @@ facility_attributes_unmatched_manual <-
     "WICHITA COUNTY JAIL"                                                       , "TX"          , "XXWICHI"                ,
     "DOD DETENTION FACILITY AT FORT BLISS"                                      , "TX"          , "EROFCB"
   )
+
+facility_attributes_unmatched_manual <-
+  bind_rows(facility_attributes_unmatched_manual, website_matches) |>
+  distinct(name, state, .keep_all = TRUE)
 
 facility_attributes_unmatched <-
   facility_attributes_nocodes |>

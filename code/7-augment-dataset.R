@@ -167,7 +167,7 @@ facility_final <-
     facility_latest_values_wide,
     by = "detention_facility_code"
   ) |>
-  select(-state) |>
+  rename(state_orig = state) |>
   left_join(
     name_code_match |>
       distinct(
@@ -176,6 +176,12 @@ facility_final <-
       ),
     by = "detention_facility_code"
   ) |>
+  # Prefer name_code_match's state (canonical), but fall back to the source
+  # state when the code isn't in name_code_match — e.g. synthetic XX-prefix
+  # placeholders generated for new website facilities that haven't been
+  # manually coded yet.
+  mutate(state = coalesce(state, state_orig)) |>
+  select(-state_orig) |>
   # left_join(facilities_open_dates, by = "detention_facility_code") |>
   # left_join(
   #   stats_from_detention_stints |>
