@@ -1,0 +1,70 @@
+name: "Diff facilities-latest on PR"
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'data/facilities-latest-sf.parquet'
+      - 'data/facilities-latest.parquet'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  diff:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Checkout main into _main/
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          lfs: true
+          path: _main
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - name: Install minimal R deps
+        # Only what diff-facilities-pr.R needs. Use Posit Public Package Manager
+        # binaries (set above via use-public-rspm) so the install is seconds, not
+        # minutes.
+        run: |
+          Rscript -e 'install.packages(c("arrow","dplyr","tidyr","stringr","readr","purrr"))'
+
+      - name: Run diff script
+        run: |
+          Rscript code/diff-facilities-pr.R \
+            _main/data/facilities-latest-sf.parquet \
+            data/facilities-latest-sf.parquet \
+            > /tmp/pr-diff-comment.md
+          # GitHub caps comment bodies at ~65k chars; truncate defensively.
+          head -c 60000 /tmp/pr-diff-comment.md > /tmp/pr-diff-comment.trimmed.md
+          if [ $(wc -c < /tmp/pr-diff-comment.md) -gt 60000 ]; then
+            printf "\n\n_…truncated at 60k chars._\n" >> /tmp/pr-diff-comment.trimmed.md
+          fi
+
+      - name: Post or update comment on PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          existing=$(gh api "repos/${REPO}/issues/${PR_NUMBER}/comments" \
+            --jq '.[] | select(.body | startswith("<!-- pr-diff-bot -->")) | .id' \
+            | head -n 1)
+          if [ -n "$existing" ]; then
+            gh api -X PATCH "repos/${REPO}/issues/comments/${existing}" \
+              -F body=@/tmp/pr-diff-comment.trimmed.md
+          else
+            gh api -X POST "repos/${REPO}/issues/${PR_NUMBER}/comments" \
+              -F body=@/tmp/pr-diff-comment.trimmed.md
+          fi

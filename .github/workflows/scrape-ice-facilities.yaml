@@ -107,6 +107,20 @@ jobs:
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
 
+      - name: Run full data pipeline
+        if: steps.check_changes.outputs.changed == 'true'
+        env:
+          # 1-process-ice-website.R already ran earlier; skip the duplicate
+          # invocation inside run_all.sh.
+          SKIP_ICE_WEBSITE_PROCESS: "1"
+        run: |
+          # Regenerate every downstream parquet (facilities-attributes-raw,
+          # facilities-name-state-match, facilities-name-code-match,
+          # facilities-latest, facilities-latest-sf, etc.) so the PR contains
+          # the fully-processed dataset, not just today's website snapshot.
+          bash code/run_all.sh
+          git add data/
+
       - name: Commit and push
         if: steps.check_changes.outputs.changed == 'true'
         run: |
