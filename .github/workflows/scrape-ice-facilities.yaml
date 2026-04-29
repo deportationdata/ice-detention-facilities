@@ -58,6 +58,11 @@ jobs:
           today_file="data/facilities-from-ice-website-$(date -u +%Y-%m-%d).parquet"
           cp "$today_file" /tmp/new-facilities-from-ice-website.parquet
 
+      - name: Match new website facilities to existing codes
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: Rscript code/0-match-website-new-facilities.R
+
       - name: Check for changes
         id: check_changes
         env:
@@ -65,7 +70,8 @@ jobs:
         run: |
           today_file="data/facilities-from-ice-website-$(date -u +%Y-%m-%d).parquet"
           git checkout -b facilities-update-$(date +%Y-%m-%d)
-          git add "$today_file" data/facilities-from-ice-website.parquet
+          git add "$today_file" data/facilities-from-ice-website.parquet \
+                  data/facilities-website-matches.parquet
           if git diff --cached --quiet; then
             echo "changed=false" >> $GITHUB_OUTPUT
             exit 0
@@ -91,8 +97,10 @@ jobs:
           # If binary files differ but data content is identical, discard and skip
           if grep -qF 'NO_REAL_CHANGES' /tmp/facilities-changes.txt; then
             echo "Binary files differ but data content is identical — skipping."
-            git reset HEAD -- "$today_file" data/facilities-from-ice-website.parquet
-            git checkout -- data/facilities-from-ice-website.parquet
+            git reset HEAD -- "$today_file" data/facilities-from-ice-website.parquet \
+                              data/facilities-website-matches.parquet
+            git checkout -- data/facilities-from-ice-website.parquet \
+                            data/facilities-website-matches.parquet
             rm -f "$today_file"
             echo "changed=false" >> $GITHUB_OUTPUT
           else
@@ -116,6 +124,10 @@ jobs:
             echo "Automated update: changes detected in ICE detention facilities data."
             echo ""
             cat /tmp/facilities-changes.txt
+            if [ -s /tmp/website-match-summary.md ]; then
+              echo ""
+              cat /tmp/website-match-summary.md
+            fi
           } > /tmp/pr-body.txt
 
           gh pr create \

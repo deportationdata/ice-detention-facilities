@@ -2,22 +2,6 @@ library(tidyverse)
 library(sf)
 library(tidygeocoder)
 
-# temporarily just use the facilities in the recent data
-# facility_list <-
-#   arrow::read_feather(
-#     # "https://github.com/deportationdata/ice/raw/refs/heads/main/data/detention-stints-latest.feather"
-#     "~/github/ice/data/detention-stints-latest.feather"
-#   ) |>
-#   as_tibble() |>
-#   # mutate(
-#   #   cnt = sum(
-#   #     year(book_in_date_time) == 2025 | year(book_out_date_time) == 2025
-#   #   ),
-#   #   .by = detention_facility_code
-#   # ) |>
-#   # filter(cnt >= 1) |>
-#   distinct(detention_facility_code, name = detention_facility)
-
 facility_latest_values <-
   arrow::read_parquet(
     "data/facilities-latest-values-long.parquet"
@@ -65,64 +49,44 @@ facilities_to_geocode <-
 #   geocode(address_full, method = "arcgis") |>
 #   as.data.frame()
 
-# facilities_geocoded_google <-
-#   facilities_to_geocode |>
-#   geocode(
-#     address_full,
-#     method = 'google',
-#     lat = latitude,
-#     long = longitude,
-#     limit = 1,
-#     full_results = TRUE
-#   )
+facilities_geocoded_google <-
+  facilities_to_geocode |>
+  geocode(
+    address_full,
+    method = 'google',
+    lat = latitude,
+    long = longitude,
+    limit = 1,
+    full_results = TRUE
+  )
 
-# write_rds(
-#   facilities_geocoded_google,
-#   file = "data/facilities_geocoded_google_11may26.rds"
-# )
-
-facilities_geocoded_google <- read_rds(
-  "data/facilities_geocoded_google_11may26.rds"
+write_rds(
+  facilities_geocoded_google,
+  file = "data/facilities_geocoded_google_28apr26.rds"
 )
 
-# facilities_geocoded_census <-
-#   facilities_to_geocode |>
-#   geocode(
-#     full_address,
-#     method = 'census',
-#     lat = latitude,
-#     long = longitude,
-#     limit = 1,
-#     full_results = TRUE
-#   )
+facilities_geocoded_google <- read_rds(
+  "data/facilities_geocoded_google_28apr26.rds"
+)
 
-# write_rds(
-#   facilities_geocoded_census,
-#   file = "data/facilities_geocoded_census_16feb26.rds"
-# )
+facilities_geocoded_arcgis <-
+  facilities_to_geocode |>
+  geocode(
+    address_full,
+    method = 'arcgis',
+    lat = latitude,
+    long = longitude,
+    limit = 1,
+    full_results = TRUE
+  )
 
-# facilities_geocoded_census <- read_rds(
-#   "data/facilities_geocoded_census_16feb26.rds"
-# )
-
-# facilities_geocoded_arcgis <-
-#   facilities_to_geocode |>
-#   geocode(
-#     address_full,
-#     method = 'arcgis',
-#     lat = latitude,
-#     long = longitude,
-#     limit = 1,
-#     full_results = TRUE
-#   )
-
-# write_rds(
-#   facilities_geocoded_arcgis,
-#   file = "data/facilities_geocoded_arcgis_11apr26.rds"
-# )
+write_rds(
+  facilities_geocoded_arcgis,
+  file = "data/facilities_geocoded_arcgis_28apr26.rds"
+)
 
 facilities_geocoded_arcgis <- read_rds(
-  "data/facilities_geocoded_arcgis_11apr26.rds"
+  "data/facilities_geocoded_arcgis_28apr26.rds"
 )
 
 facilities_geocoded_df <-
