@@ -1,0 +1,118 @@
+name: "Diff facilities-latest on PR"
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'data/facilities-latest-sf.parquet'
+      - 'data/facilities-latest.parquet'
+  # Manual fallback — re-run the diff against any open PR by typing the
+  # PR number into "Run workflow" in the Actions tab.
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'PR number to diff'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  diff:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Resolve the PR number. On `pull_request` events it comes from the
+      # event payload. On manual `workflow_dispatch` runs the user supplies
+      # it and we look up the head ref to check out.
+      - name: Resolve PR ref
+        id: pr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            num="${{ github.event.inputs.pr_number }}"
+            ref=$(gh api "repos/${REPO}/pulls/${num}" --jq .head.sha)
+          else
+            num="${{ github.event.pull_request.number }}"
+            ref="${{ github.event.pull_request.head.sha }}"
+          fi
+          echo "number=${num}" >> "$GITHUB_OUTPUT"
+          echo "ref=${ref}"     >> "$GITHUB_OUTPUT"
+
+      - name: Checkout PR head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.pr.outputs.ref }}
+          lfs: true
+
+      - name: Checkout main into _main/
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          lfs: true
+          path: _main
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - name: Install minimal R deps
+        # Only what diff-facilities-pr.R needs. Use Posit Public Package Manager
+        # binaries (set above via use-public-rspm) so the install is seconds, not
+        # minutes.
+        run: |
+          Rscript -e 'install.packages(c("arrow","dplyr","tidyr","stringr","readr","purrr"))'
+
+      - name: Run diff script
+        run: |
+          Rscript code/diff-facilities-pr.R \
+            _main/data/facilities-latest-sf.parquet \
+            data/facilities-latest-sf.parquet \
+            > /tmp/pr-diff-comment.md
+          # GitHub caps comment bodies at ~65k chars; truncate defensively.
+          head -c 60000 /tmp/pr-diff-comment.md > /tmp/pr-diff-comment.trimmed.md
+          if [ $(wc -c < /tmp/pr-diff-comment.md) -gt 60000 ]; then
+            printf "\n\n_…truncated at 60k chars._\n" >> /tmp/pr-diff-comment.trimmed.md
+          fi
+
+      - name: Post or update comment on PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          # Find every existing pr-diff-bot comment. Use --paginate (PRs can have
+          # >30 comments) and `contains` rather than `startswith` so a stray BOM
+          # or leading whitespace can't hide the marker.
+          ids=$(gh api --paginate "repos/${REPO}/issues/${PR_NUMBER}/comments" \
+            --jq '.[] | select(.body != null and (.body | contains("<!-- pr-diff-bot -->"))) | .id')
+          primary=$(echo "$ids" | head -n 1)
+          echo "pr-diff-bot comments found: $(echo "$ids" | grep -c .) ; primary: '${primary:-none}'"
+
+          # Clean up duplicate diff-bot comments left over from earlier broken
+          # runs — keep the primary, delete the rest.
+          echo "$ids" | tail -n +2 | while read -r id; do
+            [ -n "$id" ] || continue
+            echo "Deleting duplicate pr-diff-bot comment ${id}"
+            gh api -X DELETE "repos/${REPO}/issues/comments/${id}" >/dev/null || true
+          done
+
+          # Build the JSON body explicitly. `gh api -F body=@file` URL-encodes
+          # content, which was producing comments whose bodies didn't match the
+          # marker on the next run.
+          jq -Rs '{body: .}' < /tmp/pr-diff-comment.trimmed.md > /tmp/pr-comment-body.json
+
+          if [ -n "$primary" ]; then
+            echo "Patching primary comment ${primary}"
+            gh api -X PATCH "repos/${REPO}/issues/comments/${primary}" \
+              --input /tmp/pr-comment-body.json > /dev/null
+          else
+            echo "Creating new comment"
+            gh api -X POST "repos/${REPO}/issues/${PR_NUMBER}/comments" \
+              --input /tmp/pr-comment-body.json > /dev/null
+          fi

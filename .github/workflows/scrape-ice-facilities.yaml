@@ -24,10 +24,24 @@ jobs:
       RENV_CONFIG_REPOS_OVERRIDE: https://packagemanager.posit.co/cran/__linux__/manylinux_2_28/latest
 
     steps:
+      # Mint a DDO_BOT app token first. Using this token for the push and
+      # `gh pr create` makes the resulting `pull_request: opened` event
+      # trigger downstream workflows (the diff-pr workflow); PRs created with
+      # the default GITHUB_TOKEN do not.
+      - name: Generate DDO_BOT App token (this repo)
+        id: ddo-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.DDO_BOT_APP_ID }}
+          private-key: ${{ secrets.DDO_BOT_PRIVATE_KEY }}
+
       - uses: actions/checkout@v4
         with:
           lfs: true
           clean: true
+          # Persist the DDO_BOT token in git config so the later `git push`
+          # uses it (so push events also fire downstream workflows).
+          token: ${{ steps.ddo-token.outputs.token }}
 
       - name: Ensure clean working tree and snapshot most recent dated file
         run: |
@@ -58,10 +72,15 @@ jobs:
           today_file="data/facilities-from-ice-website-$(date -u +%Y-%m-%d).parquet"
           cp "$today_file" /tmp/new-facilities-from-ice-website.parquet
 
+      - name: Match new website facilities to existing codes
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: Rscript code/0-match-website-new-facilities.R
+
       - name: Check for changes
         id: check_changes
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ steps.ddo-token.outputs.token }}
         run: |
           today_file="data/facilities-from-ice-website-$(date -u +%Y-%m-%d).parquet"
           today_branch="facilities-update-$(date -u +%Y-%m-%d)"
@@ -76,7 +95,8 @@ jobs:
           fi
 
           git checkout -b "$today_branch"
-          git add "$today_file" data/facilities-from-ice-website.parquet
+          git add "$today_file" data/facilities-from-ice-website.parquet \
+                  data/facilities-website-matches.parquet
           if git diff --cached --quiet; then
             echo "changed=false" >> $GITHUB_OUTPUT
             exit 0
@@ -102,31 +122,53 @@ jobs:
           # If binary files differ but data content is identical, discard and skip
           if grep -qF 'NO_REAL_CHANGES' /tmp/facilities-changes.txt; then
             echo "Binary files differ but data content is identical — skipping."
-            git reset HEAD -- "$today_file" data/facilities-from-ice-website.parquet
-            git checkout -- data/facilities-from-ice-website.parquet
+            git reset HEAD -- "$today_file" data/facilities-from-ice-website.parquet \
+                              data/facilities-website-matches.parquet
+            git checkout -- data/facilities-from-ice-website.parquet \
+                            data/facilities-website-matches.parquet
             rm -f "$today_file"
             echo "changed=false" >> $GITHUB_OUTPUT
           else
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
 
+      - name: Run full data pipeline
+        if: steps.check_changes.outputs.changed == 'true'
+        env:
+          # 1-process-ice-website.R already ran earlier; skip the duplicate
+          # invocation inside run_all.sh.
+          SKIP_ICE_WEBSITE_PROCESS: "1"
+        run: |
+          # Regenerate every downstream parquet (facilities-attributes-raw,
+          # facilities-name-state-match, facilities-name-code-match,
+          # facilities-latest, facilities-latest-sf, etc.) so the PR contains
+          # the fully-processed dataset, not just today's website snapshot.
+          bash code/run_all.sh
+          git add data/
+
       - name: Commit and push
         if: steps.check_changes.outputs.changed == 'true'
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config --local user.email "ddo-bot@users.noreply.github.com"
+          git config --local user.name "DDO Bot"
           git commit -m "Update ICE website facilities data [skip ci]"
+          # checkout's `token:` configured the DDO_BOT token in git's
+          # extraheader, so this push uses it.
           git push --set-upstream origin HEAD
 
       - name: Create pull request
         if: steps.check_changes.outputs.changed == 'true'
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ steps.ddo-token.outputs.token }}
         run: |
           {
             echo "Automated update: changes detected in ICE detention facilities data."
             echo ""
             cat /tmp/facilities-changes.txt
+            if [ -s /tmp/website-match-summary.md ]; then
+              echo ""
+              cat /tmp/website-match-summary.md
+            fi
           } > /tmp/pr-body.txt
 
           gh pr create \
