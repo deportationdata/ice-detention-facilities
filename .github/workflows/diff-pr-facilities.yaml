@@ -1,6 +1,13 @@
 name: "Diff facilities-latest on PR"
 
 on:
+  # Auto-fired by the scrape workflow after it opens its daily PR.
+  # repository_dispatch always triggers (unlike pull_request, which is
+  # suppressed for PRs created by GITHUB_TOKEN or by an App without
+  # Actions: write).
+  repository_dispatch:
+    types: [diff-pr]
+  # Direct human pushes to PR branches still trigger via pull_request.
   pull_request:
     types: [opened, synchronize, reopened]
     paths:
@@ -24,24 +31,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Resolve the PR number. On `pull_request` events it comes from the
-      # event payload. On manual `workflow_dispatch` runs the user supplies
-      # it and we look up the head ref to check out.
+      # Resolve the PR number across all four event types and look up the
+      # PR's head SHA via the API. (Looking it up unconditionally is simpler
+      # than special-casing `pull_request` events that already carry it.)
       - name: Resolve PR ref
         id: pr
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            num="${{ github.event.inputs.pr_number }}"
-            ref=$(gh api "repos/${REPO}/pulls/${num}" --jq .head.sha)
-          else
-            num="${{ github.event.pull_request.number }}"
-            ref="${{ github.event.pull_request.head.sha }}"
-          fi
+          case "${{ github.event_name }}" in
+            workflow_dispatch)    num="${{ github.event.inputs.pr_number }}" ;;
+            repository_dispatch)  num="${{ github.event.client_payload.pr_number }}" ;;
+            *)                    num="${{ github.event.pull_request.number }}" ;;
+          esac
+          ref=$(gh api "repos/${REPO}/pulls/${num}" --jq .head.sha)
           echo "number=${num}" >> "$GITHUB_OUTPUT"
-          echo "ref=${ref}"     >> "$GITHUB_OUTPUT"
+          echo "ref=${ref}"    >> "$GITHUB_OUTPUT"
 
       - name: Checkout PR head
         uses: actions/checkout@v4

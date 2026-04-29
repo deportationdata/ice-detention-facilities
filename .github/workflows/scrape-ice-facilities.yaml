@@ -155,6 +155,7 @@ jobs:
 
       - name: Create pull request
         if: steps.check_changes.outputs.changed == 'true'
+        id: create_pr
         env:
           GH_TOKEN: ${{ steps.ddo-token.outputs.token }}
         run: |
@@ -168,11 +169,26 @@ jobs:
             fi
           } > /tmp/pr-body.txt
 
-          gh pr create \
+          pr_url=$(gh pr create \
             --title "Facilities update $(date +%Y-%m-%d)" \
             --body-file /tmp/pr-body.txt \
             --reviewer graemeblair \
-            --base main
+            --base main)
+          pr_num="${pr_url##*/}"
+          echo "pr_url=${pr_url}"     >> "$GITHUB_OUTPUT"
+          echo "pr_number=${pr_num}"  >> "$GITHUB_OUTPUT"
+
+      - name: Trigger diff workflow
+        # repository_dispatch always fires, even from GITHUB_TOKEN — so the
+        # diff workflow runs reliably without depending on the DDO_BOT app
+        # having Actions: write permission.
+        if: steps.create_pr.outputs.pr_number != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api -X POST "repos/${{ github.repository }}/dispatches" \
+            -f event_type=diff-pr \
+            -F "client_payload[pr_number]=${{ steps.create_pr.outputs.pr_number }}"
 
   notify-ddo:
     if: >-
