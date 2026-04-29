@@ -400,6 +400,7 @@ fuzzy_matches_manual <- tribble(
   # "MIGRANT OPS CENTER MAIN A"                                                 , "MIGRANT OPERATIONS CENTER MAIN AV622"        , "CU"   , "GTMODCU"                , NA                 ,
 
   "Douglas County Jail"                                        , "DOUGLAS COUNTY WISCONSIN"                    , "WI"   , "DOUGLWI"                , NA                 ,
+  "Liberty County Sheriff’s Office"                            , "LIBERTY COUNTY JAIL"                         , "FL"   , "LBRTYFL"                , NA
 )
 
 fuzzy_matches_manual <-
