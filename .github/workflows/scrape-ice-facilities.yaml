@@ -72,6 +72,19 @@ jobs:
           git checkout -b facilities-update-$(date +%Y-%m-%d)
           git add "$today_file" data/facilities-from-ice-website.parquet \
                   data/facilities-website-matches.parquet
+          today_branch="facilities-update-$(date -u +%Y-%m-%d)"
+
+          # Skip if today's branch already exists on the remote (e.g. from an
+          # earlier run today whose PR was merged or closed). Re-pushing would
+          # either be rejected as non-fast-forward or open a duplicate PR.
+          if git ls-remote --exit-code --heads origin "$today_branch" >/dev/null 2>&1; then
+            echo "Remote branch '$today_branch' already exists — skipping."
+            echo "changed=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          git checkout -b "$today_branch"
+          git add "$today_file" data/facilities-from-ice-website.parquet
           if git diff --cached --quiet; then
             echo "changed=false" >> $GITHUB_OUTPUT
             exit 0
