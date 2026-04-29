@@ -17,7 +17,10 @@ Rscript code/3-name-state-match.R
 Rscript code/4-match-hospitals.R
 Rscript code/4-name-code-match.R
 Rscript code/5-pick-attributes-latest.R
-# 6-facilities-geocode.R reads cached RDS files — fine to skip in CI; new
-# geocoding is added manually
+# Incrementally geocode any new addresses via Google/ArcGIS and update the
+# canonical caches at data/facilities-geocoded-cache-{google,arcgis}.rds.
+# Requires GOOGLEGEOCODE_API_KEY in the env (Google calls are skipped with a
+# warning if it's missing). ArcGIS uses the public no-key endpoint.
+Rscript code/6-facilities-geocode.R
 Rscript code/7-augment-dataset.R
 Rscript code/8-format-dataset.R

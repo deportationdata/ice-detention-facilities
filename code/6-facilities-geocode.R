@@ -44,50 +44,91 @@ facilities_to_geocode <-
   filter(variable == "address_full") |>
   select(detention_facility_code, address_full = value)
 
-# facilities_to_geocode |>
-#   filter(detention_facility_code == "ELPCOTX") |>
-#   geocode(address_full, method = "arcgis") |>
-#   as.data.frame()
+# Incremental cache: only call APIs for addresses we haven't geocoded.
+# Cached by address_full (not detention_facility_code) so renames don't
+# invalidate cached coords — same address ⇒ same cached result.
+# The dated _28apr26.rds files were one-off snapshots; the canonical caches
+# below are continuously updated. On first run, seed from the latest snapshot.
+google_cache_path <- "data/facilities-geocoded-cache-google.rds"
+arcgis_cache_path <- "data/facilities-geocoded-cache-arcgis.rds"
 
-# facilities_geocoded_google <-
-#   facilities_to_geocode |>
-#   geocode(
-#     address_full,
-#     method = 'google',
-#     lat = latitude,
-#     long = longitude,
-#     limit = 1,
-#     full_results = TRUE
-#   )
+load_cache <- function(canonical_path, snapshot_pattern) {
+  if (file.exists(canonical_path)) return(readRDS(canonical_path))
+  candidates <- list.files(
+    "data", pattern = snapshot_pattern, full.names = TRUE
+  )
+  if (length(candidates) > 0) {
+    readRDS(candidates[which.max(file.mtime(candidates))]) |>
+      distinct(address_full, .keep_all = TRUE)
+  } else {
+    tibble(address_full = character())
+  }
+}
 
-# write_rds(
-#   facilities_geocoded_google,
-#   file = "data/facilities_geocoded_google_28apr26.rds"
-# )
+addresses_needed <- facilities_to_geocode |>
+  filter(!is.na(address_full)) |>
+  distinct(address_full) |>
+  pull(address_full)
 
-facilities_geocoded_google <- read_rds(
-  "data/facilities_geocoded_google_28apr26.rds"
+google_cache <- load_cache(
+  google_cache_path, "^facilities_geocoded_google_.*\\.rds$"
 )
+new_for_google <- setdiff(addresses_needed, google_cache$address_full)
+if (length(new_for_google) > 0) {
+  if (!nzchar(Sys.getenv("GOOGLEGEOCODE_API_KEY"))) {
+    warning(
+      "GOOGLEGEOCODE_API_KEY not set; skipping ",
+      length(new_for_google),
+      " new address(es) for Google geocoder."
+    )
+  } else {
+    message(
+      "Geocoding ", length(new_for_google), " new address(es) via Google."
+    )
+    new_google <- tibble(address_full = new_for_google) |>
+      geocode(
+        address_full,
+        method = "google",
+        lat = latitude,
+        long = longitude,
+        limit = 1,
+        full_results = TRUE
+      )
+    google_cache <- bind_rows(google_cache, new_google) |>
+      distinct(address_full, .keep_all = TRUE)
+    saveRDS(google_cache, google_cache_path)
+  }
+}
 
-# facilities_geocoded_arcgis <-
-#   facilities_to_geocode |>
-#   geocode(
-#     address_full,
-#     method = 'arcgis',
-#     lat = latitude,
-#     long = longitude,
-#     limit = 1,
-#     full_results = TRUE
-#   )
-
-# write_rds(
-#   facilities_geocoded_arcgis,
-#   file = "data/facilities_geocoded_arcgis_28apr26.rds"
-# )
-
-facilities_geocoded_arcgis <- read_rds(
-  "data/facilities_geocoded_arcgis_28apr26.rds"
+arcgis_cache <- load_cache(
+  arcgis_cache_path, "^facilities_geocoded_arcgis_.*\\.rds$"
 )
+new_for_arcgis <- setdiff(addresses_needed, arcgis_cache$address_full)
+if (length(new_for_arcgis) > 0) {
+  message(
+    "Geocoding ", length(new_for_arcgis), " new address(es) via ArcGIS."
+  )
+  new_arcgis <- tibble(address_full = new_for_arcgis) |>
+    geocode(
+      address_full,
+      method = "arcgis",
+      lat = latitude,
+      long = longitude,
+      limit = 1,
+      full_results = TRUE
+    )
+  arcgis_cache <- bind_rows(arcgis_cache, new_arcgis) |>
+    distinct(address_full, .keep_all = TRUE)
+  saveRDS(arcgis_cache, arcgis_cache_path)
+}
+
+# Attach caches to the per-code facility list for the is_exact / pick-best
+# logic below.
+facilities_geocoded_google <-
+  facilities_to_geocode |> inner_join(google_cache, by = "address_full")
+
+facilities_geocoded_arcgis <-
+  facilities_to_geocode |> inner_join(arcgis_cache, by = "address_full")
 
 facilities_geocoded_df <-
   bind_rows(
