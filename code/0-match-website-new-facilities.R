@@ -34,7 +34,15 @@ added_keys <- if (file.exists(old_path) && file.exists(new_path)) {
   character(0)
 }
 
-lookup <- read_parquet("data/facilities-name-state-match.parquet") |>
+# Lookup includes both the basic catalog (3-name-state-match) and the augmented
+# code map (4-name-code-match) — that way any manual entries in either tribble
+# propagate here without my script re-running the whole pipeline.
+lookup <- bind_rows(
+  read_parquet("data/facilities-name-state-match.parquet") |>
+    select(detention_facility_code, name, state),
+  read_parquet("data/facilities-name-code-match.parquet") |>
+    select(detention_facility_code, name, state)
+) |>
   filter(!is.na(detention_facility_code), !is.na(state), !is.na(name)) |>
   distinct(detention_facility_code, name, state) |>
   mutate(name_join = clean_facility_name(name))
@@ -144,7 +152,20 @@ if (nrow(unmatched) > 0) {
   matches <- bind_rows(matches, list_rbind(synth))
 }
 
-bind_rows(prior, matches) |>
+# Drop prior entries whose (name, state) now matches an authoritative lookup
+# entry — keeps the matches parquet from carrying stale synthetic codes for
+# facilities that have since been manually coded in 3-name-state-match.R or
+# 4-name-code-match.R.
+prior_clean <- if (is.null(prior)) {
+  NULL
+} else {
+  prior |>
+    mutate(name_join = clean_facility_name(name)) |>
+    anti_join(lookup, by = c("state", "name_join")) |>
+    select(-name_join)
+}
+
+bind_rows(prior_clean, matches) |>
   distinct(name, state, .keep_all = TRUE) |>
   write_parquet(OUTPUT)
 
