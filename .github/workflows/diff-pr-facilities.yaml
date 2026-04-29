@@ -7,12 +7,10 @@ on:
   # Actions: write).
   repository_dispatch:
     types: [diff-pr]
-  # Direct human pushes to PR branches still trigger via pull_request.
+  # Run on every PR so any change can be tracked — non-data PRs just produce
+  # an empty diff, which is informative ("no data change").
   pull_request:
     types: [opened, synchronize, reopened]
-    paths:
-      - 'data/facilities-latest-sf.parquet'
-      - 'data/facilities-latest.parquet'
   # Manual fallback — re-run the diff against any open PR by typing the
   # PR number into "Run workflow" in the Actions tab.
   workflow_dispatch:
