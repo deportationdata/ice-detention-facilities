@@ -58,13 +58,33 @@ jobs:
           PR_NUMBER: ${{ github.event.pull_request.number }}
           REPO: ${{ github.repository }}
         run: |
-          existing=$(gh api "repos/${REPO}/issues/${PR_NUMBER}/comments" \
-            --jq '.[] | select(.body | startswith("<!-- pr-diff-bot -->")) | .id' \
-            | head -n 1)
-          if [ -n "$existing" ]; then
-            gh api -X PATCH "repos/${REPO}/issues/comments/${existing}" \
-              -F body=@/tmp/pr-diff-comment.trimmed.md
+          # Find every existing pr-diff-bot comment. Use --paginate (PRs can have
+          # >30 comments) and `contains` rather than `startswith` so a stray BOM
+          # or leading whitespace can't hide the marker.
+          ids=$(gh api --paginate "repos/${REPO}/issues/${PR_NUMBER}/comments" \
+            --jq '.[] | select(.body != null and (.body | contains("<!-- pr-diff-bot -->"))) | .id')
+          primary=$(echo "$ids" | head -n 1)
+          echo "pr-diff-bot comments found: $(echo "$ids" | grep -c .) ; primary: '${primary:-none}'"
+
+          # Clean up duplicate diff-bot comments left over from earlier broken
+          # runs — keep the primary, delete the rest.
+          echo "$ids" | tail -n +2 | while read -r id; do
+            [ -n "$id" ] || continue
+            echo "Deleting duplicate pr-diff-bot comment ${id}"
+            gh api -X DELETE "repos/${REPO}/issues/comments/${id}" >/dev/null || true
+          done
+
+          # Build the JSON body explicitly. `gh api -F body=@file` URL-encodes
+          # content, which was producing comments whose bodies didn't match the
+          # marker on the next run.
+          jq -Rs '{body: .}' < /tmp/pr-diff-comment.trimmed.md > /tmp/pr-comment-body.json
+
+          if [ -n "$primary" ]; then
+            echo "Patching primary comment ${primary}"
+            gh api -X PATCH "repos/${REPO}/issues/comments/${primary}" \
+              --input /tmp/pr-comment-body.json > /dev/null
           else
+            echo "Creating new comment"
             gh api -X POST "repos/${REPO}/issues/${PR_NUMBER}/comments" \
-              -F body=@/tmp/pr-diff-comment.trimmed.md
+              --input /tmp/pr-comment-body.json > /dev/null
           fi
