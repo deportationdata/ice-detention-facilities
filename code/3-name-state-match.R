@@ -586,7 +586,9 @@ code_name_state_manual <-
     "WVSWEST"                , ""                                   , "WV"   , "https://dcr.wv.gov/facilities/Pages/prisons-and-jails/swrjcf.aspx"                    ,
     "WVWESTR"                , ""                                   , "WV"   , "https://dcr.wv.gov/facilities/Pages/prisons-and-jails/wrjcf.aspx"                     ,
     # "XXWICHI"     Wichita County Jail           , "TX"                                 , "—"
-    "XXMRRCK"                , "MIDWEST REGIONAL RECEPTION CENTER"  , "KS"   , "https://www.ice.gov/detain/detention-facilities (Leavenworth; no ICE code yet)"
+    # State-only stub (name lives in 4-name-code-match.R so the matcher's
+    # lookup sees it; this tribble does select(-name)).
+    "XXMRRCK"                , ""                                   , "KS"   , "https://www.ice.gov/detain/detention-facilities (Leavenworth; no ICE code yet)"
   ) |>
   select(-name)
 
