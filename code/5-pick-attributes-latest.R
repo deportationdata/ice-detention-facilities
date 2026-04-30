@@ -51,11 +51,11 @@ last_detentions_date_per_code <-
 # district). These pairs are excluded from the name-based collapse so each
 # code retains its own record.
 do_not_collapse_pairs <- tribble(
-  ~code_a,   ~code_b,   ~reason,
-  "OAK",     "BOPOAD",  "Oakdale LA: IGSA and BOP complexes at 2105 E. Whatley Rd.",
-  "EDNDCTX", "EDENDTX", "Eden TX: USMS IGA and BOP facilities at Eden complex",
-  "GREENMA", "MAFRKHC", "Franklin House of Corrections MA: USMS IGA vs IGSA",
-  "USMS2TX", "USMS3TX", "US Marshals SDTX: Brownsville vs McAllen offices"
+  ~code_a   , ~code_b   , ~reason                                                     ,
+  "OAK"     , "BOPOAD"  , "Oakdale LA: IGSA and BOP complexes at 2105 E. Whatley Rd." ,
+  # "EDNDCTX" , "EDENDTX" , "these are mutually exclusive names for the same facility (used at diff times" ,     ,
+  "GREENMA" , "MAFRKHC" , "Franklin House of Corrections MA: USMS IGA vs IGSA"        ,
+  "USMS2TX" , "USMS3TX" , "US Marshals SDTX: Brownsville vs McAllen offices"
 )
 do_not_collapse_codes <- c(
   do_not_collapse_pairs$code_a,
