@@ -37,7 +37,10 @@ facilities_to_geocode <-
 
 # Caches are keyed by address_full (not detention_facility_code), so renaming a
 # code doesn't invalidate cached coords. Each run appends just the new addresses.
-google_cache <- read_rds("data/facilities-geocoded-google.rds")
+# any_of() lets the script tolerate older snapshots that still carry a stale
+# detention_facility_code column.
+google_cache <- read_rds("data/facilities-geocoded-google.rds") |>
+  select(-any_of("detention_facility_code"))
 new_for_google <- setdiff(
   facilities_to_geocode$address_full, google_cache$address_full
 )
@@ -59,7 +62,8 @@ if (length(new_for_google) > 0 && nzchar(Sys.getenv("GOOGLEGEOCODE_API_KEY"))) {
   write_rds(google_cache, "data/facilities-geocoded-google.rds")
 }
 
-arcgis_cache <- read_rds("data/facilities-geocoded-arcgis.rds")
+arcgis_cache <- read_rds("data/facilities-geocoded-arcgis.rds") |>
+  select(-any_of("detention_facility_code"))
 new_for_arcgis <- setdiff(
   facilities_to_geocode$address_full, arcgis_cache$address_full
 )
