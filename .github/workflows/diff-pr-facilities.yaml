@@ -68,11 +68,19 @@ jobs:
           use-public-rspm: true
 
       - name: Install minimal R deps
-        # Only what diff-facilities-pr.R needs. Use Posit Public Package Manager
-        # binaries (set above via use-public-rspm) so the install is seconds, not
-        # minutes.
-        run: |
-          Rscript -e 'install.packages(c("arrow","dplyr","tidyr","stringr","readr","purrr"))'
+        # Only what diff-facilities-pr.R needs. setup-r-dependencies caches the
+        # installed library across runs (keyed on the packages list + R version),
+        # so warm runs skip the install entirely.
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          packages: |
+            arrow
+            dplyr
+            tidyr
+            stringr
+            readr
+            purrr
+          cache-version: 1
 
       - name: Run diff script
         run: |
