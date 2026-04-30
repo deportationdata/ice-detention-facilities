@@ -134,6 +134,8 @@ jobs:
 
       - name: Run CI-friendly data pipeline
         if: steps.check_changes.outputs.changed == 'true'
+        env:
+          GOOGLEGEOCODE_API_KEY: ${{ secrets.GOOGLEGEOCODE_API_KEY }}
         run: |
           # CI subset of run_all.sh — skips the 1-process-* scripts that read
           # from local Box folders or sibling repos. Their outputs are already

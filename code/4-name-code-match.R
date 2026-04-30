@@ -402,6 +402,7 @@ fuzzy_matches_manual <- tribble(
   "Douglas County Jail"                                        , "DOUGLAS COUNTY WISCONSIN"                    , "WI"   , "DOUGLWI"                , NA                 ,
   "Liberty County Sheriff’s Office"                            , "LIBERTY COUNTY JAIL"                         , "FL"   , "LBRTYFL"                , NA                 ,
   "Flagler County Detention Facility"                          , "FLAGLER COUNTY JAIL"                         , "FL"   , "FLGLRFL"                , NA                 ,
+  "Midwest Regional Reception Center"                          , "MIDWEST REGIONAL RECEPTION CENTER"           , "KS"   , "XXMRRCK"                , NA                 ,
 )
 
 fuzzy_matches_manual <-
