@@ -46,21 +46,15 @@ last_detentions_date_per_code <-
   group_by(detention_facility_code) |>
   summarize(last_detentions_date = max(date, na.rm = TRUE), .groups = "drop")
 
-# Same-name pairs that ICE treats as administratively distinct facilities
-# (typically co-located BOP/IGSA complexes or separate offices in the same
-# district). These pairs are excluded from the name-based collapse so each
-# code retains its own record.
-do_not_collapse_pairs <- tribble(
-  ~code_a   , ~code_b   , ~reason                                                     ,
-  "OAK"     , "BOPOAD"  , "Oakdale LA: IGSA and BOP complexes at 2105 E. Whatley Rd." ,
-  # "EDNDCTX" , "EDENDTX" , "these are mutually exclusive names for the same facility (used at diff times" ,     ,
-  "GREENMA" , "MAFRKHC" , "Franklin House of Corrections MA: USMS IGA vs IGSA"        ,
-  "USMS2TX" , "USMS3TX" , "US Marshals SDTX: Brownsville vs McAllen offices"
-)
-do_not_collapse_codes <- c(
-  do_not_collapse_pairs$code_a,
-  do_not_collapse_pairs$code_b
-)
+# these are different facilities with the same name or ICE treats them separately,
+# so do not collapse them
+do_not_collapse_codes <- tribble(
+  ~code_a   , ~code_b   ,
+  "OAK"     , "BOPOAD"  ,
+  "GREENMA" , "MAFRKHC" ,
+  "USMS2TX" , "USMS3TX" ,
+) |>
+  unlist()
 
 facilities_with_multiple_codes <-
   name_code_match |>
