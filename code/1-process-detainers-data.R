@@ -1,8 +1,8 @@
 library(tidyverse)
 library(tidylog)
 
-detainers_master <- arrow::read_feather(
-  "https://github.com/deportationdata/ice/raw/refs/heads/cpang/data/ice-final/detainers-final-with-flags.feather"
+detainers_main <- arrow::read_feather(
+  "~/github/ice/data/detainers-historical.parquet"
 )
 
 detainers_latest <- arrow::read_parquet(

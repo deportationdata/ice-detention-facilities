@@ -295,6 +295,8 @@ facility_formatted <-
     latitude,
     longitude,
     field_office,
+    federal_court_district_of_confinement,
+    federal_court_circuit_of_confinement,
     days_with_detentions_daily_last_year,
     days_with_detentions_midnight_last_year,
     average_daily_population_last_year,
@@ -333,7 +335,6 @@ facility_formatted_sf <-
     remove = FALSE
   )
 
-
 sfarrow::st_write_parquet(
   facility_formatted_sf,
   "data/facilities-latest-sf.parquet"
@@ -367,25 +368,3 @@ zip(
   ),
   flags = "-j"
 )
-
-# # metadata for diagnostics
-# best_values_metadata <-
-#   best_values |>
-#   select(
-#     detention_facility_code,
-#     variable,
-#     n_changes,
-#     n_unique,
-#     has_reversion,
-#     is_aba,
-#     review_flag
-#   ) |>
-#   pivot_wider(
-#     names_from = variable,
-#     values_from = c(n_changes, n_unique, has_reversion, is_aba, review_flag),
-#     names_glue = "{variable}_{.value}"
-#   )
-
-# facility_final_metadata <-
-#   facility_final |>
-#   left_join(best_values_metadata, by = "detention_facility_code")
