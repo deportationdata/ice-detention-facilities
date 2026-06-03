@@ -281,11 +281,12 @@ facility_final <-
   ) |>
   st_join(
     federal_circuit_courts_sf |>
-      select(federal_court_circuit = NAME),
+      select(federal_court_circuit_of_confinement = NAME),
     join = st_within
   ) |>
   st_join(
-    federal_district_courts_sf |> select(federal_court_district = NAME),
+    federal_district_courts_sf |>
+      select(federal_court_district_of_confinement = NAME),
     join = st_within
   ) |>
   st_join(
@@ -301,24 +302,24 @@ facility_final <-
   st_join(cbsa_sf, join = st_within) |>
   st_join(csa_sf, join = st_within) |>
   mutate(
-    federal_court_circuit = case_when(
+    federal_court_circuit_of_confinement = case_when(
       # 48 USC 1613(a) specifies that the Virgin Islands are in the 3st Circuit
       state == "VI" ~ "THIRD CIRCUIT",
       # Rasul v Bush specifies that the Guantanamo Bay detention facility is in the District of Columbia Circuit
       detention_facility_code %in%
         c("GTMOBCU", "GTMODCU", "GTMOACU") ~ "DISTRICT OF COLUMBIA CIRCUIT",
-      TRUE ~ federal_court_circuit
+      TRUE ~ federal_court_circuit_of_confinement
     ),
-    federal_court_district = case_when(
+    federal_court_district_of_confinement = case_when(
       # 48 USC 1611(b) specifies that the Virgin Islands are served by the Virgin Islands District Court
       state == "VI" ~ "Virgin Islands District Court",
       # Rasul v Bush specifies that the Guantanamo Bay detention facility is in the jurisdiction of the District of District of Columbia
       detention_facility_code %in%
         c("GTMOBCU", "GTMODCU", "GTMOACU") ~ "District of District of Columbia",
-      TRUE ~ federal_court_district
+      TRUE ~ federal_court_district_of_confinement
     ),
     # simplify circuit names
-    federal_court_circuit = federal_court_circuit |>
+    federal_court_circuit_of_confinement = federal_court_circuit_of_confinement |>
       str_remove(" CIRCUIT") |>
       recode_values(
         "FIRST" ~ "1",

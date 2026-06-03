@@ -295,8 +295,8 @@ facility_formatted <-
     latitude,
     longitude,
     field_office,
-    federal_court_district,
-    federal_court_circuit,
+    federal_court_district_of_confinement,
+    federal_court_circuit_of_confinement,
     days_with_detentions_daily_last_year,
     days_with_detentions_midnight_last_year,
     average_daily_population_last_year,
@@ -335,14 +335,9 @@ facility_formatted_sf <-
     remove = FALSE
   )
 
-stop()
-
-unlink("data/facilities-latest-sf.parquet")
-st_write(
+sfarrow::st_write_parquet(
   facility_formatted_sf,
-  "data/facilities-latest-sf.parquet",
-  driver = "Parquet",
-  delete_dsn = TRUE
+  "data/facilities-latest-sf.parquet"
 )
 
 temp_dir <- tempdir()
