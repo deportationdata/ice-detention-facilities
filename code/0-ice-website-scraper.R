@@ -94,5 +94,5 @@ ice_facilities <- map_dfr(0:(n_facility_pages - 1), function(i) {
 
 arrow::write_parquet(
   ice_facilities,
-  glue::glue("data/facilities-from-ice-website-{Sys.Date()}.parquet")
+  glue::glue("data/facilities-from-ice-website-{format(Sys.time(), '%Y-%m-%d', tz = 'UTC')}.parquet")
 )

@@ -101,13 +101,31 @@ md_table <- function(df, cols, max_rows = MAX_ROWS) {
   paste0(out, "\n")
 }
 
+added_cols   <- setdiff(names(pr_df),   names(main_df))
+removed_cols <- setdiff(names(main_df), names(pr_df))
+
 # Output sections -----------------------------------------------------------
 cat(sprintf("- **Added:** %d facility(ies)\n", nrow(added)))
 cat(sprintf("- **Removed:** %d facility(ies)\n", nrow(removed)))
-cat(sprintf("- **Modified:** %d cell change(s) across %d facility(ies)\n\n",
-            nrow(changes), n_distinct(changes$.key)))
+cat(sprintf("- **Columns:** %d added, %d removed\n", length(added_cols), length(removed_cols)))
+if (nrow(changes) == 0) {
+  cat("- **Modified:** 0 cell change(s)\n\n")
+} else {
+  cat(sprintf("- **Modified:** %d cell change(s) across %d facility(ies)\n\n",
+              nrow(changes), n_distinct(changes$.key)))
+}
 
-cat("### Added\n\n")
+cat("### Schema changes\n\n")
+if (length(added_cols) == 0 && length(removed_cols) == 0) {
+  cat("_(none)_\n")
+} else {
+  if (length(added_cols))
+    cat(sprintf("- Added: %s\n", paste0("`", added_cols, "`", collapse = ", ")))
+  if (length(removed_cols))
+    cat(sprintf("- Removed: %s\n", paste0("`", removed_cols, "`", collapse = ", ")))
+}
+
+cat("\n### Added\n\n")
 cat(md_table(added,
              intersect(c("detention_facility_code", "name", "state",
                          "address_full", "field_office"), names(added))))

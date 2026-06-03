@@ -172,7 +172,7 @@ jobs:
           } > /tmp/pr-body.txt
 
           pr_url=$(gh pr create \
-            --title "Facilities update $(date +%Y-%m-%d)" \
+            --title "Facilities update $(date -u +%Y-%m-%d)" \
             --body-file /tmp/pr-body.txt \
             --reviewer graemeblair \
             --base main)
