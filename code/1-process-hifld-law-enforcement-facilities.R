@@ -21,6 +21,7 @@ local_law_enforcement_facilities <-
     status = STATUS,
     latitude = LATITUDE,
     longitude = LONGITUDE,
+    type = TYPE,
     date = as.Date("2024-10-07") # approximate date of data release based on file path
   )
 
