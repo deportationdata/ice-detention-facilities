@@ -143,8 +143,7 @@ federal_district_courts_sf <-
 # bring in ICE field office — remote parquet (sfarrow-written)
 ice_field_offices <-
   sfarrow::st_read_parquet(
-    # "https://github.com/deportationdata/ice-offices/raw/refs/heads/main/data/ice-aor-shp.parquet"
-    "~/github/ice-offices/data/ice-aor-shp.parquet"
+    "https://github.com/deportationdata/ice-offices/raw/refs/heads/main/data/ice-aor-shp.parquet"
   ) |>
   sf::st_transform(crs = 4326)
 
