@@ -403,6 +403,7 @@ fuzzy_matches_manual <- tribble(
   "Liberty County Sheriff’s Office"                            , "LIBERTY COUNTY JAIL"                         , "FL"   , "LBRTYFL"                , NA                 ,
   "Flagler County Detention Facility"                          , "FLAGLER COUNTY JAIL"                         , "FL"   , "FLGLRFL"                , NA                 ,
   "Midwest Regional Reception Center"                          , "MIDWEST REGIONAL RECEPTION CENTER"           , "KS"   , "XXMRRCK"                , NA                 ,
+  "Dakota County Sheriff Office"                               , "DAKOTA COUNTY JAIL"                          , "NE"   , "DAKOTNE"                , NA                 ,
 )
 
 fuzzy_matches_manual <-
