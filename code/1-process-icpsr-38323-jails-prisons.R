@@ -16,6 +16,7 @@ jails_prisons <-
       HOLD72PLUS == 0 ~ "Under 72",
       TRUE ~ NA_character_
     ),
+    operator_name = RUNAME,
     date = as.Date("2020-01-01") # approximate date of data release
   )
 

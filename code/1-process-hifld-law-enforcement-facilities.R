@@ -15,6 +15,8 @@ local_law_enforcement_facilities <-
     name = NAME,
     address = ADDRESS,
     city = CITY,
+    county = COUNTY,
+    county_fips = COUNTYFIPS,
     state = STATE,
     zip = ZIP,
     type = TYPE,
