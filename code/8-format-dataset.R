@@ -24,11 +24,6 @@ make_abbr_caps <- function(x, abbr) {
 facility_formatted <-
   facility_augmented |>
   # TODO: need to remove things from dtm that have 0 people detained
-  # XXWICHI is kept through the pipeline as a manual placeholder for Wichita
-  # County Jail (no ICE code yet); the code is blanked just before write.
-  mutate(
-    state = if_else(detention_facility_code == "XXWICHI", "TX", state)
-  ) |>
   # left_join(hospitals, by = c("name", "state")) |>
   mutate(
     name = name |>
