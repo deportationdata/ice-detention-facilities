@@ -205,14 +205,14 @@ facility_formatted <-
       detention_facility_code %in%
         c("CBPORIL", "JFKTSNY", "URSLATX") |
         str_detect(type_detailed, "CBP|USBP") |
-        str_detect(type, "CBP|USBP") ~ "CBP holding",
+        str_detect(type, "CBP|USBP") ~ "CBP hold room",
 
       str_detect(type, "Staging") |
-        str_detect(type_detailed, "Staging") ~ "ICE staging",
+        str_detect(type_detailed, "Staging") ~ "ICE staging facility",
 
       str_detect(detention_facility_code, "HOLD") |
         str_detect(type_detailed, "Hold") |
-        str_detect(type, "Hold") ~ "ICE holding",
+        str_detect(type, "Hold") ~ "ICE hold room",
 
       detention_facility_code %in%
         c("CSLLFTX", "THPSCTX") |
@@ -221,23 +221,40 @@ facility_formatted <-
 
       detention_facility_code == "BIINCCO" |
         str_detect(type_detailed, "CDF") |
-        str_detect(type, "CDF") ~ "CDF",
+        str_detect(type, "CDF") ~ "Contract Detention Facility",
 
-      str_detect(type_detailed, "SPC") | str_detect(type, "SPC") ~ "SPC",
+      str_detect(type_detailed, "SPC") | str_detect(type, "SPC") ~ "ICE Service Processing Center",
 
-      detention_facility_code %in%
-        c("TASTDTX", "DILLSAF", "HARRIMS", "FLDSSFS") |
-        str_starts(detention_facility_code, "GTMO") |
-        str_starts(detention_facility_code, "BOP") |
-        str_starts(detention_facility_code_alt, "BOP") |
-        str_detect(
+      str_starts(detention_facility_code, "GTMO") | str_detect(
           type_detailed,
-          "IGSA|IGA|DIGSA|County|Police|State|BOP|DOD|MOC"
+          "DOD|MOC"
         ) |
         str_detect(
           type,
-          "IGSA|IGA|DIGSA|County|Police|State|BOP|DOD|MOC"
-        ) ~ "Government contract",
+          "DOD|MOC"
+        ) ~ "Dept. of Defense",
+
+      str_starts(detention_facility_code, "BOP") |
+      str_starts(detention_facility_code_alt, "BOP") |
+      str_detect(
+          type_detailed,
+          "BOP"
+        ) |
+        str_detect(
+          type,
+          "BOP"
+        ) ~ "Federal Bureau of Prisons",
+
+      detention_facility_code %in%
+        c("TASTDTX", "DILLSAF", "HARRIMS", "FLDSSFS") |
+        str_detect(
+          type_detailed,
+          "IGSA|IGA|DIGSA|County|Police|State"
+        ) |
+        str_detect(
+          type,
+          "IGSA|IGA|DIGSA|County|Police|State"
+        ) ~ "Local government contract",
 
       str_detect(
         name,
@@ -245,7 +262,7 @@ facility_formatted <-
       ) ~ "Medical",
 
       str_detect(name, "County|PD|BRRJ|Correctional|Parish") |
-        detention_facility_code %in% "FLBAKCI" ~ "Government contract",
+        detention_facility_code %in% "FLBAKCI" ~ "Local government contract",
 
       TRUE ~ type
     ),
@@ -294,6 +311,12 @@ facility_formatted <-
     address_full,
     latitude,
     longitude,
+    type,
+    type_detailed,
+    type_ddp,
+    type_population,
+    male_female,
+    over_under_72,
     field_office,
     federal_court_district_of_confinement,
     federal_court_circuit_of_confinement,
