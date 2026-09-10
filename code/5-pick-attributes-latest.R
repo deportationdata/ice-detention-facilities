@@ -153,7 +153,7 @@ facility_attributes_unmatched_manual <-
     "TIMBER RIDGE SCHOOL"                                                       , "VA"          , "XXTIMBR"                ,
     "JTF CAMP SIX"                                                              , "FL"          , "GTMODCU"                ,
     "MIGRANT OPS CENTER MAIN A"                                                 , "FL"          , "GTMODCU"                ,
-    "WICHITA COUNTY JAIL"                                                       , "TX"          , "XXWICHI"                ,
+    "WICHITA COUNTY JAIL"                                                       , "TX"          , "WICHTTX"                ,
     "DOD DETENTION FACILITY AT FORT BLISS"                                      , "TX"          , "EROFCB"
   )
 
@@ -271,8 +271,19 @@ ice_sources <- c(
 
 cells_with_errors <-
   tribble(
-    ~detention_facility_code , ~source   , ~date                 , ~variable      , ~notes                                                                          ,
-    "CBENDTX"                , "website" , as.Date("2026-02-21") , "address_full" , "address is wrong; should be 4909 FM (Farm to Market) 2826, Robstown, TX 78380"
+    ~detention_facility_code , ~source   , ~date                 , ~variable      , ~notes                                                                                     ,
+    "CBENDTX"                , "website" , as.Date("2026-02-21") , "address_full" , "address is wrong; should be 4909 FM (Farm to Market) 2826, Robstown, TX 78380"            ,
+    "WALWOWI"                , "eoir"    , as.Date("2025-12-01") , "address"      , "WEST 4054 HIGHWAY NN is wrong; 2017/41855/vera/marshall agree on 1770 County Road NN"     ,
+    "WALWOWI"                , "eoir"    , as.Date("2025-12-01") , "address_full" , "built from the bad eoir address above"                                                    ,
+    "WALWOWI"                , "eoir"    , as.Date("2025-12-01") , "zip"          , "malformed zip 531210000; should be 53121"                                                 ,
+    "WASHCID"                , "eoir"    , as.Date("2025-12-01") , "address"      , "placeholder 1111111111111111; HIFLD/ICPSR agree on 262 East Court Street"                 ,
+    "WASHCID"                , "eoir"    , as.Date("2025-12-01") , "address_full" , "built from the placeholder eoir address above"                                            ,
+    "WASHCID"                , "eoir"    , as.Date("2025-12-01") , "zip"          , "malformed zip 836720000; should be 83672"                                                 ,
+    "ANDERSC"                , "eoir"    , as.Date("2025-12-01") , "address"      , "1009 COUNTY HOME RD. is the old road name; now 1009 David Lee Coffee Place (HIFLD/ICPSR)" ,
+    "ANDERSC"                , "eoir"    , as.Date("2025-12-01") , "address_full" , "built from the outdated eoir address above"                                               ,
+    "ANDERSC"                , "eoir"    , as.Date("2025-12-01") , "zip"          , "malformed zip 296250000; should be 29625"                                                 ,
+    "BERGENJ"                , "eoir"    , as.Date("2025-12-01") , "address_full" , "built from the malformed eoir zip below"                                                  ,
+    "BERGENJ"                , "eoir"    , as.Date("2025-12-01") , "zip"          , "malformed zip 076010000; should be 07601 (05655/41855/HIFLD agree)"
   )
 
 facility_latest_values <-

@@ -585,7 +585,22 @@ code_name_state_manual <-
     "WVSOUTH"                , ""                                   , "WV"   , "https://dcr.wv.gov/facilities/Pages/prisons-and-jails/srjcf.aspx"                     ,
     "WVSWEST"                , ""                                   , "WV"   , "https://dcr.wv.gov/facilities/Pages/prisons-and-jails/swrjcf.aspx"                    ,
     "WVWESTR"                , ""                                   , "WV"   , "https://dcr.wv.gov/facilities/Pages/prisons-and-jails/wrjcf.aspx"                     ,
-    # "XXWICHI"     Wichita County Jail           , "TX"                                 , "—"
+
+    # new ones (2026-08 detention data refresh)
+    "TAZRJVA"                , ""                                   , "VA"   , "https://swvrja.org/contact-us/ (SWVRJA Tazewell; ICE name B.R.R.J. TAZEWELL)"         ,
+    "BEECOTX"                , ""                                   , "TX"   , "Bee County Jail, Beeville TX (HIFLD/ICPSR on disk)"                                   ,
+    "CBPCAL"                 , ""                                   , "CA"   , "https://www.cbp.gov/about/contact/ports/calexico-east-class-california-2507"          ,
+    "GALVETX"                , ""                                   , "TX"   , "Galveston County Jail, Galveston TX (HIFLD/ICPSR on disk)"                            ,
+    "IRONCUT"                , ""                                   , "UT"   , "Iron County Jail, Cedar City UT (HIFLD/ICPSR on disk)"                                ,
+    "LYNNCTX"                , ""                                   , "TX"   , "Lynn County Law Enforcement Center, Tahoka TX (HIFLD on disk)"                        ,
+    "MACONTN"                , ""                                   , "TN"   , "Macon County Jail, Lafayette TN (HIFLD/ICPSR on disk)"                                ,
+    "MCJJVFL"                , ""                                   , "FL"   , "Martin County Jail juvenile unit, Stuart FL (separate code from MARTIFL adult jail)"  ,
+    "SMITHTX"                , ""                                   , "TX"   , "https://www.smith-county.com/372/Jail-Information (central jail, Tyler TX)"           ,
+    "TAYLOFL"                , ""                                   , "FL"   , "Taylor County Jail, Perry FL (HIFLD on disk)"                                         ,
+    "WASHCID"                , ""                                   , "ID"   , "Washington County Jail, Weiser ID (HIFLD/ICPSR on disk)"                              ,
+    "WICHTTX"                , ""                                   , "TX"   , "Wichita County Jail, Wichita Falls TX (replaces XXWICHI placeholder)"                 ,
+    "WNBGOWI"                , ""                                   , "WI"   , "Winnebago County Jail, Oshkosh WI (HIFLD/ICPSR on disk)"                              ,
+
     # State-only stub (name lives in 4-name-code-match.R so the matcher's
     # lookup sees it; this tribble does select(-name)).
     "XXMRRCK"                , ""                                   , "KS"   , "https://www.ice.gov/detain/detention-facilities (Leavenworth; no ICE code yet)"

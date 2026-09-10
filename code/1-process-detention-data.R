@@ -223,13 +223,13 @@ detentions_05655 <-
 
 detentions_facilities <-
   bind_rows(
-    "2026-03-10" = detentions_latest |>
+    "2026-08-07" = detentions_latest |>
       select(
         detention_facility_code,
         name = detention_facility,
         detention_book_in_date = book_in_date_time,
         detention_book_out_date = book_out_date_time,
-        anonymized_identifier
+        anonymized_identifier = unique_identifier
       ),
     # "-1" = facilities_51185,
     "2010-01-01" = detentions_hrw_df |>
