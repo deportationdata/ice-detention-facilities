@@ -281,7 +281,9 @@ cells_with_errors <-
     "WASHCID"                , "eoir"    , as.Date("2025-12-01") , "zip"          , "malformed zip 836720000; should be 83672"                                                 ,
     "ANDERSC"                , "eoir"    , as.Date("2025-12-01") , "address"      , "1009 COUNTY HOME RD. is the old road name; now 1009 David Lee Coffee Place (HIFLD/ICPSR)" ,
     "ANDERSC"                , "eoir"    , as.Date("2025-12-01") , "address_full" , "built from the outdated eoir address above"                                               ,
-    "ANDERSC"                , "eoir"    , as.Date("2025-12-01") , "zip"          , "malformed zip 296250000; should be 29625"
+    "ANDERSC"                , "eoir"    , as.Date("2025-12-01") , "zip"          , "malformed zip 296250000; should be 29625"                                                 ,
+    "BERGENJ"                , "eoir"    , as.Date("2025-12-01") , "address_full" , "built from the malformed eoir zip below"                                                  ,
+    "BERGENJ"                , "eoir"    , as.Date("2025-12-01") , "zip"          , "malformed zip 076010000; should be 07601 (05655/41855/HIFLD agree)"
   )
 
 facility_latest_values <-
