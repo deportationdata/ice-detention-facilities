@@ -270,7 +270,6 @@ facility_final <-
               "FSAHOLD",
               "LRAHOLD",
               "PHOHOLD",
-              "TUCHOLD",
               "FREHOLD",
               "REDHOLD",
               "SAAHOLD",
