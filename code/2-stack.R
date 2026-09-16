@@ -109,7 +109,7 @@ hfild_prisons <-
   )
 
 detentions_2012_2023 <- arrow::read_feather(
-  "~/github/ice/data/ice-detentions-2012-2023.feather"
+  here::here("../ice/data/ice-detentions-2012-2023.feather")
 )
 
 facilities_manual <- arrow::read_parquet(
