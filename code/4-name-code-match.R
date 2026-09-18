@@ -424,6 +424,9 @@ fuzzy_matches_manual <- tribble(
   "WINNEBAGO COUNTY SHERIFFS OFFICE / WINNEBAGO COUNTY JAIL"     , "WINNEBAGO COUNTY SHERIFF"                    , "WI"   , "WNBGOWI"                , NA                 ,
   "ANDERSON COUNTY DETENTION CENTER"                             , "ANDERSON COUNTY DET CENTER"                  , "SC"   , "ANDERSC"                , NA                 ,
   "SAN BENITO POLICE DEPARTMENT"                                 , "SAN BENITO POLICE DEPT."                     , "TX"   , "SBNTOTX"                , NA                 ,
+
+  # new on website
+  "Ward County Detention Center"                                 , "WARD COUNTY JAIL"                            , "ND"   , "WARDCND"                , NA                 ,
 )
 
 fuzzy_matches_manual <-
