@@ -291,13 +291,13 @@ facility_formatted <-
     longitude,
     field_office,
     federal_court_district_of_confinement,
-    federal_court_circuit_of_confinement,
-    days_with_detentions_daily_last_year,
-    days_with_detentions_midnight_last_year,
-    average_daily_population_last_year,
-    average_midnight_population_last_year,
-    max_daily_population_last_year,
-    max_midnight_population_last_year
+    federal_court_circuit_of_confinement
+    # days_with_detentions_daily_last_year,
+    # days_with_detentions_midnight_last_year,
+    # average_daily_population_last_year,
+    # average_midnight_population_last_year,
+    # max_daily_population_last_year,
+    # max_midnight_population_last_year
   )
 
 facility_formatted <-
