@@ -1,3 +1,857 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:875b30863a94f68e141277f3bb7623cfd370a621fa6e6bf07698e5374a97ec74
-size 133810
+source,detention_facility_code,name,address_full,address,city,state,latitude,longitude,zip,n_codings
+team-geocoding,WVNCENT,North Central Regional Jail,"1 Lois Lane, Greenwood, WV 26415",#1 Lois Lane,Greenwood,WV,39.28078206,-80.85362371,26415,2
+team-geocoding,MONTGTX,Montgomery County Jail,"1 Criminal Justice Dr, Conroe, TX 77301",1 Criminal Justice Dr,Conroe,TX,30.33538411,-95.45239176,77301,2
+team-geocoding,SPMHOLD,Bishop Henry Whipple Federal Bldg,"1 Federal Drive, Suite 1640, Fort Snelling, MN 55111","1 Federal Drive, Suite 1640",Fort Snelling,MN,44.89410469,-93.19490987,55111,2
+team-geocoding,UCHRVIL,Uchicago Medicine Ingalls Memorial,"1 Ingalls Dr, Harvey, IL 60426",1 Ingalls Dr,Harvey,IL,41.60722401,-87.659354,60426,2
+team-geocoding,WVWESTR,Western Regional Jail,"1 O'Hanlon Place, Barboursville, WV 25504",1 O'hanlon Place,Barboursville,WV,38.418957,-82.29305146,25504,2
+team-geocoding,BAKERFL,Baker County Detention Center,"1 Sheriff's Office Drive, Macclenny, FL 32063",1 Sheriff's Office Drive,Macclenny,FL,30.29585011,-82.12157801,32063,2
+team-geocoding,BOPBER,"Federal Correctional Institution - Berlin, NH","1 Success Loop Rd, Berlin, NH 03570",1 Success Loop Rd,Berlin,NH,44.52185389,-71.13753068,3570,2
+team-geocoding,MONMONJ,Monmouth County Jail,"1 Waterworks Road, Freehold, NJ 07728",1 Waterworks Road,Freehold,NJ,40.26693384,-74.28671933,7728,2
+team-geocoding,NASTRNY,Nassau County ICE Trailer,"100 Carman Avenue, East Meadow, NY 11554",100 Carman Avenue,East Meadow,NY,40.73516338,-73.55269653,11554,2
+team-geocoding,NASSANY,Nassau County Correctional Center,"100 Carman Avenue, East Meadow, NY 11554",100 Carman Avenue,East Meadow,NY,40.73516338,-73.55269653,11554,2
+team-geocoding,SUFFONY,Suffolk County Correctional Facility,"100 Center Drive, Riverhead, NY 11901",100 Center Drive,Riverhead,NY,40.91445158,-72.67250986,11901,2
+team-geocoding,CHMCINY,Courthouse Usm Cntl Islip,"100 Federal Plaza, Central Islip, NY 11722",100 Federal Plaza,Central Islip,NY,40.75988623,-73.1914954,11722,3
+hold,CIPHOLD,Central Islip Hold Room,"100 Federal Plaza, Central Islip, NY 11722",100 Federal Plaza,Central Islip,NY,40.75927388,-73.19042741,11722,2
+team-geocoding,BFLHPNY,Buffalo General Hospital,"100 High Street, Buffalo, NY 14203",100 High Street,Buffalo,NY,42.90083971,-78.86576317,14203,2
+team-geocoding,BAYAMPR,Bayamon Hospital,"100 Laurel Avenue, Bayamon, PR 00956",100 Laurel Avenue,Bayamon,PR,18.36788498,-66.15406202,956,2
+team-geocoding,BTSHOMI,Corewell Health Gr Hospital-Butterworth,"100 Michigan St NE, Grand Rapids, MI 49503",100 Michigan St NE,Grand Rapids,MI,42.9701578,-85.66538389,49503,2
+hold,GSCHOLD,Glenwood Springs Hold Room,"100 Midland Avenue Suite 210, Glenwood Springs, Co 81601",100 Midland Avenue Suite 210,Glenwood Springs,CO,39.55820977,-107.3583702,81601,2
+team-geocoding,CARROMD,Carroll County Detention Center,"100 North Court Street, Westminister, MD 21157",100 North Court Street,Westminister,MD,39.57217427,-76.98695782,21157,2
+team-geocoding,CASPSAC,Csp-Sacramento,"100 Prison Road, Represa, CA 95671",100 Prison Road,Represa,CA,38.7034219,-121.1604177,95671,2
+team-geocoding,ABRXSPA,Abraxas Academy Detention Center,"1000 Academy Drive, Morgantown, PA 19543",1000 Academy Drive,Morgantown,PA,40.19181355,-75.91580532,19543,2
+team-geocoding,BOPPOL,Pollock US Penitentiary,"1000 Airbase Rd, Pollock, LA 71467",1000 Airbase Rd,Pollock,LA,31.46885281,-92.43743997,71467,2
+new,CBPORIL,CBP O'Hare Airport Terminal 5 BC Ext,"1000 Bessie Coleman Drive, Chicago, IL 60666",1000 Bessie Coleman Drive,Chicago,IL,41.9747326,-87.89089245,60666,2
+team-geocoding,OKDBACK,Diamondback Correctional Facility,"1000 Diamondback Road, Watonga, OK 73772",1000 Diamondback Road,Watonga,OK,35.88435594,-98.39742583,73772,2
+team-geocoding,XXDIAMO,Diamondback Correctional Facility,"1000 Diamondback Road, Watonga, OK 73772",1000 Diamondback Road,Watonga,OK,35.88435594,-98.39742583,73772,2
+hold,BOSHOLD,Boston Hold Room,"1000 District Avenue, Burlington, Ma 01803",1000 District Avenue,Burlington,MA,42.48263463,-71.20887224,1803,2
+team-geocoding,WEBCOTX,Webb County Jail,"1000 San Agustin Ave, Laredo, TX 78040",1000 San Agustin Ave,Laredo,TX,27.50796861,-99.50523886,78040,2
+team-geocoding,PHELSMO,Phelps Health Hospital,"1000 W 10th St, Rolla, MO 65401",1000 W 10th St,Rolla,MO,37.952848,-91.78592,65401,2
+team-geocoding,WVSCENT,South Central Regional Jail,"1001 Centre Way, Charleston, WV 25309",1001 Centre Way,Charleston,WV,38.31099591,-81.71028615,25309,2
+team-geocoding,OGCMCCA,Orange County Global Medical Center,"1001 N Tustin Ave, Santa Ana, CA 92705",1001 N Tustin Ave,Santa Ana,CA,33.75444975,-117.8333278,92705,3
+team-geocoding,MWASHVA,Mary Washington Hospital,"1001 Sam Perry Blvd, Fredericksburg, VA 22401",1001 Sam Perry Blvd,Fredericksburg,VA,38.31104067,-77.48360637,22401,2
+team-geocoding,RGRNDTX,Rio Grande Processing Center,"1001 San Rio Blvd, Laredo, TX 78046",1001 San Rio Blvd,Laredo,TX,27.37771898,-99.49008,78046,2
+team-geocoding,CCAHUTX,T Don Hutto Detention Center,"1001 Welch Street, Taylor, TX 76574",1001 Welch Street,Taylor,TX,30.56495908,-97.41997489,76574,2
+team-geocoding,MRYHOMO,Mercy Hospital South,"10010 Kennerly Road, Saint Louis, MO 63128",10010 Kennerly Road,Saint Louis,MO,38.50735372,-90.38026964,63128,2
+team-geocoding,FLGLRFL,Flagler County Jail,"1002 Justice Ln, Bunnell, FL 32110",1002 Justice Ln,Bunnell,FL,29.45239462,-81.2561631,32110,2
+team-geocoding,ANSGHTX,Anson General Hospital,"101 Avenue J, Anson, TX 79501",101 Avenue J,Anson,TX,32.76791074,-99.89514243,79501,2
+hold,CHIHOLD,Chicago Hold Room,"101 Ida B. Wells Drive 4th Floor, Chicago, Il 60605",101 Ida B. Wells Drive 4th Floor,Chicago,IL,41.875346,-87.63100498,60605,2
+team-geocoding,BOURBKY,Bourbon County Detention Center,"101 Legion Rd, Paris, KY 40361",101 Legion Rd,Paris,KY,38.22415834,-84.24592753,40361,2
+team-geocoding,VICTOTX,Victoria County Jail,"101 North Glass Street, Victoria, TX 77901",101 North Glass Street,Victoria,TX,28.80026713,-97.0083268,77901,2
+team-geocoding,HENDRFL,Hendry County Jail,"101 South Bridge Street, Labelle, FL 33935",101 South Bridge Street,Labelle,FL,26.76036583,-81.43670544,33935,2
+team-geocoding,HLFRJVA,B R R J Halifax,"1010 Blue Ridge Lane, Halifax, VA 24558",1010 Blue Ridge Lane,Halifax,VA,36.76491657,-78.92995941,24558,2
+hold,BLGHOLD,Bowling Green Hold Room,"1013 Morgan Town Road, Bowling Green, Ky 42101",1013 Morgan Town Road,Bowling Green,KY,36.98860961,-86.48029272,42101,2
+team-geocoding,CIBOGNM,Cibola General Hospital,"1016 E Roosevelt Avenue, Grants, NM 87020",1016 E Roosevelt Avenue,Grants,NM,35.16199028,-107.8271994,87020,3
+team-geocoding,HRLGNTX,Harlingen Police Department,"1018 Fair Park Boluverd, Harlingen, TX 78550",1018 Fair Park Boluverd,Harlingen,TX,26.20035,-97.70541599,78550,2
+team-geocoding,SUTMCCA,Sutter Medical Center Sacramento,"1020 29th St #450, Sacramento, CA 95816",1020 29th St #450,Sacramento,CA,38.57280314,-121.4685018,95816,2
+team-geocoding,MYOMKMN,Mayo Clinic Health Sys - Mankato,"1025 Marsh Street, Mankato, MN 56001",1025 Marsh Street,Mankato,MN,44.1638442,-93.98340045,56001,2
+team-geocoding,AGMDCCA,Anaheim Global Medical Center,"1025 S Anaheim Blvd, Anaheim, CA 92805",1025 S Anaheim Blvd,Anaheim,CA,33.81984189,-117.9092551,92805,2
+team-geocoding,UPSLHIA,Unity Point Health St Lukes Hospital,"1026 A Ave Ne, Cedar Rapids, IA 52402",1026 A Ave Ne,Cedar Rapids,IA,41.98538438,-91.6604823,52402,2
+team-geocoding,VTDCORR,VT Department of Corrections,"103 South Main Street, Waterbury, VT 05676",103 South Main Street,Waterbury,VT,44.33372564,-72.75238596,5676,2
+hold,RMKHOLD,Roanoke Sub-Office Hold Room,"103 West Main Street, Salem, Va 24153",103 West Main Street,Salem,VA,37.29251479,-80.06117989,24153,4
+team-geocoding,DSMCNTX,Dsmc - Del Sol Medical Center,"10301 Gatewy Blvd W, El Paso, TX 79925",10301 Gatewy Blvd W,El Paso,TX,31.75681802,-106.349896,79925,4
+team-geocoding,BARTOGA,Bartow County Jail,"104 Zena Dr, Cartersville, GA 30121",104 Zena Dr,Cartersville,GA,34.19115492,-84.77817847,30121,2
+team-geocoding,ADLNTCA,Adelanto ICE Processing Center,"10400 Rancho Road, Adelanto, CA 92301",10400 Rancho Road,Adelanto,CA,34.55993666,-117.4388741,92301,2
+team-geocoding,STELHOH,St Elizabeth Youngstown Hospital,"1044 Belmont Avenue, Youngstown, OH 44501",1044 Belmont Avenue,Youngstown,OH,41.11381376,-80.65611397,44501,2
+team-geocoding,CADESVI,Desert View Annex,"10450 Rancho Road, Adelanto, CA 92301",10450 Rancho Road,Adelanto,CA,34.55929649,-117.4367633,92301,2
+team-geocoding,HARRIMS,Harrison Detention Center,"10451 Larkin Smith Dr, Gulfport, MS 39503",10451 Larkin Smith Dr,Gulfport,MS,30.43920191,-89.0546797,39503,2
+team-geocoding,CHTHMGA,Chatham County Jail,"1050 Carl Griffin Drive, Savannah, GA 31405",1050 Carl Griffin Drive,Savannah,GA,32.06669031,-81.16763009,31405,2
+team-geocoding,HDHSPNV,Henderson Hospital,"1050 West Galleria Drive, Henderson, NV 89011",1050 West Galleria Drive,Henderson,NV,36.07266562,-115.0306285,89011,2
+team-geocoding,DENVECO,Denver County Jail,"10500 East Smith Road, Denver, CO 80239",10500 East Smith Road,Denver,CO,39.76797683,-104.8651715,80239,2
+team-geocoding,MAVERTX,Tom Bowles Detention Center,"1051 Balboa Jones Boulevard, Eagle Pass, TX 78852",1051 Balboa Jones Boulevard,Eagle Pass,TX,28.71941236,-100.4599412,78852,2
+hold,BHMHOLD,Birmingham Hold Room,"107 Frankfurt Circle, Birmingham, Al 35211",107 Frankfurt Circle,Birmingham,AL,33.43680991,-86.86572565,35211,2
+team-geocoding,KINNETX,Kinney County Jail,"109 North Street, Brackettville, TX 78832",109 North Street,Brackettville,TX,29.31147722,-100.4178534,78832,2
+team-geocoding,ALAMCNC,Alamance County Detention Center,"109 South Maple Street, Graham, NC 27253",109 South Maple Street,Graham,NC,36.06825389,-79.40362386,27253,2
+hold,ALBHOLD,Albany Hold Room,"11 Old Stonebreak Road, Ballston Spa, Ny 12020",11 Old Stonebreak Road,Ballston Spa,NY,42.96526272,-73.78813707,12020,2
+team-geocoding,MAHONOH,Mahoning County Justice Center,"110 Fifth Avenue, Youngstown, OH 44503",110 Fifth Avenue,Youngstown,OH,41.10426589,-80.65505886,44503,2
+team-geocoding,PIERCND,Pierce County Jail,"110 Industrial Rd, Rugby, ND 58368",110 Industrial Rd,Rugby,ND,48.37359648,-99.97755087,58368,2
+team-geocoding,HASHENE,Hall County Department of Corrections,"110 Public Safety Drive, Grand Island, NE 68801",110 Public Safety Drive,Grand Island,NE,40.92663446,-98.32841385,68801,2
+team-geocoding,ORANGNY,Orange County Correctional Facility,"110 Wells Farm Road, Goshen, NY 10924",110 Wells Farm Road,Goshen,NY,41.40424843,-74.36062667,10924,2
+team-geocoding,CCAFLAZ,Central Arizona Florence Correctional Center,"1100 Bowling Road, Florence, AZ 85132",1100 Bowling Road,Florence,AZ,33.0440833,-111.3717718,85132,2
+team-geocoding,NATROWY,Natrona County Detention Center,"1100 Bruce Lane, Casper, WY 82601",1100 Bruce Lane,Casper,WY,42.86303117,-106.3448629,82601,2
+team-geocoding,PRSHANM,Presbyterian Hospital Abq,"1100 Central Ave Se, Albuquerque, NM 87106",1100 Central Ave Se,Albuquerque,NM,35.08206426,-106.6345973,87106,2
+team-geocoding,KCOJFOK,Kay County Detention Center,"1101 West Dry Road, Newkirk, OK 74647",1101 West Dry Road,Newkirk,OK,36.86793116,-97.06958376,74647,2
+team-geocoding,LAPAZAZ,LA Paz County Adult Detention Facility,"1109 W Arizona Ave, Parker, AZ 85344",1109 W Arizona Ave,Parker,AZ,34.14590002,-114.2901,85344,4
+team-geocoding,CARDFVA,Caroline Detention Facility,"11093 Sw Lewis Memorial Dr, Bowling Green, VA 22427",11093 Sw Lewis Memorial Dr,Bowling Green,VA,38.11157798,-77.26714497,22427,2
+team-geocoding,BMCSATX,Baptist Medical Center,"111 Dallas Street, San Antonio, TX 78205",111 Dallas Street,San Antonio,TX,29.4336342,-98.49266839,78205,2
+team-geocoding,DALCOTX,Dallas County Jail - Lew Sterrett Justice Center,"111 West Commerce Street, Dallas, TX 75202",111 West Commerce Street,Dallas,TX,32.7778,-96.8155,75202,2
+team-geocoding,PKMEDIN,Parkview Regional Medical Center,"11109 Parkview Plaza Drive, Fort Wayne, IN 46845",11109 Parkview Plaza Drive,Fort Wayne,IN,41.18690098,-85.10086799,46845,2
+team-geocoding,BANHOAZ,Banner University Medical Phoenix,"1111 E McDowell Rd 11th Floor, Phoenix, AZ 85006",1111 E McDowell Rd 11th Floor,Phoenix,AZ,33.46461231,-112.0596058,85006,2
+team-geocoding,MDLNDNE,Chi Health Midlands Hospital,"11111 S 84th St, Papillion, NE 68046",11111 S 84th St,Papillion,NE,41.13572389,-96.04030382,68046,2
+hold,KANHOLD,Kansas City Hold Room,"11125 N. Ambassador Drive Suite 100, Kansas City, Mo 64153",11125 N. Ambassador Drive Suite 100,Kansas City,MO,39.29576362,-94.68077337,64153,2
+team-geocoding,IMPCOCA,Imperial County Jail,"1115 N Imperial Ave, El Centro, CA 92243",1115 N Imperial Ave,El Centro,CA,32.80312376,-115.5690025,92243,2
+team-geocoding,ECC,El Centro Service Processing Center,"1115 North Imperial Avenue, El Centro, CA 92243",1115 North Imperial Avenue,El Centro,CA,32.80276824,-115.5696689,92243,2
+team-geocoding,HARDJIA,Hardin County Jail,"1116 14th Avenue, Eldora, IA 50627",1116 14th Avenue,Eldora,IA,42.36007804,-93.09753119,50627,2
+team-geocoding,BOPRAE,McRae Women's Facility,"112 Jim Hammock Dr, McRae-Helena, GA 31055",112 Jim Hammock Dr,McRae-Helena,GA,32.05030227,-82.8719057,31055,2
+team-geocoding,WVNORTH,Northern Regional Jail,"112 Northern Regional Correctional Dr, Moundsville, WV 26041",112 Northern Regional Correctional Dr,Moundsville,WV,39.90936738,-80.7294205,26041,2
+new,NATJVWY,Natrona County Juvenile Detention Center,"1120 Bruce Lane, Casper, WY 82601",1120 Bruce Lane,Casper,WY,42.86404709,-106.3452345,82601,2
+team-geocoding,CHSRHTX,Christus Santa Rosa Hospital - Medical,"11212 State Highway 151, San Antonio, TX 78251",11212 State Highway 151,San Antonio,TX,29.46614798,-98.69730904,78251,2
+team-geocoding,LLUMCCA,Loma Linda University Medical Center,"11234 Anderson Street, Loma Linda, CA 92354",11234 Anderson Street,Loma Linda,CA,34.04942561,-117.2643765,92354,2
+team-geocoding,PINEPLA,Pine Prairie ICE Processing Center,"1133 Hampton Dupre Road, Pine Prairie, LA 70576",1133 Hampton Dupre Road,Pine Prairie,LA,30.78908899,-92.42276602,70576,2
+team-geocoding,MHSOSTX,Methodist Hospital Stone Oak,"1139 E Sonterra Blvd, San Antonio, TX 78258",1139 E Sonterra Blvd,San Antonio,TX,29.61617248,-98.47462324,78258,2
+hold,PHIHOLD,Phi District Office,"114 North 8th Street 3rd Floor, Philadelphia, Pa 19107",114 North 8th Street 3rd Floor,Philadelphia,PA,39.95393216,-75.15308298,19107,2
+hold,LASHOLD,Las Cruces Hold Room,"1140 Commerce Drive Ste. B, Las Cruces, Nm 88011",1140 Commerce Drive Ste. B,Las Cruces,NM,32.34740306,-106.7627481,88011,2
+team-geocoding,WASHIAR,Washington County Detention Center,"1155 West Clydesdale Drive, Fayetteville, AR 72701",1155 West Clydesdale Drive,Fayetteville,AR,36.03353592,-94.17746959,72701,2
+team-geocoding,STCLAMI,St Clair County Jail,"1170 Michigan Road, Port Huron, MI 48060",1170 Michigan Road,Port Huron,MI,42.94230557,-82.47943808,48060,4
+team-geocoding,SNDCOCA,San Diego County Jail,"1173 Front St, San Diego, CA 92101",1173 Front St,San Diego,CA,32.71749456,-117.164272,92101,2
+team-geocoding,NYGREAC,Great Meadow C F,"11739 Ny-22, Comstock, NY 12821",11739 Ny-22,Comstock,NY,43.45731043,-73.43266846,12821,2
+team-geocoding,CKHOSFL,HCA Florida Kendall Hospital,"11750 Sw 40th Street, Miami, FL 33175",11750 Sw 40th Street,Miami,FL,25.7308993,-80.38543608,33175,2
+team-geocoding,HASKLTX,Rolling Plains Detention Center,"118 County Road 206, Haskell, TX 79521",118 County Road 206,Haskell,TX,33.17676916,-99.72180031,79521,3
+team-geocoding,THHHBTX,Texas Health Hurguley Hospital,"11801 South Fwy I-35w, Burleson, TX 76028",11801 South Fwy I-35w,Burleson,TX,32.58679189,-97.31691369,76028,2
+hold,BOIHOLD,Boise Hold Room,"1185 S. Vinnell Way, Boise, Id 83709",1185 S. Vinnell Way,Boise,ID,43.59423563,-116.2871064,83709,2
+team-geocoding,RADDFGA,Robert A Deyton Detention Facility,"11866 Hastings Bridge Rd, Lovejoy, GA 30250",11866 Hastings Bridge Rd,Lovejoy,GA,33.4341803,-84.30835519,30250,2
+hold,SALHOLD,Salisbury Hold Room,"119 W. Naylor Mill Road Suite 11, Salisbury, Md 21801",119 W. Naylor Mill Road Suite 11,Salisbury,MD,38.41088137,-75.57154924,21801,2
+team-geocoding,GREENMO,Greene County Jail,"1199 N Haseltine Road, Springfield, MO 65802",1199 N Haseltine Road,Springfield,MO,37.22469887,-93.38645019,65802,2
+team-geocoding,WVSOUTH,Southern Regional Jail,"1200 Airport Rd, Beaver, WV 25813",1200 Airport Rd,Beaver,WV,37.7710578,-81.11611223,25813,2
+team-geocoding,AHGRFND,Altru Hospital Grand Forks,"1200 S Columbia Rd, Grand Forks, ND 58201",1200 S Columbia Rd,Grand Forks,ND,47.91064662,-97.06872998,58201,2
+team-geocoding,LPZRHAZ,LA Paz Regional Hospital,"1200 West Mohave Road, Parker, AZ 85344",1200 West Mohave Road,Parker,AZ,34.13640135,-114.2853361,85344,2
+team-geocoding,BELCOTX,Bell County Jail,"1201 Huey Rd, Belton, TX 76513",1201 Huey Rd,Belton,TX,31.03740252,-97.48836687,76513,2
+team-geocoding,LRKBHFL,Larkin Behavioral Health Svcs,"1201 N 37th Ave, Hollywood, FL 33021",1201 N 37th Ave,Hollywood,FL,26.02102602,-80.18071597,33021,2
+team-geocoding,HICOJFL,Hillsborough County Jail,"1201 North Orient Road, Tampa, FL 33619",1201 North Orient Road,Tampa,FL,27.95903699,-82.37143098,33619,2
+team-geocoding,AKKETCH,Ketchikan Regional Correctional Institution,"1201 Schoenbar Road, Ketchikan, AK 99901",1201 Schoenbar Road,Ketchikan,AK,55.34834118,-131.6493069,99901,2
+team-geocoding,CNTRHWA,Confluence Health Hospital,"1201 South Miller Street, Wenatchee, WA 98801",1201 South Miller Street,Wenatchee,WA,47.40723098,-120.3215965,98801,2
+team-geocoding,CSLLFTX,Chi St Luke's H M Lufkin,"1201 W Frank Ave, Lufkin, TX 75904",1201 W Frank Ave,Lufkin,TX,31.33659801,-94.74156698,75904,3
+team-geocoding,SARPYNE,Sarpy County Department of Corrections,"1206 Golden Gate Drive, Papillion, NE 68046",1206 Golden Gate Drive,Papillion,NE,41.14082176,-96.04167677,68046,2
+team-geocoding,PRLDCTX,Prairieland Detention Facility,"1209 Sunflower Lane, Alvarado, TX 76009",1209 Sunflower Lane,Alvarado,TX,32.42141338,-97.19582779,76009,4
+hold,PRLHOLD,Prairieland Suboffice Hold Room,"1209 Sunflower Ln, Alvarado, Tx 76009",1209 Sunflower Ln,Alvarado,TX,32.42141903,-97.19583542,76009,2
+team-geocoding,UVALDTX,Uvalde County Jail,"121 E Nopal, Uvalde, TX 78801",121 E Nopal,Uvalde,TX,29.21130057,-99.78564569,78801,2
+team-geocoding,LYOLAIL,Loyola Center For Health,"1211 W Roosevelt Rd, Maywood, IL 60153",1211 W Roosevelt Rd,Maywood,IL,41.86430301,-87.84693697,60153,2
+team-geocoding,UVACVVA,Uva Univ Hospital Center,"1215 Lee St, Charlottesville, VA 22908",1215 Lee St,Charlottesville,VA,38.0310571,-78.49851008,22908,2
+team-geocoding,EPLTATX,El Paso Ltac Hospital,"1221 N Cotton St, El Paso, TX 79902",1221 N Cotton St,El Paso,TX,31.7837106,-106.4741601,79902,2
+team-geocoding,MLPHHMI,Mclaren Port Huron Hospital,"1221 Pine Grove Avenue, Port Huron, MI 48060",1221 Pine Grove Avenue,Port Huron,MI,42.98666671,-82.42971605,48060,3
+hold,STLHOLD,St Louis Hold Room,"1222 Spruce Street Room 100, St. Louis, Mo 63103",1222 Spruce Street Room 100,St. Louis,MO,38.6241972,-90.20048871,63103,2
+team-geocoding,CACHEUT,Cache County Jail,"1225 West Valley View (200 North), Logan, UT 84321",1225 West Valley View (200 North),Logan,UT,41.73712224,-111.8657437,84321,2
+hold,GRFHOLD,Grand Forks Hold Room,"124 N. 6th Street, Grand Forks, Nd 58203",124 N. 6th Street,Grand Forks,ND,47.92424139,-97.0352467,58203,2
+team-geocoding,MHNSATX,Methodist Hospital Northeast,"12412 Judson Rd, Live Oak, TX 78233",12412 Judson Rd,Live Oak,TX,29.55248942,-98.34807671,78233,2
+team-geocoding,LBRTYFL,Liberty County Jail,"12422 NW Revell Road, Bristol, FL 32321",12422 NW Revell Road,Bristol,FL,30.43397638,-84.96868605,32321,2
+hold,DENHOLD,Denver Hold Room,"12445 East Caley Avenue, Centennial, Co 80111",12445 East Caley Avenue,Centennial,CO,39.60151617,-104.8449951,80111,2
+team-geocoding,GEAUGOH,Geauga County Jail,"12450 Merritt Road, Chardon, OH 44024",12450 Merritt Road,Chardon,OH,41.50465415,-81.19159051,44024,2
+team-geocoding,SALEMNJ,Salem County Correctional Facility,"125 Cemetery Road, Woodstown, NJ 08098",125 Cemetery Road,Woodstown,NJ,39.63012411,-75.35691527,8098,2
+team-geocoding,CODCCSP,Colo Department of Corrections,"1250 Academy Park Loop, Colorado Springs, CO 80910",1250 Academy Park Loop,Colorado Springs,CO,38.81475392,-104.7586109,80910,2
+hold,SEAHOLD,Seattle Field Office Hold Room,"12500 Tukwila International Boulevard 4th Floor, Seattle, Wa 98168",12500 Tukwila International Boulevard 4th Floor,Seattle,WA,47.49050762,-122.2911876,98168,2
+team-geocoding,EPSSFTX,El Paso Soft Sided Facility,"12501 Gateway Blvd S, El Paso, TX 79934",12501 Gateway Blvd S,El Paso,TX,31.97015456,-106.3720369,79934,3
+team-geocoding,ELPCOTX,El Paso County Jail (TX),"12501 Montana Ave, El Paso, TX 79938",12501 Montana Ave,El Paso,TX,31.81069299,-106.254221,79938,3
+hold,HOUHOLD,Houston Field Office Hold Room,"126 Northpoint Drive, Houston, Tx 77060",126 Northpoint Drive,Houston,TX,29.93757547,-95.40639406,77060,2
+team-geocoding,UCHUHCO,UCHealth University of Colorado Hospital,"12605 E 16th Ave, Aurora, CO 80045",12605 E 16th Ave,Aurora,CO,39.74248973,-104.8416914,80045,2
+team-geocoding,UMEMCNY,United Memorial Medical Center,"127 North St, Batavia, NY 14020",127 North St,Batavia,NY,43.00508142,-78.17659681,14020,2
+team-geocoding,GLADEFL,Glades County Detention Center,"1297 East Sr 78, Moore Haven, FL 33471",1297 East Sr 78,Moore Haven,FL,26.838751,-81.124787,33471,2
+team-geocoding,PUTMAFL,Putnam County Jail,"130 Orie Griffin Blvd, Palatka, FL 32177",130 Orie Griffin Blvd,Palatka,FL,29.66833365,-81.66179215,32177,2
+team-geocoding,EHDLGTX,East Hidalgo Detention Center,"1300 E Hwy 107, La Villa, TX 78562",1300 E Hwy 107,La Villa,TX,26.29458408,-97.91891532,78562,3
+team-geocoding,WVSWEST,Southwestern Regional Jail,"1300 Gaston Caperton Dr, Holden, WV 25625",1300 Gaston Caperton Dr,Holden,WV,37.80522495,-82.09571942,25625,2
+team-geocoding,SAUKCWI,Sauk County Sheriff,"1300 Lange Ct., Baraboo, WI 53913",1300 Lange Ct.,Baraboo,WI,43.46156929,-89.7672744,53913,2
+team-geocoding,BOPLVN,Federal Correctional Institution Leavenworth,"1300 Metropolitan, Leavenworth, KS 66048",1300 Metropolitan,Leavenworth,KS,39.32984997,-94.93635042,66048,3
+team-geocoding,AFRC,Artesia Family Residential Center,"1300 W. Richey Avenue, Artesia, NM 88210",1300 W. Richey Avenue,Artesia,NM,32.85731048,-104.4129082,88210,3
+team-geocoding,PWHOSFL,Palms West Hospital,"13001 Southern Blvd, Loxahatchee, FL 33470",13001 Southern Blvd,Loxahatchee,FL,26.68372799,-80.25255064,33470,2
+team-geocoding,QUEMCHI,Queen's Medical Center,"1301 Punchbowl St, Honolulu, HI 96813",1301 Punchbowl St,Honolulu,HI,21.30787998,-157.8539078,96813,2
+team-geocoding,MVMCMAZ,HonorHealth Four Peaks Medical Center,"1301 S Crismon Rd, Mesa, AZ 85209",1301 S Crismon Rd,Mesa,AZ,33.39161121,-111.6111617,85209,2
+team-geocoding,CVREGVA,Central VA Regional Jail,"13021 James Madison Hwy, Orange, VA 22960",13021 James Madison Hwy,Orange,VA,38.22745369,-78.11670861,22960,4
+hold,JAXHOLD,Jacksonville Sub-Office,"13077 Veveras Drive, Jacksonville, Fl 32258",13077 Veveras Drive,Jacksonville,FL,30.13257185,-81.51262118,32258,2
+team-geocoding,GLEPDCA,Glendale Police Department,"131 North Isabel Street, Glendale, CA 91206",131 North Isabel Street,Glendale,CA,34.147493,-118.249203,91206,3
+team-geocoding,CULPEVA,Culpeper County Adult Detention Center,"131 W. Cameron St., Culpeper, VA 22701",131 W. Cameron St.,Culpeper,VA,38.47401868,-77.99675084,22701,2
+team-geocoding,MHMSATX,Methodist Hospital Metropolitan,"1310 Mccullough Ave, San Antonio, TX 78212",1310 Mccullough Ave,San Antonio,TX,29.44118508,-98.49100232,78212,3
+team-geocoding,POTTRTX,Potter County Jail,"13100 NE 29th Ave, Amarillo, TX 79111",13100 NE 29th Ave,Amarillo,TX,35.24127386,-101.6666629,79111,2
+team-geocoding,DOUGLWI,Douglas County Jail,"1316 N 14th St, Superior, WI 54880",1316 N 14th St,Superior,WI,46.72168099,-92.09838796,54880,3
+team-geocoding,ROCKIIL,Rock Island County Jail,"1317 3rd Avenue, Rock Island, IL 61201",1317 3rd Avenue,Rock Island,IL,41.50908189,-90.58091119,61201,2
+team-geocoding,IRWINGA,Irwin County Detention Center,"132 Cotton Drive, Ocilla, GA 31774",132 Cotton Drive,Ocilla,GA,31.57992901,-83.25533301,31774,2
+team-geocoding,UHGMCOH,Univ Hospital Geauga Medical Center,"13207 Ravenna Rd, Chardon, OH 44024",13207 Ravenna Rd,Chardon,OH,41.50878585,-81.18971573,44024,2
+team-geocoding,LACKAPA,"Lackawana Cnty Jail, PA","1371 North Washington Avenue, Scranton, PA 18509",1371 North Washington Avenue,Scranton,PA,41.42272461,-75.64816981,18509,2
+team-geocoding,STJOSCO,Saint Joseph Hospital,"1375 E 19th Ave, Denver, CO 80218",1375 E 19th Ave,Denver,CO,39.74613845,-104.9714791,80218,2
+team-geocoding,BOPVIM,Federal Correctional Institution Victorville,"13777 Air Expy, Victorville, CA 92394",13777 Air Expy,Victorville,CA,34.5654,-117.3647,92394,2
+team-geocoding,MADISNY,Madison County Jail,"138 North Court Street, Wampsville, NY 13163",138 North Court Street,Wampsville,NY,43.0797876,-75.7065087,13163,3
+team-geocoding,SHERBMN,Sherburne County Jail Services,"13880 Business Center Drive Nw, Elk River, MN 55330",13880 Business Center Drive Nw,Elk River,MN,45.3045097,-93.61927716,55330,2
+team-geocoding,RVBHHTX,Rio Vista Behv Health Hospital,"1390 Northwestern Drive, El Paso, TX 79912",1390 Northwestern Drive,El Paso,TX,31.88017096,-106.5738939,79912,2
+hold,RDUHOLD,Raleigh Hold Room,"140 Centrewest Court, Cary, Nc 27513",140 Centrewest Court,Cary,NC,35.81946182,-78.80529998,27513,2
+team-geocoding,NORFOVA,Norfolk City Jail,"140 East St, Norfolk, VA 23510",140 East St,Norfolk,VA,36.84462503,-76.28244703,23510,2
+team-geocoding,POTTAIA,Pottawattamie County Jail,"1400 Big Lake Road, Council Bluffs, IA 51501",1400 Big Lake Road,Council Bluffs,IA,41.28441839,-95.86505806,51501,2
+team-geocoding,WEBERUT,Weber County Jail,"1400 Depot Dr, Ogden, UT 84404",1400 Depot Dr,Ogden,UT,41.24036286,-111.9935134,84404,2
+team-geocoding,AKCOOKI,Anchorage Correctional Complex,"1400 E 4th Ave, Anchorage, AK 99501",1400 E 4th Ave,Anchorage,AK,61.21861499,-149.8555073,99501,2
+team-geocoding,MRMCSCA,Marian Regional Medical Center,"1400 E Church St, Santa Maria, CA 93454",1400 E Church St,Santa Maria,CA,34.95102974,-120.4132439,93454,2
+team-geocoding,ANCHOAK,Anchorage Correctional Complex,"1400 E Fourth Ave, Anchorage, AK 99501",1400 E Fourth Ave,Anchorage,AK,61.21848468,-149.8568744,99501,2
+team-geocoding,UMIAHFL,University of Miami Hospital,"1400 Nw 12th Avenue, Miami, FL 33136",1400 Nw 12th Avenue,Miami,FL,25.78835029,-80.21564345,33136,2
+team-geocoding,ADVHDCA,Adventist Health Delano,"1401 Garces Highway, Delano, CA 93215",1401 Garces Highway,Delano,CA,35.76232272,-119.2389025,93215,2
+team-geocoding,RGHOSTX,Rio Grande State Center,"1401 Rangerville Rd., Harlingen, TX 78550",1401 Rangerville Rd.,Harlingen,TX,26.16068299,-97.70724565,78550,2
+team-geocoding,NWREGVA,Northwest Regional Adult Detention,"141 Fort Collier Road, Winchester, VA 22603",141 Fort Collier Road,Winchester,VA,39.1984636,-78.14444106,22603,2
+team-geocoding,MINICID,Minicassia Detention Center,"1415 Albion Avenue, Burley, ID 83318",1415 Albion Avenue,Burley,ID,42.53503506,-113.7911899,83318,2
+team-geocoding,ECRMCCA,El Centro Regional Medical Center,"1415 Ross Ave, El Centro, CA 92243",1415 Ross Ave,El Centro,CA,32.78045379,-115.5685204,92243,2
+team-geocoding,WMDBHFL,West Miami Dade Bapt Health Emergency,"14150 SW 136th St, Miami, FL 33186",14150 SW 136th St,Miami,FL,25.64000251,-80.42243548,33186,2
+hold,GRRHOLD,Greer Hold Room,"142-F West Phillips Road, Greer, Sc 29650",142-F West Phillips Road,Greer,SC,34.87226401,-82.22835776,29650,2
+team-geocoding,ROCGHNY,Rochester General Hospital,"1425 Portland Avenue, Rochester, NY 14621",1425 Portland Avenue,Rochester,NY,43.19153379,-77.58558839,14621,2
+team-geocoding,PINELFL,Pinellas County Jail,"14400 49th Street North, Clearwater, FL 33762",14400 49th Street North,Clearwater,FL,27.90256006,-82.70587478,33762,2
+team-geocoding,MANATFL,Manatee County Detention-Annex,"14470 Harlee Road, Palmetto, FL 34221",14470 Harlee Road,Palmetto,FL,27.6366807,-82.5399629,34221,2
+team-geocoding,NRJDCVA,NW Regional Juvenile Detention Center,"145 Ft Collier Rd, Winchester, VA 22603",145 Ft Collier Rd,Winchester,VA,39.19961184,-78.14513265,22603,2
+team-geocoding,STWRTGA,Stewart Detention Center,"146 Cca Road, Lumpkin, GA 31815",146 Cca Road,Lumpkin,GA,32.03560799,-84.77150169,31815,2
+hold,WASHOLD,Washington Field Office,"14797 Murdock Street, Chantilly, Va 20151",14797 Murdock Street,Chantilly,VA,38.91143006,-77.45867867,20151,2
+new,WAJAIMN,Washington County Jail,"14900 North 62st. Street, Stillwater, Mn 55082",14900 North 62st. Street,Stillwater,MN,45.0380172,-92.80288302,55082,2
+hold,NBGHOLD,Newburgh Holding,"15 Governor Drive, Newburgh, Ny 12550",15 Governor Drive,Newburgh,NY,41.51576889,-74.11100479,12550,2
+team-geocoding,WAKULFL,Wakulla County Jail,"15 Oak Street, Crawfordville, FL 32327",15 Oak Street,Crawfordville,FL,30.19656538,-84.37729408,32327,2
+team-geocoding,UNIVHNJ,University Hospital,"150 Bergen Street, Newark, NJ 07103",150 Bergen Street,Newark,NJ,40.74063899,-74.19087603,7103,4
+hold,CSPHOLD,Casper Hold Room,"150 E. B Street Room 1014, Casper, WY 82601",150 E. B Street Room 1014,Casper,WY,42.85238167,-106.3242802,82601,2
+team-geocoding,JOPSHTX,John Peter Smith Hospital,"1500 S Main St, Fort Worth, TX 76104",1500 S Main St,Fort Worth,TX,32.7272171,-97.32722301,76104,2
+team-geocoding,HHBTHTX,Harris Health Ben Taub Hospital,"1504 Ben Taub Loop, Houston, TX 77030",1504 Ben Taub Loop,Houston,TX,29.71117201,-95.39405699,77030,3
+team-geocoding,RDRVHTX,Red River Hospital,"1505 8th St, Wichita Falls, TX 76301",1505 8th St,Wichita Falls,TX,33.90623442,-98.50126889,76301,2
+hold,MLDHOLD,"Midland, TX Enforcement and Removal Operations Hold Room","1515 Idlewild Drive, Midland, Tx 79703",1515 Idlewild Drive,Midland,TX,31.99699776,-102.1481852,79703,3
+team-geocoding,FLHOSFL,Kindred Hospital South Florida - Fort Lauderdale,"1516 E Las Olas Blvd, Fort Lauderdale, FL 33301",1516 E Las Olas Blvd,Fort Lauderdale,FL,26.11962096,-80.12701547,33301,2
+hold,RPCHOLD,Rapid City Hold Room,"1516 Fountain Plaza Drive, Rapid City, Sd 57702",1516 Fountain Plaza Drive,Rapid City,SD,44.09986245,-103.2584076,57702,2
+team-geocoding,ABIRJVA,SW Virginia Regional Jail Auth-Abg Facility,"15205 Joe Derting Dr, Abingdon, VA 24210",15205 Joe Derting Dr,Abingdon,VA,36.73258655,-81.91168152,24210,2
+team-geocoding,VVGMCCA,Victor Valley Global Medical Center,"15248 Eleventh Street, Victorville, CA 92395",15248 Eleventh Street,Victorville,CA,34.52817234,-117.2939222,92395,3
+hold,TALHOLD,Tallahassee Hold Room,"1530 Commonwealth Business Drive, Tallahassee, Fl 32303",1530 Commonwealth Business Drive,Tallahassee,FL,30.47199279,-84.35511104,32303,2
+team-geocoding,ENLMCCA,Enloe Medical Center,"1531 Esplanade Magnolia Ave, Chico, CA 95926",1531 Esplanade Magnolia Ave,Chico,CA,39.74216367,-121.8498751,95926,2
+team-geocoding,BROMMNY,Broome County Correctional Facility,"155 Lt. Vanwinkle Drive, Binghamton, NY 13905",155 Lt. Vanwinkle Drive,Binghamton,NY,42.13245472,-75.91667444,13905,2
+team-geocoding,MTNITPA,Mount Nittany Medical Center,"155 Wellness Way, State College, PA 16803",155 Wellness Way,State College,PA,40.8191247,-77.84355136,16803,2
+team-geocoding,UNIHONY,Unity Hospital,"1555 Long Pond Road, Rochester, NY 14626",1555 Long Pond Road,Rochester,NY,43.19192954,-77.70551541,14626,2
+team-geocoding,IBPSMIA,Miami Border Patrol,"15700 FL-820, Pembroke Pines, FL 33027",15700 FL-820,Pembroke Pines,FL,26.00720362,-80.35394031,33027,2
+team-geocoding,IRADFCA,Imperial Regional Detention Facility,"1572 Gateway Road, Calexico, CA 92231",1572 Gateway Road,Calexico,CA,32.69075498,-115.39788,92231,2
+team-geocoding,BOPMIA,Miami Federal Correctional Institution (Former McC),"15801 SW 137th Ave, Miami, FL 33177",15801 SW 137th Ave,Miami,FL,25.61802646,-80.40923012,33177,2
+team-geocoding,HOUICDF,Houston Contract Detention Facility,"15850 Export Plaza Drive, Houston, TX 77032",15850 Export Plaza Drive,Houston,TX,29.95053796,-95.31222371,77032,2
+team-geocoding,WKBHMFL,West Kendall Baptist Hospital,"15955 SW 96th Terrace, Miami, FL 33196",15955 SW 96th Terrace,Miami,FL,25.67808087,-80.45628462,33196,2
+team-geocoding,OLACCLA,Lasalle Correctional Center Olla,"15976 US-165, Olla, LA 71465",15976 US-165,Olla,LA,31.91098108,-92.2190292,71465,2
+team-geocoding,GREENMA,Franklin House of Corrections,"160 Elm Street, Greenfield, MA 01301",160 Elm Street,Greenfield,MA,42.59672867,-72.61310111,1301,2
+team-geocoding,HAMILTN,Hamilton County Jail (Tenn),"1600 East 3rd Street, Chattanooga, TN 37404",1600 East 3rd Street,Chattanooga,TN,35.04172975,-85.27639879,37404,2
+team-geocoding,THHEBTX,Texas Health Harris Methodist Hurst-Euless-Bedford,"1600 Hospital Pkwy, Bedford, TX 76022",1600 Hospital Pkwy,Bedford,TX,32.83543455,-97.1233219,76022,2
+team-geocoding,BRGMCFL,Broward Health Medical Center,"1600 South Andrews Avenue, Fort Lauderdale, FL 33316",1600 South Andrews Avenue,Fort Lauderdale,FL,26.10258902,-80.14083798,33316,2
+team-geocoding,JMTHOVA,Johnston Memorial Hospital,"16000 Johnston Memorial Drive, Abingdon, VA 24211",16000 Johnston Memorial Drive,Abingdon,VA,36.72304096,-81.9119617,24211,2
+team-geocoding,DAKOTNE,Dakota County Jail,"1601 Broadway, Dakota City, NE 68731",1601 Broadway,Dakota City,NE,42.41607108,-96.41979172,68731,3
+team-geocoding,STMARAZ,St Mary's Hospital,"1601 West Saint Marys Road, Tucson, AZ 85745",1601 West Saint Marys Road,Tucson,AZ,32.22820338,-111.0000813,85745,4
+hold,YRKHOLD,York Hold Room,"1605 Clugston Road, York, Pa 17404",1605 Clugston Road,York,PA,39.9849929,-76.75795911,17404,3
+team-geocoding,UHOSPIN,Union Hospital,"1606 N 7th St, Terre Haute, IN 47804",1606 N 7th St,Terre Haute,IN,39.485422,-87.40781904,47804,4
+team-geocoding,JMHOSFL,Jackson Memorial Hospital,"1611 N.w. 12th Ave, Miami, FL 33136",1611 N.w. 12th Ave,Miami,FL,25.79112433,-80.21207435,33136,2
+team-geocoding,ERICOPA,Erie County Jail,"1618 Ash Street, Erie, PA 16503",1618 Ash Street,Erie,PA,42.123738,-80.06654004,16503,2
+team-geocoding,CSCNWWA,Northwest ICE Processing Center (Nwipc),"1623 E J Street, Suite 2, Tacoma, WA 98421","1623 E J Street, Suite 2",Tacoma,WA,47.24917683,-122.421692,98421,2
+team-geocoding,THPSCTX,Thop Sierra Campus Elp,"1625 Medical Center Dr, El Paso, TX 79902",1625 Medical Center Dr,El Paso,TX,31.77760597,-106.4803796,79902,2
+team-geocoding,BNMCTAZ,Banner Medical Center Tucson,"1625 N Campbell Ave, Tucson, AZ 85719",1625 N Campbell Ave,Tucson,AZ,32.24189358,-110.9463954,85719,2
+team-geocoding,HERNAFL,Hernando County Jail,"16425 Spring Hill Drive, Brooksville, FL 34604",16425 Spring Hill Drive,Brooksville,FL,28.48386776,-82.45172885,34604,3
+team-geocoding,YORCOSC,York County Detention Center,"1675 York Hwy #3-A, York, SC 29745",1675 York Hwy #3-A,York,SC,34.98239828,-81.19973823,29745,2
+team-geocoding,DSRTVCA,Desert Valley Hospital,"16850 Bear Valley Road, Victorville, CA 92395",16850 Bear Valley Road,Victorville,CA,34.47233814,-117.2976951,92395,2
+team-geocoding,LSHOSMA,Lemuel Shattuck Hospital,"170 Morton Street, Jamaica Plain, MA 02130",170 Morton Street,Jamaica Plain,MA,42.29959544,-71.1019386,2130,2
+team-geocoding,PRESBNY,New York Presbyterian Hospital,"170 William St, New York, NY 10038",170 William St,New York,NY,40.71075893,-74.00513465,10038,2
+team-geocoding,HALLJGA,Hall County Jail,"1700 Barber Road, Gainesville, GA 30507",1700 Barber Road,Gainesville,GA,34.23860701,-83.81286502,30507,2
+team-geocoding,LRDMCTX,Laredo Medical Center,"1700 East Saunders, Laredo, TX 78044",1700 East Saunders,Laredo,TX,27.532485,-99.47807703,78044,2
+team-geocoding,KERNHCA,Kern Medical Hospital,"1700 Mount Vernon Ave, Bakersfield, CA 93306",1700 Mount Vernon Ave,Bakersfield,CA,35.38252331,-118.9706301,93306,2
+team-geocoding,GFJUVND,Grand Forks County Juvenile,"1701 N Washington St, Grand Forks, ND 58203",1701 N Washington St,Grand Forks,ND,47.93548832,-97.05764256,58203,2
+team-geocoding,GFCORND,Grand Forks County Correctional Center,"1701 N Washington St, Grand Forks, ND 58203",1701 N Washington St,Grand Forks,ND,47.93548832,-97.05764256,58203,2
+team-geocoding,EDNBGTX,Edinburg Police Department,"1702 S. Closner Blvd, Edinburg, TX 78539",1702 S. Closner Blvd,Edinburg,TX,26.28568427,-98.16455695,78539,2
+team-geocoding,EAZ,Eloy Detention Center,"1705 E Hanna Road, Eloy, AZ 85131",1705 E Hanna Road,Eloy,AZ,32.81759501,-111.5223773,85131,2
+hold,OMAHOLD,Omaha Field Office Hold,"1717 Ave H, Omaha, Ne 68110",1717 Ave H,Omaha,NE,41.28062931,-95.90853636,68110,2
+team-geocoding,CHISLTX,Chi St Luke's Health Mem,"1717 Hwy 59 Loop North, Livingston, TX 77351",1717 Hwy 59 Loop North,Livingston,TX,30.73109919,-94.93936652,77351,2
+team-geocoding,STJMCWA,St Joseph Medical Center,"1717 South J St, Tacoma, WA 98405",1717 South J St,Tacoma,WA,47.24542785,-122.4478638,98405,2
+hold,HLGHOLD,Harlingen Hold Room,"1717 Zoy Street, Harlingen, Tx 78552",1717 Zoy Street,Harlingen,TX,26.17792699,-97.71415999,78552,2
+team-geocoding,WMHOSCA,White Memorial Hospital,"1720 E Cesar Chavez, Los Angeles, CA 90033",1720 E Cesar Chavez,Los Angeles,CA,34.04931669,-118.2178375,90033,2
+team-geocoding,SLHTWTX,St Luke's Health - The Woodlands,"17200 St Lukes Way, The Woodlands, TX 77384",17200 St Lukes Way,The Woodlands,TX,30.20566754,-95.45833587,77384,2
+team-geocoding,HENRIVA,Henrico County Jail,"17320 New Kent Hwy, Barhamsville, VA 23011",17320 New Kent Hwy,Barhamsville,VA,37.49537919,-76.86187099,23011,3
+team-geocoding,RAPPSVA,Rappahannock Regional Jail,"1745 Richmond Hwy, Stafford, VA 22554",1745 Richmond Hwy,Stafford,VA,38.40682528,-77.42242233,22554,2
+hold,PKEHOLD,Pike County Enforcement and Removal Operations Hold Room,"170 Pike County Blvd, Lords Valley, Pa 18428",170 Pike County Blvd,Hawley,PA,41.38863106,-75.07251886,18428,2
+team-geocoding,PIKCOPA,Pike County Correctional Facility,"175 Pike County Blvd, Lords Valley, PA 18428",175 Pike County Blvd,Lords Valley,PA,41.38907634,-75.07122649,18428,2
+team-geocoding,LICEPLA,Louisiana ICE Processing Center,"17544 Tunica Trace, Angola, LA 70712",17544 Tunica Trace,Angola,LA,30.940609,-91.56848321,70712,2
+team-geocoding,KERCOCA,Kern County Jail (Lerdo),"17645 Industrial Farm Rd, Bakersfield, CA 93308",17645 Industrial Farm Rd,Bakersfield,CA,35.51071001,-119.1104,93308,2
+team-geocoding,HARFOCT,Hartford Correctional Center,"177 Weston Street, Hartford, CT 06120",177 Weston Street,Hartford,CT,41.79372102,-72.66131701,6120,2
+hold,PRUHOLD,Provo Hold Room,"1793 W. Business Parkway Drive, Orem, Ut 84058",1793 W. Business Parkway Drive,Orem,UT,40.27388571,-111.7378139,84058,2
+team-geocoding,HENDENV,Henderson Detention Center,"18 E. Basic Road, Henderson, NV 89015",18 E. Basic Road,Henderson,NV,36.03059098,-114.979471,89015,2
+team-geocoding,LAWINCI,Winn Correctional Center,"180 Cca Blvd, Winnfield, LA 71483",180 Cca Blvd,Winnfield,LA,31.85046438,-92.78139171,71483,2
+team-geocoding,RWCCMLA,Richwood Correctional Center,"180 Pine Bayou Circle, Monroe, LA 71202",180 Pine Bayou Circle,Monroe,LA,32.45663028,-92.07881881,71202,2
+hold,ATLHOLD,Atlanta District Hold Room,"180 Ted Turner Drive, Sw, Atlanta, Ga 30303","180 Ted Turner Drive, Sw",Atlanta,GA,33.74958147,-84.39736522,30303,2
+team-geocoding,CGRMCAZ,Casa Grande Regional Medical Center,"1800 E. Florence Bl., Casa Grande, AZ 85222",1800 E. Florence Bl.,Casa Grande,AZ,32.88130854,-111.7096158,85222,2
+team-geocoding,ELVDFTX,El Valle Detention Facility,"1800 Industrial Drive, Raymondville, TX 78580",1800 Industrial Drive,Raymondville,TX,26.46728403,-97.76164364,78580,2
+team-geocoding,UMCLVNV,University Medical Center,"1800 W Charleston Blvd, Las Vegas, NV 89102",1800 W Charleston Blvd,Las Vegas,NV,36.16038225,-115.1674545,89102,3
+team-geocoding,FRANKPA,Franklin County Jail,"1804 Opportunity Avenue, Chambersburg, PA 17201",1804 Opportunity Avenue,Chambersburg,PA,40.00173579,-77.64437253,17201,2
+team-geocoding,NRLKCMI,North Lake Processing Center,"1805 W 32nd Street, Baldwin, MI 49304",1805 W 32nd Street,Baldwin,MI,43.928627,-85.83879097,49304,2
+hold,NOLHOLD,New Orleans Hold Room,"181 James Drive W, Saint Rose, La 70087",181 James Drive W,Saint Rose,LA,29.98567009,-90.28531471,70087,2
+team-geocoding,AKANVIL,"Anvil Mountain Correctional Institution, Nome","1810 Center Creek, Nome, AK 99762",1810 Center Creek,Nome,AK,64.5376119,-165.4121958,99762,2
+team-geocoding,OZARKMO,Ozark County Jail,"1818 County Road 806, Gainesville, MO 65655",1818 County Road 806,Gainesville,MO,36.60009801,-92.448936,65655,2
+team-geocoding,KRO,Krome North Service Processing Center,"18201 Sw 12th Street, Miami, FL 33194",18201 Sw 12th Street,Miami,FL,25.75414381,-80.48911771,33194,2
+hold,KROHOLD,Krome Hold Room,"18201 Sw 12th Street, Miami, Fl 33194",18201 Sw 12th Street,Miami,FL,25.75476916,-80.49056912,33194,2
+team-geocoding,COBBJGA,Cobb County Sheriffs Ofc Adult Detention Center,"1825 County Services Parkway, Marietta, GA 30060",1825 County Services Parkway,Marietta,GA,33.90856554,-84.57997695,30060,2
+team-geocoding,STMARCA,St Mary Medical Center,"18300 California 18, Apple Valley, CA 92307",18300 California 18,Apple Valley,CA,34.54189778,-117.2655742,92307,2
+hold,COAHOLD,"Columbia, SC Hold Room","1835 Assembly Street, Suite 1569, Columbia, Sc 29201","1835 Assembly Street, Suite 1569",Columbia,SC,34.00900983,-81.04024712,29201,2
+team-geocoding,CALHOMI,Calhoun County Correctional Center,"185 E. Michigan Street, Battle Creek, MI 49014",185 E. Michigan Street,Battle Creek,MI,42.31641023,-85.17578658,49014,3
+team-geocoding,DONAANM,Dona Ana County Detention Center,"1850 Copper Loop, Las Cruces, NM 88004",1850 Copper Loop,Las Cruces,NM,32.30278652,-106.8058217,88004,2
+team-geocoding,PCKNSAL,Pickens County Detention Center,"188 Cemetery St, Carrollton, AL 35447",188 Cemetery St,Carrollton,AL,33.2603977,-88.09594803,35447,2
+team-geocoding,MHNHHTX,Memorial Hermann NE Hospital,"18951 N Memorial Drive, Humble, TX 77338",18951 N Memorial Drive,Humble,TX,29.99528802,-95.27621598,77338,3
+new,EPBHSTX,El Paso Behavioral Health System,"1900 Denver Ave, El Paso, Tx 79902",1900 Denver Ave,El Paso,TX,31.78063671,-106.4759787,79902,5
+new,KFMANTX,Kaufman County Detention Center,"1900 East US Highway 175, Kaufman, TX 75142",1900 East US Highway 175,Kaufman,TX,32.55974919,-96.29438571,75142,2
+team-geocoding,HNDMCTX,Hendrick Medical Center,"1900 Pine St, Abilene, TX 79601",1900 Pine St,Abilene,TX,32.47216534,-99.73381326,79601,2
+team-geocoding,BOPSPG,Springfield Federal Medical Center,"1900 W. Sunshine, Springfield, MO 65807",1900 W. Sunshine,Springfield,MO,37.17763662,-93.3231892,65807,2
+team-geocoding,FLDADCI,Dade Correctional Inst,"19000 SW 377th St, Homestead, FL 33034",19000 SW 377th St,Homestead,FL,25.41562701,-80.49991215,33034,4
+team-geocoding,LARCOWY,Laramie County Jail,"1910 Pioneer Avenue, Cheyenne, WY 82001",1910 Pioneer Avenue,Cheyenne,WY,41.13494563,-104.8198642,82001,2
+team-geocoding,CENTRVA,Centra Health,"1920 Atherholt Road, Lynchburg, VA 24501",1920 Atherholt Road,Lynchburg,VA,37.41365911,-79.16925554,24501,2
+hold,ALMHOLD,Alamosa Hold Room,"1921 State Street, Alamosa, Co 81101",1921 State Street,Alamosa,CO,37.45111503,-105.8659922,81101,2
+hold,BSAHOLD,Broadview Service Staging,"1930 Beach Street, Broadview, Il 60155",1930 Beach Street,Broadview,IL,41.86800572,-87.86604184,60155,3
+team-geocoding,AKFAIRB,Fairbanks Correctional Center,"1931 Eagan Street, Fairbanks, AK 99701",1931 Eagan Street,Fairbanks,AK,64.83352041,-147.7594745,99701,2
+team-geocoding,TALLAMS,Tallahatchie County Correctional Facility,"19351 US 49, Tutwiler, MS 38963",19351 US 49,Tutwiler,MS,34.02701222,-90.44625155,38963,2
+team-geocoding,CHANRAZ,Chandler Regional Medical Center,"1955 W Frye Rd, Chandler, AZ 85224",1955 W Frye Rd,Chandler,AZ,33.29759274,-111.8747923,85224,2
+team-geocoding,TOOELUT,Tooele County Jail,"1960 S Main St, Tooele, UT 84074",1960 S Main St,Tooele,UT,40.49319387,-112.3324999,84074,2
+team-geocoding,POLKJIA,Polk County Jail,"1985 Ne 51st Place, Des Moines, IA 50313",1985 Ne 51st Place,Des Moines,IA,41.65362786,-93.58789616,50313,2
+team-geocoding,WMLNDPA,Westmoreland County Jail,"2 North Main Street, Greensburg, PA 15601",2 North Main Street,Greensburg,PA,40.30276321,-79.54461724,15601,2
+team-geocoding,ADAMSMS,Adams County Correctional Center,"20 Hobo Forks Road, Natchez, MS 39120",20 Hobo Forks Road,Natchez,MS,31.55764769,-91.22127871,39120,3
+team-geocoding,ESSEXMA,"Essex County Jail, Middleton","20 Manning Ave, Middleton, MA 01949",20 Manning Ave,Middleton,MA,42.59770873,-70.98647059,1949,2
+team-geocoding,MONTGNY,Montgomery County Jail,"200 Clark Drive, Fultonville, NY 12072",200 Clark Drive,Fultonville,NY,42.93366199,-74.33258678,12072,2
+team-geocoding,JEFFEID,Jefferson County Jail,"200 Courthouse Way, Rigby, ID 83442",200 Courthouse Way,Rigby,ID,43.67344981,-111.9112013,83442,2
+hold,NORHOLD,Norfolk Sub-Office Hold,"200 Granby Street Suite 821, Norfolk, Va 23510",200 Granby Street Suite 821,Norfolk,VA,36.84850338,-76.29086079,23510,2
+team-geocoding,BALDWAL,Baldwin County Correctional Center,"200 Hand Ave., Bay Minette, AL 36507",200 Hand Ave.,Bay Minette,AL,30.88542951,-87.77481125,36507,2
+team-geocoding,FRIRHTX,Frio Regional Hospital,"200 Ih 35 South, Pearsall, TX 78061",200 Ih 35 South,Pearsall,TX,28.89634801,-99.11726803,78061,3
+team-geocoding,DAVIDTN,Davidson County Sheriff Department,"200 James Robertson Pkwy, Nashville, TN 37201",200 James Robertson Pkwy,Nashville,TN,36.16785092,-86.77929975,37201,2
+team-geocoding,UPMCPPA,Upmc Presbyterian Hospital,"200 Lothrop St, Pittsburgh, PA 15213",200 Lothrop St,Pittsburgh,PA,40.44224705,-79.96092873,15213,2
+team-geocoding,SUWANFL,Suwannee County Jail,"200 Ohio Ave S, Live Oak, FL 32064",200 Ohio Ave S,Live Oak,FL,30.29564082,-82.98506902,32064,2
+team-geocoding,CIBOCNM,Cibola County Correctional Center,"2000 Cibola Loop, Milan, NM 87021",2000 Cibola Loop,Milan,NM,35.179948,-107.9073231,87021,3
+team-geocoding,CIBOLNM,Cibola County Detention Center,"2000 Cibola Loop, Milan, NM 87021",2000 Cibola Loop,Milan,NM,35.179948,-107.9073231,87021,3
+team-geocoding,AKLEMON,"Lemon Creek, Juneau, AK","2000 Lemon Creek Road, Juneau, AK 99801",2000 Lemon Creek Road,Juneau,AK,58.36257205,-134.4844093,99801,2
+team-geocoding,ALEXAVA,Alexandria City Jail,"2001 Mill Rd, Alexandria, VA 22314",2001 Mill Rd,Alexandria,VA,38.79792346,-77.06462629,22314,2
+team-geocoding,THPMCTX,The Hospital of Providence,"2001 N Oregon St, El Paso, TX 79902",2001 N Oregon St,El Paso,TX,31.77089731,-106.5001404,79902,2
+team-geocoding,FULCJIN,Fulton County Jail Indiana,"2006 Sweetgum Rd, Rochester, IN 46975",2006 Sweetgum Rd,Rochester,IN,41.05192359,-86.23201245,46975,2
+team-geocoding,NBRMCFL,Broward Health North,"201 East Sample Road, Pompano Beach, FL 33060",201 East Sample Road,Pompano Beach,FL,26.27695821,-80.12134193,33060,2
+team-geocoding,VRK,Vrk Prcs,"201 Varick Street, New York, NY 10014",201 Varick Street,New York,NY,40.72807334,-74.00559633,10014,2
+team-geocoding,THHMHTX,TX Health Harris Meth Hospital,"201 Walls Dr, Cleburne, TX 76033",201 Walls Dr,Cleburne,TX,32.33174348,-97.43840728,76033,2
+team-geocoding,GARVIOK,Garvin County Jail,"201 West Grant Avenue, Pauls Valley, OK 73075",201 West Grant Avenue,Pauls Valley,OK,34.74063838,-97.22216046,73075,2
+hold,JAKHOLD,Jackson MS Hold Room,"202 Metroplex Drive, Pearl, Ms 39208",202 Metroplex Drive,Pearl,MS,32.29032628,-90.05979838,39208,2
+team-geocoding,SARASFL,Sarasota County Jail,"2020 Main St, Sarasota, FL 34237",2020 Main St,Sarasota,FL,27.33606348,-82.52949364,34237,2
+team-geocoding,LONPDAR,Lonoke Police Department Detention Center,"203 W. Front Street, Lonoke, AR 72086",203 W. Front Street,Lonoke,AR,34.78361001,-91.90152002,72086,2
+team-geocoding,LIRSFCO,Lirs - Lfsrm Fort Collins Ltfc County,"2032 Lowe Street, Suite 200, Fort Collins, CO 80525","2032 Lowe Street, Suite 200",Fort Collins,CO,40.53253146,-105.0397792,80525,2
+hold,PHOHOLD,Phoenix District Office,"2035 N. Central Avenue, Phoenix, Az 85004",2035 N. Central Avenue,Phoenix,AZ,33.47084002,-112.073136,85004,4
+team-geocoding,WOODFKY,Woodford County Sheriff/Jail,"204 Beasley Rd, Versailles, KY 40383",204 Beasley Rd,Versailles,KY,38.04795649,-84.75795972,40383,2
+team-geocoding,WARDCND,Ward County Jail,"204 Front St, Minot, ND 58702",204 Front St,Minot,ND,48.23365612,-101.2873442,58702,2
+hold,IMPHOLD,Imperial Sub Office Hold Room,"2051 North Waterman Avenue Suite 101, El Centro, Ca 92243",2051 North Waterman Avenue Suite 101,El Centro,CA,32.81319479,-115.572837,92243,2
+team-geocoding,LVYHOPA,Lehigh Valley Hospital - Pocono,"206 East Brown Street, East Stroudsburg, PA 18301",206 East Brown Street,East Stroudsburg,PA,40.99252079,-75.17476579,18301,2
+hold,ATTHOLD,"Athens, TX Hold Room","206 N Murchison St, Athens, Tx 75751",206 N Murchison St,Athens,TX,32.2076,-95.84575004,75751,2
+team-geocoding,FLBAKCI,Baker Correctional Institution,"20706 FL-10, Sanderson, FL 32087",20706 FL-10,Sanderson,FL,30.21764047,-82.36717399,32087,2
+hold,IFIHOLD,Idaho Falls Hold Room,"2075 N Boulevard, Idaho Falls, Id 83402",2075 N Boulevard,Idaho Falls,ID,43.51459485,-112.0341288,83402,2
+team-geocoding,TOORANM,Torrance County Detention Facility,"209 County Road A049, Estancia, NM 87016",209 County Road A049,Estancia,NM,34.76767999,-106.018446,87016,2
+team-geocoding,UNIONSD,Union County Jail,"209 E Main St Suite #250, Elk Point, SD 57025",209 E Main St Suite #250,Elk Point,SD,42.68584986,-96.68255716,57025,2
+hold,DVDHOLD,Dover Hold Room,"210 Beiser Boulevard, Dover, De 19904",210 Beiser Boulevard,Dover,DE,39.15520653,-75.54284634,19904,2
+hold,DSMHOLD,Des Moines Hold Room,"210 Walnut St. Suite 359, Des Moines, Ia 50309",210 Walnut St. Suite 359,Des Moines,IA,41.58651404,-93.62024201,50309,5
+team-geocoding,VBHOSTX,Valley Baptist Hospital,"2101 Pease St, Harlingen, TX 78550",2101 Pease St,Harlingen,TX,26.17445998,-97.67072497,78550,2
+team-geocoding,OAK,Oakdale Federal Detention Center,"2105 E. Whatley Rd., Oakdale, LA 71463",2105 E. Whatley Rd.,Oakdale,LA,30.82081998,-92.642909,71463,4
+team-geocoding,AZSPPER,Perryville State Prison,"2105 North Citrus Rd, Goodyear, AZ 85395",2105 North Citrus Rd,Goodyear,AZ,33.47137516,-112.4421715,85395,6
+hold,RIIHOLD,Rock Island Hold Room,"211 19th Street, Rock Island, Il 61201",211 19th Street,Rock Island,IL,41.51069591,-90.57292064,61201,4
+team-geocoding,GUDOCHG,"Guam Department of Corrections, Hagatna Detention Facility","211 Aspinall Ave, Hagatna, GU 96910",211 Aspinall Ave,Hagatna,GU,13.4743782,144.7501207,96910,3
+hold,EUGHOLD,Eugene Hold Room,"211 East 7th Avenue Suite 120, Eugene, Or 97401",211 East 7th Avenue Suite 120,Eugene,OR,44.05267406,-123.0893703,97401,3
+team-geocoding,SMNOLFL,John E. Polk Correctional Facility,"211 Eslinger Way, Sanford, FL 32773",211 Eslinger Way,Sanford,FL,28.74779273,-81.29824922,32773,3
+hold,TFIHOLD,Twin Falls Hold Room,"212 Deere Street, Twin Falls, Id 83301",212 Deere Street,Twin Falls,ID,42.5461324,-114.4277209,83301,2
+team-geocoding,BEDCITX,Bedford City Jail,"2121 L Don Dodson Drive, Bedford, TX 76021",2121 L Don Dodson Drive,Bedford,TX,32.8421008,-97.13128261,76021,4
+hold,BSCHOLD,Big Spring Hold Room,"2137-2077 W 16th St, Big Spring, TX",2137-2077 W 16th St,Big Spring,TX,32.23300795,-101.4953538,79720,3
+team-geocoding,GCLECOK,Grady County Law Enforcement Center,"215 N 3rd St., Chickasha, OK 73018",215 N 3rd St.,Chickasha,OK,35.05318999,-97.93638,73018,2
+team-geocoding,MESJACO,Mesa County Jail,"215 Rice Street, Grand Junction, CO 81501",215 Rice Street,Grand Junction,CO,39.0686798,-108.5735786,81501,4
+hold,CNGHOLD,Chattanooga Hold Room,"2150 Stein Drive, Chattanooga, Tn 37421",2150 Stein Drive,Chattanooga,TN,35.05620303,-85.1845245,37421,4
+team-geocoding,LOGANOK,Logan County Jail,"216 S Broad St, Guthrie, OK 73044",216 S Broad St,Guthrie,OK,35.87625303,-97.4223618,73044,2
+team-geocoding,DODGEWI,Dodge Detention Facility,"216 W. Center Street, Juneau, WI 53039",216 W. Center Street,Juneau,WI,43.40726386,-88.70645613,53039,3
+team-geocoding,KODIAAK,Kodiak City Jail,"2160 Mill Bay Rd, Kodiak, AK 99615",2160 Mill Bay Rd,Kodiak,AK,57.80475301,-152.3726919,99615,6
+team-geocoding,SUMTEFL,Sumter County Jail,"219 East Anderson Ave, Bushnell, FL 33513",219 East Anderson Ave,Bushnell,FL,28.66270266,-82.10976288,33513,2
+team-geocoding,HAILEID,Dale G Haile Detention Center,"219 N 12th Ave, Caldwell, ID 83605",219 N 12th Ave,Caldwell,ID,43.66575656,-116.6809993,83605,2
+new,AMHERVA,Amherst County Jail,"219 South Riverview Road, Madison Heights, VA 24572",219 South Riverview Road,Madison Heights,VA,37.40853902,-79.09350065,24572,3
+team-geocoding,NVSDCNV,Nevada Southern Detention Center,"2190 E Mesquite Avenue, Pahrump, NV 89060",2190 E Mesquite Avenue,Pahrump,NV,36.25245773,-115.977029,89060,3
+team-geocoding,UNMEDMD,Univ of Maryland Medical Center,"22 S Greene St, Baltimore, MD 21201",22 S Greene St,Baltimore,MD,39.28810428,-76.62472205,21201,3
+team-geocoding,DORCDSC,Dorchester County Detention Center,"220 Hodge Road, Summerville, SC 29483",220 Hodge Road,Summerville,SC,33.05753131,-80.22068583,29483,4
+team-geocoding,CLARKIA,Clarke County Sheriff,"220 Townline Rd, Osceola, IA 50213",220 Townline Rd,Osceola,IA,41.04467609,-93.76335286,50213,5
+team-geocoding,PVHOSIN,Parkview Hospital Randallia,"2200 Randallia Drive, Fort Wayne, IN 46805",2200 Randallia Drive,Fort Wayne,IN,41.09570202,-85.10979799,46805,4
+team-geocoding,KANDIMN,Kandiyohi County Jail,"2201 23rd St. Ne, Willmar, MN 56201",2201 23rd St. Ne,Willmar,MN,45.14587401,-95.01397397,56201,3
+team-geocoding,NUMCENY,Nassau Univ Medical Center,"2201 Hempstead Turnpike, East Meadow, NY 11554",2201 Hempstead Turnpike,East Meadow,NY,40.72641896,-73.55334328,11554,3
+hold,MCAHOLD,McAllen Hold Room,"2202 Cornerstone Blvd, Edinburg, Tx 78539",2202 Cornerstone Blvd,Edinburg,TX,26.2639474,-98.1981895,78539,5
+team-geocoding,UNMHANM,University of New Mexico Hospital,"2211 Lomas Blvd Ne, Albuquerque, NM 87106",2211 Lomas Blvd Ne,Albuquerque,NM,35.08786337,-106.6185127,87106,2
+team-geocoding,MEHOSCA,Mercy Hospital Downtown Bakersfield,"2215 Truxtun Ave, Bakersfield, CA 93301",2215 Truxtun Ave,Bakersfield,CA,35.37279812,-119.0276222,93301,5
+team-geocoding,CLARKID,Clark County Jail (ID),"224 W Main St, Dubois, ID 83423",224 W Main St,Dubois,ID,44.1766347,-112.232917,83423,3
+team-geocoding,CCANOOH,Northeast Ohio Correctional Center,"2240 Hubbard Road, Youngstown, OH 44505",2240 Hubbard Road,Youngstown,OH,41.13134916,-80.63152281,44505,4
+team-geocoding,TRRMCNJ,Trinitas Regional Medical Center,"225 Williamson St, Elizabeth, NJ 07202",225 Williamson St,Elizabeth,NJ,40.65906601,-74.21475004,7202,3
+team-geocoding,HPKNSKY,Hopkins County Jail,"2250 Laffoon Trl, Madisonville, KY 42431",2250 Laffoon Trl,Madisonville,KY,37.33759615,-87.53993367,42431,4
+team-geocoding,ELMORID,Elmore County Detention Center (Elmore County Jail),"2255 East 8th North, Mountain Home, ID 83647",2255 East 8th North,Mountain Home,ID,43.13685038,-115.6731791,83647,3
+team-geocoding,CACTYCA,California City Detention Facility,"22844 Virginia Boulevard, California City, CA 93505",22844 Virginia Boulevard,California City,CA,35.15290316,-117.8589979,93505,2
+team-geocoding,EPCPCTX,EGP CPC Holding,"2285 Del Rio Blvd, Eagle Pass, TX 78852",2285 Del Rio Blvd,Eagle Pass,TX,28.73532285,-100.4970642,78852,4
+team-geocoding,HHCHKTX,Houston Healthcare Hospital,"22999 Us-59n, Kingwood, TX 77339",22999 Us-59n,Kingwood,TX,30.04814462,-95.25505479,77339,4
+team-geocoding,MILLRAR,Miller County Jail,"2300 East Street, Texarkana, AR 71854",2300 East Street,Texarkana,AR,33.40116926,-94.02247496,71854,3
+team-geocoding,STJHCCA,St John's Hospital Camarillo,"2309 Antonio Ave, Camarillo, CA 93010",2309 Antonio Ave,Camarillo,CA,34.24360246,-119.0203184,93010,4
+team-geocoding,NEMCCOI,McCook ICE Igsa,"2309 Us-83 N, Mccook, NE 69001",2309 Us-83 N,Mccook,NE,40.22811415,-100.6484457,69001,2
+team-geocoding,XXMCCOO,McCook Detention Center,"2309 US-83 N, Mccook, NE 69001",2309 US-83 N,Mccook,NE,40.22814664,-100.648867,69001,4
+hold,CHMHOLD,Champlain Hold Room,"237 West Service Road Room Cb 107, Unit 8, Champlain, Ny 12919","237 West Service Road Room Cb 107, Unit 8",Champlain,NY,45.00655616,-73.45333856,12919,3
+team-geocoding,NNVMCNV,Northern Nevada Medical Center,"2375 E Prater Way, Sparks, NV 89434",2375 E Prater Way,Sparks,NV,39.54110713,-119.697335,89434,3
+team-geocoding,POLKJFL,Polk County Jail,"2390 Bob Philips Road, Bartow, FL 33830",2390 Bob Philips Road,Bartow,FL,27.88139844,-81.81927419,33830,3
+team-geocoding,PVLYHCA,Paradise Valley Hospital,"2400 E 4th St, National City, CA 91950",2400 E 4th St,National City,CA,32.68540972,-117.0823869,91950,4
+team-geocoding,BOPLEW,Federal Correctional Institution Lewisburg,"2400 Robert F. Miller Drive, Lewisburg, PA 17837",2400 Robert F. Miller Drive,Lewisburg,PA,40.98668294,-76.91495825,17837,4
+team-geocoding,YRMDCAZ,Yuma Regional Medical Center,"2400 S Avenue A, Yuma, AZ 85364",2400 S Avenue A,Yuma,AZ,32.68316965,-114.6334572,85364,3
+hold,PDNHOLD,Pdn Hold Room,"2401 Dodson Avenue, Del Rio, Tx 78840",2401 Dodson Avenue,Del Rio,TX,29.39287859,-100.8987698,78840,3
+team-geocoding,BOPSET,Seatac Federal Detention Center,"2425 S. 200th Street, Seatac, WA 98198",2425 S. 200th Street,Seatac,WA,47.42197684,-122.3015451,98198,4
+hold,OGUHOLD,Ogden Hold Room,"2487 S. 1620 W Unit E, Ogden, Ut 84401",2487 S. 1620 W Unit E,Ogden,UT,41.22058827,-112.0191589,84401,3
+team-geocoding,CLICONY,Clinton County Jail,"25 Mccarthy Drive, Plattsburgh, NY 12901",25 Mccarthy Drive,Plattsburgh,NY,44.7200284,-73.46672469,12901,4
+team-geocoding,ROCKIVA,Rockingham County Jail,"25 South Liberty Street, Harrisonburg, VA 22801",25 South Liberty Street,Harrisonburg,VA,38.44929957,-78.87077907,22801,4
+hold,BUFHOLD,Buffalo Hold Room,"250 Delaware Avenue 7th Floor, Buffalo, Ny 14202",250 Delaware Avenue 7th Floor,Buffalo,NY,42.89129675,-78.87687255,14202,3
+team-geocoding,MONTGAL,Montgomery County Mac Sim Butler Detention Facility,"250 Mcdonough Street, Montgomery, AL 36103",250 Mcdonough Street,Montgomery,AL,32.37440645,-86.30508269,36103,4
+hold,MGAHOLD,Montgomery Hold Room,"250 S Mcdonough St, Montgomery, Al 36104",250 S Mcdonough St,Montgomery,AL,32.37440645,-86.30508269,36104,3
+team-geocoding,CCRMCCA,Contra Costa Regional Medical Center,"2500 Alhambra Ave, Martinez, CA 94553",2500 Alhambra Ave,Martinez,CA,38.00656485,-122.1329147,94553,3
+team-geocoding,UBRKHWV,Wvu Medicine Berkeley Medical Center,"2500 Hospital Dr, Martinsburg, WV 25401",2500 Hospital Dr,Martinsburg,WV,39.47649468,-77.98042649,25401,4
+team-geocoding,ECLECTX,Ector County LEC,"2500 S Hwy 385, Odessa, TX 79762",2500 S Hwy 385,Odessa,TX,31.82035687,-102.3584451,79762,3
+team-geocoding,VIRBEVA,Virginia Beach Corrections Center,"2501 James Madison Boulevard, Virginia Beach, VA 23456",2501 James Madison Boulevard,Virginia Beach,VA,36.75324963,-76.06190081,23456,4
+team-geocoding,SCOTTNE,Scotts Bluff County Jail,"2522 7th St, Gering, NE 69341",2522 7th St,Gering,NE,41.83622545,-103.6548715,69341,4
+team-geocoding,FLOYDGA,Floyd County Jail,"2526 New Calhoun Hwy, Rome, GA 30161",2526 New Calhoun Hwy,Rome,GA,34.28002514,-85.14154059,30161,3
+team-geocoding,VALVETX,Val Verde Correctional Facility,"253 Farm To Market 2523, Del Rio, TX 78840",253 Farm To Market 2523,Del Rio,TX,29.37315993,-100.8478472,78840,4
+hold,DLRHOLD,Del Rio Detention and Removal Operations Hold Room,"253 Fm 2523, Del Rio, Tx 78840",253 Fm 2523,Del Rio,TX,29.37326002,-100.8476796,78840,4
+team-geocoding,ATLANGA,Atlanta Pretrial Detention Center,"254 Peachtree Street Southwest, Atlanta, GA 30303",254 Peachtree Street Southwest,Atlanta,GA,33.74728512,-84.39542925,30303,2
+team-geocoding,CVANXCA,Central Valley Annex,"254 Taylor Avenue, Mcfarland, CA 93250",254 Taylor Avenue,Mcfarland,CA,35.66815665,-119.2289669,93250,2
+hold,NYCHOLD,NYC Hold Room,"26 Federal Plaza 9th Floor, Suite 9-110, New York, Ny 10278","26 Federal Plaza 9th Floor, Suite 9-110",New York,NY,40.71571691,-74.00438162,10278,4
+team-geocoding,PLYMOMA,Plymouth County Correctional Facility,"26 Long Pond Road, Plymouth, MA 02360",26 Long Pond Road,Plymouth,MA,41.93130887,-70.65133445,2360,3
+team-geocoding,OTRPCNM,Otero County Processing Center,"26 Mcgregor Range Road, Chaparral, NM 88081",26 Mcgregor Range Road,Chaparral,NM,32.08037214,-106.2817264,88081,5
+hold,DETHOLD,Detroit Hold Room,"260 Mt. Elliott, Detroit, Mi 48207",260 Mt. Elliott,Detroit,MI,42.34294627,-83.00924536,48207,2
+team-geocoding,VWHMCAZ,Valleywise Health Medical Center,"2601 E Roosevelt St, Phoenix, AZ 85008",2601 E Roosevelt St,Phoenix,AZ,33.45754045,-112.025579,85008,4
+team-geocoding,CITRUFL,Citrus County Jail,"2604 W. Woodland Ridge Dr., Lecanto, FL 34461",2604 W. Woodland Ridge Dr.,Lecanto,FL,28.84512779,-82.47693927,34461,4
+team-geocoding,ADVHBCA,Adventist Health Bakersfield,"2615 Chester Avenue, Bakersfield, CA 93301",2615 Chester Avenue,Bakersfield,CA,35.38320895,-119.0205378,93301,3
+hold,HBGHOLD,Harrisonburg Hold Room,"263 Neff Ave., Harrisonburg, Va 22801",263 Neff Ave.,Harrisonburg,VA,38.42707504,-78.84957336,22801,3
+team-geocoding,RVRCCLA,River Correctional Center,"26362 Highway 15, Ferriday, LA 71334",26362 Highway 15,Ferriday,LA,31.59715294,-91.55822753,71334,3
+team-geocoding,STRAFNH,Strafford County Corrections,"266 County Farm Road, Dover, NH 03820",266 County Farm Road,Dover,NH,43.21782859,-70.94013597,3820,2
+team-geocoding,CHRLTFL,Charlotte County Jail,"26601 Airport Rd, Punta Gorda, FL 33982",26601 Airport Rd,Punta Gorda,FL,26.91495297,-82.00683319,33982,4
+new,ALLEGVA,Alleghany County Jail,"268 West Main Street, Covington, VA 24426",268 West Main Street,Covington,VA,37.7927241,-79.99578035,24426,5
+hold,SFDHOLD,Sioux Falls Hold Room,"2708 N. 1st Avenue, Sioux Falls, Sd 57104",2708 N. 1st Avenue,Sioux Falls,SD,43.57649692,-96.72352389,57104,2
+team-geocoding,UPSLSIA,Unitypoint Health St Lukes Hospital Sxc,"2720 Stone Park Boulevard, Sioux City, IA 51104",2720 Stone Park Boulevard,Sioux City,IA,42.51900551,-96.40598748,51104,4
+hold,CSDHOLD,Colo Springs Den HSI Hold,"2739 E Las Vegas St, Colorado Springs, Co 80906",2739 E Las Vegas St,Colorado Springs,CO,38.78740899,-104.779556,80906,6
+hold,MANHOLD,Manchester Hold Room,"275 Chestnut Street, Manchester, Nh 03101",275 Chestnut Street,Manchester,NH,42.98871864,-71.46031827,3101,2
+team-geocoding,BIDHPMA,Beth Israel Deaconess Hospital,"275 Sandwich St, Plymouth, MA 02360",275 Sandwich St,Plymouth,MA,41.94299198,-70.64528011,2360,4
+hold,LSFHOLD,Los Fresnos Hold Room,"27991 Buena Vista Blvd, Los Fresnos, Tx 78566",27991 Buena Vista Blvd,Los Fresnos,TX,26.15577778,-97.33813889,78566,4
+team-geocoding,RGS,Port Isabel Detention Center,"27991 Buena Vista Blvd, Los Fresnos, TX 78566",27991 Buena Vista Blvd,Los Fresnos,TX,26.15603231,-97.33778121,78566,5
+team-geocoding,PIC,Port Isabel Service Processing Center,"27991 Buena Vista Blvd., Los Fresnos, TX 78566",27991 Buena Vista Blvd.,Los Fresnos,TX,26.15505562,-97.33831307,78566,3
+team-geocoding,IAHSFTX,George Bush Intercontinental,"2800 N. Terminal Road, Houston, TX 77032",2800 N. Terminal Road,Houston,TX,29.98707572,-95.35055977,77032,3
+team-geocoding,HCPSYTX,Harris County Psychiatric Center,"2800 S Macgregor Way, Houston, TX 77021",2800 S Macgregor Way,Houston,TX,29.71223932,-95.37435583,77021,2
+hold,HELHOLD,Hel District Custody,"2800 Skyway Drive, Helena, Mt 59602",2800 Skyway Drive,Helena,MT,46.61228604,-111.9906212,59602,3
+team-geocoding,DEKALAL,Dekalb County Detention Center,"2801 Jordan Road, Fort Payne, AL 35968",2801 Jordan Road,Fort Payne,AL,34.41817885,-85.77299638,35968,5
+hold,MIAHOLD,Miami (Miramar) Hold Room,"2805 Sw 145th Avenue, Miramar, Fl 33027",2805 Sw 145th Avenue,Miramar,FL,25.98276732,-80.33940803,33027,6
+team-geocoding,XXWICHI,Wichita County Jail,"2815 Central Fwy, Wichita Falls, TX 76302",2815 Central Fwy,Wichita Falls,TX,33.88454222,-98.44014177,76302,3
+hold,MEMHOLD,Memphis Hold Room,"2833 Business Park Drive Building 1, Memphis, Tn 38118",2833 Business Park Drive Building 1,Memphis,TN,35.07180678,-89.965521,38118,3
+team-geocoding,FRANKNC,Franklin County Detention Center,"285 T Kemp Rd, Louisburg, NC 27549",285 T Kemp Rd,Louisburg,NC,36.09447504,-78.31954212,27549,4
+hold,WPOHOLD,Williamsport Hold Room,"2851 S Reach Rd, Williamsport, Pa 17701",2851 S Reach Rd,Williamsport,PA,41.22387787,-77.07078908,17701,3
+team-geocoding,TELLECO,Teller County Jail,"288 Weaverville Road, Divide, CO 80814",288 Weaverville Road,Divide,CO,38.94302011,-105.1513653,80814,6
+hold,FAYHOLD,Fayetteville Hold Room,"2887 N. Point Circle, Fayetteville, Ar 72701",2887 N. Point Circle,Fayetteville,AR,36.10466936,-94.17847944,72701,3
+hold,BILHOLD,Billings Hold Room,"2900 4th Avenue Suite 205, Billings, Mt 59101",2900 4th Avenue Suite 205,Billings,MT,45.78387519,-108.5095612,59101,4
+hold,AGAHOLD,Agana INS,"291 Chalan Pasaheru Suite 100, Tamuning, Gu 96913",291 Chalan Pasaheru Suite 100,Tamuning,GU,13.49405556,144.7983056,96913,3
+team-geocoding,MADISMS,Madison County Detention Center,"2935 Highway 51, Canton, MS 39046",2935 Highway 51,Canton,MS,32.59324217,-90.0397719,39046,3
+team-geocoding,KENMHNY,Kenmore Mercy Hospital,"2950 Elmwood Avenue, Kenmore, NY 14217",2950 Elmwood Avenue,Kenmore,NY,42.97766249,-78.87934353,14217,6
+hold,SLCHOLD,Salt Lake City Hold Room,"2975 Decker Lake Drive Suite 100, West Valley City, Ut 84119",2975 Decker Lake Drive Suite 100,West Valley City,UT,40.7062262,-111.9463437,84119,4
+new,DEPCOGU,Department of Corrections,"3 Mashburn Lane Off Dairy Rd, Mangilao, Gu 96913",3 Mashburn Lane Off Dairy Rd,Mangilao,GU,13.44905254,144.7869185,96913,5
+team-geocoding,CBRRSNC,Cabarrus County Jail,"30 Corban Avenue Se, Concord, NC 28025",30 Corban Avenue Se,Concord,NC,35.40932859,-80.5779668,28025,3
+team-geocoding,UHSHONY,Uhs Wilson Medical Center,"30 Harrison St, Johnson City, NY 13790",30 Harrison St,Johnson City,NY,42.11476098,-75.95951804,13790,3
+hold,CBPHOLD,Buffalo USBP Hold Room,"300 Airborne Pkwy W #300, Cheektowaga, Ny 14225",300 Airborne Pkwy W #300,Cheektowaga,NY,42.93765609,-78.71391502,14225,5
+hold,NRPHOLD,North Platte Hold Room,"300 E. 3rd Street Suite 110, North Platte, Ne 69101",300 E. 3rd Street Suite 110,North Platte,NE,41.13482698,-100.760386,69101,4
+new,DILLSAF,Dilley Processing Single Female,"300 El Rancho Way, Dilley, TX 78017",300 El Rancho Way,Dilley,TX,28.65845409,-99.20087844,78017,4
+team-geocoding,STFRCTX,South Texas Family Residential Center1,"300 El Rancho Way, Dilley, TX 78017",300 El Rancho Way,Dilley,TX,28.65785369,-99.20038782,78017,4
+team-geocoding,TASTDTX,South Texas Family Residential Center,"300 El Rancho Way, Dilley, TX 78017",300 El Rancho Way,Dilley,TX,28.65783248,-99.20043079,78017,4
+team-geocoding,CULBETX,Culberson County Sheriff's,"300 La Caverna, Van Horn, TX 79855",300 La Caverna,Van Horn,TX,31.04297641,-104.830544,79855,4
+hold,TULHOLD,Tulsa Hold Room,"300 N Denver St, Tulsa, Ok 74103",300 N Denver St,Tulsa,OK,36.15715998,-95.99896997,74103,4
+hold,LOSHOLD,Los Cust Case,"300 N. Los Angeles Street Room B17, Los Angeles, Ca 90012",300 N. Los Angeles Street Room B17,Los Angeles,CA,34.053742,-118.23961,90012,4
+team-geocoding,TULCOOK,Tulsa County Jail (David L Moss Justice Center),"300 North Denver Avenue, Tulsa, OK 74103",300 North Denver Avenue,Tulsa,OK,36.15724099,-95.99931204,74103,2
+team-geocoding,KENTOKY,Kenton County Detention Center,"3000 Decker Crane Lane, Covington, KY 41017",3000 Decker Crane Lane,Covington,KY,39.00247471,-84.53050924,41017,2
+hold,PITHOLD,Pittsburgh Hold Room,"3000 Sidney Street Suite 100, Pittsburgh, Pa 15203",3000 Sidney Street Suite 100,Pittsburgh,PA,40.42482874,-79.96079956,15203,3
+team-geocoding,CCRMHMN,Centracare Rice Memorial Hospital,"301 Becker Ave SW, Willmar, MN 56201",301 Becker Ave SW,Willmar,MN,45.11990989,-95.04560459,56201,5
+team-geocoding,SSHNHNY,South Shore University Hospital,"301 E Main St, Bay Shore, NY 11706",301 E Main St,Bay Shore,NY,40.72575482,-73.24141704,11706,6
+team-geocoding,CLINTIN,Clinton County Sheriff's Office,"301 E Walnut Street, Frankfort, IN 46041",301 E Walnut Street,Frankfort,IN,40.27934622,-86.50903267,46041,4
+team-geocoding,CHASEKS,Chase County Jail,"301 South Walnut, Cottonwood Falls, KS 66845",301 South Walnut,Cottonwood Falls,KS,38.367077,-96.53842901,66845,4
+hold,WNTHOLD,Wenatchee Hold Room,"301 Yakima St, Wenatchee, WA 98801",301 Yakima St,Wenatchee,WA,47.4205823,-120.3119796,98801,4
+team-geocoding,LINCONE,Lincoln County Detention Center,"302 N Jeffers Street, North Platte, NE 69101",302 N Jeffers Street,North Platte,NE,41.13569388,-100.7639978,69101,4
+team-geocoding,BOONEKY,Boone County Jail,"3020 Conrad Lane, Burlington, KY 41005",3020 Conrad Lane,Burlington,KY,39.03647808,-84.72845962,41005,2
+team-geocoding,FIPCDGA,Folkston ICE Processing Center,"3026 Hwy 252 E, Folkston, GA 31537",3026 Hwy 252 E,Folkston,GA,30.87362191,-81.97934365,31537,2
+team-geocoding,FIPCMGA,Folkston ICE Processing Center (Main),"3026 Hwy 252 E, Folkston, GA 31537",3026 Hwy 252 E,Folkston,GA,30.87210016,-81.98234889,31537,4
+team-geocoding,BROWNWI,Brown County Jail,"3030 Curry Ln, Green Bay, WI 54311",3030 Curry Ln,Green Bay,WI,44.52205942,-87.93163593,54311,4
+team-geocoding,INMIAMI,Miami Correctional Facility (Mcf),"3038 West 850s, Bunker Hill, IN 46914",3038 West 850s,Bunker Hill,IN,40.64428381,-86.1314789,46914,2
+team-geocoding,GCPFCKS,Garden City Processing @ Finney County,"304 N. 9th St, Garden City, KS 67846",304 N. 9th St,Garden City,KS,37.96750455,-100.8761009,67846,4
+team-geocoding,FINNEKS,Finney County Jail,"304 N. 9th Street, Garden City, KS 67846",304 N. 9th Street,Garden City,KS,37.96750455,-100.8761009,67846,4
+team-geocoding,TITUSTX,Titus County Jail,"304 South Van Buren Avenue, Mount Pleasant, TX 75455",304 South Van Buren Avenue,Mount Pleasant,TX,33.15478716,-94.9709381,75455,2
+team-geocoding,SENECOH,Seneca County Jail,"3040 South State Route 100, Tiffin, OH 44883",3040 South State Route 100,Tiffin,OH,41.07935461,-83.15365924,44883,2
+team-geocoding,BSTAYTX,Baylor Scott White MD Center,"305 Mallard Ln, Taylor, TX 76574",305 Mallard Ln,Taylor,TX,30.59101955,-97.41537909,76574,3
+team-geocoding,MINNESD,Minnehaha County Jail,"305 W 4th St, Sioux Falls, SD 57104",305 W 4th St,Sioux Falls,SD,43.55340744,-96.72992274,57104,2
+team-geocoding,BOPCAA,US Penitentiary Canaan,"3057 Eric J. Williams Memorial Dr, Waymart, PA 18472",3057 Eric J. Williams Memorial Dr,Waymart,PA,41.5679172,-75.41206133,18472,3
+team-geocoding,PENNISD,Pennington County Jail,"307 Saint Joseph St, Rapid City, SD 57701",307 Saint Joseph St,Rapid City,SD,44.07876386,-103.221489,57701,3
+team-geocoding,UTAHCUT,Utah County Jail,"3075 North Main Street, Spanish Fork, UT 84660",3075 North Main Street,Spanish Fork,UT,40.14931516,-111.6592909,84660,3
+hold,BALHOLD,Baltimore Hold Room,"31 Hopkins Plaza 6th Floor, Baltimore, Md 21201",31 Hopkins Plaza 6th Floor,Baltimore,MD,39.28809309,-76.61669655,21201,4
+hold,MILHOLD,Milwaukee Hold Room,"310 East Knapp Street, Milwaukee, Wi 53202",310 East Knapp Street,Milwaukee,WI,43.04731452,-87.90803065,53202,3
+team-geocoding,JHRWLTX,Jack Harwell Detention Center,"3101 Marlin Hwy, Waco, TX 76705",3101 Marlin Hwy,Waco,TX,31.54918377,-97.08131943,76705,4
+team-geocoding,GRGBVTX,Georgetown Behavioral Hospital,"3101 S Austin Ave, Georgetown, TX 78626",3101 S Austin Ave,Georgetown,TX,30.61487888,-97.68066012,78626,4
+team-geocoding,CROWGMN,Crow Wing County Jail,"313 Laurel Street, Brainerd, MN 56401",313 Laurel Street,Brainerd,MN,46.35660921,-94.20530053,56401,4
+team-geocoding,DENICDF,Denver Contract Detention Facility (Aurora),"3130 North Oakland Street, Aurora, CO 80010",3130 North Oakland Street,Aurora,CO,39.76087267,-104.8491804,80010,3
+team-geocoding,BIINCCO,"Bi Incororated, Geo Group Company","3130 Oakland St, Aurora, CO 80010",3130 Oakland St,Aurora,CO,39.76087267,-104.8491804,80010,4
+team-geocoding,TACGHWA,Tacoma General Hospital,"315 Mlk Jr Way, Tacoma, WA 98405",315 Mlk Jr Way,Tacoma,WA,47.25977776,-122.4531703,98405,5
+team-geocoding,OKMULOK,Okmulgee County Jail,"315 W 8th St, Okmulgee, OK 74447",315 W 8th St,Okmulgee,OK,35.62172157,-95.97443932,74447,3
+team-geocoding,OHNORWE,Corrections Center of Northwest Ohio (Ccno),"3151 Co Rd 2425, Stryker, OH 43557",3151 Co Rd 2425,Stryker,OH,41.45886276,-84.35734202,43557,5
+team-geocoding,YELLOMT,Yellowstone County Jail,"3165 King Avenue East, Billings, MT 59101",3165 King Avenue East,Billings,MT,45.75579292,-108.5009179,59101,5
+from-manual,SNTRHNY,,"3186 S Maryland Pkwy, Las Vegas, NV 89109",3186 S Maryland Pkwy,Las Vegas,NV,36.13275003,-115.1358968,89109,4
+hold,DURHOLD,Durango Hold Room,"32 Sheppard Drive, Durango, Co 81303",32 Sheppard Drive,Durango,CO,37.2371465,-107.8742502,81303,4
+team-geocoding,MNTGMAL,Montgomery City Jail,"320 North Ripley Street, Montgomery, AL 36104",320 North Ripley Street,Montgomery,AL,32.38156183,-86.29775876,36104,4
+team-geocoding,GRAYSKY,Grayson County Detention Center,"320 Shaw Station Road, Leitchfield, KY 42754",320 Shaw Station Road,Leitchfield,KY,37.48915122,-86.27020937,42754,4
+team-geocoding,OKCIMMC,CoreCivic Cimarron Correctional Facility,"3200 S. Kings Hwy, Cushing, OK 74023",3200 S. Kings Hwy,Cushing,OK,35.94271099,-96.78172182,74023,3
+team-geocoding,MCCLETX,Mclennan County Jail,"3201 E State Hwy 6, Waco, TX 76705",3201 E State Hwy 6,Waco,TX,31.54986931,-97.08035016,76705,4
+hold,VENHOLD,Ventura Custody Case,"321 Cortez Circle, Camarillo, Ca 93012",321 Cortez Circle,Camarillo,CA,34.21409975,-118.9948304,93012,3
+team-geocoding,PALMBFL,Palm Beach County Jail,"3228 Gun Club Road, West Palm Beach, FL 33406",3228 Gun Club Road,West Palm Beach,FL,26.67176572,-80.09248303,33406,3
+team-geocoding,RONKEVA,Roanoke City Jail,"324 Campbell Ave SW, Roanoke, VA 24016",324 Campbell Ave SW,Roanoke,VA,37.2711437,-79.9466271,24016,3
+hold,KNXHOLD,Knoxville Hold Room,"324 Prosperity Drive, Knoxville, Tn 37923",324 Prosperity Drive,Knoxville,TN,35.92320036,-84.07938959,37923,4
+team-geocoding,CHIPPMI,Chippewa County Correctional Facility,"325 Court Street, Sault Sainte Marie, MI 49783",325 Court Street,Sault Sainte Marie,MI,46.49743168,-84.34560789,49783,5
+team-geocoding,FLO,Florence Service Processing Center,"3250 N. Pinal Parkway, Florence, AZ 85132",3250 N. Pinal Parkway,Florence,AZ,33.0642139,-111.38242,85132,2
+team-geocoding,FSF,Florence Staging Facility,"3250 North Pinal Parkway, Florence, AZ 85132",3250 North Pinal Parkway,Florence,AZ,33.06411191,-111.3805116,85132,6
+team-geocoding,BRLHOAK,Bartlett Regional Hospital,"3260 Hospital Dr, Juneau, AK 99801",3260 Hospital Dr,Juneau,AK,58.32899842,-134.4646689,99801,3
+team-geocoding,JKPCCLA,Jackson Parish Correctional Center,"327 Industrial Drive, Jonesboro, LA 71251",327 Industrial Drive,Jonesboro,LA,32.21524643,-92.71586213,71251,8
+team-geocoding,BLOJVTN,Blount County Juvenile Detention Center,"329 Court St, Maryville, TN 37804",329 Court St,Maryville,TN,35.75459515,-83.96930017,37804,4
+team-geocoding,MARIOFL,Marion County Jail,"3290 Nw 10th St, Ocala, FL 34475",3290 Nw 10th St,Ocala,FL,29.19503591,-82.17477409,34475,3
+team-geocoding,MSF,Miami Staging Facility,"33 Ne 4th St, Miami, FL 33132",33 Ne 4th St,Miami,FL,25.77846074,-80.19313158,33132,5
+team-geocoding,BOPMIM,Fdc Miami,"33 Ne 4th Street, Miami, FL 33132",33 Ne 4th Street,Miami,FL,25.77846074,-80.19313158,33132,3
+team-geocoding,BOPMCR,McCreary US Penitentiary,"330 Federal Way, Pine Knot, KY 42635",330 Federal Way,Pine Knot,KY,36.68663433,-84.38791446,42635,3
+team-geocoding,BOPLEX,Lexinton Federal Medical Center,"3301 Leestown Road, Lexington, KY 40511",3301 Leestown Road,Lexington,KY,38.10463085,-84.56012963,40511,2
+hold,SXCHOLD,Sioux City Hold Room,"3301 Singing Hills Boulevard Suite B, Sioux City, Ia 51106",3301 Singing Hills Boulevard Suite B,Sioux City,IA,42.43673725,-96.36555217,51106,3
+team-geocoding,DVCSDKY,Daviess County Detention Center,"3337 Highway 144, Owensboro, KY 42303",3337 Highway 144,Owensboro,KY,37.78675411,-87.07085722,42303,3
+team-geocoding,COLLIFL,Collier County Naples Jail Center,"3347 Tamiami Trail E, Naples, FL 34112",3347 Tamiami Trail E,Naples,FL,26.12969965,-81.76343194,34112,2
+team-geocoding,OKMHKTX,Otto Kaiser Memorial Hospital,"3349 S Highway 181, Kenedy, TX 78119",3349 S Highway 181,Kenedy,TX,28.85004667,-97.87839944,78119,4
+hold,CRIHOLD,Cedar Rapids Hold Room,"3351 Square D Drive Sw, Cedar Rapids, Ia 52404",3351 Square D Drive Sw,Cedar Rapids,IA,41.94200342,-91.68092912,52404,4
+team-geocoding,CASSCNE,Cass County Jail,"336 Main Street, Plattsmouth, NE 68048",336 Main Street,Plattsmouth,NE,41.01179494,-95.88295697,68048,3
+team-geocoding,AKMATSU,"Matsu Pretrial, Palmer AK","339 E. Dogwood, Palmer, AK 99645",339 E. Dogwood,Palmer,AK,61.6023381,-149.1094552,99645,4
+hold,SAAHOLD,Santa Ana Detention and Removal Operations Hold Room,"34 Civic Center Plaza Room 1027, Santa Ana, Ca 92701",34 Civic Center Plaza Room 1027,Santa Ana,CA,33.74855732,-117.8751141,92701,3
+team-geocoding,POLKCTX,Iah Polk Adult Detention Facility,"3400 Fm 350 South, Livingston, TX 77351",3400 Fm 350 South,Livingston,TX,30.69789175,-95.00594905,77351,4
+team-geocoding,YORCOPA,York County Prison,"3401 Concord Road, York, PA 17402",3401 Concord Road,York,PA,39.98573989,-76.66609663,17402,4
+team-geocoding,OLDHAKY,Oldham County Detention Center,"3405 West Highway 146, La Grange, KY 40031",3405 West Highway 146,La Grange,KY,38.38935908,-85.42367734,40031,6
+team-geocoding,SLSLCUT,Salt Lake County Metro Jail,"3415 South 900 West, Salt Lake City, UT 84119",3415 South 900 West,Salt Lake City,UT,40.69691294,-111.9155301,84119,4
+team-geocoding,FIPCAGA,Folkston ICE Processing Center (Annex),"3424 Hwy 252 E, Folkston, GA 31537",3424 Hwy 252 E,Folkston,GA,30.8712568,-81.98107709,31537,3
+team-geocoding,ADDCOVT,Addison County Jail,"35 Court Street, Middlebury, VT 05753",35 Court Street,Middlebury,VT,44.01144984,-73.16365678,5753,4
+team-geocoding,HUDSONJ,Hudson County Jail,"35 Hackensack Ave., Kearny, NJ 07032",35 Hackensack Ave.,Kearny,NJ,40.72807538,-74.10842526,7032,2
+team-geocoding,STJOSAZ,St Joseph's Hospital & Medical Center,"350 West Thomas Rd, Phoenix, AZ 85013",350 West Thomas Rd,Phoenix,AZ,33.48092072,-112.0792416,85013,3
+team-geocoding,CCHRTTX,Cedar Crest Hospital Treat,"3500 I-35 Frontage Rd, Belton, TX 76513",3500 I-35 Frontage Rd,Belton,TX,31.0214428,-97.47648886,76513,5
+hold,STUHOLD,Stuart Hold Room,"3500 Se Comerce Ave, Stuart, Fl 34997",3500 Se Comerce Ave,Stuart,FL,27.16264739,-80.22172729,34997,4
+team-geocoding,MEMRHFL,Memorial Regional Hospital,"3501 Johnson St, Hollywood, FL 33021",3501 Johnson St,Hollywood,FL,26.01965398,-80.180432,33021,5
+hold,LBKHOLD,Lubbock Hold Room,"3502 N Holly Ave, Lubbock, Tx 79403",3502 N Holly Ave,Lubbock,TX,33.63233333,-101.7958889,79403,3
+team-geocoding,LUBBOTX,Lubbock County Detention Center,"3502 N Holly Ave, Lubbock, TX 79403",3502 N Holly Ave,Lubbock,TX,33.63257513,-101.7955856,79403,3
+team-geocoding,BOPHON,"Federal Detention Center, Honolulu (Fdc Honolulu)","351 Elliott Street, Honolulu, HI 96819",351 Elliott Street,Honolulu,HI,21.33362931,-157.9283142,96819,3
+hold,SNAHOLD,San Antonio Detention and Removal Operations Hold Room,"3523 Crosspoint Drive, San Antonio, Tx 78217",3523 Crosspoint Drive,San Antonio,TX,29.54375024,-98.4289065,78217,3
+team-geocoding,ESSEXNJ,Essex County Jail,"354 Doremus Avenue, Newark, NJ 07105",354 Doremus Avenue,Newark,NJ,40.72104059,-74.12687828,7105,4
+team-geocoding,WVPTMAC,Potomac Highlands Regional Jail,"355 Dolan Drive, Augusta, WV 26704",355 Dolan Drive,Augusta,WV,39.30234778,-78.64697463,26704,3
+team-geocoding,DVHSPNV,Desert View Hospital,"360 South Lola Lane, Pahrump, NV 89048",360 South Lola Lane,Pahrump,NV,36.21454178,-116.024896,89048,3
+team-geocoding,HCAFMFL,HCA Florida Memorial Hospital,"3625 University Blvd S, Jacksonville, FL 32216",3625 University Blvd S,Jacksonville,FL,30.28875772,-81.60115746,32216,4
+team-geocoding,NWSCFVT,Northwest State Correctional Facility,"3649 Lower Newton Road, Swanton, VT 05488",3649 Lower Newton Road,Swanton,VT,44.85044608,-73.13328077,5488,4
+team-geocoding,VTSTALB,Northwest State Correctional Center,"3649 Lower Newton Road, Swanton, VT 05488",3649 Lower Newton Road,Swanton,VT,44.85044608,-73.13328077,5488,2
+team-geocoding,URSLATX,Ursula Centralized Processing Center,"3700 W Ursula Ave, McAllen, TX 78503",3700 W Ursula Ave,McAllen,TX,26.15905836,-98.27020363,78503,3
+team-geocoding,BIMDCAZ,Banner Ironwood Medical Center,"37000 N Gantzel Rd, Queen Creek, AZ 85140",37000 N Gantzel Rd,Queen Creek,AZ,33.21459325,-111.5655306,85140,4
+team-geocoding,WOODBIA,Woodbury County Jail,"3701 28th St, Sioux City, IA 51105",3701 28th St,Sioux City,IA,42.52061602,-96.35358368,51105,4
+team-geocoding,CNTGRIL,Northwestern Medicine Woodstock Hospital,"3701 Doty St, Woodstock, IL 60098",3701 Doty St,Woodstock,IL,42.27548004,-88.40086099,60098,3
+hold,YAKHOLD,Yakima Sub-Office,"3701 River Road, Yakima, Wa 98902",3701 River Road,Yakima,WA,46.61861971,-120.558072,98902,2
+team-geocoding,CHAVENM,Chavez Detention Center,"3701 S Atkinson Ave, Roswell, NM 88203",3701 S Atkinson Ave,Roswell,NM,33.35126736,-104.5055643,88203,4
+hold,MEDHOLD,Medford Sub-Office,"3715 International Way, Medford, Or 97504",3715 International Way,Medford,OR,42.37316605,-122.8666184,97504,3
+team-geocoding,HENDENC,Henderson County Detention Facility,"375 1st Avenue East, Hendersonville, NC 28792",375 1st Avenue East,Hendersonville,NC,35.3158728,-82.45598946,28792,4
+hold,FRDHOLD,Frederick Hold Room,"3770 Puritan Way Unit J, Frederick, Co 80516",3770 Puritan Way Unit J,Frederick,CO,40.08193501,-104.985039,80516,2
+team-geocoding,BOPPHX,Phoenix Federal Correctional Inst,"37900 N 45th Ave, Phoenix, AZ 85086",37900 N 45th Ave,Phoenix,AZ,33.83242985,-112.1619896,85086,2
+team-geocoding,CASCAMT,"Cascade County Jail, MT","3800 Ulm North Frontage Road, Great Falls, MT 59404",3800 Ulm North Frontage Road,Great Falls,MT,47.46905431,-111.3676879,59404,2
+team-geocoding,COXMEMO,Coxhealth Medical Center South,"3801 South National Ave., Springfield, MO 65807",3801 South National Ave.,Springfield,MO,37.14577927,-93.27913576,65807,4
+hold,TXAHOLD,Texarkana Hold Room,"3822 Airport Plaza, Texarkana, Ar 71854",3822 Airport Plaza,Texarkana,AR,33.45803218,-94.00108635,71854,4
+team-geocoding,CHARLSC,Sheriff Al Cannon Detention Center,"3841 Leeds Ave, North Charleston, SC 29405",3841 Leeds Ave,North Charleston,SC,32.84545105,-80.01354428,29405,3
+team-geocoding,BASILLA,South Louisiana ICE Processing Center,"3843 Stagg Ave, Basile, LA 70515",3843 Stagg Ave,Basile,LA,30.48171312,-92.58121682,70515,3
+team-geocoding,ORANGFL,Orange County Jail (FL),"3855 South John Young Parkway, Orlando, FL 32839",3855 South John Young Parkway,Orlando,FL,28.50352437,-81.41685299,32839,4
+hold,SGUHOLD,"St George, UT Hold Room","389 N. Industrial Road Suite 4, St. George, Ut 84770",389 N. Industrial Road Suite 4,St. George,UT,37.11495142,-113.5610635,84770,2
+team-geocoding,COLUMFL,Columbia County Jail,"389 Nw Quinten St, Lake City, FL 32025",389 Nw Quinten St,Lake City,FL,30.22030783,-82.64355617,32025,3
+team-geocoding,WCCPBFL,Broward Transitional Center,"3900 N. Powerline Road, Pompano Beach, FL 33073",3900 N. Powerline Road,Pompano Beach,FL,26.27717618,-80.15089668,33073,3
+hold,YUMHOLD,Yuma Hold Room,"3911 S Pico Ave., Yuma, Az 85365",3911 S Pico Ave.,Yuma,AZ,32.65653318,-114.6117802,85365,2
+hold,CHLHOLD,"Charleston, SC Hold Room","3950 Faber Place Drive, North Charleston, Sc 29405",3950 Faber Place Drive,North Charleston,SC,32.84643027,-80.01972811,29405,5
+team-geocoding,NWHNVNC,New Hanover County Jail,"3950 Juvenile Center Rd, Castle Hayne, NC 28429",3950 Juvenile Center Rd,Castle Hayne,NC,34.32703364,-77.89565863,28429,2
+team-geocoding,STJONFL,St John's County Jail,"3955 Lewis Speedway St., Saint Augustine, FL 32084",3955 Lewis Speedway St.,Saint Augustine,FL,29.94029975,-81.33880221,32084,2
+hold,POMHOLD,"Portland, ME Hold Room","40 Manson Libby Road Suite 101, Scarborough, Me 04074",40 Manson Libby Road Suite 101,Scarborough,ME,43.57880425,-70.36056715,4074,4
+team-geocoding,WLTSOFL,Walton County Jail,"40 Sheriff Cir, Defuniak Springs, FL 32433",40 Sheriff Cir,Defuniak Springs,FL,30.78346025,-86.1039943,32433,4
+hold,INPHOLD,Indianapolis Hold Room,"40 South Alabama Street, Indianapolis, In 46204",40 South Alabama Street,Indianapolis,IN,39.76591442,-86.15355163,46204,2
+team-geocoding,BLBNATX,Bluebonnet Detention Facility,"400 2nd Street, Anson, TX 79501",400 2nd Street,Anson,TX,32.76764511,-99.88808411,79501,4
+team-geocoding,CHSPKVA,Chesapeake City Jail,"400 Albemarle Dr, Chesapeake, VA 23322",400 Albemarle Dr,Chesapeake,VA,36.71921713,-76.24997269,23322,3
+team-geocoding,MHCHSMI,Munson Healthcare Cadillac Hospital,"400 Hobart St, Cadillac, MI 49601",400 Hobart St,Cadillac,MI,44.245567,-85.38951802,49601,2
+team-geocoding,ARRMCCA,Arrowhead Regional Medical Center,"400 N. Pepper Avenue, Colton, CA 92324",400 N. Pepper Avenue,Colton,CA,34.07398698,-117.351356,92324,3
+team-geocoding,BERNANM,Albuquerque Police Department,"400 Roma Ave NW, Albuquerque, NM 87102",400 Roma Ave NW,Albuquerque,NM,35.08924662,-106.650944,87102,4
+team-geocoding,MIDMHTX,Midland Memorial Hospital,"400 Rosalind Redfern Grover Parkway, Midland, TX 79701",400 Rosalind Redfern Grover Parkway,Midland,TX,31.99675704,-102.09953,79701,2
+team-geocoding,MIDLATX,Midland Detention Center,"400 S Main Street, Midland, TX 79701",400 S Main Street,Midland,TX,31.99404968,-102.0748857,79701,4
+hold,VVSHOLD,Shreveport Hold Room,"400 Texas Street, Suite 900, Shreveport, La","400 Texas Street, Suite 900",Shreveport,LA,32.51361901,-93.74925199,71101,4
+team-geocoding,SCOTTIA,Scott County Detention Facility,"400 W 4th St, Davenport, IA 52801",400 W 4th St,Davenport,IA,41.52386632,-90.57924038,52801,3
+team-geocoding,MUSCAIA,Muscatine County Jail,"400 Walnut Street, Muscatine, IA 52761",400 Walnut Street,Muscatine,IA,41.42433913,-91.04451543,52761,4
+team-geocoding,BURLEND,Burleigh County Detention Center,"4000 Apple Creek Road, Bismarck, ND 58504",4000 Apple Creek Road,Bismarck,ND,46.79632959,-100.7263795,58504,3
+team-geocoding,MARICOR,Marion County Jail,"4000 Aumsville Highway Se, Salem, OR 97301",4000 Aumsville Highway Se,Salem,OR,44.89656231,-122.9605171,97301,3
+team-geocoding,DOUGLCO,Douglas County Detention Center,"4000 Justice Way, Castle Rock, CO 80109",4000 Justice Way,Castle Rock,CO,39.40231655,-104.8640292,80109,4
+hold,SYRHOLD,Syracuse Hold Room,"401 S. Salina Street, Suite 108, Syracuse, Ny 13202","401 S. Salina Street, Suite 108",Syracuse,NY,43.04672795,-76.15151819,13202,73119
+team-geocoding,OSCEOFL,Osceola County Jail,"402 Simpson Rd, Kissimmee, FL 34744",402 Simpson Rd,Kissimmee,FL,28.29626212,-81.35244938,34744,3
+team-geocoding,MRYHPMN,Mercy Hospital,"4050 Coon Rapids Blvd, Coon Rapids, MN 55433",4050 Coon Rapids Blvd,Coon Rapids,MN,45.18306682,-93.36971949,55433,4
+team-geocoding,SLRDCAZ,San Luis Regional Detention Center,"406 North Avenue D, San Luis, AZ 85349",406 North Avenue D,San Luis,AZ,32.48466594,-114.6846373,85349,4
+team-geocoding,KCCDCTX,Karnes County Civil Detention Facility,"409 Fm 1144, Karnes City, Tx 78118",409 Fm 1144,Karnes City,TX,28.88474485,-97.91519074,78118,4
+team-geocoding,KRNRCTX,Karnes County Residential Center2,"409 Fm 1144, Karnes City, TX 78118",409 Fm 1144,Karnes City,TX,28.88474485,-97.91519074,78118,4
+team-geocoding,LHMCBMA,Lahey Hospital & Medical Center,"41 Burlington Mall Rd, Burlington, MA 01805",41 Burlington Mall Rd,Burlington,MA,42.48548852,-71.20404746,1805,4
+team-geocoding,CHRISKY,Christian County Jail,"410 West 7th Street, Hopkinsville, KY 42240",410 West 7th Street,Hopkinsville,KY,36.86780594,-87.49036804,42240,3
+team-geocoding,FREEBMN,Freeborn County Jail Services,"411 S. Broadway Avenue, Albert Lea, MN 56007",411 S. Broadway Avenue,Albert Lea,MN,43.64599669,-93.36810296,56007,5
+hold,SPOHOLD,Spokane Hold Room,"411 W Cataldo Avenue, Spokane, Wa 99201",411 W Cataldo Avenue,Spokane,WA,47.66576345,-117.4179692,99201,4
+team-geocoding,PLATTMO,Platte County Jail,"415 Third Street, Platte City, MO 64079",415 Third Street,Platte City,MO,39.37166539,-94.78019244,64079,3
+team-geocoding,PHPMHGA,Phoebe Putney Memorial Hospital,"417 W Third Ave, Albany, GA 31701",417 W Third Ave,Albany,GA,31.59038707,-84.15756568,31701,3
+team-geocoding,SMARYMD,St Mary's County Detention Center,"41880 Baldridge Street, Leonardtown, MD 20650",41880 Baldridge Street,Leonardtown,MD,38.30283319,-76.62814991,20650,5
+team-geocoding,BOPDEV,Devens Fmc,"42 Patton Rd, Devens, MA 01434",42 Patton Rd,Devens,MA,42.52930037,-71.62304095,1434,4
+team-geocoding,RDHOSPA,Reading Hospital,"420 S 5th Avenue, West Reading, PA 19611",420 S 5th Avenue,West Reading,PA,40.33007455,-75.94916278,19611,3
+team-geocoding,LOUCOVA,Loudoun County,"42035 Loudoun Center Place, Leesburg, VA 20175",42035 Loudoun Center Place,Leesburg,VA,39.07501078,-77.54534461,20175,4
+team-geocoding,PUTNMTN,Putnam County Sheriff,"421 E Spring St., Cookeville, TN 38501",421 E Spring St.,Cookeville,TN,36.16153688,-85.49796141,38501,3
+team-geocoding,ALAMOTX,Alamo Police Department,"423 N Tower Road, Alamo, TX 78516",423 N Tower Road,Alamo,TX,26.18684613,-98.11078218,78516,5
+team-geocoding,GASTNNC,Gaston County Jail,"425 Dr M.l.k. Jr. Way, Gastonia, NC 28052",425 Dr M.l.k. Jr. Way,Gastonia,NC,35.26751035,-81.18343961,28052,3
+team-geocoding,CACFMES,Mesa Verde ICE Processing Center,"425 Golden State Avenue, Bakersfield, CA 93301",425 Golden State Avenue,Bakersfield,CA,35.37931836,-119.0065207,93301,3
+team-geocoding,RAADCMN,"Ramsey Adult Detention Center Annex, Spm","425 Grove Street, Saint Paul, MN 55101",425 Grove Street,Saint Paul,MN,44.95628917,-93.08610962,55101,3
+team-geocoding,CAMBRPA,"Cambria County Jail, PA","425 Manor Drive, Ebensburg, PA 15931",425 Manor Drive,Ebensburg,PA,40.48440374,-78.70141182,15931,5
+team-geocoding,BTV,Buffalo (Batavia) Service Processing Center,"4250 Federal Drive, Batavia, NY 14020",4250 Federal Drive,Batavia,NY,43.0204479,-78.20212174,14020,3
+hold,CMDHOLD,Batavia Command Center Hold Room,"4250 Federal Drive, Batavia, Ny 14020",4250 Federal Drive,Batavia,NY,43.02019981,-78.20260937,14020,2
+hold,POOHOLD,Portland District Office,"4310 S Macadam Avenue Suite 300, Portland, Or 97239",4310 S Macadam Avenue Suite 300,Portland,OR,45.49280392,-122.6726165,97239,4
+team-geocoding,KPCHOAZ,Phoenix Specialty Hospital,"433 E 6th St, Mesa, AZ 85203",433 E 6th St,Mesa,AZ,33.42551597,-111.8213499,85203,4
+team-geocoding,SIOUXIA,Sioux County Jail,"4363 Ironwood Avenue, Orange City, IA 51041",4363 Ironwood Avenue,Orange City,IA,43.01882741,-96.07743013,51041,4
+hold,SAGHOLD,San Angelo Hold Room,"4382 N Us Hwy 277, San Angelo, Tx 76905",4382 N Us Hwy 277,San Angelo,TX,31.49788472,-100.3668734,76905,3
+team-geocoding,TGREETX,Tom Green County Jail,"4382 N US Hwy 277, San Angelo, TX 76905",4382 N US Hwy 277,San Angelo,TX,31.49783364,-100.3668749,76905,4
+team-geocoding,LARELKY,Laurel County Correctional Center,"440 Hammock Road, London, KY 40744",440 Hammock Road,London,KY,37.05715191,-84.07137624,40744,2
+hold,OKCHOLD,Oklahoma City Hold Room,"1220 Sovereign Row, Oklahoma City, Ok 73108",1220 Sovereign Row,Oklahoma City,OK,35.4536782,-97.59814012,73108,73108
+hold,PROHOLD,Prohold,"443 Jefferson Blvd North Suite, Warwick, Ri 02886",443 Jefferson Blvd North Suite,Warwick,RI,41.73571611,-71.44113855,2886,4
+hold,REDHOLD,Redding Hold Room,"443 Redcliff Drive, Redding, Ca 96002",443 Redcliff Drive,Redding,CA,40.5750068,-122.3626105,96002,3
+team-geocoding,FCLT8CA,Facility 8 Detention Facility,"446 Alta Rd. Suite 5300, San Diego, CA 92158",446 Alta Rd. Suite 5300,San Diego,CA,32.5919577,-116.9241024,92158,3
+team-geocoding,MHTFHOH,Mercy Health - Tiffin Hospital,"45 St Lawrence Drive, Tiffin, OH 44883",45 St Lawrence Drive,Tiffin,OH,41.10415299,-83.21621701,44883,5
+team-geocoding,CASSCND,Cass County Jail,"450 34th Street South, Fargo, ND 58103",450 34th Street South,Fargo,ND,46.86958851,-96.83313991,58103,4
+team-geocoding,LOSCJCA,Los Angeles County Jail-Twin Tower,"450 Bauchet Street, Los Angeles, CA 90012",450 Bauchet Street,Los Angeles,CA,34.05872701,-118.230515,90012,5
+hold,HARHOLD,Hartford Office,"450 Main Street, Hartford, Ct 06103",450 Main Street,Hartford,CT,41.76129399,-72.67425179,6103,6
+hold,LRAHOLD,Little Rock Hold Room,"4501 E Roosevelt Road, Little Rock, Ar 72206",4501 E Roosevelt Road,Little Rock,AR,34.72110213,-92.22493232,72206,3
+team-geocoding,UVHSATX,University Hospital,"4502 Medical Dr, San Antonio, TX 78229",4502 Medical Dr,San Antonio,TX,29.50705674,-98.57813556,78229,7
+team-geocoding,DHDFNJ,Delaney Hall Detention Facility,"451 Doremus Avenue, Newark, NJ 07105",451 Doremus Avenue,Newark,NJ,40.71799741,-74.12833924,7105,3
+team-geocoding,UCSDHCA,Unv California San Diego Hospital,"4520 Executive Dr, San Diego, CA 92121",4520 Executive Dr,San Diego,CA,32.87519985,-117.2148794,92121,2
+team-geocoding,FLORHAZ,HonorHealth Florence Medical Center,"4545 N Hunt Hwy, Florence, AZ 85132",4545 N Hunt Hwy,Florence,AZ,33.07326552,-111.4856323,85132,5
+team-geocoding,PHRCENJ,Plaza Healthcare Rehab Center,"456 Rahway Avenue, Elizabeth, NJ 07202",456 Rahway Avenue,Elizabeth,NJ,40.65702904,-74.22787148,7202,2
+team-geocoding,BEHOSNY,"Bellevue Hospital, Manhat","462 1st Avenue, New York, NY 10016",462 1st Avenue,New York,NY,40.73954825,-73.97633468,10016,3
+team-geocoding,ECMCBNY,Erie County Medical Center,"462 Grider Street, Buffalo, NY 14215",462 Grider Street,Buffalo,NY,42.92694678,-78.83100577,14215,4
+hold,CRGHOLD,Craig Hold Room,"466 Tucker Street, Craig, Co 81626",466 Tucker Street,Craig,CO,40.51361837,-107.5452081,81626,3
+team-geocoding,LRDICDF,Corecivic Laredo Processing Center,"4702 East Saunders, Laredo, TX 78041",4702 East Saunders,Laredo,TX,27.52925759,-99.44856712,78041,2
+hold,SPGHOLD,Enforcement and Removal Operations Hold Room (Springfield MO),"4715 West Junction Street, Springfield, Mo 65802",4715 West Junction Street,Springfield,MO,37.21639265,-93.37402427,65802,2
+team-geocoding,BPC,Boston Service Processing Center,"476-498 Hanover St Exd, Boston, MA 02109",476-498 Hanover St Exd,Boston,MA,42.36782376,-71.0520908,2109,2
+team-geocoding,UMCEPTX,University Medical Center of El Paso,"4815 Alameda Ave, El Paso, TX 79905",4815 Alameda Ave,El Paso,TX,31.7713296,-106.4340021,79905,2
+team-geocoding,ALLEGNY,Allegany County Jail,"4884 State Route 19, Belmont, NY 14813",4884 State Route 19,Belmont,NY,42.2125682,-78.01703328,14813,2
+team-geocoding,CBENDTX,Coastal Bend Detention Center,"4909 FM2826, Robstown, TX 78380",4909 FM2826,Robstown,TX,27.73672232,-97.75480211,78380,2
+team-geocoding,CONHOTX,Connally Memorial Medical Center,"499 10th Street, Floresville, TX 78114",499 10th Street,Floresville,TX,29.15866293,-98.17490198,78114,2
+team-geocoding,CATAHLA,Catahoula Correctional Center,"499 Old Colombia Road, Harrisonburg, LA 71340",499 Old Colombia Road,Harrisonburg,LA,31.77501001,-91.83695296,71340,3
+hold,FSAHOLD,Fort Smith Hold Room,"4991 Old Greenwood Road, Fort Smith, Ar 72903",4991 Old Greenwood Road,Fort Smith,AR,35.3358685,-94.38851384,72903,2
+team-geocoding,STGENMO,Sainte Genevieve County Jail,"5 Basler Drive, Sainte Genevieve, MO 63670",5 Basler Drive,Sainte Genevieve,MO,37.96605377,-90.05559285,63670,3
+team-geocoding,INDMPIN,Indianapolis Metropolitan PD,"50 Alabama St, Indianapolis, IN 46204",50 Alabama St,Indianapolis,IN,39.76795998,-86.15298996,46204,2
+team-geocoding,CUMBEME,Cumberland County Jail,"50 County Way, Portland, ME 04102",50 County Way,Portland,ME,43.65117004,-70.28184004,4102,2
+team-geocoding,LAWRESD,Lawrence County Jail,"50 Tatanka Dr, Deadwood, SD 57732",50 Tatanka Dr,Deadwood,SD,44.39682696,-103.7119196,57732,2
+hold,LRDHOLD,Laredo Detention Center Hold Room,"500 E. Mann Road, Suite A-3, Laredo, Tx 78041","500 E. Mann Road, Suite A-3",Laredo,TX,27.55908098,-99.49982698,78041,2
+team-geocoding,RSREGVA,Riverside Regional Jail,"500 Folar Trail, North Prince George, VA 23860",500 Folar Trail,North Prince George,VA,37.3071009,-77.34100945,23860,2
+team-geocoding,JCRLYTX,Joe Corley Processing Center,"500 Hilbig Road, Conroe, TX 77301",500 Hilbig Road,Conroe,TX,30.33580401,-95.448276,77301,2
+hold,RSWHOLD,Roswell Hold Room,"500 N. Richardson Avenue, Roswell, Nm 88201",500 N. Richardson Avenue,Roswell,NM,33.39823379,-104.5248356,88201,2
+team-geocoding,MMMCSMI,Mymichigan Medical Center Sault,"500 Osborn Blvd, Sault Sainte Marie, MI 49783",500 Osborn Blvd,Sault Sainte Marie,MI,46.49812599,-84.35046302,49783,2
+hold,AUSHOLD,Austin Detention and Removal Operations Hold Room,"500 W 10th St, Austin, Tx 78701",500 W 10th St,Austin,TX,30.27332216,-97.74613167,78701,2
+team-geocoding,PHELPMO,Phelps County Jail,"500 W. 2nd Street, Rolla, MO 65401",500 W. 2nd Street,Rolla,MO,37.945737,-91.77515504,65401,2
+team-geocoding,WASHIMD,Washington County Detention,"500 Western Maryland Parkway, Hagerstown, MD 21740",500 Western Maryland Parkway,Hagerstown,MD,39.63950317,-77.76189888,21740,2
+team-geocoding,KNXDFTN,Roger D. Wilson Detention Facility,"5001 Maloneyville Rd, Knoxville, TN 37918",5001 Maloneyville Rd,Knoxville,TN,36.08502499,-83.84114322,37918,2
+hold,NSVHOLD,Nashville Hold Room,"501 Brick Church Park Drive, Nashville, Tn 37207",501 Brick Church Park Drive,Nashville,TN,36.22512326,-86.78658624,37207,2
+team-geocoding,CLARKIN,Clark County Jail,"501 E Court Avenue Suite 159, Jeffersonville, IN 47130",501 E Court Avenue Suite 159,Jeffersonville,IN,38.27740338,-85.73700013,47130,2
+hold,LVGHOLD,Las Vegas Hold Room,"501 S. Las Vegas Boulevard Suite 100, Las Vegas, Nv 89101",501 S. Las Vegas Boulevard Suite 100,Las Vegas,NV,36.16404198,-115.143298,89101,2
+team-geocoding,SWEETWY,Sweetwater County Detention Center,"50140 Us Highway 191 South, Rock Springs, WY 82901",50140 Us Highway 191 South,Rock Springs,WY,41.53703632,-109.3002655,82901,2
+team-geocoding,WORCEMD,Worcester County Jail,"5022 Joyner Road, Snow Hill, MD 21863",5022 Joyner Road,Snow Hill,MD,38.17003656,-75.37565444,21863,2
+team-geocoding,HCAHCTX,HCA Houston Hc Conroe,"504 Medical Center Blvd, Conroe, TX 77304",504 Medical Center Blvd,Conroe,TX,30.28417928,-95.46825041,77304,2
+team-geocoding,NLSCOLA,Nelson Coleman Correction,"5061 Highway 3127, Killona, LA 70057",5061 Highway 3127,Killona,LA,29.991934,-90.50261072,70057,3
+team-geocoding,STCHRLA,Nelson Coleman Correctional Center,"5061 La Highway 3127, Killona, LA 70057",5061 La Highway 3127,Killona,LA,29.991934,-90.50261072,70057,2
+team-geocoding,FRMVLVA,Farmville Detention Center,"508 Waterworks Road, Farmville, VA 23901",508 Waterworks Road,Farmville,VA,37.32057983,-78.44092758,23901,2
+new,LYNRJVA,BRRJ Lynchburg,"510 9th St, Lynchburg, VA 24504",510 9th St,Lynchburg,VA,37.41283622,-79.14506302,24504,2
+team-geocoding,WAUKEWI,Waukesha County Jail,"515 W Moreland Blvd, Waukesha, WI 53188",515 W Moreland Blvd,Waukesha,WI,43.02223576,-88.22965085,53188,2
+hold,GRMHOLD,Grand Rapids Hold Room,"517 Ottawa Ave Nw, Grand Rapids, Mi 49503",517 Ottawa Ave Nw,Grand Rapids,MI,42.97266679,-85.67048302,49503,2
+hold,HENHOLD,Hendersonville Hold Room,"518 6th Avenue West, Hendersonville, Nc 28739",518 6th Avenue West,Hendersonville,NC,35.31875999,-82.46779503,28739,3
+team-geocoding,PKLDHTX,Parkland Hospital,"5200 Harry Hines Blvd, Dallas, TX 75235",5200 Harry Hines Blvd,Dallas,TX,32.81173132,-96.83571868,75235,2
+team-geocoding,LEXINSC,Lexington County Jail,"521 Gibson Road, Lexington, SC 29072",521 Gibson Road,Lexington,SC,33.97926087,-81.25044606,29072,2
+team-geocoding,TBRJLME,Two Bridges Regional Jail,"522 Bath Road, Wiscasset, ME 04578",522 Bath Road,Wiscasset,ME,43.97837246,-69.69871824,4578,2
+team-geocoding,LINNJIA,Linn County Jail,"53 3rd Avenue Bridge, Cedar Rapids, IA 52401",53 3rd Avenue Bridge,Cedar Rapids,IA,41.9746498,-91.66921113,52401,2
+hold,MLJHOLD,Mount Laurel Hold Room,"532 Fellowship Road Suite A, Mount Laurel, Nj 08054",532 Fellowship Road Suite A,Mount Laurel,NJ,39.93309161,-74.95747677,8054,2
+team-geocoding,CRYCCTX,Crystal City Correctional Center,"5332 US-83, Crystal City, TX 78839",5332 US-83,Crystal City,TX,28.74688094,-99.84383177,78839,2
+team-geocoding,BOPLOS,Los Angeles Metropolitan Detention Center,"535 Alameda St, Los Angeles, CA 90012",535 Alameda St,Los Angeles,CA,34.0534729,-118.2382043,90012,2
+new,LEONCFL,Leon County Jail,"535 Appleyard Drive, Tallahassee, FL 32316",535 Appleyard Drive,Tallahassee,FL,30.43665171,-84.33564441,32316,2
+team-geocoding,SPRHONY,Spring Valley Hospital,"5400 S Rainbow Blvd, Las Vegas, NV 89118",5400 S Rainbow Blvd,Las Vegas,NV,36.09062745,-115.239613,89118,3
+new,PAMSATX,Pam Health Specialty Hospital 1,"5418 N. Loop 1604 West, San Antonio, TX 78249",5418 N. Loop 1604 West,San Antonio,TX,29.59021528,-98.59160477,78249,3
+hold,ABQHOLD,Albuquerque Hold Room,"5441 Watson Drive South East, Albuquerque, Nm 87106",5441 Watson Drive South East,Albuquerque,NM,35.00126699,-106.6169912,87106,2
+team-geocoding,FLDSSFS,Florida Soft-Sided Facility-South,"54575 Tamiami Trail E, Ochopee, FL 34141",54575 Tamiami Trail E,Ochopee,FL,25.86545815,-80.89870829,34141,2
+team-geocoding,UMASSMA,Umass Memorial Medical Center,"55 Lake Ave N, Worcester, MA 01655",55 Lake Ave N,Worcester,MA,42.27756491,-71.7616715,1655,2
+team-geocoding,OCIRCCA,Orange Count Intake Release Facility,"550 North Flower Street, Santa Ana, CA 92703",550 North Flower Street,Santa Ana,CA,33.7488147,-117.8784021,92703,2
+hold,CHAHOLD,Charlotte Amalie Hold Room,"5500 Veterans Dr, St. Thomas, Vi 00802",5500 Veterans Dr,St. Thomas,VI,18.34051145,-64.92685482,802,2
+team-geocoding,MONROFL,Monroe County Jail,"5501 College Road, Key West, FL 33040",5501 College Road,Key West,FL,24.57657206,-81.75136686,33040,2
+team-geocoding,INTEGOK,Integris Health Baptist Medical,"5501 N. Portland, Oklahoma City, OK 73112",5501 N. Portland,Oklahoma City,OK,35.52676999,-97.58462698,73112,2
+team-geocoding,LPAPSAZ,LA Palma Correctional Center Apso,"5501 North La Palma Road, Eloy, AZ 85131",5501 North La Palma Road,Eloy,AZ,32.81490557,-111.529474,85131,2
+team-geocoding,LPLCCAZ,LA Palma Correctional Center,"5501 North La Palma Road, Eloy, AZ 85131",5501 North La Palma Road,Eloy,AZ,32.81451817,-111.528823,85131,2
+new,HMCHOTX,Harlingen Medical Center,"5501 S Expressway 77/83, Harlingen, TX 78550",5501 S Expressway 77/83,Harlingen,TX,26.15745,-97.67529998,78550,
+team-geocoding,LAKCOFL,Lake County Jail,"551 W. Main St., Tavares, FL 32778",551 W. Main St.,Tavares,FL,28.80187717,-81.73296138,32778,
+hold,TAMHOLD,Tampa Hold Room,"5524 West Cypress Street, Tampa, Fl 33607",5524 West Cypress Street,Tampa,FL,27.95167185,-82.53982291,33607,
+team-geocoding,NIAGANY,Niagara County Jail,"5526 Niagara Street Extention, Lockport, NY 14094",5526 Niagara Street Extention,Lockport,NY,43.18030263,-78.73732719,14094,
+team-geocoding,MSVPCPA,Moshannon Valley Processing Center,"555 Geo Drive, Philipsburg, PA 16866",555 Geo Drive,Philipsburg,PA,40.92260818,-78.24169679,16866,
+hold,WICHOLD,Wichita Hold Room,"555 North Woodlawn Street Building 4, Suite 160, Wichita, Ks 67208","555 North Woodlawn Street Building 4, Suite 160",Wichita,KS,37.69580858,-97.26504404,67208,
+team-geocoding,BROJAFL,Broward County Jail,"555 Se 1st Avenue, Fort Lauderdale, FL 33301",555 Se 1st Avenue,Fort Lauderdale,FL,26.11614231,-80.14209399,33301,
+team-geocoding,LBJHSTX,Harris Health Lbj Hospital,"5656 Kelley St, Houston, TX 77026",5656 Kelley St,Houston,TX,29.81192802,-95.31240602,77026,
+hold,STDHOLD,South Texas/Pearsall Hold Room,"566 Veterans Dr, Pearsall, Tx 78061",566 Veterans Dr,Pearsall,TX,28.89412689,-99.12107157,78061,
+team-geocoding,STCDFTX,South Texas ICE Processing Center,"566 Veterans Drive, Pearsall, TX 78061",566 Veterans Drive,Pearsall,TX,28.89486166,-99.12126683,78061,
+team-geocoding,METROFL,Metro Dade Jail,"5680 Southwest 87th Avenue, Miami, FL 33173",5680 Southwest 87th Avenue,Miami,FL,25.71542744,-80.33587179,33173,
+hold,GJCHOLD,Grand Junction Hold Room,"569 S. Commercial Drive, Grand Junction, Co 81505",569 S. Commercial Drive,Grand Junction,CO,39.08709556,-108.5858754,81505,
+team-geocoding,BAYCOFL,Bay County,"5700 Star Lane, Panama City, FL 32404",5700 Star Lane,Panama City,FL,30.22608007,-85.56210812,32404,
+team-geocoding,SROSAFL,Santa Rosa County Jail,"5755 East Milton Road, Milton, FL 32583",5755 East Milton Road,Milton,FL,30.64349152,-86.97431178,32583,
+team-geocoding,FLBHCFL,Fort Lauderdale Behavor Health Center,"5757 N Dixie Hwy, Oakland Park, FL 33334",5757 N Dixie Hwy,Oakland Park,FL,26.19754928,-80.13333978,33334,
+team-geocoding,CLINTPA,Clinton County Correctional Facility,"58 Pine Mountain Road, Mcelhattan, PA 17748",58 Pine Mountain Road,Mcelhattan,PA,41.15114278,-77.34937957,17748,
+team-geocoding,UCCHIIL,Uchicago Medicine Hospital Chicago,"5841 S Maryland Ave, Chicago, IL 60637",5841 S Maryland Ave,Chicago,IL,41.78843099,-87.60427702,60637,
+team-geocoding,WVIRGVA,Western Virginia Regional Jail,"5885 W River Rd, Salem, VA 24153",5885 W River Rd,Salem,VA,37.25088418,-80.17034186,24153,
+hold,HHWHOLD,Enforcement and Removal Operations Honolulu Sub-Office Hold Room,"595 Ala Moana Boulevard, Honolulu, Hi 96813",595 Ala Moana Boulevard,Honolulu,HI,21.29993808,-157.8638846,96813,
+team-geocoding,BRWNSTX,Brownsville Police Department,"600 E Jackson St, Brownsville, TX 78520",600 E Jackson St,Brownsville,TX,25.90787598,-97.49835599,78520,
+team-geocoding,FAYETKY,Fayette County Detention Center,"600 Old Frankford Cr, Lexington, KY 40510",600 Old Frankford Cr,Lexington,KY,38.06563162,-84.54514102,40510,
+team-geocoding,LEXFCKY,Lexington Processing @ Fayette County,"600 Old Frankford Cr, Lexington, KY 40510",600 Old Frankford Cr,Lexington,KY,38.06563162,-84.54514102,40510,
+team-geocoding,CAMCOWY,Campbell County Jail,"600 West Boxelder, Gillette, WY 82718",600 West Boxelder,Gillette,WY,44.2772226,-105.512222,82718,
+team-geocoding,LOCMHNY,Lockport Memorial Hospital,"6001 Shimer Dr, Lockport, NY 14094",6001 Shimer Dr,Lockport,NY,43.14884975,-78.7066112,14094,
+team-geocoding,CPBDCKY,Campbell County Detention Center,"601 Central Avenue, Newport, KY 41071",601 Central Avenue,Newport,KY,39.08871276,-84.49675045,41071,
+team-geocoding,EPCDFTX,El Paso County Detention Facility,"601 E. Overland, El Paso, TX 79901",601 E. Overland,El Paso,TX,31.75845584,-106.4831359,79901,
+team-geocoding,STRMONY,Strong Memorial Hospital,"601 Elmwood Ave, Rochester, NY 14642",601 Elmwood Ave,Rochester,NY,43.12283219,-77.62358742,14642,
+team-geocoding,BROHOMI,Bronson Methodist Hospital,"601 John Street, Kalamazoo, MI 49007",601 John Street,Kalamazoo,MI,42.28462557,-85.58040992,49007,
+team-geocoding,BOPATL,Federal Correctional Institution Atlanta,"601 Mcdonough Blvd Se, Atlanta, GA 30315",601 Mcdonough Blvd Se,Atlanta,GA,33.71244414,-84.36793535,30315,
+hold,SNJHOLD,Snj Hold Room,"603 San Juan Avenue First Floor, Stockton, Ca 95203",603 San Juan Avenue First Floor,Stockton,CA,37.95375697,-121.3211203,95203,
+team-geocoding,STK,Stockton Staging Facility,"603 San Juan Avenue, Stockton, CA 95203",603 San Juan Avenue,Stockton,CA,37.95375697,-121.3211203,95203,
+team-geocoding,CLAYCIN,Clay County Jail,"611 East Jackson Street, Brazil, IN 47834",611 East Jackson Street,Brazil,IN,39.52372922,-87.11907555,47834,
+team-geocoding,GLDSACA,Golden State Annex,"611 Frontage Road, Mcfarland, CA 93250",611 Frontage Road,Mcfarland,CA,35.66990008,-119.2278086,93250,
+hold,CLTHOLD,Charlotte Hold Room,"6130 Tyvola Centre Drive, Charlotte, Nc 28217",6130 Tyvola Centre Drive,Charlotte,NC,35.16429622,-80.90953805,28217,
+team-geocoding,VCUHOVA,Vcu Health Tappahannock Hospital,"618 Hospital Road, Tappahannock, VA 22560",618 Hospital Road,Tappahannock,VA,37.90130269,-76.87888516,22560,
+team-geocoding,SACITCA,Santa Ana City Jail,"62 Civic Center Plaza, Santa Ana, CA 92701",62 Civic Center Plaza,Santa Ana,CA,33.7502121,-117.880568,92701,
+hold,ANCHOLD,Anchorage Sub-Office Hold Room,"620 East 10th Avenue, Anchorage, Ak 99501",620 East 10th Avenue,Anchorage,AK,61.21236695,-149.8722869,99501,
+team-geocoding,ELZICDF,Elizabeth Contract Detention Facility,"625 Evans Street, Elizabeth, NJ 07201",625 Evans Street,Elizabeth,NJ,40.66622291,-74.18880208,7201,
+team-geocoding,TNWESDF,West Tennessee Detention Facility,"6299 Finde Naifeh Drive, Mason, TN 38049",6299 Finde Naifeh Drive,Mason,TN,35.40742552,-89.54861067,38049,
+team-geocoding,FNDDUWI,Fond Du Lac County Sheriff/Jail,"63 Western Ave, Fond Du Lac, WI 54935",63 Western Ave,Fond Du Lac,WI,43.77359905,-88.44861093,54935,
+team-geocoding,SBERNCA,San Bernardino County Jail,"630 East Rialto Avenue, San Bernardino, CA 92408",630 East Rialto Avenue,San Bernardino,CA,34.10231198,-117.273646,92408,
+hold,SFRHOLD,Sfr Hold Room,"630 Sansome Street 5th Floor, San Francisco, Ca 94111",630 Sansome Street 5th Floor,San Francisco,CA,37.79621202,-122.401634,94111,
+team-geocoding,SUMMIUT,Summit County Jail,"6300 Justice Center Rd, Park City, UT 84098",6300 Justice Center Rd,Park City,UT,40.7208854,-111.479076,84098,
+hold,IWAHOLD,AZ Removal Operation Coord Center (Arocc),"6335 South Downwind, Suite 104, Mesa, Az 85212","6335 South Downwind, Suite 104",Mesa,AZ,33.30339444,-111.6627399,85212,
+hold,STAHOLD,Saint Albans Hold Room,"64 Gricebrook Road, St. Albans, Vt 05478",64 Gricebrook Road,St. Albans,VT,44.80149468,-73.07339391,5478,
+team-geocoding,ADVHCHI,Adventist Health Castle,"640 Ulukahiki St, Kailua, HI 96734",640 Ulukahiki St,Kailua,HI,21.38062035,-157.7576827,96734,
+hold,TUCHOLD,Tucson INS Hold Room,"6431 South Country Club Road, Tucson, Az 85706",6431 South Country Club Road,Tucson,AZ,32.13575034,-110.9248099,85706,
+hold,SACHOLD,Sacramento Hold,"650 Capitol Mall Room I-120, Sacramento, Ca 95814",650 Capitol Mall Room I-120,Sacramento,CA,38.57767039,-121.4999439,95814,
+team-geocoding,SJS,San Juan Staging,"651 Federal Drive, Suite 104, Guaynabo, PR 00965","651 Federal Drive, Suite 104",Guaynabo,PR,18.42354698,-66.11456196,965,
+team-geocoding,BOPGUA,Guaynabo Mdc (San Juan),"652 Carretera 28, Guaynabo, PR 00965",652 Carretera 28,Guaynabo,PR,18.42143101,-66.11932498,965,
+hold,LOUHOLD,Louisville Hold Room,"654 South 7th Street, Louisville, Ky 40203",654 South 7th Street,Louisville,KY,38.24725899,-85.76375173,40203,
+hold,SBDHOLD,San Bernardino Hold Room,"655 West Rialto Avenue, San Bernardino, Ca 92410",655 West Rialto Avenue,San Bernardino,CA,34.10052676,-117.2975932,92410,
+team-geocoding,SHMCHNV,Summerlin Hospital Medical Center,"657 N Town Center Dr, Las Vegas, NV 89144",657 N Town Center Dr,Las Vegas,NV,36.18116931,-115.3170879,89144,
+hold,PCSHOLD,Pecos Hold Room,"67 S. Frontage Ih-20w, Pecos, Tx 79772",67 S. Frontage Ih-20w,Pecos,TX,31.39660166,-103.4926944,79772,
+team-geocoding,MHTSATX,Methodist Hospital Texsan,"6700 W I-10, San Antonio, TX 78201",6700 W I-10,San Antonio,TX,29.48980703,-98.54748109,78201,
+hold,CLMHOLD,Columbus Hold Room,"675 Brooksedge Boulevard, Westerville, Oh 43081",675 Brooksedge Boulevard,Westerville,OH,40.1081008,-82.93247576,43081,
+team-geocoding,MARIOIN,Marion County Jail,"675 Justice Way, Indianapolis, IN 46203",675 Justice Way,Indianapolis,IN,39.7557574,-86.11095438,46203,
+team-geocoding,CHFLDVA,Chesterfield County Jail,"6900 Mimms Dr, Chesterfield, VA 23832",6900 Mimms Dr,Chesterfield,VA,37.37892798,-77.50784406,23832,
+team-geocoding,WALTNFL,Walton County Department of Corrections,"691 Institution Rd., Defuniak Springs, FL 32433",691 Institution Rd.,Defuniak Springs,FL,30.7780307,-86.10312887,32433,
+team-geocoding,XXBLISS,Dod Detention Facility At Fort Bliss,"6920 Digital Rd, El Paso, TX 79936",6920 Digital Rd,El Paso,TX,31.81113348,-106.2994954,79936,
+team-geocoding,EROFCB,Enforcement and Removal Operations El Paso Camp East Montana,"6920 Digital Road, El Paso, TX 79936",6920 Digital Road,El Paso,TX,31.811927,-106.2981181,79936,
+hold,RENHOLD,Reno Hold Room,"6999 Sierra Center Parkway, Reno, Nv 89511",6999 Sierra Center Parkway,Reno,NV,39.46210857,-119.7775334,89511,
+team-geocoding,VTCHTDN,Chittenden Regional Correctional Facility,"7 Farrell Street, South Burlington, VT 05403",7 Farrell Street,South Burlington,VT,44.44639778,-73.20538039,5403,
+team-geocoding,BOPPHL,Fdc Philadelphia,"700 Arch Street, Philadelphia, PA 19106",700 Arch Street,Philadelphia,PA,39.95254135,-75.1520479,19106,
+team-geocoding,MNROEMI,Monroe County Jail,"7000 East Dunbar Road, Monroe, MI 48161",7000 East Dunbar Road,Monroe,MI,41.89557061,-83.3932822,48161,
+team-geocoding,MONROMI,Monroe County Detention-Dorm,"7000 East Dunbar Road, Monroe, MI 48161",7000 East Dunbar Road,Monroe,MI,41.89557061,-83.3932822,48161,
+team-geocoding,TGKJLFL,Turner Guilford Knight (Tgk) Jail,"7000 Nw 41st St., Miami, FL 33166",7000 Nw 41st St.,Miami,FL,25.81029782,-80.31141999,33166,
+team-geocoding,NYLIVIC,Livingston Correctional,"7005 Sonyea Rd, Sonyea, NY 14556",7005 Sonyea Rd,Sonyea,NY,42.6896103,-77.82396193,14556,
+team-geocoding,MMCCRIA,Mercy Medical Center Cedar Rapid,"701 10th St Se, Cedar Rapids, IA 52403",701 10th St Se,Cedar Rapids,IA,41.97806891,-91.65578114,52403,
+team-geocoding,BOPCNV,Nashville Comm Correctional,"701 Broadway St, Suite 124, Nashville, TN 37203","701 Broadway St, Suite 124",Nashville,TN,36.15843994,-86.78240643,37203,
+team-geocoding,HIDALTX,Hidalgo County Sheriff's Jail,"701 E El Cibolo Rd, Edinburg, TX 78541",701 E El Cibolo Rd,Edinburg,TX,26.416844,-98.12778001,78541,
+team-geocoding,LASALTX,Lasalle County Jail,"703 N Main Street, Cotulla, TX 78014",703 N Main Street,Cotulla,TX,28.44383667,-99.23705189,78014,
+hold,GRIHOLD,Grand Island Hold Room,"703 S Webb Rd, Suite D, Grand Island, NE 68803","703 S Webb Rd, Suite D",Grand Island,NE,40.91207017,-98.37725856,68803,
+team-geocoding,LRKNHFL,Larkin Hospital,"7031 SW 62nd Ave, South Miami, FL 33143",7031 SW 62nd Ave,South Miami,FL,25.70558445,-80.29317311,33143,
+team-geocoding,EDNDCTX,Eden Detention Center,"704 E Broadway Street, Eden, TX 76837",704 E Broadway Street,Eden,TX,31.21636286,-99.8344809,76837,
+team-geocoding,BUTLEOH,Butler County Sheriff's Office,"705 Hanover Street, Hamilton, OH 45011",705 Hanover Street,Hamilton,OH,39.38790911,-84.55572745,45011,
+team-geocoding,APIBHCA,Alvarado Parkway Institute,"7050 Parkway Dr, La Mesa, CA 91942",7050 Parkway Dr,La Mesa,CA,32.77458776,-117.0441556,91942,
+hold,CHYHOLD,Cheyenne Hold Room,"7052 Commerce Circle Suite 130, Cheyenne, WY 82007",7052 Commerce Circle Suite 130,Cheyenne,WY,41.13481054,-104.7211537,82007,
+team-geocoding,OGRMCNY,Orange Regional Medical Center,"707 E Main St, Middletown, NY 10940",707 E Main St,Middletown,NY,41.44184139,-74.36814683,10940,
+team-geocoding,PCRMMGA,Piedmount Columbus Regional Midtown Mc,"710 Center St, Columbus, GA 31901",710 Center St,Columbus,GA,32.48050735,-84.98169032,31901,
+team-geocoding,CHPHOVA,Chippenham Hospital - Richmond,"7101 Jahnke Rd, Richmond, VA 23225",7101 Jahnke Rd,Richmond,VA,37.51445053,-77.52573356,23225,
+team-geocoding,AZSVCPC,Arizona State Prison - Yuma,"7125 E Cesar Chavez Blvd, San Luis, AZ 85349",7125 E Cesar Chavez Blvd,San Luis,AZ,32.50243458,-114.6465752,85349,
+team-geocoding,PHELPNE,Phelps County Jail,"715 5th Avenue, Holdrege, NE 68949",715 5th Avenue,Holdrege,NE,40.43955352,-99.37063646,68949,
+new,ONSLONC,Onslow County Jail,"717 Court Street, Jacksonville, NC 28540",717 Court Street,Jacksonville,NC,34.75173459,-77.43225086,28540,
+team-geocoding,PMMRHMI,Promedica Monroe Regional Hospital,"718 N Macomb St, Monroe, MI 48162",718 N Macomb St,Monroe,MI,41.92448244,-83.3881912,48162,
+team-geocoding,NYWASHC,Washington Correctional,"72 Lock 11 Rd, Comstock, NY 12821",72 Lock 11 Rd,Comstock,NY,43.46521437,-73.43226744,12821,
+team-geocoding,ESKHLIN,Eskenazi Health,"720 Eskenazi Avenue, Indianapolis, IN 46202",720 Eskenazi Avenue,Indianapolis,IN,39.77822865,-86.18412848,46202,
+team-geocoding,HCMCMMN,Hennepin County Medical Center,"730 S 8th St, Minneapolis, MN 55415",730 S 8th St,Minneapolis,MN,44.97210379,-93.2624106,55415,
+hold,FREHOLD,Fresno Hold Room,"733 L Street, Fresno, Ca 93721",733 L Street,Fresno,CA,36.73282025,-119.7855754,93721,
+team-geocoding,APPSCLA,Allen Parish Public Safety Complex,"7340 Highway 26 W, Oberlin, LA 70655",7340 Highway 26 W,Oberlin,LA,30.62356505,-92.78271897,70655,
+team-geocoding,ARAPACO,Arapahoe County Jail,"7375 S. Potomac St., Centennial, CO 80112",7375 S. Potomac St.,Centennial,CO,39.58144095,-104.8326118,80112,
+hold,SMAHOLD,Santa Maria Sub Office Enforcement and Removal Operations,"740 West Century Street Suite A, Santa Maria, Ca 93455",740 West Century Street Suite A,Santa Maria,CA,34.91811001,-120.44476,93455,
+team-geocoding,TVMSATX,Pam Specialty Hospital of San Antonio,"7400 Barlite Blvd, San Antonio, TX 78244",7400 Barlite Blvd,San Antonio,TX,29.35298822,-98.54591158,78244,
+team-geocoding,CCASDCA,Otay Mesa Detention Center,"7488 Calzada De La Fuente, San Diego, CA 92154",7488 Calzada De La Fuente,San Diego,CA,32.57583662,-116.9155909,92154,
+team-geocoding,SMRVLTX,Somervell County Sheriff's Department,"750 Bo Gibbs Blvd, Glen Rose, TX 76043",750 Bo Gibbs Blvd,Glen Rose,TX,32.25009478,-97.75109712,76043,
+team-geocoding,WASHCUT,Washington County Jail,"750 South 5300 West, Hurricane, UT 84737",750 South 5300 West,Hurricane,UT,37.15838619,-113.4122214,84737,
+team-geocoding,SCVMCCA,Sharp Chula Vista Medical Center,"751 Medical Center Ct, Chula Vista, CA 91911",751 Medical Center Ct,Chula Vista,CA,32.61893561,-117.0235211,91911,
+team-geocoding,LPD77CA,Los Angeles Police PD 77th Div,"7600 S Broadway, Los Angeles, CA 90003",7600 S Broadway,Los Angeles,CA,33.97056125,-118.2779324,90003,
+team-geocoding,NASSAFL,Nassau County Jail,"76212 Nicholas Cutinha Rd, Yulee, FL 32097",76212 Nicholas Cutinha Rd,Yulee,FL,30.62244431,-81.63525504,32097,
+team-geocoding,UINTAWY,Uinta County Sheriff,"77 County Road #109, Evanston, WY 82930",77 County Road #109,Evanston,WY,41.26930541,-110.9213668,82930,
+team-geocoding,METHOTX,Methodist Hospital,"7700 Floyd Curl Dr, San Antonio, TX 78229",7700 Floyd Curl Dr,San Antonio,TX,29.50814961,-98.57256528,78229,
+team-geocoding,DNHMCCO,Denver Health Medical Center,"777 Bannock Street, Denver, CO 80204",777 Bannock Street,Denver,CO,39.72859471,-104.9910426,80204,
+team-geocoding,WWDHDNH,Wentworth-Douglass Hospital,"789 Central Ave, Dover, NH 03820",789 Central Ave,Dover,NH,43.21340901,-70.87359603,3820,
+team-geocoding,COLCASC,Columbia Care Center,"7901 Farrow Road, Columbia, SC 29203",7901 Farrow Road,Columbia,SC,34.07857594,-80.97888153,29203,
+team-geocoding,BOPBRO,Mdc Brooklyn,"80 29th Street, Brooklyn, NY 11232",80 29th Street,Brooklyn,NY,40.66031328,-74.00398013,11232,
+team-geocoding,GMHATGA,Grady Memorial Hospital,"80 Jessie Hill Jr Dr Se, Atlanta, GA 30303",80 Jessie Hill Jr Dr Se,Atlanta,GA,33.75168214,-84.38198619,30303,
+team-geocoding,WILSOTX,Wilson County Jail,"800 10th St Unit 4, Floresville, TX 78114",800 10th St Unit 4,Floresville,TX,29.14815731,-98.15761162,78114,
+hold,WCTHOLD,Waco Detention and Removal Operations Hold Room,"800 Franklin Avenue, Ste 153, Waco, Tx","800 Franklin Avenue, Ste 153",Waco,TX,31.55300969,-97.13329209,76701,
+hold,SAJHOLD,San Juan Sub-Office Hold Room,"800 Juan Ponce De Leon Avenue, 12th Floor, San Juan, Pr 00908","800 Juan Ponce De Leon Avenue, 12th Floor",San Juan,PR,18.45535098,-66.08279203,908,
+team-geocoding,CSSCHVA,Centra Southside Comm Hospital,"800 Oak St, Farmville, VA 23901",800 Oak St,Farmville,VA,37.30296686,-78.40435374,23901,
+team-geocoding,VENTUCA,Ventura County Jail,"800 South Victoria Avenue, Ventura, CA 93009",800 South Victoria Avenue,Ventura,CA,34.26848745,-119.2114051,93009,
+team-geocoding,MARTIFL,Martin County Jail,"800 Southeast Monterey Road, Stuart, FL 34994",800 Southeast Monterey Road,Stuart,FL,27.17239299,-80.24191904,34994,
+hold,BKLHOLD,Bakerfield Hold,"800 Truxtun Avenue, Bakersfield, Ca 93301",800 Truxtun Avenue,Bakersfield,CA,35.37379603,-119.0111914,93301,
+team-geocoding,DAVISUT,Davis County,"800 West State Street, Farmington, UT 84025",800 West State Street,Farmington,UT,40.98053232,-111.9041646,84025,
+team-geocoding,CURRYNM,Curry County Detention Facility,"801 Mitchell Street, Clovis, NM 88101",801 Mitchell Street,Clovis,NM,34.40628552,-103.2062745,88101,
+team-geocoding,SEBASAR,Sebastian County Detention Center,"801 South A Street, Fort Smith, AR 72901",801 South A Street,Fort Smith,AR,35.38250868,-94.42505022,72901,
+team-geocoding,MSTHSTX,Methodist Specialty Transplant Hos,"8026 Floyd Curl Dr, San Antonio, TX 78229",8026 Floyd Curl Dr,San Antonio,TX,29.51361839,-98.57659002,78229,
+team-geocoding,MTGHOLD,Montgomery Hold Room,"806 Hilbig Road, Conroe, TX 77301",806 Hilbig Road,Conroe,TX,30.33710098,-95.44269901,77301,
+team-geocoding,MTGPCTX,Montgomery Processing Center,"806 Hilbig Road, Conroe, TX 77301",806 Hilbig Road,Conroe,TX,30.33710098,-95.44269901,77301,
+team-geocoding,MVPNHPA,Penn Highlands Clearfield,"809 Turnpike Ave, Clearfield, PA 16830",809 Turnpike Ave,Clearfield,PA,41.0334042,-78.4498357,16830,
+team-geocoding,KARNETX,Karnes County Correctional Center,"810 Commerce Street, Karnes City, TX 78118",810 Commerce Street,Karnes City,TX,28.883469,-97.9117849,78118,
+hold,DALHOLD,Dallas FO Hold,"8101 N. Stemmons Freeway, Dallas, Tx 75247",8101 N. Stemmons Freeway,Dallas,TX,32.82378266,-96.87200755,75247,
+team-geocoding,NWRCCMN,Northwest Regional Corrections Center,"816 Marin Ave., Suite 110, Crookston, MN 56716","816 Marin Ave., Suite 110",Crookston,MN,47.7688529,-96.62850915,56716,
+hold,WESHOLD,Westminster Custody,"8200 Westminster Boulevard, Westminster, Ca 92683",8200 Westminster Boulevard,Westminster,CA,33.75709999,-117.9859,92683,
+hold,RICHOLD,Richland Hold Room,"825 Jadwin Avenue Room G165, Richland, Wa 99352",825 Jadwin Avenue Room G165,Richland,WA,46.27754116,-119.275982,99352,
+hold,ETWHOLD,Etowah Enforcement and Removal Operations Hold Room,"827 Forrest Avenue, Gadsden, AL",827 Forrest Avenue,Gadsden,AL,34.01549738,-86.01228957,35901,
+team-geocoding,ETOWAAL,Etowah County Jail,"827 Forrest Avenue, Gadsden, AL 35901",827 Forrest Avenue,Gadsden,AL,34.01639458,-86.01248822,35901,
+team-geocoding,HIDALNM,Hidalgo County Detention Center,"83 Old Highway 70, Lordsburg, NM 88045",83 Old Highway 70,Lordsburg,NM,32.33784165,-108.6661874,88045,
+team-geocoding,JENADLA,La Salle Detention Facility,"830 Pinehill Road, Jena, LA 71342",830 Pinehill Road,Jena,LA,31.70820361,-92.15343938,71342,
+team-geocoding,LSRDCTX,LaSalle County Regional Detention Center,"832 East Texas Hwy 44, Encinal, TX 78019",832 East Texas Hwy 44,Encinal,TX,28.04550349,-99.33632924,78019,
+team-geocoding,HCPSCMS,Hancock County Public Safety Complex,"8450 Highway 90, Bay Saint Louis, MS 39520",8450 Highway 90,Bay Saint Louis,MS,30.30312418,-89.47651733,39520,
+team-geocoding,GUAMHGU,Guam Memorial Hospital,"850 Gov Carlos G Camacho Rd., Tamuning, GU 96913",850 Gov Carlos G Camacho Rd.,Tamuning,GU,13.50496171,144.7746424,96913,
+team-geocoding,PLATTWY,Platte County Jail,"850 Maple Street, Wheatland, WY 82201",850 Maple Street,Wheatland,WY,42.05542801,-104.952064,82201,
+new,BOPLAT,LA Tuna Federal Correctional Institution,"8500 Doniphan Rd, Anthony, TX 79821",8500 Doniphan Rd,Anthony,TX,31.98212529,-106.5914752,79821,
+team-geocoding,HGHBECO,Highlands Behavioral Health,"8565 Poplar Way, Littleton, CO 80130",8565 Poplar Way,Littleton,CO,39.56277988,-104.9076912,80130,
+team-geocoding,BREVDFL,Brevard County Jail Complex,"860 Camp Road, Cocoa, FL 32927",860 Camp Road,Cocoa,FL,28.44815289,-80.78176892,32927,
+hold,SNDHOLD,Snd District Staging,"880 Front Street Suite 2242, San Diego, Ca 92101",880 Front Street Suite 2242,San Diego,CA,32.71460715,-117.165296,92101,
+hold,FMYHOLD,Fort Myers Enforcement and Removal Operations Hold Room,"8860 Salrose Lane, Fort Myers, Fl 33912",8860 Salrose Lane,Fort Myers,FL,26.54846913,-81.81094099,33912,
+team-geocoding,JHMCJNY,Jamaica Hospital Medical Center,"8900 Van Wyck Expwy, Richmond Hill, NY 11418",8900 Van Wyck Expwy,Richmond Hill,NY,40.70025598,-73.81621603,11418,
+team-geocoding,BOPTCN,Tucson Federal Correctional Inst,"8901 South Wilmot Road, Tucson, AZ 85706",8901 South Wilmot Road,Tucson,AZ,32.08938687,-110.8566636,85706,
+team-geocoding,EPC,El Paso Service Processing Center,"8915 Montana Avenue, El Paso, TX 79925",8915 Montana Avenue,El Paso,TX,31.79376201,-106.3692084,79925,
+team-geocoding,EPCJUVI,El Paso Service Processing Center Juvenile,"8915 Montana St., El Paso, TX 79925",8915 Montana St.,El Paso,TX,31.79376201,-106.3692084,79925,
+team-geocoding,PRVMDKS,Providence Medical Group,"8929 Parallel Pkwy, Kansas City, KS 66112",8929 Parallel Pkwy,Kansas City,KS,39.12730061,-94.7869798,66112,
+team-geocoding,BURNETX,Burnet County Jail,"900 County Ln, Burnet, TX 78611",900 County Ln,Burnet,TX,30.74152144,-98.2530483,78611,
+team-geocoding,HARDEFL,Hardee County Jail,"900 E Summit St, Wauchula, FL 33873",900 E Summit St,Wauchula,FL,27.54292218,-81.8022425,33873,
+team-geocoding,STLUCFL,St Lucie County Jail,"900 N. Rock Rd, Fort Pierce, FL 34945",900 N. Rock Rd,Fort Pierce,FL,27.45346523,-80.40944118,34945,
+hold,MOAHOLD,Mobile Hold Room,"900 Western America Circle, Mobile, Al 36609",900 Western America Circle,Mobile,AL,30.67357769,-88.13118549,36609,
+team-geocoding,BROKSTX,Brooks County Detention Center,"901 County Road 201, Falfurrias, TX 78355",901 County Road 201,Falfurrias,TX,27.24768503,-98.12648551,78355,
+team-geocoding,PUEBLCO,Pueblo County Jail,"909 Court Street, Pueblo, CO 81003",909 Court Street,Pueblo,CO,38.27555705,-104.610633,81003,
+team-geocoding,LIMESTX,Limestone County Detention Center,"910 North Tyus Street, Groesbeck, TX 76642",910 North Tyus Street,Groesbeck,TX,31.52584114,-96.50657417,76642,
+team-geocoding,TAYLOTX,Taylor County Adult Detention,"910 South 27th Street, Abilene, TX 79602",910 South 27th Street,Abilene,TX,32.41693799,-99.73460803,79602,
+team-geocoding,LIMCJTX,Limestone County Jail,"910 Tyus St, Groesbeck, TX 76642",910 Tyus St,Groesbeck,TX,31.52584114,-96.50657417,76642,
+hold,AMTHOLD,Amarillo Hold Room,"9100 S Georgia St, Amarillo, Tx 79118",9100 S Georgia St,Amarillo,TX,35.11763714,-101.8670628,79118,
+team-geocoding,RNDLLTX,Randall County Jail,"9100 South Georgia Street, Amarillo, TX 79118",9100 South Georgia Street,Amarillo,TX,35.11763714,-101.8670628,79118,
+team-geocoding,AKHIGHL,Hiland Mountain Correctional Center,"9101 Hesterberg Road, Eagle River, AK 99577",9101 Hesterberg Road,Eagle River,AK,61.30306602,-149.581249,99577,
+team-geocoding,WASHONV,Washoe County Jail,"911 E Parr Blvd, Reno, NV 89512",911 E Parr Blvd,Reno,NV,39.57384441,-119.8110119,89512,
+team-geocoding,SALINNE,Saline County Jail,"911 S Main Street, Wilber, NE 68465",911 S Main Street,Wilber,NE,40.47505021,-96.96165644,68465,
+hold,CRPHOLD,Corpus Christi EOR Hold Room,"9149 Tx-44, Corpus Christi, Tx 78406",9149 Tx-44,Corpus Christi,TX,27.77946586,-97.5436642,78406,
+team-geocoding,LEVYCFL,Levy County Jail,"9150 Ne 80th Ave, Bronson, FL 32621",9150 Ne 80th Ave,Bronson,FL,29.4651518,-82.63967979,32621,
+new,LAFAYLA,Lafayette Parish so Jail Annex,"916 Lafayette Street, Lafayette, La 70501",916 Lafayette Street,Lafayette,LA,30.22352032,-92.02141108,70501,
+hold,RCMHOLD,Richmond Sub-Office Hold,"9200 Arboretum Parkway Suite 140, North Chesterfield, Va 23236",9200 Arboretum Parkway Suite 140,North Chesterfield,VA,37.49424235,-77.56860725,23236,
+hold,CLEHOLD,Cleveland Hold Room,"925 Keynote Circle, Brooklyn Heights, Oh 44131",925 Keynote Circle,Brooklyn Heights,OH,41.41178355,-81.66552561,44131,
+team-geocoding,PWILLVA,Prince William County Adult Detention Center,"9320 Lee Avenue, Manassas, VA 20110",9320 Lee Avenue,Manassas,VA,38.75207198,-77.48000919,20110,
+team-geocoding,VPREGVA,Virginia Peninsula Regional Jail,"9320 Merrimac Trail, Williamsburg, VA 23185",9320 Merrimac Trail,Williamsburg,VA,37.21660857,-76.60350921,23185,
+hold,PUEHOLD,Pueblo Hold Room,"935 Highway 67, Florence, Co 81226",935 Highway 67,Florence,CO,38.42656923,-105.1156528,81226,
+team-geocoding,WVEASTR,Eastern Regional Jail,"94 Grapevine Rd, Martinsburg, WV 25405",94 Grapevine Rd,Martinsburg,WV,39.43592522,-77.9563675,25405,
+team-geocoding,BRDFDFL,Bradford County Jail,"945 N Temple Ave, Starke, FL 32091",945 N Temple Ave,Starke,FL,29.95411301,-82.10957797,32091,
+hold,ORLHOLD,Orlando Hold Room,"9495 Delegates Drive, Orlando, Fl 32837",9495 Delegates Drive,Orlando,FL,28.42818942,-81.40971328,32837,
+team-geocoding,BRYANGA,Bryan County Jail,"95 Public Safety Way, Pembroke, GA 31321",95 Public Safety Way,Pembroke,GA,32.134516,-81.618418,31321,
+team-geocoding,WYATTRI,Wyatt Detention Facility,"950 High Street, Central Falls, RI 02863",950 High Street,Central Falls,RI,41.8923362,-71.3840132,2863,
+team-geocoding,COCONAZ,Coconino County Detention Facility,"951 E. Sawmill Rd, Flagstaff, AZ 86001",951 E. Sawmill Rd,Flagstaff,AZ,35.18722484,-111.6411599,86001,
+new,CAMERTX,Cameron County Jail,"954 E. Harrison, Olmito, Tx 78520",954 E. Harrison,Olmito,TX,25.90778902,-97.49519098,78520,
+team-geocoding,JENATLA,Alexandria Staging Facility,"96 George Thompson Dr., Alexandria, LA 71303",96 George Thompson Dr.,Alexandria,LA,31.3175636,-92.53649027,71303,
+team-geocoding,ROCKINH,Rockingham County Jail,"96 North Road, Brentwood, NH 03833",96 North Road,Brentwood,NH,43.01201382,-71.05077908,3833,
+hold,NEWHOLD,New/INS Os Hold Room,"970 Broad Street 11th Floor, Newark, Nj 07102",970 Broad Street 11th Floor,Newark,NJ,40.730128,-74.17434499,7102,
+team-geocoding,PINALAZ,Pinal County Jail,"971 N. Jason Lopez Circle, Florence, AZ 85132",971 N. Jason Lopez Circle,Florence,AZ,33.04146965,-111.377858,85132,
+hold,CINHOLD,Cincinnati Hold Room,"9875 Redhill Drive, Blue Ash, Oh 45242",9875 Redhill Drive,Blue Ash,OH,39.23831905,-84.3803083,45242,
+team-geocoding,WEBDCTX,Corecivic Webb County Detention Center,"9998 S. Highway 83, Laredo, TX 78046",9998 S. Highway 83,Laredo,TX,27.36981816,-99.49028435,78046,
+new,GTMOACU,Windward Holding Facility,"Avenue C Psc 1005 Box 55, Fpo, Cu",Avenue C Psc 1005 Box 55,FPO AE,CU,,,9593,
+new,GTMOBCU,Migrant Operations Center East,"Avenue C Psc 1005 Box 55, Fpo, Cu",Avenue C Psc 1005 Box 55,FPO AE,CU,,,9593,
+new,GTMODCU,Migrant Operations Center Main Av622,"Avenue C Psc 1005 Box 55, Fpo, Cu",Avenue C Psc 1005 Box 55,FPO AE,CU,19.91143841,-75.22266036,9593,
+team-geocoding,KRHUBFL,Krome/Miami Hub,"Concourse E Satellite, Miami International, Miami, FL 33299","Concourse E Satellite, Miami International",Miami,FL,25.7952677,-80.2834383,33299,
+new,AGC,Aguadilla Service Processing Center,"Corner of Belt Rd and Gun Club St., Aguadilla, Pr 00604",Corner of Belt Rd and Gun Club St.,Aguadilla,PR,18.49562533,-67.14344217,604,
+new,MPSIPAN,Saipan Department of Corrections,"Tekken St, Susupe, Saipan, Mp 96950",Tekken St,"Susupe, Saipan",MP,15.1581786,145.7073558,96950,
+team-geocoding,JFKTSNY,JFK International Ap - T7,"Terminal 7, Jamaica, NY 11430",Terminal 7,Jamaica,NY,40.6495293,-73.7828736,11430,
+new,CBPCAL,Calexico East Poe,"1699 Carr Road, Calexico, CA 92231",1699 Carr Road,Calexico,CA,,,92231,
+new,MCJJVFL,Martin County Jail - Juvenile,"800 SE Monterey Road, Stuart, FL 34994",800 SE Monterey Road,Stuart,FL,,,34994,
+new,SMITHTX,Smith County Jail,"206 E Elm Street, Tyler, TX 75702",206 E Elm Street,Tyler,TX,,,75702,
+new,GALVETX,Galveston County Jail,"5700 Avenue H, Galveston, TX 77551",5700 Avenue H,Galveston,TX,29.293133622244,-94.8306397124008,77551,
+new,SBNTOTX,San Benito Police Department,"601 N Oscar Williams Rd, San Benito, TX 78586",601 N Oscar Williams Rd,San Benito,TX,,,78586,
+new,TAYLOFL,Taylor County Jail,,,,,30.1104,-83.5734,,
+new,COOKETX,Cooke County Jail,"300 County Road 451, Gainesville, TX 76240",300 County Road 451,Gainesville,TX,33.6491,-97.1684,76240,
+new,LINCOWY,Lincoln County Jail,"1040 Justice Center Dr, Kemmerer, WY 83101",1040 Justice Center Dr,Kemmerer,WY,41.794,-110.5726,83101,
+new,TETONWY,Teton County Detention Center,"175 S Willow St, Jackson, WY 83001",175 S Willow St,Jackson,WY,43.47795,-110.7594,83001,
+new,OTEROCO,Otero County Jail,"222 East Second Street, La Junta, CO 81050",222 East Second Street,La Junta,CO,37.98665,-103.5396,81050,
+new,BEECOTX,Bee County Jail,,,,,28.404,-97.7297,,
+new,TAZRJVA,Southwest Regional Jail Authority - Tazewell Facility,,,,,,,,
+new,NATCHLA,,,,,,31.7326013287411,-93.1005448465157,,
+new,BARRECA,,,,,,32.7180851660563,-116.676653857671,,
+new,DELAWPA,George W. Hill Correctional Facility,"500 Cheyney Road, Thornton, PA 19373",500 Cheyney Road,Thornton,PA,,,,
+hold,SAVHOLD,Savannah Hold Room,"1050 Carl Griffin Dr, Savannah, GA 31405",1050 Carl Griffin Dr,Savannah,GA,32.06706317931771,-81.16854290804255,31405,
+hold,OAKHOLD,Oakdale Holding Room,"1010 E Whatley Rd, Oakdale, LA 71463",1010 E Whatley Rd,Oakdale,LA,30.831289629029506,-92.65036902511154,71463,
+hold,FDLHOLD,Ferndale Hold Room,"5200 Industrial Pl Ferndale, WA 98248",5200 Industrial Pl,Ferndale,WA,48.82982219180827,-122.55544009860967,98248,
