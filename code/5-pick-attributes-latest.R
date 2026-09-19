@@ -213,6 +213,29 @@ facility_attributes <-
   ) |>
   select(-detention_facility_code_1)
 
+# same site, ICE books under active_code for all stints after jan 1 2025
+superseded_codes <- tribble(
+  ~detention_facility_code , ~active_code ,
+  "TASTDTX"                , "STFRCTX"    ,
+  "BOPNEO"                 , "CCANOOH"    ,
+  "NWSCFVT"                , "VTSTALB"    ,
+  "XXNORTH"                , "NWRCCMN"    ,
+)
+
+facility_attributes <-
+  facility_attributes |>
+  left_join(superseded_codes, by = "detention_facility_code") |>
+  mutate(
+    detention_facility_code = if_else(
+      !is.na(active_code) &
+        source %in% c("detention_management", "website") &
+        date >= as.Date("2025-01-01"),
+      active_code,
+      detention_facility_code
+    )
+  ) |>
+  select(-active_code)
+
 arrow::write_parquet(
   facility_attributes,
   "data/facilities-attributes-cleaned-with-codes.parquet"
@@ -321,7 +344,10 @@ facility_latest_values <-
   arrange(
     detention_facility_code,
     variable,
-    is_likely_street_address(value) | source == "manual",
+    (variable %in%
+      c("address", "address_full") &
+      is_likely_street_address(value)) |
+      source == "manual",
     source_hierarchy,
     variable == "name" & source == "website",
     date

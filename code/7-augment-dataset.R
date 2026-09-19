@@ -147,13 +147,13 @@ ice_field_offices <-
   ) |>
   sf::st_transform(crs = 4326)
 
-# rolling 365-day window stats computed from detention stints (covers
-# hospitals and other facilities missing from the ICE daily-population feed).
-# See code/1-process-individual-count.R for the computation.
-facility_window_stats <-
-  arrow::read_parquet(
-    "data/facility-individual-counts-2025-2026.parquet"
-  )
+# # rolling 365-day window stats computed from detention stints (covers
+# # hospitals and other facilities missing from the ICE daily-population feed).
+# # See code/1-process-individual-count.R for the computation.
+# facility_window_stats <-
+#   arrow::read_parquet(
+#     "data/facility-individual-counts-2025-2026.parquet"
+#   )
 
 name_code_match <-
   arrow::read_parquet(
@@ -425,8 +425,8 @@ duplicate_facilities_to_remove <-
 # remove the extra rows for facilities that have two codes
 facility_final <-
   facility_final |>
-  anti_join(duplicate_facilities_to_remove, by = "detention_facility_code") |>
-  left_join(facility_window_stats, by = "detention_facility_code")
+  anti_join(duplicate_facilities_to_remove, by = "detention_facility_code")
+# left_join(facility_window_stats, by = "detention_facility_code")
 
 arrow::write_parquet(
   facility_final,
