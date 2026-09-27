@@ -30,6 +30,10 @@ prison_boundaries <-
     population = POPULATION,
     latitude,
     longitude,
+    # when HIFLD read each record's source, and when it last checked the record against imagery
+    source_date = as.Date(SOURCEDATE),
+    validated_date = as.Date(VAL_DATE),
+    source_url = na_if(SOURCE, "NOT AVAILABLE"),
     date = as.Date("2024-10-07") # approximate date of data release based on file path
   )
 
