@@ -44,9 +44,41 @@ jobs:
           token: ${{ steps.ddo-token.outputs.token }}
 
       - name: Ensure clean working tree and snapshot most recent dated file
+        id: base
+        env:
+          GH_TOKEN: ${{ steps.ddo-token.outputs.token }}
         run: |
           git lfs pull
           git checkout -- .
+
+          # Snapshot main's most recent dated file. The PR comment/body reports
+          # the cumulative diff against this (everything pending vs main).
+          latest_main=$(ls data/facilities-from-ice-website-*.parquet 2>/dev/null | sort | tail -n 1)
+          cp "${latest_main:-data/facilities-from-ice-website.parquet}" \
+             /tmp/main-facilities-from-ice-website.parquet
+
+          # If a bot PR from an earlier scrape is still open, build on its
+          # branch instead of main, so today's scrape is added to that PR.
+          # (Previously the run was skipped whenever an open PR touched the
+          # same files, so one unmerged PR silently froze all later updates.)
+          open_pr=$(gh pr list --state open --limit 200 \
+            --json number,headRefName,isCrossRepository \
+            --jq '[.[] | select((.headRefName | startswith("facilities-update-")) and (.isCrossRepository | not))]
+                  | sort_by(.number) | last // empty | "\(.number) \(.headRefName)"')
+          if [ -n "$open_pr" ]; then
+            pr_number="${open_pr%% *}"
+            pr_branch="${open_pr#* }"
+            echo "Open bot PR #$pr_number ($pr_branch) found — building on it."
+            git fetch origin "+refs/heads/$pr_branch:refs/remotes/origin/$pr_branch"
+            git checkout -B "$pr_branch" "origin/$pr_branch"
+            git lfs pull
+            echo "pr_number=$pr_number" >> "$GITHUB_OUTPUT"
+            echo "pr_branch=$pr_branch" >> "$GITHUB_OUTPUT"
+          fi
+
+          # Snapshot the most recent dated file on the branch we're building
+          # on (main, or the open PR's branch). The matcher and the
+          # "anything new today?" check diff today's scrape against this.
           latest=$(ls data/facilities-from-ice-website-*.parquet 2>/dev/null | sort | tail -n 1)
           if [ -n "$latest" ]; then
             cp "$latest" /tmp/old-facilities-from-ice-website.parquet
@@ -75,62 +107,80 @@ jobs:
       - name: Match new website facilities to existing codes
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: Rscript code/0-match-website-new-facilities.R
+        run: |
+          if [ -z "$OPENAI_API_KEY" ]; then
+            msg="OPENAI_API_KEY secret is missing or empty: new website facilities are not fuzzy-matched to existing codes and get synthetic XX placeholders instead."
+            echo "::warning title=Website matcher has no OpenAI key::$msg"
+            echo ":warning: $msg" >> "$GITHUB_STEP_SUMMARY"
+          fi
+          Rscript code/0-match-website-new-facilities.R
 
       - name: Check for changes
         id: check_changes
         env:
-          GH_TOKEN: ${{ steps.ddo-token.outputs.token }}
+          PR_NUMBER: ${{ steps.base.outputs.pr_number }}
+          PR_BRANCH: ${{ steps.base.outputs.pr_branch }}
         run: |
           today_file="data/facilities-from-ice-website-$(date -u +%Y-%m-%d).parquet"
           today_branch="facilities-update-$(date -u +%Y-%m-%d)"
+          scrape_files=("$today_file" data/facilities-from-ice-website.parquet
+                        data/facilities-website-matches.parquet)
 
-          # Skip if today's branch already exists on the remote (e.g. from an
-          # earlier run today whose PR was merged or closed). Re-pushing would
-          # either be rejected as non-fast-forward or open a duplicate PR.
-          if git ls-remote --exit-code --heads origin "$today_branch" >/dev/null 2>&1; then
-            echo "Remote branch '$today_branch' already exists — skipping."
-            echo "changed=false" >> $GITHUB_OUTPUT
+          # Record why nothing was proposed, visibly on the run page, so a
+          # skipped run can't be mistaken for a run that had nothing to do.
+          skip() {
+            echo "$1"
+            echo "::notice title=No facilities update proposed::$1"
+            echo "**No facilities update proposed:** $1" >> "$GITHUB_STEP_SUMMARY"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
+          }
+
+          # Put the scrape outputs back to the committed state.
+          discard() {
+            git reset -q HEAD -- "${scrape_files[@]}"
+            git checkout -- data/facilities-from-ice-website.parquet \
+                            data/facilities-website-matches.parquet
+            if git ls-files --error-unmatch "$today_file" >/dev/null 2>&1; then
+              git checkout -- "$today_file"
+            else
+              rm -f "$today_file"
+            fi
+          }
+
+          if [ -z "$PR_BRANCH" ]; then
+            # No open bot PR: start today's branch from main. Skip if it already
+            # exists on the remote (e.g. from an earlier run today whose PR was
+            # merged or closed). Re-pushing would either be rejected as
+            # non-fast-forward or open a duplicate PR.
+            if git ls-remote --exit-code --heads origin "$today_branch" >/dev/null 2>&1; then
+              skip "Remote branch '$today_branch' already exists and has no open PR."
+            fi
+            git checkout -B "$today_branch"
           fi
 
-          git checkout -b "$today_branch"
-          git add "$today_file" data/facilities-from-ice-website.parquet \
-                  data/facilities-website-matches.parquet
+          git add "${scrape_files[@]}"
           if git diff --cached --quiet; then
-            echo "changed=false" >> $GITHUB_OUTPUT
-            exit 0
+            skip "Scrape matches what is already on ${PR_BRANCH:-main}."
           fi
 
-          # Check if any open PR already contains these files
-          changed_files=$(git diff --cached --name-only)
-          open_prs=$(gh pr list --state open --json number --jq '.[].number')
-          for pr in $open_prs; do
-            pr_files=$(gh pr view "$pr" --json files --jq '.files[].path')
-            for file in $changed_files; do
-              if echo "$pr_files" | grep -qF "$file"; then
-                echo "File '$file' already present in open PR #$pr — skipping."
-                echo "changed=false" >> $GITHUB_OUTPUT
-                exit 0
-              fi
-            done
-          done
-
-          # Generate change summary comparing previous dated file vs today's
+          # Change summary: today's scrape vs the previous dated file on the
+          # branch we're building on.
           Rscript code/0-ice-website-diff.R
 
           # If binary files differ but data content is identical, discard and skip
           if grep -qF 'NO_REAL_CHANGES' /tmp/facilities-changes.txt; then
-            echo "Binary files differ but data content is identical — skipping."
-            git reset HEAD -- "$today_file" data/facilities-from-ice-website.parquet \
-                              data/facilities-website-matches.parquet
-            git checkout -- data/facilities-from-ice-website.parquet \
-                            data/facilities-website-matches.parquet
-            rm -f "$today_file"
-            echo "changed=false" >> $GITHUB_OUTPUT
-          else
-            echo "changed=true" >> $GITHUB_OUTPUT
+            discard
+            skip "Binary files differ but data content is identical to ${PR_BRANCH:-main}."
           fi
+
+          # Cumulative summary: today's scrape vs main's latest dated file, i.e.
+          # everything the PR proposes once today's scrape is added to it.
+          FACILITIES_DIFF_OLD=/tmp/main-facilities-from-ice-website.parquet \
+          FACILITIES_DIFF_OUT=/tmp/facilities-changes-vs-main.txt \
+            Rscript code/0-ice-website-diff.R
+
+          echo "changed=true" >> "$GITHUB_OUTPUT"
 
       - name: Run CI-friendly data pipeline
         if: steps.check_changes.outputs.changed == 'true'
@@ -152,31 +202,63 @@ jobs:
           git config --local user.name "DDO Bot"
           git commit -m "Update ICE website facilities data [skip ci]"
           # checkout's `token:` configured the DDO_BOT token in git's
-          # extraheader, so this push uses it.
+          # extraheader, so this push uses it. When building on an open PR's
+          # branch this is a fast-forward of that branch.
           git push --set-upstream origin HEAD
 
-      - name: Create pull request
+      - name: Create or update pull request
         if: steps.check_changes.outputs.changed == 'true'
         id: create_pr
         env:
           GH_TOKEN: ${{ steps.ddo-token.outputs.token }}
+          PR_NUMBER: ${{ steps.base.outputs.pr_number }}
         run: |
-          {
-            echo "Automated update: changes detected in ICE detention facilities data."
-            echo ""
-            cat /tmp/facilities-changes.txt
-            if [ -s /tmp/website-match-summary.md ]; then
+          today="$(date -u +%Y-%m-%d)"
+          if [ -n "$PR_NUMBER" ]; then
+            # An earlier bot PR is still open: today's scrape was pushed to its
+            # branch. Leave its description alone and add a comment with what
+            # is new today plus the running total against main.
+            {
+              echo "Refreshed with the $today scrape of the ICE detention facilities page."
               echo ""
-              cat /tmp/website-match-summary.md
-            fi
-          } > /tmp/pr-body.txt
+              echo "### New since the previous scrape on this PR"
+              echo ""
+              cat /tmp/facilities-changes.txt
+              if [ -s /tmp/website-match-summary.md ]; then
+                echo ""
+                cat /tmp/website-match-summary.md
+              fi
+              echo ""
+              echo "### All website changes in this PR vs main"
+              echo ""
+              if grep -qF 'NO_REAL_CHANGES' /tmp/facilities-changes-vs-main.txt; then
+                echo "None — the website listing is back to what is on main."
+              else
+                cat /tmp/facilities-changes-vs-main.txt
+              fi
+            } > /tmp/pr-body.txt
+            pr_url=$(gh pr comment "$PR_NUMBER" --body-file /tmp/pr-body.txt)
+            pr_num="$PR_NUMBER"
+            echo "Added the $today scrape to open PR #$pr_num." >> "$GITHUB_STEP_SUMMARY"
+          else
+            {
+              echo "Automated update: changes detected in ICE detention facilities data."
+              echo ""
+              cat /tmp/facilities-changes.txt
+              if [ -s /tmp/website-match-summary.md ]; then
+                echo ""
+                cat /tmp/website-match-summary.md
+              fi
+            } > /tmp/pr-body.txt
 
-          pr_url=$(gh pr create \
-            --title "Facilities update $(date -u +%Y-%m-%d)" \
-            --body-file /tmp/pr-body.txt \
-            --reviewer graemeblair \
-            --base main)
-          pr_num="${pr_url##*/}"
+            pr_url=$(gh pr create \
+              --title "Facilities update $today" \
+              --body-file /tmp/pr-body.txt \
+              --reviewer graemeblair \
+              --base main)
+            pr_num="${pr_url##*/}"
+            echo "Opened PR #$pr_num for the $today scrape." >> "$GITHUB_STEP_SUMMARY"
+          fi
           echo "pr_url=${pr_url}"     >> "$GITHUB_OUTPUT"
           echo "pr_number=${pr_num}"  >> "$GITHUB_OUTPUT"
 
