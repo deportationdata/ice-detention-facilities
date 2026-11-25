@@ -39,6 +39,8 @@ jobs:
         with:
           lfs: true
           clean: true
+          # Full history: needed to merge main into an open bot PR's branch.
+          fetch-depth: 0
           # Persist the DDO_BOT token in git config so the later `git push`
           # uses it (so push events also fire downstream workflows).
           token: ${{ steps.ddo-token.outputs.token }}
@@ -71,6 +73,18 @@ jobs:
             echo "Open bot PR #$pr_number ($pr_branch) found — building on it."
             git fetch origin "+refs/heads/$pr_branch:refs/remotes/origin/$pr_branch"
             git checkout -B "$pr_branch" "origin/$pr_branch"
+            # Bring the PR branch up to date with main so the run uses current
+            # code and inputs. If the two conflict a person has to resolve the
+            # PR anyway; carry on from the unmerged branch so the scrape is
+            # still recorded, and say so on the run page.
+            git config --local user.email "ddo-bot@users.noreply.github.com"
+            git config --local user.name "DDO Bot"
+            if ! git merge --no-edit origin/main; then
+              git merge --abort
+              msg="PR #$pr_number ($pr_branch) conflicts with main; today's scrape was built on the unmerged PR branch. Resolve or close the PR."
+              echo "::warning title=Open facilities PR conflicts with main::$msg"
+              echo ":warning: $msg" >> "$GITHUB_STEP_SUMMARY"
+            fi
             git lfs pull
             echo "pr_number=$pr_number" >> "$GITHUB_OUTPUT"
             echo "pr_branch=$pr_branch" >> "$GITHUB_OUTPUT"
@@ -176,9 +190,15 @@ jobs:
 
           # Cumulative summary: today's scrape vs main's latest dated file, i.e.
           # everything the PR proposes once today's scrape is added to it.
-          FACILITIES_DIFF_OLD=/tmp/main-facilities-from-ice-website.parquet \
-          FACILITIES_DIFF_OUT=/tmp/facilities-changes-vs-main.txt \
-            Rscript code/0-ice-website-diff.R
+          # (The diff script reads and writes fixed /tmp paths, so swap its
+          # "old" input and move its output aside.)
+          cp /tmp/facilities-changes.txt /tmp/facilities-changes-today.txt
+          cp /tmp/old-facilities-from-ice-website.parquet /tmp/prev-facilities-from-ice-website.parquet
+          cp /tmp/main-facilities-from-ice-website.parquet /tmp/old-facilities-from-ice-website.parquet
+          Rscript code/0-ice-website-diff.R
+          mv /tmp/facilities-changes.txt /tmp/facilities-changes-vs-main.txt
+          mv /tmp/facilities-changes-today.txt /tmp/facilities-changes.txt
+          mv /tmp/prev-facilities-from-ice-website.parquet /tmp/old-facilities-from-ice-website.parquet
 
           echo "changed=true" >> "$GITHUB_OUTPUT"
 

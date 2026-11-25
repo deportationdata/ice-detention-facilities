@@ -3,14 +3,8 @@ suppressPackageStartupMessages({
   library(dplyr)
 })
 
-# Paths can be overridden so the scrape workflow can also diff today's scrape
-# against main's snapshot (the cumulative change in a long-open PR).
-old_path <- Sys.getenv("FACILITIES_DIFF_OLD", "/tmp/old-facilities-from-ice-website.parquet")
-new_path <- Sys.getenv("FACILITIES_DIFF_NEW", "/tmp/new-facilities-from-ice-website.parquet")
-out_path <- Sys.getenv("FACILITIES_DIFF_OUT", "/tmp/facilities-changes.txt")
-
-old <- read_parquet(old_path)
-new <- read_parquet(new_path)
+old <- read_parquet("/tmp/old-facilities-from-ice-website.parquet")
+new <- read_parquet("/tmp/new-facilities-from-ice-website.parquet")
 
 key <- function(d) paste(d$name, d$state, sep = " | ")
 
@@ -50,7 +44,7 @@ if (length(modified_lines) > 0) {
   lines <- c(lines, "")
 }
 if (length(lines) == 0) {
-  writeLines("NO_REAL_CHANGES", out_path)
+  writeLines("NO_REAL_CHANGES", "/tmp/facilities-changes.txt")
 } else {
-  writeLines(lines, out_path)
+  writeLines(lines, "/tmp/facilities-changes.txt")
 }
