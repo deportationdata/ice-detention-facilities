@@ -63,6 +63,19 @@ csa_sf <-
     geometry
   )
 
+# Census city (place / county subdivision) containing each facility;
+# same geography and ids as ice's code/city-match.R
+census_city_sf <-
+  st_read(
+    "/vsicurl/https://github.com/deportationdata/us-shapefiles/raw/aab0e445e70b5e103df25a5542d67ab5c8b44374/data/places-county-subdivisions-sf.parquet",
+    quiet = TRUE
+  ) |>
+  select(
+    city_geoid = geoid,
+    city_geo_level = geo_level,
+    city_name_census = namelsad
+  )
+
 # bring in all facilities in detention file plus in any ICE source (DTM, web site, etc.)
 facility_list <-
   arrow::read_parquet(
@@ -360,6 +373,7 @@ facility_final <-
   ) |>
   st_join(cbsa_sf, join = st_within) |>
   st_join(csa_sf, join = st_within) |>
+  st_join(census_city_sf, join = st_within) |>
   mutate(
     federal_court_circuit_of_confinement = case_when(
       # 48 USC 1613(a) specifies that the Virgin Islands are in the 3st Circuit
@@ -414,6 +428,7 @@ facility_final <-
     .before = state
   ) |>
   relocate(state_fips_code, .after = state) |>
+  relocate(city_geoid, city_geo_level, city_name_census, .after = city) |>
   relocate(detention_facility_code_alt, .after = detention_facility_code)
 
 duplicate_facilities_to_remove <-
